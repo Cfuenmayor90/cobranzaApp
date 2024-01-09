@@ -501,6 +501,11 @@ a{
         text-align: center;
         border: none;
     }
+    .botonesMenuPrincipal:hover{
+        background-color: orangered;
+        color: whitesmoke;
+        font-size: 32px;
+    }
     .sectionContPrin{
         width: 100%;
         height: 600px;
@@ -508,4 +513,124 @@ a{
         margin: 0.2em;
     }
 
+    /*Codigo de clientes.html*/
+.contMayorCli{
+    display: block;
+    justify-content:center;
+
+}
+.formCliente{
+    background-color: whitesmoke;
+    width: 100%;
+     margin: 0.5em;
+}
+.formCliente2{
+    padding: 2em;
+}
+
+.sectionContClientes{
+    width: 100%;
+    height: auto;
+    margin: 0.5em;
+    padding: 0; 
+}
+.divClienteBuscar{
+    width: 100%;
+    height: auto;
+    background-color: #b9e4ff;
+    text-align: center;
+    padding: 0.5em;
+}
+.divClienteBuscar2{
+    width: 100%;
+    height: auto;
+    background-color: whitesmoke;
+    text-align: center;
+    padding: 5px;
+}
+
+.tarjCli{
+    width: 100%;
+    height: auto;
+    background-color: whitesmoke;
+    padding: 0.5em;
+}
+
+/*codigo formulario.html*/
+
+.inpForm{
+    padding: 3px;
+    margin-bottom: 0.5;
+}
+.btnFormReset{
+    font-size: 16px;
+}
+.btnFormAceptar{
+    font-size: 16px;
+}
+/*Error */
+.btnError{
+    width: 100%;
+    padding: 0.5em;
+    font-size: 1.5em;
+}
+.divError{
+    width: 100%;
+    height: auto;
+    padding: 2em;
+    margin: 1.5em;
+}
+.labelError{
+    font-size: 4em;
+}
+.h2Error {
+    font-size: 2em;
+    padding: 1em;
+}
+/*Usuarios*/
+.tarjUser{
+    width: 100%;
+    height: auto;
+    background-color: whitesmoke;
+    padding: 0;
+}
+.tableUsuarios{
+    background-color: #ffffff;
+    margin: 0;
+    width: 100%;
+}
+.tableUsuariosTr{
+    background-color: #102f43;
+}
+.tableUsuariosThTitulo{
+    padding: 0.8em;
+    color: white;
+    font-size: 0.8em;
+}
+.tableUsuariosThRespuesta{
+    padding: 0.5em;
+    font-size: 0.9em;
+}
+.tableUsuariosBtnEliminar{
+    background-color: red;
+    color: white;
+    font-size: 0.8em;
+    padding: 0.5em;
+    border: 0;
+}
+.tableUsuariosBtnModificar{
+    background-color: green;
+    color: white;
+    font-size: 0.8em;
+    padding: 0.5em;
+    border: 0;
+}
+.tableUsuariosBtnEliminar:hover{
+   border-color: red;
+}
+.tableUsuariosBtnModificar:hover{
+    border-color: green;
  }
+
+
+}

@@ -101,16 +101,14 @@
           <tr class="tableUsuariosTr">
           <th class="tableUsuariosThTitulo">DNI</th>
           <th class="tableUsuariosThTitulo">Apellido y Nombre</th>
-          <th class="tableUsuariosThTitulo">Direccion Comercial</th>
-          <th class="tableUsuariosThTitulo">Whatsapp</th>
+        
           <th class="tableUsuariosThTitulo">Opciones</th>
           </tr>
         {{#each clientes }}
           <tr>
              <th class="tableUsuariosThRespuesta">{{dni}}</th>
              <th class="tableUsuariosThRespuesta">{{nombre}}</th>
-             <th class="tableUsuariosThRespuesta">{{localidadComercial}} / {{dirComercial}}</th>
-             <th class="tableUsuariosThRespuesta">{{celular}}</th>
+
              
              <th class="">
                <a href="/client/delete/{{_id}}" onclick="return confirm('¿Esta Seguro De Eliminar El Usuario?')" class="tableUsuariosBtnEliminar">Eliminar</a>
