@@ -1,0 +1,75 @@
+<nav class="navegacion">
+    <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a>
+    <div>
+      <span>Clientes</span>
+    </div>
+    <div class="iconMenuHamburguesa">
+      <i class="bi bi-menu-button-wide-fill"></i>
+    </div>
+  </nav>
+   <div class="contMayorCli">
+<div class="formCliente">
+    <div class="divClienteBuscar">
+        <h3 class="tituloForm">Registrar Cliente</h3>
+      </div>
+    <form action="/client/edit/{{cliente._id}}" method="post" class="formCliente2">
+
+      <p>Ingresa los datos para dar de alta al cliente</p>
+      <br />
+
+      <label class="title" for="nombre">Apellido y Nombre</label>
+      <br />
+      <input type="text" class="inpForm" value="{{cliente.nombre}}" id="nombre" name="nombre" required />
+      <br />
+      <label class="title" for="dni">DNI</label>
+      <br />
+      <input type="number" class="inpForm" value="{{cliente.dni}}" id="dni" name="dni" required />
+      <br />
+      <label class="title" for="rubro">Rubro</label>
+      <br />
+      <input type="text" class="inpForm" value="{{cliente.rubro}}" id="rubro" name="rubro" required />
+      <br />
+      <label class="title" for="direccion comercial">Localidad Comercial</label>
+      <select class="inpForm" name="localidadComercial" id="localidadComercial">
+        <option value="Capital">Capital</option>
+        <option value="La Banda">La Banda</option>
+      </select>
+      <label class="title" for="direccion comercial">Direccion Comercial</label>
+      <br />
+      <input type="text" class="inpForm" value="{{cliente.dirComercial}}" id="dirComercial" name="dirComercial"
+        required />
+      <br />
+       <label class="title" for="direccion particular">Localidad Particular</label>
+      <select class="inpForm" name="localidadParticular" id="localidParticular">
+        <option value="Capital">Capital</option>
+        <option value="La Banda">La Banda</option>
+      </select>
+      <br>
+      <label class="title" for="direccion particular">Direccion Particular</label>
+      <br />
+      <input type="text" class="inpForm" value="{{cliente.dirParticular}}" id="dirParticular" name="dirParticular"
+        required />
+      <br />
+      <label class="title" for="celular">Celular</label>
+      <br />
+      <input type="text" class="inpForm" value="{{cliente.celular}}" id="celular" name="celular" required />
+      <br />
+      <label class="title" for="telefono">Telefono</label>
+      <br />
+      <input type="text" class="inpForm" value="{{cliente.telefono}}" id="telefono" name="telefono" required />
+      <br />
+      <label class="title" for="email">Email</label>
+      <br />
+      <input type="email" class="inpForm" value="{{cliente.email}}" id="email" name="email" />
+      <br />
+
+      <div class="cantBtnForm">
+        <button class="btnFormReset" type="reset">Limpiar</button>
+
+        <button class="btnFormAceptar" type="submit">Editar</button>
+      </div>
+  
+    </form>
+</div>
+   
+  </div>

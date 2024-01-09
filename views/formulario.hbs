@@ -1,0 +1,60 @@
+
+    <nav class="navegacion">
+        <div>
+            <a href="/vistas/volver"><i class="bi bi-x-square"></i></a>
+        </div>
+        <div>
+            <span>Cobranza App</span>
+        </div>
+        <!--<div>
+            <a href="" class="menuOpciones">Principal</a>
+            <a href="" class="menuOpciones">Cobranza</a>
+            <a href="" class="menuOpciones">Clientes</a>
+            <a href="" class="menuOpciones">Productos</a>
+            <a href="" class="menuOpciones">Novedades</a>
+            <a href="" class="menuOpciones">Calculadora</a>
+            <a href="" class="menuOpciones">Estadisticas</a>
+        </div> -->
+        <div class="iconMenuHamburguesa">
+            <i class="bi bi-menu-button-wide-fill"></i>
+        </div>
+    </nav>
+
+    <div class="divCon">
+        <form action="/users" method="post" class="formulario">
+                <h3 class="tituloForm">
+                    Formulario De Contacto
+                </h3>
+                <br>
+                <p>Escribenos y en breve nos pondremos en contaco contigo</p>
+         
+            <label class="title" for="nombre">Nombre</label>
+            <br>
+            <input type="text" class="inpForm" placeholder="Escribe tu nombre" name="name" required>
+            <br>
+            <label class="title" for="email">Email</label>
+            <br>
+            <input type="email" class="inpForm" placeholder="Escribe tu Email" name="email" required>
+            <br>
+            <label class="title" for="telefono">Telefono</label>
+            <br>
+            <input type="tel" class="inpForm" placeholder="Escribi tu edad" name="age" required>
+            
+            <br>
+            <label class="title" for="asunto">Asunto</label>
+            <br>
+            <input type="text" class="inpForm" placeholder="Escribe un asunto" required> 
+            <br>
+            <label class="title" for="mensaje">Mensaje</label>
+            <br>
+            <textarea class="inpForm" name="" id="" cols="30" rows="10" placeholder="Deje aqui su comentario..."></textarea>
+            <br>
+            <div class="cantBtnForm">
+                <button class="btnFormReset" type="reset">Limpiar</button>
+          
+                <button class="btnFormAceptar" type="submit">Aceptar</button>
+
+            </div>
+         
+        </form>
+    </div>

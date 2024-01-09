@@ -1,0 +1,122 @@
+<nav class="navegacion">
+  <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a>
+  <div>
+    <span>Usuarios</span>
+  </div>
+
+  <div class="iconMenuHamburguesa">
+    <i class="bi bi-menu-button-wide-fill"></i>
+  </div>
+</nav>
+
+
+<div class="contMayorCli">
+  <div class="formCliente">
+      <div class="divClienteBuscar">
+        <h3 class="tituloForm">Registrar Usuarios</h3>
+      </div>
+  <form action="/users/crearUsers" method="post" class="formCliente2">
+    
+    <p>Ingresa los datos para dar de alta al usuario</p>
+    <br />
+
+    <label class="title" for="nombre">Apellido y Nombre</label>
+    <br />
+    <input
+      type="text"
+      class="inpForm"
+      placeholder="Escribe Apellido y Nombre"
+      id="nombre"
+      name="nombre"
+      required
+    />
+    <br />
+    <label class="title" for="dni">DNI</label>
+    <br />
+    <input
+      type="number"
+      class="inpForm"
+      placeholder="Escribe el DNI"
+      id="dni"
+      name="dni"
+      required
+    />
+    <br />
+    <label class="title" for="password">Contraseña</label>
+    <br />
+    <input
+      type="text"
+      class="inpForm"
+      placeholder="Ingrese una Contraseña"
+      id="password"
+      name="password"
+      required
+    />
+    <br />
+    <label for="rol" class="title">Rol del usuario</label>
+    <select class="inpForm" name="role" id="role" required>
+      <option value="admin">Administrador</option>
+      <option value="vendedor">Vendedor</option>
+      <option value="cobrador">Cobrador</option>
+    </select>
+
+    <div class="cantBtnForm">
+      <button class="btnFormReset" type="reset">Limpiar</button>
+
+      <button class="btnFormAceptar" type="submit">Guardar</button>
+    </div>
+  </form>
+</div>
+
+  <section class="sectionContClientes">
+         <div class="divClienteBuscar">
+             <h3 class="tituloForm">Buscar Usuario</h3>
+          </div>
+         <div class="divClienteBuscar2">
+  
+             <input class="inpBuscarClientes" type="text" name="" id="" placeholder="Ingrese un DNI o Nombre" />
+             <button class="btnBuscarCliente"><i class="bi bi-search"></i></button>
+         </div>
+      <div class="tarjCli">
+        <h4 >Apellido y Nombre</h4>
+           <h5>DNI</h4>
+          <h5>Direccion Comercial:</h5>
+           <h5>Direccion Particular:</h5>
+          <h5>Tipo de comercio:</h5>
+           <h5>Celular:</h5>
+          <h5>Telefono:</h5>
+          <h5>Correo Electronico:</h5>
+      </div> 
+
+    <div class="divClienteBuscar">
+        <h3 class="tituloForm"> Usuarios Agregados Recientemente</h3>
+      </div>
+      <div class="tarjUser">
+     
+        <table class="tableUsuarios">
+          <tr class="tableUsuariosTr">
+          <th class="tableUsuariosThTitulo">DNI</th>
+          <th class="tableUsuariosThTitulo">Apellido y Nombre</th>
+          <th class="tableUsuariosThTitulo">Rol</th>
+          <th class="tableUsuariosThTitulo">
+            Opciones
+          </th>
+          </tr>
+        {{#each usuarios }}
+          <tr>
+             <th class="tableUsuariosThRespuesta">{{dni}}</th>
+             <th class="tableUsuariosThRespuesta">{{nombre}}</th>
+             <th class="tableUsuariosThRespuesta">{{role}}</th>
+             <th class="">
+               <a href="/users/delete/{{_id}}" onclick="return confirm('¿Esta Seguro De Eliminar El Usuario?')" class="tableUsuariosBtnEliminar">Eliminar</a>
+               <a href="/users/edit/{{_id}}" class="tableUsuariosBtnModificar">Modificar</a>
+            </th>
+          </tr>
+        {{/each}}
+        </table>
+
+      </div>  
+
+    </section>
+
+</div>

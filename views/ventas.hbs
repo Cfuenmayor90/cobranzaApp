@@ -1,0 +1,97 @@
+
+
+    <nav class="navegacion">
+        <div>
+           <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a> 
+        </div>
+        <div>
+           <span>Ventas</span>
+        </div>
+        <div class="iconMenuHamburguesa">
+            <i class="bi bi-menu-button-wide-fill"></i>
+        </div>
+    </nav>
+
+
+   <div class="contMayorCli">
+<div class="formCliente">
+    <div class="divClienteBuscar">
+        <h3 class="tituloForm">Registrar Ventas</h3>
+      </div>
+    <form action="/ventas/cotizar" method="post" class="formCliente2">
+
+            <label for="ruta">Ruta De Cobro</label>
+            <select class="inpForm" name="ruta" id="ruta" required>
+                <option value="1">Emiliano</option>
+                <option value="1">Ramon</option>
+                <option value="1">Javier</option>
+            </select>
+            <br>
+            <label for="dni">DNI</label><br>
+            <input class="inpForm" type="number" id="dni" name="dni" required>
+            <br>
+            <label for="monto">Monto</label>
+            <input class="inpForm" type="number" id="monto" name="monto" required>
+            <br>
+            <label for="cantCuotas">Cantidad De Cutas</label>
+            <input class="inpForm" type="number" id="cantCuotas" name="cantCuotas" required size="8">
+            <br>
+            <label for="interes">Interes</label>
+            <input class="inpForm" type="number" id="interes" name="interes" required>
+            <br>
+            <label for="plan">Plan De Cobro</label>
+            <select class="inpForm" name="plan" id="plan">
+                <option value="Semanal">Semanal</option>
+                <option value="Diario">Diario</option>
+            </select>
+            <br>
+            <label for="diasDeCobro">Dia De Cobro</label>
+            <select class="inpForm" name="diasDeCobro" id="diasDeCobro">
+                <option value="lunes">Lunes</option>
+                <option value="martes">Martes</option>
+                <option value="miercoles">Miercoles</option>
+                <option value="jueves">Jueves</option>
+                <option value="viernes">Viernes</option>
+                <option value="Sabado">Sabado</option>
+                <option value="todos">Todos</option>
+            </select>
+               <div class="cantBtnForm">
+                <button class="btnFormReset" type="reset">Limpiar</button>
+                <button class="btnFormAceptar" type="submit">Aceptar</button>
+            </div>
+    </form>
+</div>
+    <section class="sectionContClientes">
+         <div class="divClienteBuscar">
+             <h3 class="tituloForm">Buscar Producto</h3>
+          </div>
+         <div class="divClienteBuscar2">
+  
+             <input class="inpBuscarClientes" type="text" name="" id="" placeholder="Ingrese un DNI o Nombre" />
+             <button class="btnBuscarCliente"><i class="bi bi-search"></i></button>
+         </div>
+      <div class="tarjCli">
+        <h4 >Apellido y Nombre</h4>
+           <h5>DNI</h4>
+          <h5>Direccion Comercial:</h5>
+           <h5>Direccion Particular:</h5>
+          <h5>Tipo de comercio:</h5>
+           <h5>Celular:</h5>
+          <h5>Telefono:</h5>
+          <h5>Correo Electronico:</h5>
+          
+      </div>  
+       <div class="divClienteBuscar">
+        <h3 class="tituloForm">Clientes Agregados Recientemente</h3>
+      </div>
+      <div class="tarjCli">
+        dfssdfds
+      </div>  
+
+    </section>
+  </div>
+
+
+
+
+

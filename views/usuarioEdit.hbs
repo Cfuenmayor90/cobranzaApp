@@ -1,0 +1,74 @@
+<nav class="navegacion">
+  <a href="/vistas/usuarios"><i class="bi bi-box-arrow-left"></i></a>
+  <div>
+    <span>Usuarios</span>
+  </div>
+
+  <div class="iconMenuHamburguesa">
+    <i class="bi bi-menu-button-wide-fill"></i>
+  </div>
+</nav>
+
+
+<div class="contMayorCli">
+  <div class="formCliente">
+      <div class="divClienteBuscar">
+        <h3 class="tituloForm">Editar Usuario</h3>
+      </div>
+  <form action="/users/edit/{{usuario._id}}" method="post" class="formCliente2">
+    <br />
+    <p>Modificar los campos para editar usuario</p>
+    <br />
+
+    <label class="title" for="nombre">Apellido y Nombre</label>
+    <br />
+    <input
+      type="text"
+      class="inpForm"
+      placeholder="Escribe Apellido y Nombre"
+      id="nombre"
+      name="nombre" 
+      value="{{usuario.nombre}}"
+      required
+    />
+    <br />
+    <label class="title" for="dni">DNI</label>
+    <br />
+    <input
+      type="number"
+      class="inpForm"
+      placeholder="Escribe el DNI"
+      id="dni"
+      name="dni"
+      value="{{usuario.dni}}"
+      required
+    />
+    <br />
+    <label class="title" for="password">Contraseña</label>
+    <br />
+    <input
+      type="text"
+      class="inpForm"
+      placeholder="Ingrese una Contraseña"
+      id="password"
+      name="password"
+      required
+    />
+    <br />
+    <label for="rol" class="title">Rol del usuario</label>
+    <select class="inpForm" name="role" id="role" required>
+      <option value="cobrador">Cobrador</option>
+      <option value="vendedor">Vendedor</option>
+      <option value="admin">Administrador</option>
+    </select>
+
+    <div class="cantBtnForm">
+      <a class="btnFormReset" href="/vistas/usuarios">Volver</a>
+      <button class="btnFormAceptar" type="submit">Editar</button>
+    </div>
+  </form>
+</div>
+
+  
+
+</div>

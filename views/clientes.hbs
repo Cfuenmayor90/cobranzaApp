@@ -1,0 +1,127 @@
+
+  <nav class="navegacion">
+    <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a>
+    <div>
+      <span>Clientes</span>
+    </div>
+    <div class="iconMenuHamburguesa">
+      <i class="bi bi-menu-button-wide-fill"></i>
+    </div>
+  </nav>
+   <div class="contMayorCli">
+<div class="formCliente">
+    <div class="divClienteBuscar">
+        <h3 class="tituloForm">Registrar Cliente</h3>
+      </div>
+    <form action="/client/crearCliente" method="post" class="formCliente2">
+
+      <p>Ingresa los datos para dar de alta al cliente</p>
+      <br />
+
+      <label class="title" for="nombre">Apellido y Nombre</label>
+      <br />
+      <input type="text" class="inpForm" placeholder="Escribe Apellido y Nombre" id="nombre" name="nombre" required />
+      <br />
+      <label class="title" for="dni">DNI</label>
+      <br />
+      <input type="number" class="inpForm" placeholder="Escribe el DNI" id="dni" name="dni" required />
+      <br />
+      <label class="title" for="rubro">Rubro</label>
+      <br />
+      <input type="text" class="inpForm" placeholder="Rubro" id="rubro" name="rubro" required />
+      <br />
+      <label class="title" for="direccion comercial">Localidad Comercial</label>
+      <select class="inpForm" name="localidadComercial" id="localidadComercial">
+        <option value="Capital">Capital</option>
+        <option value="La Banda">La Banda</option>
+      </select>
+      <label class="title" for="direccion comercial">Direccion Comercial</label>
+      <br />
+      <input type="text" class="inpForm" placeholder="Barrio/ calle y numero" id="dirComercial" name="dirComercial"
+        required />
+      <br />
+       <label class="title" for="direccion particular">Localidad Particular</label>
+      <select class="inpForm" name="localidadParticular" id="localidParticular">
+        <option value="Capital">Capital</option>
+        <option value="La Banda">La Banda</option>
+      </select>
+      <br>
+      <label class="title" for="direccion particular">Direccion Particular</label>
+      <br />
+      <input type="text" class="inpForm" placeholder="Barrio/ calle y numero" id="dirParticular" name="dirParticular"
+        required />
+      <br />
+      <label class="title" for="celular">Celular</label>
+      <br />
+      <input type="text" class="inpForm" placeholder="Numero de Celular" id="celular" name="celular" required />
+      <br />
+      <label class="title" for="telefono">Telefono</label>
+      <br />
+      <input type="text" class="inpForm" placeholder="Numero de Telefono" id="telefono" name="telefono" required />
+      <br />
+      <label class="title" for="email">Email</label>
+      <br />
+      <input type="email" class="inpForm" placeholder="Escribe tu Email" id="email" name="email" />
+      <br />
+
+      <div class="cantBtnForm">
+        <button class="btnFormReset" type="reset">Limpiar</button>
+
+        <button class="btnFormAceptar" type="submit">Guardar</button>
+      </div>
+  
+    </form>
+</div>
+    <section class="sectionContClientes">
+         <div class="divClienteBuscar">
+             <h3 class="tituloForm">Buscar Cliente</h3>
+          </div>
+         <div class="divClienteBuscar2">
+  
+             <input class="inpBuscarClientes" type="text" name="" id="" placeholder="Ingrese un DNI o Nombre" />
+             <button class="btnBuscarCliente"><i class="bi bi-search"></i></button>
+         </div>
+      <div class="tarjCli">
+        <h4 >Apellido y Nombre</h4>
+           <h5>DNI</h4>
+          <h5>Direccion Comercial:</h5>
+           <h5>Direccion Particular:</h5>
+          <h5>Tipo de comercio:</h5>
+           <h5>Celular:</h5>
+          <h5>Telefono:</h5>
+          <h5>Correo Electronico:</h5>
+          
+      </div>  
+       <div class="divClienteBuscar">
+        <h3 class="tituloForm">Clientes Agregados Recientemente</h3>
+      </div>
+      <div class="tarjUser">
+     
+        <table class="tableUsuarios">
+          <tr class="tableUsuariosTr">
+          <th class="tableUsuariosThTitulo">DNI</th>
+          <th class="tableUsuariosThTitulo">Apellido y Nombre</th>
+          <th class="tableUsuariosThTitulo">Direccion Comercial</th>
+          <th class="tableUsuariosThTitulo">Whatsapp</th>
+          <th class="tableUsuariosThTitulo">Opciones</th>
+          </tr>
+        {{#each clientes }}
+          <tr>
+             <th class="tableUsuariosThRespuesta">{{dni}}</th>
+             <th class="tableUsuariosThRespuesta">{{nombre}}</th>
+             <th class="tableUsuariosThRespuesta">{{localidadComercial}} / {{dirComercial}}</th>
+             <th class="tableUsuariosThRespuesta">{{celular}}</th>
+             
+             <th class="">
+               <a href="/client/delete/{{_id}}" onclick="return confirm('¿Esta Seguro De Eliminar El Usuario?')" class="tableUsuariosBtnEliminar">Eliminar</a>
+               <a href="/client/edit/{{_id}}" class="tableUsuariosBtnModificar">Modificar</a>
+            </th>
+          </tr>
+        {{/each}}
+        </table>
+
+      </div>  
+
+
+    </section>
+  </div>
