@@ -21,16 +21,40 @@ const crearCliente = async (req, res) => {
     email,
   } = req.body;
   try {
-    let clienteNuevo = await client.findOne({dni});
+    let clienteNuevo = await client.findOne(dni);
+    const clientes = await client.find();
     if (clienteNuevo) {
-      return res.send("<h1>El cliente  ya existe</h1>");
+      const mensaje = '¡El Cliente Ya Existe!'
+      return res.render('clientes', {mensaje, clientes});
     }
     clienteNuevo = new client(req.body);
     await clienteNuevo.save();
-    res.send('<h1>cliente Guardado con exito</h1>');
+    mensaje = '¡Cliente Guardado Con Exito!'
+     return res.render('clientes', {clientes, mensaje})
   } catch (error) {
-    return res.send("<h1>Error en la Data Base</h1>");
+    const mensajeError = '¡Error En La Base De datos!'
+    return res.render('error', {mensajeError});
   }
+};
+
+const buscarCliente = async(req, res) => {
+  try {
+    const {dni} = req.body;
+    console.log('dni cliente ' + dni);
+    const clienteBuscado = await client.findOne({dni});
+    const clientes = await client.find();
+    console.log(clienteBuscado);
+    if (clienteBuscado) {
+      return res.render('clientes', {clienteBuscado, clientes});
+    } else {
+      const mensajeBuscar = '¡El Cliente No Existe En La Base De Datos!'
+      return res.render('clientes', {clientes, mensajeBuscar});
+    }
+  } catch (error) {
+    const mensajeError = 'Error en la Data Base';
+    return res.render('error', {mensajeError});
+  }
+
 };
 
 const cargarClientes = async(req, res) =>{
@@ -77,5 +101,6 @@ module.exports = {
   cargarClientes,
   editClientGet,
   editClientPost,
-  deleteClient
+  deleteClient,
+  buscarCliente
 };

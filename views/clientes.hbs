@@ -14,7 +14,8 @@
         <h3 class="tituloForm">Registrar Cliente</h3>
       </div>
     <form action="/client/crearCliente" method="post" class="formCliente2">
-
+       
+        <h2 style="color: rgb(36, 114, 17);">{{mensaje}}</h2>
       <p>Ingresa los datos para dar de alta al cliente</p>
       <br />
 
@@ -63,7 +64,7 @@
       <br />
       <input type="email" class="inpForm" placeholder="Escribe tu Email" id="email" name="email" />
       <br />
-
+       <h2 style="color: rgb(36, 114, 17);">{{mensaje}}</h2>
       <div class="cantBtnForm">
         <button class="btnFormReset" type="reset">Limpiar</button>
 
@@ -76,20 +77,62 @@
          <div class="divClienteBuscar">
              <h3 class="tituloForm">Buscar Cliente</h3>
           </div>
-         <div class="divClienteBuscar2">
-  
-             <input class="inpBuscarClientes" type="text" name="" id="" placeholder="Ingrese un DNI o Nombre" />
-             <button class="btnBuscarCliente"><i class="bi bi-search"></i></button>
-         </div>
+         <form action="/client/buscar" method="post" class="divClienteBuscar2">
+             <input class="inpBuscarClientes" type="number" name="dni" id="dni" placeholder="Ingrese el DNI " />
+             <button class="btnBuscarCliente" type="submit"><i class="bi bi-search"></i></button>
+             <h2 style="color: rgb(195, 58, 0);">{{mensajeBuscar}}</h2>
+         </form>
       <div class="tarjCli">
-        <h4 >Apellido y Nombre</h4>
-           <h5>DNI</h4>
-          <h5>Direccion Comercial:</h5>
-           <h5>Direccion Particular:</h5>
-          <h5>Tipo de comercio:</h5>
-           <h5>Celular:</h5>
-          <h5>Telefono:</h5>
-          <h5>Correo Electronico:</h5>
+       <table class="tablaBuscar">
+        
+          <tr>
+            <td class="tdTablaBuscar">Nombre</td>
+            <td class="tdResTablaBuscar">{{clienteBuscado.nombre}}</td>
+          </tr>
+          <tr>
+            <td class="tdTablaBuscar">DNI</td>
+            <td class="tdResTablaBuscar">{{clienteBuscado.dni}}</td>
+          </tr>
+          <tr>
+            <td class="tdTablaBuscar">Direccion Comercial</td>
+            <td class="tdResTablaBuscar">{{clienteBuscado.dirComercial}}</td>
+          </tr>
+          <tr>
+            <td class="tdTablaBuscar">Direccion Particular</td>
+            <td class="tdResTablaBuscar">{{clienteBuscado.dirParticular}}</td>
+          </tr>
+          <tr>
+            <td class="tdTablaBuscar">Actividad</td>
+            <td class="tdResTablaBuscar">{{clienteBuscado.rubro}}</td>
+          </tr>
+          <tr>
+            <td class="tdTablaBuscar">Celular</td>
+            <td class="tdResTablaBuscar">{{clienteBuscado.celular}}</td>
+          </tr>
+          <tr>
+            <td class="tdTablaBuscar">Telefono</td>
+            <td class="tdResTablaBuscar">{{clienteBuscado.telefono}}</td>
+          </tr>
+          <tr>
+            <td class="tdTablaBuscar">Email</td>
+            <td class="tdResTablaBuscar">{{clienteBuscado.email}}</td>
+          </tr>
+          <tr>
+           <th colspan="2" class="thContBtn">
+            <a href="https://wa.me/549{{clienteBuscado.celular}}" class="btnBusCliente" style="background-color: green;"><i class="bi bi-whatsapp"></i>Whatsapp</a>
+            <a href="tel:{{clienteBuscado.telefono}}" class="btnBusCliente" style="background-color: rgb(73, 73, 255);"><i class="bi bi-telephone-outbound"></i>Llamar</a>
+            <a href="" class="btnBusCliente" style="background-color: orangered;"><i class="bi bi-shop"></i>Vender</a>
+            <a href="" class="btnBusCliente" style="background-color: rgb(175, 0, 53);"><i class="bi bi-geo-alt-fill"></i>Mapa</a>
+            </th>
+            
+        
+            
+          </tr>
+  
+       </table>
+
+
+      
           
       </div>  
        <div class="divClienteBuscar">
