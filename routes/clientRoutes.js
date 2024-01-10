@@ -9,7 +9,7 @@ const {
 } = require('../controllers/clientControllers');
 const {checkRole} = require('../controllers/usersControllers');
 
-router.post('/crearCliente', crearCliente);
+router.post('/crearCliente',checkRole(['admin', 'cobrador', 'vendedor']), crearCliente);
 
 router.get('/edit/:id',checkRole(['admin']), editClientGet);
  

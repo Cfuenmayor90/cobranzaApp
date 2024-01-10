@@ -262,17 +262,6 @@ a {
     background-color: #009cfb;
 }
 
-.btnBusCliente {
-    font-size: 20px;
-    width: 25%;
-    padding: 5px;
-    color: white;
-}
-
-
-.thContBtn {
-    padding: 1em;
-}
 
 
 
@@ -482,18 +471,50 @@ a {
     width: auto;
     background-color: white;
     margin: auto;
+    border: 1px solid #009cfb;
 
 }
 
 .tdTablaBuscar {
-    background-color: #102f43;
-    color: white;
+    background-color: #b9e4ff;
+    color: rgb(0, 0, 0);
     padding: 0.5em;
+    border-bottom: 1px solid #009cfb;
+    border-right: 1px solid #009cfb;
 }
 
 .tdResTablaBuscar {
     padding: 0.5em;
     min-width: 15em;
+    border-bottom: 1px solid #009cfb;
+}
+
+.thContBtn {
+    padding: 1em;
+    background-color: #b9e4ff;
+}
+.btnBusCliente {
+    font-size: 20px;
+    width: 25%;
+    padding: 5px;
+    color: white;
+    border-radius: 3px;
+}
+.btnBusCliente:hover{
+    background-color: goldenrod;
+}
+/*Botones de accion para busqueda de clientes y usuarios*/
+.btnWA{
+    background-color: green;
+}
+.btnTelefono{
+    background-color: blue;
+}
+.btnVender{
+    background-color: orangered;
+}
+.btnMapa{
+    background-color: #310f53;
 }
 
 .tarjUser {
@@ -506,42 +527,47 @@ a {
 .tableUsuarios {
     background-color: #ffffff;
     margin: auto;
+    border: 1px solid #009cfb;
 
 }
 
-.tableUsuariosTr {
-    background-color: #102f43;
-}
 
 .tableUsuariosThTitulo {
     padding: 0.5em 2em;
-    color: white;
+    color: black;
+    border-bottom: 1px solid #009cfb;
+    border-right: 1px solid #009cfb;
+    background-color: #b9e4ff;
 }
 
 .tableUsuariosThRespuesta {
     padding: 0.5em 2em;
+    border-bottom: 1px solid #009cfb;
+    border-right: 1px solid #009cfb;
 }
 
 .tableUsuariosBtnEliminar {
     background-color: red;
     color: white;
     padding: 0.5em 1em;
-    border: 3px solid #ffffff;
+    margin:0.5em 0;
+    border-radius: 3px;
 }
 
 .tableUsuariosBtnModificar {
     background-color: green;
     color: white;
     padding: 0.5em 1em;
-    border: 3px solid #ffffff;
+    margin:0.5em 0;
+    border-radius: 3px;
 }
 
 .tableUsuariosBtnEliminar:hover {
-    border-color: red;
+    background-color: goldenrod;
 }
 
 .tableUsuariosBtnModificar:hover {
-    border-color: green;
+    background-color: goldenrod;
 }
 
 @media (max-width:440px) {
@@ -709,18 +735,12 @@ a {
     }
 
     .tableUsuarios {
-        background-color: #ffffff;
         margin: 0;
         width: 100%;
     }
 
-    .tableUsuariosTr {
-        background-color: #102f43;
-    }
-
     .tableUsuariosThTitulo {
         padding: 0.8em;
-        color: white;
         font-size: 0.8em;
     }
 
@@ -730,28 +750,15 @@ a {
     }
 
     .tableUsuariosBtnEliminar {
-        background-color: red;
-        color: white;
         font-size: 0.8em;
         padding: 0.5em;
-        border: 0;
     }
 
     .tableUsuariosBtnModificar {
-        background-color: green;
-        color: white;
         font-size: 0.8em;
         padding: 0.5em;
-        border: 0;
     }
 
-    .tableUsuariosBtnEliminar:hover {
-        border-color: red;
-    }
-
-    .tableUsuariosBtnModificar:hover {
-        border-color: green;
-    }
 
 
 }

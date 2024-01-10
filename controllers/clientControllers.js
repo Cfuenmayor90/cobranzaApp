@@ -21,7 +21,8 @@ const crearCliente = async (req, res) => {
     email,
   } = req.body;
   try {
-    let clienteNuevo = await client.findOne(dni);
+    console.log('Crear cliente');
+    let clienteNuevo = await client.findOne({dni});
     const clientes = await client.find();
     if (clienteNuevo) {
       const mensaje = '¡El Cliente Ya Existe!'
@@ -29,7 +30,8 @@ const crearCliente = async (req, res) => {
     }
     clienteNuevo = new client(req.body);
     await clienteNuevo.save();
-    mensaje = '¡Cliente Guardado Con Exito!'
+    mensaje = '¡Cliente Guardado Con Exito!';
+    clientes = await client.find();
      return res.render('clientes', {clientes, mensaje})
   } catch (error) {
     const mensajeError = '¡Error En La Base De datos!'

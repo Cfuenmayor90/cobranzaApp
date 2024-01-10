@@ -118,11 +118,11 @@
             <td class="tdResTablaBuscar">{{clienteBuscado.email}}</td>
           </tr>
           <tr>
-           <th colspan="2" class="thContBtn">
-            <a href="https://wa.me/549{{clienteBuscado.celular}}" class="btnBusCliente" style="background-color: green;"><i class="bi bi-whatsapp"></i>Whatsapp</a>
-            <a href="tel:{{clienteBuscado.telefono}}" class="btnBusCliente" style="background-color: rgb(73, 73, 255);"><i class="bi bi-telephone-outbound"></i>Llamar</a>
-            <a href="" class="btnBusCliente" style="background-color: orangered;"><i class="bi bi-shop"></i>Vender</a>
-            <a href="" class="btnBusCliente" style="background-color: rgb(175, 0, 53);"><i class="bi bi-geo-alt-fill"></i>Mapa</a>
+           <th  colspan="2" class="thContBtn">
+            <a href="https://wa.me/549{{clienteBuscado.celular}}" class="btnBusCliente btnWA"><i class="bi bi-whatsapp"></i> Whatsapp</a>
+            <a href="tel:+549{{clienteBuscado.telefono}}" class="btnBusCliente btnTelefono" ><i class="bi bi-telephone-outbound"></i> Llamar</a>
+            <a href="" class="btnBusCliente btnVender"><i class="bi bi-shop"></i> Vender</a>
+            <a href="" class="btnBusCliente btnMapa"><i class="bi bi-geo-alt-fill"></i> Mapa</a>
             </th>
             
         
@@ -142,15 +142,15 @@
      
         <table class="tableUsuarios">
           <tr class="tableUsuariosTr">
-          <th class="tableUsuariosThTitulo">DNI</th>
           <th class="tableUsuariosThTitulo">Apellido y Nombre</th>
+          <th class="tableUsuariosThTitulo">Direccion</th>
         
           <th class="tableUsuariosThTitulo">Opciones</th>
           </tr>
         {{#each clientes }}
           <tr>
-             <th class="tableUsuariosThRespuesta">{{dni}}</th>
              <th class="tableUsuariosThRespuesta">{{nombre}}</th>
+             <th class="tableUsuariosThRespuesta">{{dirComercial}}</th>
 
              
              <th class="">
