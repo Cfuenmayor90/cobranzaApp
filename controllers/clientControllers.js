@@ -44,7 +44,7 @@ const buscarCliente = async(req, res) => {
     const {dni} = req.body;
     console.log('dni cliente ' + dni);
     const clienteBuscado = await client.findOne({dni});
-    const clientes = await client.find();
+    const clientes = await client.find().limit(4);
     console.log(clienteBuscado);
     if (clienteBuscado) {
       return res.render('clientes', {clienteBuscado, clientes});
@@ -64,7 +64,7 @@ const cargarClientes = async(req, res) =>{
     const token =  req.cookies.token;
     const verifyToken = await verifyJWT(token);
     const role = verifyToken.role;
-    const clientes = await client.find();
+    const clientes = await client.find().limit(4);
      return res.render('clientes', {clientes, role});
   } catch (error) {
     console.log(error);

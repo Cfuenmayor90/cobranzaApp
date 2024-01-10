@@ -9,7 +9,7 @@
     background-color: #009cfb;
     display: flex;
     height: 50px;
-    width: auto;
+    width: 100%;
     justify-content: space-around;
     align-items: center;
     position: sticky;
@@ -189,6 +189,7 @@ a {
 .contMayorCli {
     display: flex;
     justify-content: space-evenly;
+    width: 100%;
 
 }
 
@@ -233,9 +234,8 @@ a {
     text-align: center;
     color: grey;
     margin-top: 5px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    border-style: none;
+    border-radius: 3px;
+    border: 1px solid #009cfb;
 }
 
 .btnBuscarCliente {
@@ -622,8 +622,8 @@ a {
     }
     .tablaBuscar {
       font-size: 12px;
-      margin: 0;
-      width: 100%;
+      margin: 0 auto;
+      width: 90%;
     }
     
     .tdTablaBuscar {
@@ -636,7 +636,7 @@ a {
     }
     
     .btnBusCliente {
-        font-size: 16px;
+        font-size: 15px;
         width: 25%;
         padding: 0.8;
        
@@ -735,8 +735,9 @@ a {
     }
 
     .tableUsuarios {
-        margin: 0;
-        width: 100%;
+        margin: 0 auto;
+        width: 90%;
+
     }
 
     .tableUsuariosThTitulo {
@@ -750,15 +751,14 @@ a {
     }
 
     .tableUsuariosBtnEliminar {
-        font-size: 0.8em;
-        padding: 0.5em;
+        font-size: 10px;
+        padding: 0.8em 0.5em;
     }
 
     .tableUsuariosBtnModificar {
-        font-size: 0.8em;
-        padding: 0.5em;
+        font-size: 10px;
+        padding: 0.8em 0.5em;
     }
-
-
+ 
 
 }
