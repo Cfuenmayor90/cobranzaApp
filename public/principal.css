@@ -544,7 +544,7 @@ a {
     border-color: green;
 }
 
-@media (max-width:412px) {
+@media (max-width:440px) {
     .navegacion {
         font-size: 20px;
     }
