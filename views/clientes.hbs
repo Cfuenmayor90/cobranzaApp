@@ -130,7 +130,7 @@
           </tr>
        </table>       
       </div>  
-      
+
        <div class="divClienteBuscar">
         <h3 class="tituloForm">Clientes Agregados Recientemente</h3>
       </div>
@@ -150,8 +150,9 @@
 
              
              <th class="">
-               <a href="/client/delete/{{_id}}" onclick="return confirm('¿Esta Seguro De Eliminar El Usuario?')" class="tableUsuariosBtnEliminar">Eliminar</a>
-               <a href="/client/edit/{{_id}}" class="tableUsuariosBtnModificar">Modificar</a>
+               <a href="/client/delete/{{_id}}" onclick="return confirm('¿Esta Seguro De Eliminar El Usuario?')" class="tableUsuariosBtnEliminar"><i class="bi bi-trash"></i>
+               </a>
+               <a href="/client/edit/{{_id}}" class="tableUsuariosBtnModificar"><i class="bi bi-pencil-square"></i></a>
             </th>
           </tr>
         {{/each}}
