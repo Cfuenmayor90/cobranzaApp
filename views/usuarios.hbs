@@ -53,6 +53,28 @@
       required
     />
     <br />
+    <label class="title" for="password">Direccion</label>
+    <br />
+    <input
+      type="text"
+      class="inpForm"
+      placeholder="Direccion Particular"
+      id="direccion"
+      name="direccion"
+      required
+    />
+    <br />
+    <label class="title" for="password">Telefono</label>
+    <br />
+    <input
+      type="number"
+      class="inpForm"
+      placeholder="Ingrese Numero Telefonico"
+      id="telefono"
+      name="telefono"
+      required
+    />
+    <br />
     <label for="rol" class="title">Rol del usuario</label>
     <select class="inpForm" name="role" id="role" required>
       <option value="admin">Administrador</option>
@@ -72,21 +94,48 @@
          <div class="divClienteBuscar">
              <h3 class="tituloForm">Buscar Usuario</h3>
           </div>
-         <div class="divClienteBuscar2">
-  
-             <input class="inpBuscarClientes" type="text" name="" id="" placeholder="Ingrese un DNI o Nombre" />
-             <button class="btnBuscarCliente"><i class="bi bi-search"></i></button>
-         </div>
+            <form action="/users/buscar" method="post" class="divClienteBuscar2">
+             <input class="inpBuscarClientes" type="number" name="dni" id="dni" placeholder="Ingrese el DNI " />
+             <button class="btnBuscarCliente" type="submit"><i class="bi bi-search"></i></button>
+             <h2 style="color: rgb(195, 58, 0);">{{mensajeBuscar}}</h2>
+         </form>
       <div class="tarjCli">
-        <h4 >Apellido y Nombre</h4>
-           <h5>DNI</h4>
-          <h5>Direccion Comercial:</h5>
-           <h5>Direccion Particular:</h5>
-          <h5>Tipo de comercio:</h5>
-           <h5>Celular:</h5>
-          <h5>Telefono:</h5>
-          <h5>Correo Electronico:</h5>
-      </div> 
+       
+       <table class="tablaBuscar">
+        
+          <tr>
+            <td class="tdTablaBuscar">Nombre</td>
+            <td class="tdResTablaBuscar">{{usuarioBuscado.nombre}}</td>
+          </tr>
+          <tr>
+            <td class="tdTablaBuscar">DNI</td>
+            <td class="tdResTablaBuscar">{{usuarioBuscado.dni}}</td>
+          </tr>
+          <tr>
+            <td class="tdTablaBuscar">Direccion Particular</td>
+            <td class="tdResTablaBuscar">{{usuarioBuscado.direccion}}</td>
+          </tr>
+          <tr>
+            <td class="tdTablaBuscar">Role</td>
+            <td class="tdResTablaBuscar">{{clienteBuscado.role}}</td>
+          </tr>
+          <tr>
+            <td class="tdTablaBuscar">Telefono</td>
+            <td class="tdResTablaBuscar">{{usuarioBuscado.telefono}}</td>
+          </tr>
+          <tr>
+           <th  colspan="2" class="thContBtn">
+            <a href="https://wa.me/549{{usuarioBuscado.telefono}}" class="btnBusCliente btnWA"><i class="bi bi-whatsapp"></i> Whatsapp</a>
+            <a href="tel:+549{{usuarioBuscado.telefono}}" class="btnBusCliente btnTelefono" ><i class="bi bi-telephone-outbound"></i> Llamar</a>
+            <a href="" class="btnBusCliente btnVender"><i class="bi bi-shop"></i> Vender</a>
+            <a href="" class="btnBusCliente btnMapa"><i class="bi bi-geo-alt-fill"></i> Mapa</a>
+            </th>
+            
+        
+            
+          </tr>
+       </table>       
+      </div>  
 
     <div class="divClienteBuscar">
         <h3 class="tituloForm"> Usuarios Agregados Recientemente</h3>
@@ -108,8 +157,8 @@
              <th class="tableUsuariosThRespuesta">{{nombre}}</th>
              <th class="tableUsuariosThRespuesta">{{role}}</th>
              <th class="">
-               <a href="/users/delete/{{_id}}" onclick="return confirm('¿Esta Seguro De Eliminar El Usuario?')" class="tableUsuariosBtnEliminar">Eliminar</a>
-               <a href="/users/edit/{{_id}}" class="tableUsuariosBtnModificar">Modificar</a>
+                <a href="/client/delete/{{_id}}" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El Usuario: {{{nombre}}}?')" class="tableUsuariosBtnEliminar"><i class="bi bi-trash"></i></a>
+               <a href="/client/edit/{{_id}}" class="tableUsuariosBtnModificar"><i class="bi bi-pencil-square"></i></a>
             </th>
           </tr>
         {{/each}}

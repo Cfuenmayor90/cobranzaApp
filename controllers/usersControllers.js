@@ -37,6 +37,25 @@ const crearUsuario = async (req, res) => {
   }
 };
 
+const buscarUsuario = async (req, res) => {
+  try {
+    const {dni} = req.body;
+    console.log('dni user ' + dni);
+    const usuarioBuscado = await users.findOne({dni});
+    const usuarios = await users.find();
+    console.log(usuarioBuscado);
+    if (usuarioBuscado) {
+      return res.render('usuarios', {usuarioBuscado, usuarios});
+    } else {
+      const mensajeBuscar = '¡El Usuario No Existe En La Base De Datos!'
+      return res.render('usuarios', {usuarios, mensajeBuscar});
+    }
+  } catch (error) {
+    const mensajeError = 'Error en la Data Base';
+    return res.render('error', {mensajeError});
+  }
+};
+
 const validarIngresoUsuario = async (req, res) => {
   const { dni, password } = req.body;
 
@@ -212,5 +231,6 @@ module.exports = {
   cargarUsuarios,
   editUserGet,
   editUserPost,
-  deleteUser
+  deleteUser,
+  buscarUsuario
 };

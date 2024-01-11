@@ -7,7 +7,8 @@ const {
     editUserGet,
     editUserPost,
     deleteUser,
-    checkRole
+    checkRole,
+    buscarUsuario
 } = require('../controllers/usersControllers');
 const jwt = require('../middleware/jwt');
 
@@ -32,5 +33,7 @@ router.get('/edit/:id',checkRole(['admin']), editUserGet);
 router.post('/edit/:id', checkRole(['admin']), editUserPost);
 
 router.get('/delete/:id', checkRole(['admin']), deleteUser);
+
+router.post('/buscar', checkRole(['admin']), buscarUsuario);
 
 module.exports = router;
