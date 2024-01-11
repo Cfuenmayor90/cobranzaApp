@@ -9,163 +9,132 @@
   </div>
 </nav>
 
-
 <div class="contMayorCli">
   <div class="formCliente">
-      <div class="divClienteBuscar">
-        <h3 class="tituloForm">Registrar Usuarios</h3>
-      </div>
-  <form action="/users/crearUsers" method="post" class="formCliente2">
-    
-    <p>Ingresa los datos para dar de alta al usuario</p>
-    <br />
-
-    <label class="title" for="nombre">Apellido y Nombre</label>
-    <br />
-    <input
-      type="text"
-      class="inpForm"
-      placeholder="Escribe Apellido y Nombre"
-      id="nombre"
-      name="nombre"
-      required
-    />
-    <br />
-    <label class="title" for="dni">DNI</label>
-    <br />
-    <input
-      type="number"
-      class="inpForm"
-      placeholder="Escribe el DNI"
-      id="dni"
-      name="dni"
-      required
-    />
-    <br />
-    <label class="title" for="password">Contraseña</label>
-    <br />
-    <input
-      type="text"
-      class="inpForm"
-      placeholder="Ingrese una Contraseña"
-      id="password"
-      name="password"
-      required
-    />
-    <br />
-    <label class="title" for="password">Direccion</label>
-    <br />
-    <input
-      type="text"
-      class="inpForm"
-      placeholder="Direccion Particular"
-      id="direccion"
-      name="direccion"
-      required
-    />
-    <br />
-    <label class="title" for="password">Telefono</label>
-    <br />
-    <input
-      type="number"
-      class="inpForm"
-      placeholder="Ingrese Numero Telefonico"
-      id="telefono"
-      name="telefono"
-      required
-    />
-    <br />
-    <label for="rol" class="title">Rol del usuario</label>
-    <select class="inpForm" name="role" id="role" required>
-      <option value="admin">Administrador</option>
-      <option value="vendedor">Vendedor</option>
-      <option value="cobrador">Cobrador</option>
-    </select>
-
-    <div class="cantBtnForm">
-      <button class="btnFormReset" type="reset">Limpiar</button>
-
-      <button class="btnFormAceptar" type="submit">Guardar</button>
+    <div class="divClienteBuscar">
+      <h3 class="tituloForm">Registrar Usuarios</h3>
     </div>
-  </form>
-</div>
+    <form action="/users/crearUsers" method="post" class="formCliente2">
+
+      <p>Ingresa los datos para dar de alta al usuario</p>
+      <br />
+
+      <label class="title" for="nombre">Apellido y Nombre</label>
+      <br />
+      <input type="text" class="inpForm" placeholder="Escribe Apellido y Nombre" id="nombre" name="nombre" required />
+      <br />
+      <label class="title" for="dni">DNI</label>
+      <br />
+      <input type="number" class="inpForm" placeholder="Escribe el DNI" id="dni" name="dni" required />
+      <br />
+      <label class="title" for="password">Contraseña</label>
+      <br />
+      <input type="text" class="inpForm" placeholder="Ingrese una Contraseña" id="password" name="password" required />
+      <br />
+      <label class="title" for="password">Direccion</label>
+      <br />
+      <input type="text" class="inpForm" placeholder="Direccion Particular" id="direccion" name="direccion" required />
+      <br />
+      <label class="title" for="password">Telefono</label>
+      <br />
+      <input type="number" class="inpForm" placeholder="Ingrese Numero Telefonico" id="telefono" name="telefono"
+        required />
+      <br />
+      <label for="rol" class="title">Rol del usuario</label>
+      <select class="inpForm" name="role" id="role" required>
+        <option value="admin">Administrador</option>
+        <option value="vendedor">Vendedor</option>
+        <option value="cobrador">Cobrador</option>
+      </select>
+
+      <div class="cantBtnForm">
+        <button class="btnFormReset" type="reset">Limpiar</button>
+
+        <button class="btnFormAceptar" type="submit">Guardar</button>
+      </div>
+    </form>
+  </div>
 
   <section class="sectionContClientes">
-         <div class="divClienteBuscar">
-             <h3 class="tituloForm">Buscar Usuario</h3>
-          </div>
-            <form action="/users/buscar" method="post" class="divClienteBuscar2">
-             <input class="inpBuscarClientes" type="number" name="dni" id="dni" placeholder="Ingrese el DNI " />
-             <button class="btnBuscarCliente" type="submit"><i class="bi bi-search"></i></button>
-             <h2 style="color: rgb(195, 58, 0);">{{mensajeBuscar}}</h2>
-         </form>
-      <div class="tarjCli">
-       
-       <table class="tablaBuscar">
-        
-          <tr>
-            <td class="tdTablaBuscar">Nombre</td>
-            <td class="tdResTablaBuscar">{{usuarioBuscado.nombre}}</td>
-          </tr>
-          <tr>
-            <td class="tdTablaBuscar">DNI</td>
-            <td class="tdResTablaBuscar">{{usuarioBuscado.dni}}</td>
-          </tr>
-          <tr>
-            <td class="tdTablaBuscar">Direccion Particular</td>
-            <td class="tdResTablaBuscar">{{usuarioBuscado.direccion}}</td>
-          </tr>
-          <tr>
-            <td class="tdTablaBuscar">Role</td>
-            <td class="tdResTablaBuscar">{{clienteBuscado.role}}</td>
-          </tr>
-          <tr>
-            <td class="tdTablaBuscar">Telefono</td>
-            <td class="tdResTablaBuscar">{{usuarioBuscado.telefono}}</td>
-          </tr>
-          <tr>
-           <th  colspan="2" class="thContBtn">
-            <a href="https://wa.me/549{{usuarioBuscado.telefono}}" class="btnBusCliente btnWA"><i class="bi bi-whatsapp"></i> Whatsapp</a>
-            <a href="tel:+549{{usuarioBuscado.telefono}}" class="btnBusCliente btnTelefono" ><i class="bi bi-telephone-outbound"></i> Llamar</a>
-            <a href="" class="btnBusCliente btnVender"><i class="bi bi-shop"></i> Vender</a>
-            <a href="" class="btnBusCliente btnMapa"><i class="bi bi-geo-alt-fill"></i> Mapa</a>
-            </th>
-            
-        
-            
-          </tr>
-       </table>       
-      </div>  
+    <div class="divClienteBuscar">
+      <h3 class="tituloForm">Buscar Usuario</h3>
+    </div>
+    <form action="/users/buscar" method="post" class="divClienteBuscar2">
+      <input class="inpBuscarClientes" type="number" name="dni" id="dni" placeholder="Ingrese el DNI " />
+      <button class="btnBuscarCliente" type="submit"><i class="bi bi-search"></i></button>
+      <h2 style="color: rgb(195, 58, 0);">{{mensajeBuscar}}</h2>
+    </form>
+    <div class="tarjCli">
+
+      <table class="tablaBuscar">
+
+        <tr>
+          <td class="tdTablaBuscar">Nombre</td>
+          <td class="tdResTablaBuscar">{{usuarioBuscado.nombre}}</td>
+        </tr>
+        <tr>
+          <td class="tdTablaBuscar">DNI</td>
+          <td class="tdResTablaBuscar">{{usuarioBuscado.dni}}</td>
+        </tr>
+        <tr>
+          <td class="tdTablaBuscar">Direccion Particular</td>
+          <td class="tdResTablaBuscar">{{usuarioBuscado.direccion}}</td>
+        </tr>
+        <tr>
+          <td class="tdTablaBuscar">Role</td>
+          <td class="tdResTablaBuscar">{{clienteBuscado.role}}</td>
+        </tr>
+        <tr>
+          <td class="tdTablaBuscar">Telefono</td>
+          <td class="tdResTablaBuscar">{{usuarioBuscado.telefono}}</td>
+        </tr>
+        <tr>
+          <th colspan="2" class="thContBtn">
+            <a href="https://wa.me/549{{usuarioBuscado.telefono}}" class="btnBusCliente btnWA"><i
+                class="bi bi-whatsapp"></i> Whatsapp</a>
+            <a href="tel:+549{{usuarioBuscado.telefono}}" class="btnBusCliente btnTelefono"><i
+                class="bi bi-telephone-outbound"></i> Llamar</a>
+            <a href="" class="btnBusCliente btnVender"><i class="bi bi-shop"></i>
+              Vender</a>
+            <a href="" class="btnBusCliente btnMapa"><i class="bi bi-geo-alt-fill"></i>
+              Mapa</a>
+          </th>
+
+        </tr>
+      </table>
+    </div>
 
     <div class="divClienteBuscar">
-        <h3 class="tituloForm"> Usuarios Agregados Recientemente</h3>
-      </div>
-      <div class="tarjUser">
-     
-        <table class="tableUsuarios">
-          <tr class="tableUsuariosTr">
+      <h3 class="tituloForm"> Usuarios Agregados Recientemente</h3>
+    </div>
+    <div class="tarjUser">
+
+      <table class="tableUsuarios">
+        <tr class="tableUsuariosTr">
           <th class="tableUsuariosThTitulo">DNI</th>
           <th class="tableUsuariosThTitulo">Apellido y Nombre</th>
           <th class="tableUsuariosThTitulo">Rol</th>
           <th class="tableUsuariosThTitulo">
             Opciones
           </th>
-          </tr>
-        {{#each usuarios }}
-          <tr>
-             <th class="tableUsuariosThRespuesta">{{dni}}</th>
-             <th class="tableUsuariosThRespuesta">{{nombre}}</th>
-             <th class="tableUsuariosThRespuesta">{{role}}</th>
-             <th class="">
-                <a href="/client/delete/{{_id}}" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El Usuario: {{{nombre}}}?')" class="tableUsuariosBtnEliminar"><i class="bi bi-trash"></i></a>
-               <a href="/client/edit/{{_id}}" class="tableUsuariosBtnModificar"><i class="bi bi-pencil-square"></i></a>
-            </th>
-          </tr>
+        </tr>
+        {{#each usuarios}}
+        <tr>
+          <th class="tableUsuariosThRespuesta">{{dni}}</th>
+          <th class="tableUsuariosThRespuesta">{{nombre}}</th>
+          <th class="tableUsuariosThRespuesta">{{role}}</th>
+          <th class="">
+            <a href="/client/delete/{{_id}}"
+              onclick="return confirm('¿Esta Seguro Que Desea Eliminar El Usuario: {{{nombre}}}?')"
+              class="tableUsuariosBtnEliminar"><i class="bi bi-trash"></i></a>
+            <a href="/client/edit/{{_id}}" class="tableUsuariosBtnModificar"><i class="bi bi-pencil-square"></i></a>
+          </th>
+        </tr>
         {{/each}}
-        </table>
+      </table>
 
-      </div>  
+    </div>
 
-    </section>
+  </section>
 
 </div>

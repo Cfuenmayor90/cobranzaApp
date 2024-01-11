@@ -569,7 +569,14 @@ a {
 .tableUsuariosBtnModificar:hover {
     background-color: goldenrod;
 }
-
+/*pag Settings o configuraciones*/
+.inpFormSett{
+    width: 50%;
+    padding: 3px;
+    margin-bottom: 2px;
+    border: 3px solid #009cfb;
+    border-radius: 3px;
+}
 @media (max-width:440px) {
     .navegacion {
         font-size: 20px;
