@@ -834,9 +834,13 @@ a {
 .btnFormSettings{
     padding: 0.5em 2em;
 }
-
+.tableSettPlanes{
+    width: 90%;
+}
 .thTableSettPla{
     border: 1px solid blue;
+    font-size: 15px;
+    padding: 0.2em;
 }
 
 }
