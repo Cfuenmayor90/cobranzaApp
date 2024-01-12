@@ -52,6 +52,21 @@
       </table>
       <br />
     </form>
+      <table>
+        <tr>
+          <th>Plan</th>
+          <th>Cuotas</th>
+          <th>Porcentaje</th>
+        </tr>
+        {{#each planActualPres}}
+        <tr>
+          <th>{{plan}}</th>
+          <th>{{cuotas}}</th>
+          <th>{{porcentaje}}%</th>
+          <th> <a href="/settings/deletePlan/{{_id}}" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El Plan?: {{{nombre}}}?')" class="tablePlanesBtnEliminar">Eliminar</a></th>
+        </tr>
+        {{/each}}
+      </table>
       <div class="divClienteBuscar">
       <h3 class="tituloForm">Configuracion % De Ganancia</h3>
     </div>

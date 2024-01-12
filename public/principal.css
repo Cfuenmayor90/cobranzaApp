@@ -599,6 +599,12 @@ a {
 .btnFormSettings:hover{
     background-color: goldenrod;
 }
+.tablePlanesBtnEliminar{
+    background-color: orangered;
+    border-radius: 3px;
+    padding: 0.1em;
+    font-size: 0.8em;
+}
 @media (max-width:440px) {
     .navegacion {
         font-size: 20px;
@@ -820,4 +826,5 @@ a {
 .btnFormSettings:hover{
     background-color: goldenrod;
 }
+
 }

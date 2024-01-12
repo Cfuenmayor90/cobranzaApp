@@ -47,9 +47,6 @@ router.get('/usuarios', checkRole(['admin']), cargarUsuarios);
 router.get('/gastos', checkRole(['admin',  'vendedor', 'cobrador']), (req, res)=>{
     res.render('gastos')
 });
-router.get('/settings', checkRole(['admin']), (req, res) => {
-    res.render('configuracion');
-})
 router.get('/Exit', logOut);
 
 router.get('/volver', volverPrin)
