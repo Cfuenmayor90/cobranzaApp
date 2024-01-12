@@ -1,5 +1,5 @@
 <nav class="navegacion">
-  <a href="/vistas/usuarios"><i class="bi bi-box-arrow-left"></i></a>
+  <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a>
   <div>
     <span>Settings</span>
   </div>
@@ -10,14 +10,20 @@
 </nav>
 
 <div class="contMayorCli">
-  <div class="formCliente">
-    <div class="divClienteBuscar">
-      <h3 class="tituloForm">Configuracion De Prestamos</h3>
+  <div class="formSetti">
+     <div class="divClienteBuscar">
+      <h3 class="tituloForm">Planes De Pago</h3>
     </div>
-    <form action="" method="post" class="formCliente2">
-      <p>Agregar Un Plan De Pago De Prestamos</p>
-
-      <table>
+    <form action="/settings/savePlans" method="post">
+      <p>Agregar Un Plan De Pago</p>
+      <table class="tableSettings">
+        <tr>
+          <th><label class="title" for="paln">Categoria</label></th>
+          <th><select name="categoria" id="categoria" class="inpFormSett">
+            <option value="financiamiento">Financiamiento De Productos</option>
+            <option value="prestamo">Prestamo De Dinero</option>
+          </select></th>
+        </tr>
         <tr>
           <th><label class="title" for="paln">Tipo De Plan</label></th>
           <th><select name="plan" id="plan" class="inpFormSett">
@@ -41,51 +47,32 @@
               name="porcentaje" required /></th>
         </tr>
         <tr>
-          <th colspan="2" class=""><button type="submit" class="btnFormAceptar">Guardar</button></th>
+          <th colspan="2" class=""><button type="submit" class="btnFormSettings">Guardar</button></th>
         </tr>
       </table>
       <br />
     </form>
-  </div>
-
-  <div class="contMayorCli">
-    <div class="formCliente">
       <div class="divClienteBuscar">
-        <h3 class="tituloForm">Configuracion De Prestamos</h3>
-      </div>
-      <form action="" method="post" class="formCliente2">
-        <p>Agregar Un Plan De Pago De Productos</p>
-
-        <table>
-          <tr>
-            <th><label class="title" for="paln">Tipo De Plan</label></th>
-            <th><select name="plan" id="plan" class="inpFormSett">
-                <option value="diario">Diario</option>
-                <option value="Semanal">Semanal</option>
-                <option value="quincenal">Quincenal</option>
-                <option value="mensual">Mensual</option>
-                <option value="trimestral">Trimestral</option>
-                <option value="semestral">Semestral</option>
-                <option value="anual">Anual</option>
-              </select></th>
-          </tr>
-          <tr>
-            <th><label class="title" for="nombre">Cuotas</label></th>
-            <th><input type="number" class="inpFormSett" placeholder="Cantidad De Cuotas" id="cuotas" name="cuotas"
-                required /></th>
-          </tr>
-          <tr>
-            <th><label class="title" for="nombre">Porcentaje</label></th>
-            <th> <input type="number" class="inpFormSett" placeholder="Cantidad De Cuotas" id="porcentaje"
-                name="porcentaje" required /></th>
-          </tr>
-          <tr>
-            <th colspan="2" class=""><button type="submit" class="btnFormAceptar">Guardar</button></th>
-          </tr>
-        </table>
-        <br />
-      </form>
-
-
-</div>
+      <h3 class="tituloForm">Configuracion % De Ganancia</h3>
     </div>
+    <form action="" method="post">
+      <p>Porcentaje De Ganancias En Venta De Productos</p>
+
+      <table class="tableSettings">
+  
+        <tr>
+          <th><label class="title" for="nombre">Porcentaje</label></th>
+          <th><input type="number" class="inpFormSett" placeholder="" id="porcentaje" name="porcentaje"
+              required /></th>
+        </tr>
+        <tr>
+          <th colspan="2" class=""><button type="submit" class="btnFormSettings">Guardar</button></th>
+        </tr>
+      </table>
+      <br />
+    </form>
+
+
+  </div>
+  </div>
+    

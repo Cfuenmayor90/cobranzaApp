@@ -571,11 +571,33 @@ a {
 }
 /*pag Settings o configuraciones*/
 .inpFormSett{
-    width: 50%;
+    width: 100%;
     padding: 3px;
     margin-bottom: 2px;
     border: 3px solid #009cfb;
     border-radius: 3px;
+}
+.formSetti{
+    text-align: center;
+    background-color: white;
+    height: auto;
+    margin: auto;
+    width: 30%;
+    padding: 0;
+}
+.tableSettings{
+    margin: 0 auto;
+}
+.btnFormSettings{
+    background-color: green;
+    color: white;
+    padding: 0.5em 2em;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+}
+.btnFormSettings:hover{
+    background-color: goldenrod;
 }
 @media (max-width:440px) {
     .navegacion {
@@ -768,4 +790,34 @@ a {
         padding: 0.5em;
         margin-left: 0.2em;
     }
+    /*pag Settings o configuraciones*/
+.inpFormSett{
+
+    padding: 3px;
+    margin-bottom: 2px;
+    border: 3px solid #009cfb;
+    border-radius: 3px;
+}
+.formSetti{
+    text-align: center;
+    background-color: white;
+    height: auto;
+    margin: 1em auto;
+    width: 80%;
+    padding: 0;
+}
+.tableSettings{
+    margin: 0 auto;
+}
+.btnFormSettings{
+    background-color: green;
+    color: white;
+    padding: 0.5em 2em;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+}
+.btnFormSettings:hover{
+    background-color: goldenrod;
+}
 }
