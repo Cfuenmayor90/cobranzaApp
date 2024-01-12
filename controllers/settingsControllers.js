@@ -3,7 +3,8 @@ const setPrest = require('../models/settingsModels');
 const cargarSettins = async(req,res) =>{
     try {
         const planActualPres = await setPrest.find({categoria: 'prestamo'});
-        res.render('configuracion', {planActualPres});
+        const planActualProd = await setPrest.find({categoria:'financiamiento'});
+        res.render('configuracion', {planActualPres, planActualProd});
     } catch (error) {
         
     }

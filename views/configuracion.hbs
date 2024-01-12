@@ -52,21 +52,48 @@
       </table>
       <br />
     </form>
-      <table>
+    <p>Planes De Pago De Prestamos De Dinero</p>
+      <table class="tableSettPlanes">
         <tr>
-          <th>Plan</th>
-          <th>Cuotas</th>
-          <th>Porcentaje</th>
+          <th class="thTableSettPla">Plan</th>
+          <th class="thTableSettPla">Cuotas</th>
+          <th class="thTableSettPla">Porcentaje</th>
+          <th class="thTableSettPla">Opcion</th>
         </tr>
         {{#each planActualPres}}
         <tr>
-          <th>{{plan}}</th>
-          <th>{{cuotas}}</th>
-          <th>{{porcentaje}}%</th>
-          <th> <a href="/settings/deletePlan/{{_id}}" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El Plan?: {{{nombre}}}?')" class="tablePlanesBtnEliminar">Eliminar</a></th>
+          <th class="thTableSettPla">{{plan}}</th>
+          <th class="thTableSettPla">{{cuotas}}</th>
+          <th class="thTableSettPla">{{porcentaje}}%</th>
+          <th class="thTableSettPla"> <a href="/settings/deletePlan/{{_id}}" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El Plan?: {{{nombre}}}?')" class="tablePlanesBtnEliminar">Eliminar</a></th>
         </tr>
         {{/each}}
       </table>
+      <br>
+      <p>Planes De Pago De Financiamiento De Productos</p>
+     <table class="tableSettPlanes">
+        <tr>
+          <th class="thTableSettPla">Plan</th>
+          <th class="thTableSettPla">Cuotas</th>
+          <th class="thTableSettPla">Porcentaje</th>
+          <th class="thTableSettPla">Opcion</th>
+        </tr>
+        {{#each planActualProd}}
+        <tr>
+          <th class="thTableSettPla">{{plan}}</th>
+          <th class="thTableSettPla">{{cuotas}}</th>
+          <th class="thTableSettPla">{{porcentaje}}%</th>
+          <th class="thTableSettPla"> <a href="/settings/deletePlan/{{_id}}" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El Plan?: {{{nombre}}}?')" class="tablePlanesBtnEliminar">Eliminar</a></th>
+        </tr>
+        {{/each}}
+      </table>
+  
+
+
+
+
+
+      <br>
       <div class="divClienteBuscar">
       <h3 class="tituloForm">Configuracion % De Ganancia</h3>
     </div>
@@ -78,6 +105,14 @@
         <tr>
           <th><label class="title" for="nombre">Porcentaje</label></th>
           <th><input type="number" class="inpFormSett" placeholder="" id="porcentaje" name="porcentaje"
+              required /></th>
+        </tr>
+        <tr>
+          <th colspan="2"> Valor Del Dolar</th>
+        </tr>
+        <tr>
+          <th><label class="title" for="nombre">Dolar $</label></th>
+          <th><input type="number" class="inpFormSett" placeholder="" id="dolar" name="dolar"
               required /></th>
         </tr>
         <tr>
