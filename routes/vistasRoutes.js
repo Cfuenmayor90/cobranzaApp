@@ -36,9 +36,6 @@ router.get('/estadisticas', checkRole(['admin',  'vendedor', 'cobrador']),(req, 
 router.get('/novedades', checkRole(['admin',  'vendedor', 'cobrador']), (req, res)=>{
     res.render('novedades')
 });
-router.get('/calculadora', checkRole(['admin',  'vendedor', 'cobrador']), (req, res)=>{
-    res.render('calculadora')
-});
 router.get('/ventas', checkRole(['admin',  'vendedor', 'cobrador']), (req, res)=>{
     res.render('ventas')
 });
@@ -47,6 +44,7 @@ router.get('/usuarios', checkRole(['admin']), cargarUsuarios);
 router.get('/gastos', checkRole(['admin',  'vendedor', 'cobrador']), (req, res)=>{
     res.render('gastos')
 });
+
 router.get('/Exit', logOut);
 
 router.get('/volver', volverPrin)

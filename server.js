@@ -14,6 +14,7 @@ const ventasRoutes = require('./routes/ventasRoutes');
 const vistasRoutes = require('./routes/vistasRoutes');
 const clientRoutes = require('./routes/clientRoutes');
 const settingsRoutes = require('./routes/settingsRoutes');
+const calculadoraRoutes = require('./routes/calculadoraRoutes');
 
 
 const app = express();
@@ -35,6 +36,7 @@ app.use(express.urlencoded({extended: false}));
  app.use('/vistas', vistasRoutes);
  app.use('/client', clientRoutes);
  app.use('/settings', settingsRoutes);
+ app.use('/calculadora', calculadoraRoutes);
 
  app.get('/', (req, res) => {
    res.render('index');

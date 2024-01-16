@@ -1,0 +1,54 @@
+<nav class="navegacion">
+  <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a>
+  <div>
+    <span>Calculadora</span>
+  </div>
+
+  <div class="iconMenuHamburguesa">
+    <i class="bi bi-menu-button-wide-fill"></i>
+  </div>
+</nav>
+
+<div class="contMayorCli">
+  <div class="formSetti">
+     <div class="divClienteBuscar">
+      <h3 class="tituloForm">Calculadora De Prestamos</h3>
+    </div>
+    <form action="/calculadora/calcular" method="post">
+      <p>Ingrese Monto Del Prestamo</p>
+      <table class="tableSettings">
+        <tr>
+          <th><label class="title" for="nombre">Monto</label></th>
+          <th><input type="number" class="inpFormSett" placeholder="Monto Del Prestamo" id="monto" name="monto"
+              required /></th>
+        </tr>
+        <tr>
+          <th colspan="2" class=""><button type="submit" class="btnFormSettings">Calcular</button></th>
+        </tr>
+      </table>
+      <br />
+    </form>
+    <p>Tabla De Pagos Para Prestamos, Monto: ${{monto}}</p>
+      <table class="tableSettPlanes">
+        <tr>
+          <th class="thTableSettPla">Plan</th>
+          <th class="thTableSettPla">Cuotas</th>
+          <th class="thTableSettPla">Porcentaje</th>
+          <th class="thTableSettPla">Valor De Cuota</th>
+          <th class="thTableSettPla">Total</th>
+        </tr>
+      
+        {{#each array}}
+        <tr>
+          <th class="thTableSettPla">{{plan}}</th>
+          <th class="thTableSettPla">{{cuotas}}</th>
+          <th class="thTableSettPla">{{porcentaje}}%</th>
+          <th class="thTableSettPla">${{cuota}}</th>
+          <th class="thTableSettPla">${{total}}</th>
+        </tr>
+        {{/each}}
+      </table>
+ <br>
+  </div>
+  </div>
+    
