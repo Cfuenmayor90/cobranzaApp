@@ -48,6 +48,23 @@
         </tr>
         {{/each}}
       </table>
+
+       <p>Tabla De Pagos Para Productos</p>
+      <table class="tableSettPlanes">
+        <tr>
+          <th class="thTableSettPla">Plan</th>
+          <th class="thTableSettPla">Cuotas</th>
+          <th class="thTableSettPla">Valor De Cuota</th>
+        </tr>
+      
+        {{#each arrayProd}}
+        <tr>
+          <th class="thTableSettPla">{{plan}}</th>
+          <th class="thTableSettPla">{{cuotas}}</th>
+          <th class="thTableSettPla">${{cuota}}</th>
+        </tr>
+        {{/each}}
+      </table>
  <br>
   </div>
   </div>
