@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const {Schema} = require('mongoose');
 
-const settingsPrestSchema = new Schema({
+const settingSchema = new Schema({
     plan: {
         type: String,
         require: true
@@ -20,4 +20,4 @@ const settingsPrestSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('setPrest', settingsPrestSchema);
+module.exports = mongoose.model('setPrest', settingSchema);

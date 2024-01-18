@@ -87,32 +87,29 @@
         </tr>
         {{/each}}
       </table>
-  
-
-
-
 
 
       <br>
       <div class="divClienteBuscar">
       <h3 class="tituloForm">Configuracion % De Ganancia</h3>
     </div>
-    <form action="" method="post">
+    {{#each valores}}
+    <form action="/settings/updateValores/{{_id}}" method="post">
       <p>Porcentaje De Ganancias En Venta De Productos</p>
 
       <table class="tableSettings">
   
         <tr>
-          <th><label class="title" for="nombre">Porcentaje</label></th>
-          <th><input type="number" class="inpFormSett" placeholder="" id="porcentaje" name="porcentaje"
+          <th><label class="title" for="nombre">Porcentaje:</label></th>
+          <th><input type="number" class="inpFormSett" placeholder="  {{porcentaje}}%" id="porcentaje" name="porcentaje"
               required /></th>
         </tr>
         <tr>
           <th colspan="2"> Valor Del Dolar</th>
         </tr>
         <tr>
-          <th><label class="title" for="nombre">Dolar $</label></th>
-          <th><input type="number" class="inpFormSett" placeholder="" id="dolar" name="dolar"
+          <th><label class="title" for="nombre">Dolar:</label></th>
+          <th><input type="number" class="inpFormSett" placeholder="  ${{dolar}}" id="dolar" name="dolar"
               required /></th>
         </tr>
         <tr>
@@ -121,7 +118,7 @@
       </table>
       <br />
     </form>
-
+  {{/each}}
 
   </div>
   </div>
