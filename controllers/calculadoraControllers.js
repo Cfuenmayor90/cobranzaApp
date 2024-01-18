@@ -1,5 +1,6 @@
 const { json } = require('express');
 const setPrest = require('../models/settingsModels');
+const setvalores = require('../models/settingValoresModels');
 const { parse } = require('path');
 
 const cargarCalculadora = async(req,res) =>{
@@ -20,10 +21,11 @@ const cargarCalculadora = async(req,res) =>{
 };
 const calcular = async(req,res) =>{
     try {
-        const {monto} = req.body;
+        const {monto, desc} = req.body;
         const planes = await setPrest.find({categoria: 'prestamo'});
         const planesProdu = await setPrest.find({categoria: 'financiamiento'});
-        const montoProd = monto * 1.3;
+        const valores = await setvalores.findOne();
+        const montoProd = monto * ((valores.porcentaje/100)+1);
         const array = [];
         const arrayProd = [];
         planes.forEach(element => {
@@ -38,7 +40,7 @@ const calcular = async(req,res) =>{
             arrayProd.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota});
         
         });
-        return res.render('calculadora', {array, arrayProd, monto});
+        return res.render('calculadora', {array, arrayProd, monto, desc});
  
     } catch (error) {
         res.render('error')

@@ -22,6 +22,11 @@
           <th><input type="number" class="inpFormSett" placeholder="Monto Del Prestamo" id="monto" name="monto"
               required /></th>
         </tr>
+         <tr>
+          <th><label class="title" for="nombre">Descripcion</label></th>
+          <th><input type="text" class="inpFormSett" placeholder="Solo Para Productos" id="desc" name="desc"
+               /></th>
+        </tr>
         <tr>
           <th colspan="2" class=""><button type="submit" class="btnFormSettings">Calcular</button></th>
         </tr>
@@ -49,7 +54,7 @@
         {{/each}}
       </table>
 
-       <p>Tabla De Pagos Para Productos</p>
+       <p>Tabla De Pagos Para: {{desc}}</p>
       <table class="tableSettPlanes">
         <tr>
           <th class="thTableSettPla">Plan</th>
