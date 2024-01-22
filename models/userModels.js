@@ -32,6 +32,10 @@ const userSchema = new Schema({
     timestamp: {
         type: Date,
         default: Date.now()
+    },
+    numRuta: {
+        type: Number,
+        require: true
     }
 });
 

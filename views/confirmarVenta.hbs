@@ -1,0 +1,67 @@
+<nav class="navegacion">
+    <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a>
+    <div>
+      <span>Ventas</span>
+    </div>
+    <div class="iconMenuHamburguesa">
+      <i class="bi bi-menu-button-wide-fill"></i>
+    </div>
+  </nav>
+   <div class="contMayorCli">
+<div class="formCliente">
+    <div class="divClienteBuscar">
+        <h3 class="tituloForm">Confirmar Venta</h3>
+      </div>
+    <form action="/ventas/guardar" method="post" class="formCliente2">
+
+      <p>Ingresa los datos para dar de alta al cliente</p>
+      <br />
+
+      <label class="title" for="nombre">Apellido y Nombre</label>
+      <input type="text" class="inpForm" value="{{client.nombre}}" id="nombre" name="nombre" required />
+      <br />
+      <label class="title" for="dni">DNI</label>
+      <input type="number" class="inpForm" value="{{client.dni}}" id="dni" name="dni" required />
+      <br />
+      <label class="title" for="nombre">Vendedor</label>
+      <input type="text" class="inpForm" value="{{cot.venRuta}}" id="venRuta" name="venRuta" required />
+      <br />
+        <label class="title" for="nombre">Cobrador</label>
+        <input type="text" class="inpForm" value="{{cot.cobRuta}}" id="cobRuta" name="cobRuta" required />
+      <br />
+      <label class="title" for="dni">Monto</label>
+        <input type="text" class="inpForm" value="{{cot.monto}}" id="venRuta" name="venRuta" required />
+      <br />
+      <label class="title" for="celular">Codigo De Producto</label>
+      <input type="text" class="inpForm" value="{{cot.codProd}}" id="codProd" name="codProd"/>
+      <br />
+      <label class="title" for="telefono">Descripcion</label>
+      <input type="text" class="inpForm" value="{{cot.detalle}}" id="detalle" name="detalle"/>
+      <br />
+      <label class="title" for="email">Total</label>
+      <input type="number" class="inpForm" value="{{mTotal}}" id="mTotal" name="mTotal" />
+      <br />
+       <label class="title" for="cuotas">Plan</label>
+       <input type="text" class="inpForm" value="{{planCot.plan}}" id="plan" name="plan" />
+      <br />
+       <label class="title" for="cuotas">N° de Cuotas</label>
+       <input type="number" class="inpForm" value="{{planCot.cuotas}}" id="cuotas" name="cuotas" />
+      <br />
+        <label class="title" for="cuota">Valor Cuota</label>
+       <input type="number" class="inpForm" value="{{cuota}}" id="cuota" name="cuota" />
+      <br />
+        <label class="title" for="cuota">Dia De Cobro</label>
+       <input type="number" class="inpForm" value="{{cot.diaDeCobro}}" id="diaDeCobro" name="diaDeCobro" />
+      <br />
+
+      <div class="cantBtnForm">
+    
+        <a class="btnFormReset" href="javascript:history.back()"> Volver Atrás</a>
+
+        <button class="btnFormAceptar" type="submit">Guardar</button>
+      </div>
+  
+    </form>
+</div>
+   
+  </div>

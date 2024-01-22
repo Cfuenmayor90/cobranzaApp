@@ -15,7 +15,7 @@ const crearUsuario = async (req, res) => {
     return res.render('error', {mensajeError});
   }
 
-  const { nombre, dni, password, rol } = req.body;
+  const { nombre, dni, password, rol, direccion, telefono } = req.body;
 
   try {
     let usuarioNuevo = await users.findOne({ dni });
@@ -24,16 +24,24 @@ const crearUsuario = async (req, res) => {
       return res.render('error', {mensajeError});
     }
     //creamos el usuario en la base de datos
+    const userNumRuta = await users.findOne().sort({numRuta: -1});
+    console.log(userNumRuta);
+    const nRuta = userNumRuta.numRuta || 100;
+
+     const nuRuta = nRuta + 1;
+    console.log(nRuta);
     usuarioNuevo = new users(req.body);
+    usuarioNuevo.numRuta = nuRuta;
     const salt = bcrypt.genSaltSync(10);
     usuarioNuevo.password = bcrypt.hashSync(password, salt);
     console.log(usuarioNuevo);
     await usuarioNuevo.save();
     res.redirect('/vistas/usuarios');
-
+   console.log(nRuta);
+    
   } catch (error) {
-     const mensajeError = 'Error en la Data Base';
-     return res.render('error', {mensajeError});
+    const mensajeError = 'Error en la Data Base';
+    return res.render('error', {mensajeError});
   }
 };
 
@@ -94,7 +102,7 @@ const validarIngresoUsuario = async (req, res) => {
       }
      }
      mensajeError = 'Password Incorrecto';
-    return res.render('error', {mensajeError});
+    return res.render('errorToken', {mensajeError});
      
   } catch (error) {
     mensajeError = 'Error en Data Base ';
@@ -107,45 +115,38 @@ const checkRole = (roles) => async (req, res, next) => {
   try {
       const token =  req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
       const verifyToken = await verifyJWT(token); // Verificar el token JWT
-    console.log('Token checkrole::::' + token);
-    console.log('verifyToken ' + token.role);
       if (!verifyToken) {
           // Si el token no es válido o no existe
           res.clearCookie('token'); // Borrar la cookie del token
           mensajeError = 'Tu sesion ha caducado'
-          res.render('error', {mensajeError})
+          res.render('errorToken', {mensajeError})
           
       } else {
           // Si el token es válido
           const userDetail = users.findOne(verifyToken.dni); // Buscar en la base de datos el detalle del usuario correspondiente al ID almacenado en el token
           req.user = userDetail; // Asignar el detalle del usuario al objeto req para que esté disponible en los siguientes middlewares o controladores
           const role = verifyToken.role; // Obtener el rol del usuario
-          console.log(role);
           if ([].concat(roles).includes(role)) {
               // Si el rol del usuario está incluido en el arreglo de roles permitidos
               next(); // Pasar al siguiente middleware o controlador
           } else {
               // Si el rol del usuario no está incluido en el arreglo de roles permitidos
               res.status(409);
-              res.render('error', { mensajeError: 'Usted no cuenta con los permisos suficientes para acceder a esta página' }); // Mostrar un mensaje de error indicando que el usuario no tiene los permisos suficientes
+              res.render('errorToken', { mensajeError: 'Usted no cuenta con los permisos suficientes para acceder a esta página' }); // Mostrar un mensaje de error indicando que el usuario no tiene los permisos suficientes
           }
       }
   } catch (e) {
       // Si ocurre algún error durante el proceso de autenticación o autorización
-      console.log('___Error rolAuth___');
       res.status(409);
       mensajeError = 'Error en token de usuario'
-      res.render('error', {mensajeError})
+      res.render('errorToken', {mensajeError})
       
   }
 };
 
 const logOut = (req, res) => {
-
- 
     res.clearCookie('token');
     res.render('index');
-
 };
 
 const volverPrin = async (req, res) => {
@@ -156,14 +157,12 @@ const volverPrin = async (req, res) => {
     if (!verifyToken) {
       res.clearCookie('token'); // Borrar la cookie del token
       mensajeError = 'Tu sesion ha caducado'
-      res.render('error', {mensajeError})
+      res.render('errorToken', {mensajeError})
       
     } else {
       const rol = verifyToken.role;
       nombre = verifyToken.nombre;
       fecha = Date().toString();
-      console.log(rol);
-      console.log(nombre);
       switch (rol) {
         case 'admin':
          res.render("principal", {fecha, nombre});
@@ -182,7 +181,7 @@ const volverPrin = async (req, res) => {
     }
 } catch (error) {
   mensajeError = 'No cuentas con autorizacion'
-  return render('error', {mensajeError})
+  return render('errorToken', {mensajeError})
 }};
 
 const cargarUsuarios = async(req, res) => {
@@ -190,7 +189,7 @@ const cargarUsuarios = async(req, res) => {
    const usuarios = await users.find();
    res.render('usuarios', {usuarios});
  } catch (error) {
-  
+  return res.render('error');
  }};
 
  const editUserGet = async(req, res) =>{
@@ -199,7 +198,7 @@ const cargarUsuarios = async(req, res) => {
     const usuario = await users.findById(id).lean();
     res.render('usuarioEdit', {usuario});
   } catch (error) {
-    
+    return res.render('error');
   }};
   const editUserPost = async(req, res) =>{
     try {
@@ -211,7 +210,7 @@ const cargarUsuarios = async(req, res) => {
      await users.findByIdAndUpdate({_id:id}, usuarioNuevo);
      res.redirect('/vistas/usuarios');
     } catch (error) {
-      console.log(error);
+      return res.render('error');
     }};
 
 

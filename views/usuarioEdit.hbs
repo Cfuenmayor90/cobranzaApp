@@ -9,66 +9,93 @@
   </div>
 </nav>
 
-
 <div class="contMayorCli">
   <div class="formCliente">
-      <div class="divClienteBuscar">
-        <h3 class="tituloForm">Editar Usuario</h3>
-      </div>
-  <form action="/users/edit/{{usuario._id}}" method="post" class="formCliente2">
-    <br />
-    <p>Modificar los campos para editar usuario</p>
-    <br />
-
-    <label class="title" for="nombre">Apellido y Nombre</label>
-    <br />
-    <input
-      type="text"
-      class="inpForm"
-      placeholder="Escribe Apellido y Nombre"
-      id="nombre"
-      name="nombre" 
-      value="{{usuario.nombre}}"
-      required
-    />
-    <br />
-    <label class="title" for="dni">DNI</label>
-    <br />
-    <input
-      type="number"
-      class="inpForm"
-      placeholder="Escribe el DNI"
-      id="dni"
-      name="dni"
-      value="{{usuario.dni}}"
-      required
-    />
-    <br />
-    <label class="title" for="password">Contraseña</label>
-    <br />
-    <input
-      type="text"
-      class="inpForm"
-      placeholder="Ingrese una Contraseña"
-      id="password"
-      name="password"
-      required
-    />
-    <br />
-    <label for="rol" class="title">Rol del usuario</label>
-    <select class="inpForm" name="role" id="role" required>
-      <option value="cobrador">Cobrador</option>
-      <option value="vendedor">Vendedor</option>
-      <option value="admin">Administrador</option>
-    </select>
-
-    <div class="cantBtnForm">
-      <a class="btnFormReset" href="/vistas/usuarios">Volver</a>
-      <button class="btnFormAceptar" type="submit">Editar</button>
+    <div class="divClienteBuscar">
+      <h3 class="tituloForm">Editar Usuario</h3>
     </div>
-  </form>
-</div>
+    <form
+      action="/users/edit/{{usuario._id}}"
+      method="post"
+      class="formCliente2"
+    >
+      <br />
+      <p>Modificar los campos para editar usuario</p>
+      <br />
 
-  
+      <label class="title" for="nombre">Apellido y Nombre</label>
+      <br />
+      <input
+        type="text"
+        class="inpForm"
+        placeholder="Escribe Apellido y Nombre"
+        id="nombre"
+        name="nombre"
+        value="{{usuario.nombre}}"
+        required
+      />
+      <br />
+      <label class="title" for="dni">DNI</label>
+      <br />
+      <input
+        type="number"
+        class="inpForm"
+        placeholder="Escribe el DNI"
+        id="dni"
+        name="dni"
+        value="{{usuario.dni}}"
+        required
+      />
+      <br />
+      <label class="title" for="password">Contraseña</label>
+      <br />
+      <input
+        type="text"
+        class="inpForm"
+        placeholder="Ingrese una Contraseña"
+        id="password"
+        name="password"
+        required
+      />
+      <br />
+      <label class="title" for="password">Direccion</label>
+      <br />
+      <input
+        type="text"
+        class="inpForm"
+        placeholder="Direccion Particular"
+        value="{{usuario.direccion}}"
+        id="direccion"
+        name="direccion"
+        required
+      />
+      <br />
+      <label class="title" for="password">Telefono</label>
+      <br />
+      <input
+        type="number"
+        class="inpForm"
+        placeholder="Ingrese Numero Telefonico"
+        value="{{usuario.telefono}}"
+        id="telefono"
+        name="telefono"
+        required
+      />
+      <br />
+      <label for="rol" class="title">Rol del usuario</label>
+      <select class="inpForm" name="role" id="role" required>
+        <option value="cobrador">Cobrador</option>
+        <option value="vendedor">Vendedor</option>
+        <option value="admin">Administrador</option>
+      </select>
+      <br>
+      <label class="title" for="password">Codigo De Ruta: {{usuario.numRuta}}</label>
+
+      <div class="cantBtnForm">
+        <a class="btnFormReset" href="/vistas/usuarios">Volver</a>
+        <button class="btnFormAceptar" type="submit">Editar</button>
+      </div>
+    </form>
+  </div>
 
 </div>

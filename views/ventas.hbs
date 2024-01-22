@@ -19,12 +19,22 @@
         <h3 class="tituloForm">Registrar Ventas</h3>
       </div>
     <form action="/ventas/cotizar" method="post" class="formCliente2">
-
+           
+            <label for="ruta">Vendedor</label>
+            <select class="inpForm" name="venRuta" id="venRuta" required>
+                <option value="0001">Renovacion</option>
+                 <option value="0002">Venta De Contado</option>
+                {{#each usuarios}}
+                <option value="{{numRuta}}">{{numRuta}}/{{nombre}}</option>
+                {{/each}}
+            </select>
+            <br>
             <label for="ruta">Ruta De Cobro</label>
-            <select class="inpForm" name="ruta" id="ruta" required>
-                <option value="1">Emiliano</option>
-                <option value="1">Ramon</option>
-                <option value="1">Javier</option>
+            <select class="inpForm" name="cobRuta" id="cobRuta" required>
+                 <option value="0002">Pago De Contado</option>
+                {{#each usuarios}}
+                <option value="{{numRuta}}">{{numRuta}}/{{nombre}}</option>
+                {{/each}}
             </select>
             <br>
             <label for="dni">DNI</label><br>
@@ -33,20 +43,24 @@
             <label for="monto">Monto</label>
             <input class="inpForm" type="number" id="monto" name="monto" required>
             <br>
-            <label for="cantCuotas">Cantidad De Cutas</label>
-            <input class="inpForm" type="number" id="cantCuotas" name="cantCuotas" required size="8">
+            <label for="detalle">Descripcion</label>
+            <input class="inpForm" type="text" id="detalle" placeholder="Inf. Solo para productos" name="detalle">
             <br>
-            <label for="interes">Interes</label>
-            <input class="inpForm" type="number" id="interes" name="interes" required>
+            <label for="detalle">Codigo De Producto</label>
+            <input class="inpForm" type="text" id="codProd" placeholder="Inf. Solo para productos" name="codProd">
             <br>
             <label for="plan">Plan De Cobro</label>
-            <select class="inpForm" name="plan" id="plan">
-                <option value="Semanal">Semanal</option>
-                <option value="Diario">Diario</option>
+            <select class="inpForm" name="planId" id="planId">
+                {{#each planPrest}}
+                <option value="{{_id}}">{{categoria}} / {{plan}} / Cuotas: {{cuotas}} / {{porcentaje}}% </option>
+                {{/each}}
+                {{#each planProd}}
+                <option value="{{_id}}">{{categoria}} / {{plan}} / Cuotas: {{cuotas}} / {{porcentaje}}% </option>
+                {{/each}}
             </select>
             <br>
             <label for="diasDeCobro">Dia De Cobro</label>
-            <select class="inpForm" name="diasDeCobro" id="diasDeCobro">
+            <select class="inpForm" name="diaDeCobro" id="diaDeCobro">
                 <option value="lunes">Lunes</option>
                 <option value="martes">Martes</option>
                 <option value="miercoles">Miercoles</option>
@@ -57,7 +71,7 @@
             </select>
                <div class="cantBtnForm">
                 <button class="btnFormReset" type="reset">Limpiar</button>
-                <button class="btnFormAceptar" type="submit">Aceptar</button>
+                <button class="btnFormAceptar" type="submit">Cotizar</button>
             </div>
     </form>
 </div>

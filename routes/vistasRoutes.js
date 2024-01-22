@@ -36,9 +36,7 @@ router.get('/estadisticas', checkRole(['admin',  'vendedor', 'cobrador']),(req, 
 router.get('/novedades', checkRole(['admin',  'vendedor', 'cobrador']), (req, res)=>{
     res.render('novedades')
 });
-router.get('/ventas', checkRole(['admin',  'vendedor', 'cobrador']), (req, res)=>{
-    res.render('ventas')
-});
+
 router.get('/usuarios', checkRole(['admin']), cargarUsuarios);
 
 router.get('/gastos', checkRole(['admin',  'vendedor', 'cobrador']), (req, res)=>{

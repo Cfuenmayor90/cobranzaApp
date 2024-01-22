@@ -111,7 +111,7 @@
 
       <table class="tableUsuarios">
         <tr class="tableUsuariosTr">
-          <th class="tableUsuariosThTitulo">DNI</th>
+          <th class="tableUsuariosThTitulo">N° Ruta</th>
           <th class="tableUsuariosThTitulo">Apellido y Nombre</th>
           <th class="tableUsuariosThTitulo">Rol</th>
           <th class="tableUsuariosThTitulo">
@@ -120,14 +120,14 @@
         </tr>
         {{#each usuarios}}
         <tr>
-          <th class="tableUsuariosThRespuesta">{{dni}}</th>
+          <th class="tableUsuariosThRespuesta">{{numRuta}}</th>
           <th class="tableUsuariosThRespuesta">{{nombre}}</th>
           <th class="tableUsuariosThRespuesta">{{role}}</th>
           <th class="">
-            <a href="/client/delete/{{_id}}"
+            <a href="/users/delete/{{_id}}"
               onclick="return confirm('¿Esta Seguro Que Desea Eliminar El Usuario: {{{nombre}}}?')"
               class="tableUsuariosBtnEliminar"><i class="bi bi-trash"></i></a>
-            <a href="/client/edit/{{_id}}" class="tableUsuariosBtnModificar"><i class="bi bi-pencil-square"></i></a>
+            <a href="/users/edit/{{_id}}" class="tableUsuariosBtnModificar"><i class="bi bi-pencil-square"></i></a>
           </th>
         </tr>
         {{/each}}
