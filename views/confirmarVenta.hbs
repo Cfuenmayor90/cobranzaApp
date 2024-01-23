@@ -24,13 +24,13 @@
       <input type="number" class="inpForm" value="{{client.dni}}" id="dni" name="dni" required />
       <br />
       <label class="title" for="nombre">Vendedor</label>
-      <input type="text" class="inpForm" value="{{cot.venRuta}}" id="venRuta" name="venRuta" required />
+      <input type="number" class="inpForm" value="{{cot.venRuta}}" id="venRuta" name="venRuta" required />
       <br />
         <label class="title" for="nombre">Cobrador</label>
-        <input type="text" class="inpForm" value="{{cot.cobRuta}}" id="cobRuta" name="cobRuta" required />
+        <input type="number" class="inpForm" value="{{cot.cobRuta}}" id="cobRuta" name="cobRuta" required />
       <br />
       <label class="title" for="dni">Monto</label>
-        <input type="text" class="inpForm" value="{{cot.monto}}" id="venRuta" name="venRuta" required />
+        <input type="number" class="inpForm" value="{{cot.monto}}" id="monto" name="monto" required />
       <br />
       <label class="title" for="celular">Codigo De Producto</label>
       <input type="text" class="inpForm" value="{{cot.codProd}}" id="codProd" name="codProd"/>
@@ -40,6 +40,9 @@
       <br />
       <label class="title" for="email">Total</label>
       <input type="number" class="inpForm" value="{{mTotal}}" id="mTotal" name="mTotal" />
+      <br />
+      <label class="title" for="cuotas">Categoria</label>
+       <input type="text" class="inpForm" value="{{planCot.categoria}}" id="categoria" name="categoria" />
       <br />
        <label class="title" for="cuotas">Plan</label>
        <input type="text" class="inpForm" value="{{planCot.plan}}" id="plan" name="plan" />
@@ -51,7 +54,7 @@
        <input type="number" class="inpForm" value="{{cuota}}" id="cuota" name="cuota" />
       <br />
         <label class="title" for="cuota">Dia De Cobro</label>
-       <input type="number" class="inpForm" value="{{cot.diaDeCobro}}" id="diaDeCobro" name="diaDeCobro" />
+       <input type="text" class="inpForm" value="{{cot.diaDeCobro}}" id="diaDeCobro" name="diaDeCobro" />
       <br />
 
       <div class="cantBtnForm">

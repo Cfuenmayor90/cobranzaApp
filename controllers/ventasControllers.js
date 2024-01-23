@@ -1,5 +1,6 @@
 const users = require("../models/userModels");
 const setPrest = require('../models/settingsModels');
+const ventas = require('../models/ventasModels');
 
 
 
@@ -15,7 +16,7 @@ const cotizarPlan = async(req, res) => {
     const cot = req.body;
     const client = await users.findOne({dni:cot.dni});
     if (client) {
-      console.log(cot.monto);
+      console.log(cot);
       const planCot = await setPrest.findById({_id:cot.planId});
       const mTotal = (cot.monto * ((planCot.porcentaje / 100)+1)).toFixed(2);
       const cuota = (mTotal / planCot.cuotas).toFixed(2);
@@ -32,7 +33,9 @@ const cotizarPlan = async(req, res) => {
   }
 };
 const guardarVentas = async(req,res) => {
- console.log('hola');
+ const newVenta = new ventas(req.body);
+ await newVenta.save();
+ res.redirect('/ventas');
 };
 
 module.exports = {cotizarPlan, cargarVentas, guardarVentas};
