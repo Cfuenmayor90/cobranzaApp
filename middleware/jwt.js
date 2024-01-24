@@ -12,7 +12,8 @@ const generarJWT = async (users) => {
         {
             dni: users.dni,
             role: users.role,
-            nombre: users.nombre
+            nombre: users.nombre,
+            numRuta: users.numRuta
         },
         secretKey,
         {

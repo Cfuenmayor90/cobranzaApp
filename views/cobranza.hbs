@@ -12,61 +12,41 @@
     </nav>
 
     <div class="contPres">
+        {{#each prestamos}}
         <table class="tablePres">
             <tr>
-                <th colspan="3" class="thTitleTablePres">Nombre:</th>
+                <th colspan="3" class="thTitleTablePres"> {{nombre}}</th>
             </tr>
              <tr>
                 <th colspan="3" class="thTable">Direccion:</th>
             </tr>
               <tr>
-                <th class="thTable">Monto:</th>
-                 <th class="thTable">Cuotas:</th>
-                  <th class="thTable">Cuota</th>
+                <th class="thTable">Monto: ${{monto}}</th>
+                 <th class="thTable">Cuotas: {{cuotas}}</th>
+                  <th class="thTable">Cuota: ${{cuota}}</th>
+            </tr>
+            <tr>
+                <th class="thTable">Total: ${{mTotal}}</th>
+                 <th class="thTable">Atraso:</th>
+                  <th class="thTable">Saldo:</th>
             </tr>
              <tr>
                 <th class="thTable">Inicio:</th>
                  <th class="thTable">Vence:</th>
-                  <th class="thTable">Atraso:</th>
+                  <th class="thTable"></th>
             </tr>
             <tr class="trTablePres">
                  <th colspan="3" class="trTablePres">
                     Pago:
                     <input type="number" class="inpPres">
-                    <button>Registrar</button>
-                    <button>Telefono</button>
-                    <button>Info</button>
+                    <a href="" class="btnPagoCobra" style="background-color: blue;"><i class="bi bi-check-lg"></i></a>
+                    <a href="" class="btnPagoCobra" style="background-color: red;"><i class="bi bi-x"></i></a>
+                    <a href="https://wa.me/549{{clienteBuscado.celular}}" class="btnPagoCobra" style="background-color: green;"><i class="bi bi-whatsapp"></i></a>
+                    <a href="" class="btnPagoCobra" style="background-color: orangered;"><i class="bi bi-card-list"></i></i></a>
                 </th>
             </tr>
         </table>
-        <table class="tablePres">
-            <tr>
-                <th colspan="3" class="thTitleTablePres">Nombre:</th>
-            </tr>
-             <tr>
-                <th colspan="3" class="thTable">Direccion:</th>
-            </tr>
-              <tr>
-                <th class="thTable">Monto:</th>
-                 <th class="thTable">Cuotas:</th>
-                  <th class="thTable">Cuota</th>
-            </tr>
-             <tr>
-                <th class="thTable">Inicio:</th>
-                 <th class="thTable">Vence:</th>
-                  <th class="thTable">Atraso:</th>
-            </tr>
-            <tr>
-                <th colspan="3" class="trTablePres">
-                    Pago:
-                    <input type="number" class="inpPres">
-                    <a href=""><i class="bi bi-floppy-fill"></i></a>
-                    <a href=""><i class="bi bi-whatsapp"></i></a>
-                    <button>Info</button>
-                </th>
-            </tr>
-        </table>
-
+        {{/each}}
     </div>
 
     <footer class="footerCobranza">
