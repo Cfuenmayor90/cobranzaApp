@@ -21,6 +21,8 @@ const pagoSave = async(req, res) => {
         if (prestamo.mTotal > pago) {
             const pagoVa = new pagoN(req.body);
             await pagoVa.save();
+            prestamo.mTotal = (prestamo.mTotal - pago);
+            await ventas.findByIdAndUpdate({_id: codPres}, prestamo);
             res.send('todo ok');
         } else {
             const mensajeError = '¡El monto del pago debe ser menor al SALDO!';

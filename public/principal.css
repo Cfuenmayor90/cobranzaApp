@@ -97,7 +97,7 @@ a {
 /*Codigo de cobranza.html*/
 .contPres{
     width: 90%;
-    height: 1000px;
+    height: auto;
     margin: 1em auto;
     background-color: white;
 }
