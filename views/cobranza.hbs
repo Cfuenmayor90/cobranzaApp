@@ -13,6 +13,8 @@
 
     <div class="contPres">
         {{#each prestamos}}
+        <form action="/cobranza/savePago" method="post"> 
+
         <table class="tablePres">
             <tr>
                 <th colspan="3" class="thTitleTablePres"> {{nombre}}</th>
@@ -33,19 +35,23 @@
              <tr>
                 <th class="thTable">Inicio:</th>
                  <th class="thTable">Vence:</th>
-                  <th class="thTable"></th>
+                  <th class="thTable">Dia de cobro: {{diaDeCobro}}</th>
+            </tr>
+              <tr>
+                <th colspan="3" >Cod: <input type="text" style="border: none;" readonly id="codPres" name="codPres" value="{{_id}}"></th>
             </tr>
             <tr class="trTablePres">
                  <th colspan="3" class="trTablePres">
                     Pago:
-                    <input type="number" class="inpPres">
-                    <a href="" class="btnPagoCobra" style="background-color: blue;"><i class="bi bi-check-lg"></i></a>
+                    <input type="number" class="inpPres" id="pago" name="pago">
+                    <button type="submit" class="btnPagoCobra" style="background-color: blue; color:white"><i class="bi bi-check-lg"></i></button>
                     <a href="" class="btnPagoCobra" style="background-color: red;"><i class="bi bi-x"></i></a>
-                    <a href="https://wa.me/549{{clienteBuscado.celular}}" class="btnPagoCobra" style="background-color: green;"><i class="bi bi-whatsapp"></i></a>
+                    <a href="https://wa.me/549{{celular}}" class="btnPagoCobra" style="background-color: green;"><i class="bi bi-whatsapp"></i></a>
                     <a href="" class="btnPagoCobra" style="background-color: orangered;"><i class="bi bi-card-list"></i></i></a>
                 </th>
             </tr>
         </table>
+        </form>
         {{/each}}
     </div>
 

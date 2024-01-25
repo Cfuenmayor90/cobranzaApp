@@ -1,6 +1,8 @@
 const users = require("../models/userModels");
 const setPrest = require('../models/settingsModels');
+const client = require("../models/clientModels");
 const ventas = require('../models/ventasModels');
+
 
 
 
@@ -14,14 +16,14 @@ const cargarVentas = async(req, res) => {
 const cotizarPlan = async(req, res) => {
   try {
     const cot = req.body;
-    const client = await users.findOne({dni:cot.dni});
-    if (client) {
+    const cliente = await client.findOne({dni:cot.dni});
+    if (cliente) {
       console.log(cot);
       const planCot = await setPrest.findById({_id:cot.planId});
       const mTotal = (cot.monto * ((planCot.porcentaje / 100)+1)).toFixed(2);
       const cuota = (mTotal / planCot.cuotas).toFixed(2);
       //res.send(`Monto:${cot.monto}, Cuotas: ${planCot.cuotas}, Cuota: ${cuota}, Total: ${mTotal}`);
-      res.render('confirmarVenta', {cot, planCot, cuota, mTotal, client})
+      res.render('confirmarVenta', {cot, planCot, cuota, mTotal, cliente})
       
     } else {
       const mensajeError = 'El Usuario No Existe';
@@ -37,5 +39,9 @@ const guardarVentas = async(req,res) => {
  await newVenta.save();
  res.redirect('/ventas');
 };
+
+
+
+
 
 module.exports = {cotizarPlan, cargarVentas, guardarVentas};

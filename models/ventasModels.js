@@ -52,6 +52,13 @@ const ventaSchema = new Schema({
         type: String,
         require: true
     },
+    celular:{
+        type: Number,
+    },
+    direccion:{
+        type: String,
+        require: true
+    },
     timestamp: {
         type: Date,
         default: Date.now()

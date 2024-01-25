@@ -18,10 +18,16 @@
       <br />
 
       <label class="title" for="nombre">Apellido y Nombre</label>
-      <input type="text" class="inpForm" value="{{client.nombre}}" id="nombre" name="nombre" required />
+      <input type="text" class="inpForm" value="{{cliente.nombre}}" id="nombre" name="nombre" required />
       <br />
       <label class="title" for="dni">DNI</label>
-      <input type="number" class="inpForm" value="{{client.dni}}" id="dni" name="dni" required />
+      <input type="number" class="inpForm" value="{{cliente.dni}}" id="dni" name="dni" required />
+      <br />
+      <label class="title" for="direccion">Direccion</label>
+      <input type="text" class="inpForm" value="{{cliente.localidadComercial}} / {{cliente.dirComercial}}" id="direccion" name="direccion" required />
+      <br />
+      <label class="title" for="dni">Celular</label>
+      <input type="number" class="inpForm" value="{{cliente.celular}}" id="celular" name="celular" required />
       <br />
       <label class="title" for="nombre">Vendedor</label>
       <input type="number" class="inpForm" value="{{cot.venRuta}}" id="venRuta" name="venRuta" required />
