@@ -104,7 +104,7 @@ a {
 .tablePres{
     text-align: left;
     width: 100%;
-    border: 1px solid black;
+   /* border: 1px solid black;*/
 }
 .thTitleTablePres{
 background-color: #bfe5fd; 

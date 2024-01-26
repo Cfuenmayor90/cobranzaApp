@@ -29,16 +29,24 @@ const pagoSave = async(req, res) => {
             res.render('error', {mensajeError});
         }
     } catch (error) {
-        res.render('error', {mensajeError});
+        res.render('error');
     }
 };
 const listaPagos = async(req, res)=>{
     try {
         const {id} = req.params;
-        console.log('id pago: '+id);
         const listPa = await pagoN.find({codPres: id});
-       console.log(listPa);
-       return res.render('pagosList', {listPa});
+        const prestamo = await ventas.findOne({_id: id});
+        console.log(prestamo);
+        const array = [];
+        listPa.forEach(element => {
+            const fechaString = element.fecha.toLocaleDateString();
+            const id = element._id;
+            const pagO = element.pago;
+            array.push({fechaString, id, pagO});
+        });
+      
+       return res.render('pagosList', {array, prestamo});
     } catch (error) {
         
     }

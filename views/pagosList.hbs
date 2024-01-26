@@ -4,7 +4,7 @@
            <a href="/cobranza"><i class="bi bi-box-arrow-left"></i></a> 
         </div>
         <div>
-           <span>Cobranza</span>
+           <span>Historial De Pagos</span>
         </div>
         <div class="iconMenuHamburguesa">
             <i class="bi bi-menu-button-wide-fill"></i>
@@ -15,18 +15,18 @@
 
         <table class="tablePres">
             <tr>
-                <th colspan="3" class="thTitleTablePres"> {{nombre}}</th>
+                <th colspan="3" class="thTitleTablePres"> {{prestamo.nombre}}</th>
             </tr>
               <tr>
-                <th class="thTable">Codigo</th>
-                 <th class="thTable">Fecha</th>
-                  <th class="thTable">Pago</th>
+                <th class="thTable" style="border-bottom: 1px solid orange;">Codigo</th>
+                 <th class="thTable" style="border-bottom: 1px solid orange;">Fecha</th>
+                  <th class="thTable" style="border-bottom: 1px solid orange;">Pago</th>
             </tr>
-        {{#each listPa}}
+        {{#each array}}
                  <tr>
-                <th class="thTable">{{_id}}</th>
-                 <th class="thTable">fecha</th>
-                  <th class="thTable">${{pago}}</th>
+                <th class="thTable">{{id}}</th>
+                 <th class="thTable">{{fechaString}}</th>
+                  <th class="thTable">${{pagO}}</th>
             </tr>
         {{/each}}
 
