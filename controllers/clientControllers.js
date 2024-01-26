@@ -73,7 +73,6 @@ const cargarClientes = async(req, res) =>{
   const editClientGet = async(req, res) =>{
     try {
       const {id} = req.params;
-      console.log(id);
       const cliente = await client.findById(id);
       res.render('clienteEdit', {cliente});
       

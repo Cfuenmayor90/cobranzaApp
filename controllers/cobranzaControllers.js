@@ -12,7 +12,7 @@ const cargarCobranza = async(req, res) =>{
       const prestamos = await ventas.find({cobRuta: verifyToken.numRuta});
       console.log(prestamos);
       res.render('cobranza', {prestamos});
-}
+};
 const pagoSave = async(req, res) => {
     const {codPres, pago} = req.body;
     try {
@@ -29,8 +29,19 @@ const pagoSave = async(req, res) => {
             res.render('error', {mensajeError});
         }
     } catch (error) {
+        res.render('error', {mensajeError});
+    }
+};
+const listaPagos = async(req, res)=>{
+    try {
+        const {id} = req.params;
+        console.log('id pago: '+id);
+        const listPa = await pagoN.find({codPres: id});
+       console.log(listPa);
+       return res.render('pagosList', {listPa});
+    } catch (error) {
         
     }
 }
 
-module.exports = {cargarCobranza, pagoSave};
+module.exports = {cargarCobranza, pagoSave, listaPagos};
