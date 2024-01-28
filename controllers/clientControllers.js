@@ -64,7 +64,7 @@ const cargarClientes = async(req, res) =>{
     const token =  req.cookies.token;
     const verifyToken = await verifyJWT(token);
     const role = verifyToken.role;
-    const clientes = await client.find().limit(4);
+    const clientes = await client.find().sort({timeStamp: -1}).limit(4);
      return res.render('clientes', {clientes, role});
   } catch (error) {
     console.log(error);

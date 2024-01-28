@@ -132,7 +132,7 @@ const checkRole = (roles) => async (req, res, next) => {
           } else {
               // Si el rol del usuario no está incluido en el arreglo de roles permitidos
               res.status(409);
-              res.render('errorToken', { mensajeError: 'Usted no cuenta con los permisos suficientes para acceder a esta página' }); // Mostrar un mensaje de error indicando que el usuario no tiene los permisos suficientes
+              res.render('error', { mensajeError: 'Usted no cuenta con los permisos suficientes para acceder a esta página' }); // Mostrar un mensaje de error indicando que el usuario no tiene los permisos suficientes
           }
       }
   } catch (e) {

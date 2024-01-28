@@ -40,7 +40,6 @@ const clientSchema = new Schema({
     },
     email:{
         type: String,
-        require: true
     },
     timeStamp:{
         type: Date,
