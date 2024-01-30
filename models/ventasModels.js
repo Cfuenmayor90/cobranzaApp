@@ -62,12 +62,12 @@ const ventaSchema = new Schema({
     fechaInicio: {
         type: String,
         require: true
-    }
+    },
     
-    /*fechaFinal: {
-        type: Date,
+    fechaFinal: {
+        type: String,
         require: true
-    }*/
+    }
 });
 
 module.exports = mongoose.model('ventas', ventaSchema);

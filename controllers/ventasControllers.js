@@ -36,9 +36,17 @@ const cotizarPlan = async(req, res) => {
 };
 const guardarVentas = async(req,res) => {
  const newVenta = new ventas(req.body);
- var diaAc = new Date().toLocaleDateString("es-AR");
+ var diaAc = new Date().toLocaleDateString();
+ var fechaV = new Date();
+ var fechaVencimiento = "";
+ if (newVenta.plan === "diario") {
+  var DiaDom = parseInt(newVenta.cuotas/6);
+   fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas + DiaDom)));
+ } else {
+  fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas * 7)));
+ }
  newVenta.fechaInicio = diaAc;
- console.log('fecha actual '+ diaAc);
+ newVenta.fechaFinal = fechaVencimiento.toLocaleDateString();
  await newVenta.save();
  res.redirect('/ventas');
 };
