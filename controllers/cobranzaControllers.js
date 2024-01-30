@@ -35,14 +35,20 @@ const cargarCobranza = async (req, res) => {
   }
   const diaD = [dia, 'todos'];
   const coRu = verifyToken.numRuta;
-  console.log("fecha actual: " + diaD);
-  const esperado = await ventas.find({ cobRuta: verifyToken.numRuta, diaDeCobro: diaD});
+  const esperado = await ventas.find({ cobRuta: coRu, diaDeCobro: diaD});
+  const diaInici = new Date().toLocaleDateString();
+  const pagosActuales = await pagoN.where("fecha").gte(diaInici).where("cobRuta").equals(coRu);
+  console.log(pagosActuales);
+  var monCobrado = 0;
   var espeValor = 0;
+  pagosActuales.forEach(element => {
+      monCobrado = element.pago + monCobrado;
+  });
   esperado.forEach(element => {
       espeValor = element.cuota +espeValor;
   });
-   console.log(espeValor);
-  res.render("cobranza", { prestamos, espeValor, dia });
+   console.log("Esperado: "+ espeValor);
+  res.render("cobranza", { prestamos, espeValor,monCobrado, dia });
 };
 const pagoSave = async (req, res) => {
   const { codPres, pago } = req.body;
@@ -51,6 +57,9 @@ const pagoSave = async (req, res) => {
     console.log(prestamo);
     if (prestamo.mTotal > pago) {
       const pagoVa = new pagoN(req.body);
+      const fechaActual = new Date().toLocaleDateString("es-AR");
+      pagoVa.fecha = fechaActual;
+      pagoVa.cobRuta = prestamo.cobRuta;
       await pagoVa.save();
       prestamo.mTotal = prestamo.mTotal - pago;
       await ventas.findByIdAndUpdate({ _id: codPres }, prestamo);
@@ -71,7 +80,7 @@ const listaPagos = async (req, res) => {
     console.log(prestamo);
     const array = [];
     listPa.forEach((element) => {
-      const fechaString = element.fecha.toLocaleDateString();
+      const fechaString = element.fecha;
       const id = element._id;
       const pagO = element.pago;
       array.push({ fechaString, id, pagO });

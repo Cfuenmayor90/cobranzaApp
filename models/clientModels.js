@@ -8,7 +8,8 @@ const clientSchema = new Schema({
    },
     dni:{
         type: Number,
-        require: true
+        require: true,
+        unique: true
     },
     rubro:{
         type: String,

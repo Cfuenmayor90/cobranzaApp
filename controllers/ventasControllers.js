@@ -36,6 +36,9 @@ const cotizarPlan = async(req, res) => {
 };
 const guardarVentas = async(req,res) => {
  const newVenta = new ventas(req.body);
+ var diaAc = new Date().toLocaleDateString("es-AR");
+ newVenta.fechaInicio = diaAc;
+ console.log('fecha actual '+ diaAc);
  await newVenta.save();
  res.redirect('/ventas');
 };

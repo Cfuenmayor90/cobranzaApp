@@ -33,7 +33,7 @@
                   <th class="thTable">Saldo: ${{mTotal}}</th>
             </tr>
              <tr>
-                <th class="thTable">Inicio:</th>
+                <th class="thTable">Inicio: {{fechaInicio}}</th>
                  <th class="thTable">Vence:</th>
                   <th class="thTable">Dia de cobro: {{diaDeCobro}}</th>
             </tr>
@@ -43,7 +43,7 @@
             <tr class="trTablePres">
                  <th colspan="3" class="trTablePres">
                     Pago:
-                    <input type="number" class="inpPres" id="pago" name="pago">
+                    <input type="number" class="inpPres" id="pago" name="pago"  required>
                     <button type="submit" class="btnPagoCobra" style="background-color: blue; border: none; color:white"><i class="bi bi-check-lg"></i></button>
                     <a href="" class="btnPagoCobra" style="background-color: red;"><i class="bi bi-x"></i></a>
                     <a href="https://wa.me/549{{celular}}" class="btnPagoCobra" style="background-color: green;"><i class="bi bi-whatsapp"></i></a>
@@ -58,7 +58,7 @@
     <footer class="footerCobranza">
             <div class="divFooter">
                 <spam>Nombre Usuario</spam>
-                <spam>Cobrado= $0.0</spam>
+                <spam>Cobrado= ${{monCobrado}}</spam>
                 <spam>Esperado= ${{espeValor}}</spam>
             </div>
     

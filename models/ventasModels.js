@@ -59,10 +59,15 @@ const ventaSchema = new Schema({
         type: String,
         require: true
     },
-    timestamp: {
-        type: Date,
-        default: Date.now()
+    fechaInicio: {
+        type: String,
+        require: true
     }
+    
+    /*fechaFinal: {
+        type: Date,
+        require: true
+    }*/
 });
 
 module.exports = mongoose.model('ventas', ventaSchema);

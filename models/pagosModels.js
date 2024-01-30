@@ -6,9 +6,17 @@ const pagoSchema = new Schema({
         type: String,
         require: true
     },
+    cobRuta:{
+        type: Number,
+        require: true
+    },
     fecha: {
-        type: Date,
-        default: Date.now()
+        type: String,
+        require: true
+    },
+    timeStamp:{
+       type: Date,
+       default: new Date()
     },
     pago: {
         type: Number,
