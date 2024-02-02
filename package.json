@@ -20,7 +20,7 @@
     "hbs": "^4.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.1",
+    "node-cron": "^3.0.3",
     "path": "^0.12.7"
   }
-
 }

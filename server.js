@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const hbs = require('hbs');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const cron = require('node-cron');
 dotenv.config();
 require('./dataBase/conexion');
 
@@ -15,7 +16,7 @@ const vistasRoutes = require('./routes/vistasRoutes');
 const clientRoutes = require('./routes/clientRoutes');
 const settingsRoutes = require('./routes/settingsRoutes');
 const calculadoraRoutes = require('./routes/calculadoraRoutes');
-
+const {guardarBalanceDiario} = require('./controllers/cobranzaControllers');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -40,8 +41,11 @@ app.use(express.urlencoded({extended: false}));
 
  app.get('/', (req, res) => {
    res.render('index');
- })
-
+ });
+//Node-cron para ejecutar funciones en tiempo especifico
+ cron.schedule('10 21 * * *',() =>{
+      guardarBalanceDiario();
+ });
 
 app.listen(PORT, (req, res) => {
     console.log("servidor corriendo en el puerto" + PORT);

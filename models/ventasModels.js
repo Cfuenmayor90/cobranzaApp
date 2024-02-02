@@ -67,6 +67,9 @@ const ventaSchema = new Schema({
     fechaFinal: {
         type: String,
         require: true
+    },
+    fechaUltPago: {
+        type: String,
     }
 });
 

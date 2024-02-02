@@ -18,21 +18,24 @@ const crearCliente = async (req, res) => {
     dirParticular,
     celular,
     telefono,
-    email,
+    email
   } = req.body;
   try {
     console.log('Crear cliente');
-    let clienteNuevo = await client.findOne({dni});
-    const clientes = await client.find();
+    var clienteNuevo = await client.findOne({dni});
+    var clientes = await client.find().sort({timeStamp: -1}).limit(10);
     if (clienteNuevo) {
-      const mensaje = '¡El Cliente Ya Existe!'
+      var mensaje = '¡El Cliente Ya Existe!';
       return res.render('clientes', {mensaje, clientes});
     }
-    clienteNuevo = new client(req.body);
-    await clienteNuevo.save();
-    mensaje = '¡Cliente Guardado Con Exito!';
-    clientes = await client.find();
-     return res.render('clientes', {clientes, mensaje})
+    else{
+      clienteNuevo = new client(req.body);
+      await clienteNuevo.save();
+          mensaje = '¡Cliente Guardado Con Exito!';
+          clientes = await client.find().sort({timeStamp: -1}).limit(10);
+       return res.render('clientes', {clientes, mensaje});
+
+    }
   } catch (error) {
     const mensajeError = '¡Error En La Base De datos!'
     return res.render('error', {mensajeError});
@@ -44,7 +47,7 @@ const buscarCliente = async(req, res) => {
     const {dni} = req.body;
     console.log('dni cliente ' + dni);
     const clienteBuscado = await client.findOne({dni});
-    const clientes = await client.find().limit(4);
+    const clientes = await client.find().sort({timeStamp: -1}).limit(10);
     console.log(clienteBuscado);
     if (clienteBuscado) {
       return res.render('clientes', {clienteBuscado, clientes});
@@ -64,7 +67,7 @@ const cargarClientes = async(req, res) =>{
     const token =  req.cookies.token;
     const verifyToken = await verifyJWT(token);
     const role = verifyToken.role;
-    const clientes = await client.find().sort({timeStamp: -1}).limit(4);
+    const clientes = await client.find().sort({timeStamp: -1}).limit(10);
      return res.render('clientes', {clientes, role});
   } catch (error) {
     console.log(error);

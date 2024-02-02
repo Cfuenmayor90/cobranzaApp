@@ -6,9 +6,8 @@ const { validarIngresoUsuario,
     logOut,
 volverPrin,
 cargarUsuarios} = require('../controllers/usersControllers');
-
 const  {cargarClientes} = require('../controllers/clientControllers');
-
+const {cargarEstadisticas} = require('../controllers/estadisticasControllers');
 
 router.get('/principal', checkRole(['admin']), (req, res)=>{
     res.render('principal')
@@ -30,9 +29,7 @@ router.get('/RutasDeCobranza', checkRole(['admin']), (req, res)=>{
 router.get('/productos', checkRole(['admin', 'vendedor', 'cobrador']), (req, res)=>{
     res.render('productos')
 });
-router.get('/estadisticas', checkRole(['admin',  'vendedor', 'cobrador']),(req, res)=>{
-    res.render('estadisticas')
-});
+router.get('/estadisticas', checkRole(['admin',  'vendedor', 'cobrador']), cargarEstadisticas);
 router.get('/novedades', checkRole(['admin',  'vendedor', 'cobrador']), (req, res)=>{
     res.render('novedades')
 });

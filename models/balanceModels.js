@@ -1,24 +1,28 @@
 const mongoose = require('mongoose');
 const {Schema} = require('mongoose');
 
-const pagoSchema = new Schema({
-    codPres: {
-        type: String,
-        require: true
-    },
+const balanceSchema = new Schema({
     cobRuta:{
         type: Number,
+        require: true
+    },
+    nombre:{
+        type: String,
         require: true
     },
     fecha: {
         type: String,
         require: true
     },
-    pago: {
+    cobrado: {
+        type: Number,
+        require: true
+    },
+    esperado: {
         type: Number,
         require: true
     }
-
+    
 });
 
-module.exports = mongoose.model('pago', pagoSchema);
+module.exports = mongoose.model('balances', balanceSchema);

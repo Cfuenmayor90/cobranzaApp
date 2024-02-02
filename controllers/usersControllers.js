@@ -25,19 +25,15 @@ const crearUsuario = async (req, res) => {
     }
     //creamos el usuario en la base de datos
     const userNumRuta = await users.findOne().sort({numRuta: -1});
-    console.log(userNumRuta);
     const nRuta = userNumRuta.numRuta || 100;
 
      const nuRuta = nRuta + 1;
-    console.log(nRuta);
     usuarioNuevo = new users(req.body);
     usuarioNuevo.numRuta = nuRuta;
     const salt = bcrypt.genSaltSync(10);
     usuarioNuevo.password = bcrypt.hashSync(password, salt);
-    console.log(usuarioNuevo);
     await usuarioNuevo.save();
     res.redirect('/vistas/usuarios');
-   console.log(nRuta);
     
   } catch (error) {
     const mensajeError = 'Error en la Data Base';
@@ -48,10 +44,8 @@ const crearUsuario = async (req, res) => {
 const buscarUsuario = async (req, res) => {
   try {
     const {dni} = req.body;
-    console.log('dni user ' + dni);
     const usuarioBuscado = await users.findOne({dni});
     const usuarios = await users.find();
-    console.log(usuarioBuscado);
     if (usuarioBuscado) {
       return res.render('usuarios', {usuarioBuscado, usuarios});
     } else {
@@ -84,7 +78,7 @@ const validarIngresoUsuario = async (req, res) => {
           httpOnly: true
       });
       const rol = userIngreso.role;
-      const fecha = Date().toString();
+      const fecha = new Date().toLocaleDateString();
       switch (rol) {
         case 'admin':
           return res.render("principal", { nombre, fecha});
