@@ -9,7 +9,7 @@ const balances = require('../models/balanceModels');
 const cargarCobranza = async (req, res) => {
   const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
   const verifyToken = await verifyJWT(token);
-  const prestamos = await ventas.find({ cobRuta: verifyToken.numRuta });
+  const prestamos = await ventas.find({ cobRuta: verifyToken.numRuta}).sort({fechaUltPago: 1});
   var dia = "dia";
   switch (new Date().getDay()) {
     case 1 :

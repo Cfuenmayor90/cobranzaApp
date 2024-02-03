@@ -78,16 +78,15 @@ const validarIngresoUsuario = async (req, res) => {
           httpOnly: true
       });
       const rol = userIngreso.role;
-      const fecha = new Date().toLocaleDateString();
       switch (rol) {
         case 'admin':
-          return res.render("principal", { nombre, fecha});
+          return res.render("principal", { nombre});
           break;
         case 'cobrador':
-          return res.render("principalCobrador", { nombre, fecha });
+          return res.render("principalCobrador", { nombre});
           break;
         case 'vendedor':
-          return res.render("principalVendedor", { nombre, fecha });
+          return res.render("principalVendedor", { nombre});
           break;
         default:
           mensajeError = 'Role Inexistente';
