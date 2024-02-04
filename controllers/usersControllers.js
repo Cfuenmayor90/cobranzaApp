@@ -77,13 +77,14 @@ const validarIngresoUsuario = async (req, res) => {
       res.cookie('token', token, {
           httpOnly: true
       });
+      const fecha = new Date().toLocaleTimeString();
       const rol = userIngreso.role;
       switch (rol) {
         case 'admin':
           return res.render("principal", { nombre});
           break;
         case 'cobrador':
-          return res.render("principalCobrador", { nombre});
+          return res.render("principalCobrador", { nombre, fecha});
           break;
         case 'vendedor':
           return res.render("principalVendedor", { nombre});
