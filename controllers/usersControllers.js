@@ -77,7 +77,7 @@ const validarIngresoUsuario = async (req, res) => {
       res.cookie('token', token, {
           httpOnly: true
       });
-      const fecha = new Date().toLocaleTimeString();
+      const fecha = new Date();
       const rol = userIngreso.role;
       switch (rol) {
         case 'admin':
