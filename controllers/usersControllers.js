@@ -156,7 +156,7 @@ const volverPrin = async (req, res) => {
     } else {
       const rol = verifyToken.role;
       nombre = verifyToken.nombre;
-      fecha = Date().toString();
+      const fecha = new Date().toLocaleTimeString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
       switch (rol) {
         case 'admin':
          res.render("principal", {fecha, nombre});
