@@ -41,16 +41,20 @@ const cargarCobranza = async (req, res) => {
   const pagosActuales = await pagoN.find({cobRuta: coRu, fecha: diaInici});
   var monCobrado = 0;
   var espeValor = 0;
-  pagosActuales.forEach(element => {
-      monCobrado = element.pago + monCobrado;
-  });
+  var infoPagos = [];
+  for (let i = 0; i < pagosActuales.length; i++) {
+    const element = pagosActuales[i];
+    monCobrado = element.pago + monCobrado;
+    const infoPres = await ventas.findOne({_id:element.codPres});
+    infoPagos.push({nombre: infoPres.nombre, pago:element.pago})
+  };
   esperado.forEach(element => {
       espeValor = element.cuota +espeValor;
   });
   monCobrado = monCobrado.toFixed(2);
   espeValor = espeValor.toFixed(2);
   const efect = ((monCobrado / espeValor)*100).toFixed(2);
-  res.render("cobranza", { prestamos, espeValor,monCobrado, dia, efect });
+  res.render("cobranza", { prestamos, espeValor,monCobrado, dia, efect, infoPagos});
 };
 const pagoSave = async (req, res) => {
   const { codPres, pago } = req.body;
