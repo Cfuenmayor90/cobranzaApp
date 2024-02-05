@@ -66,7 +66,7 @@ const pagoSave = async (req, res) => {
       prestamo.mTotal = prestamo.mTotal - pago;
       prestamo.fechaUltPago = fechaActual;
       await ventas.findByIdAndUpdate({ _id: codPres }, prestamo);
-      res.send("todo ok");
+      res.redirect('/cobranza');
     } else {
       const mensajeError = "¡No puedes ingresar 2 o mas pagos para el mismo credito en un mismo dia, el monto del pago debe ser menor al saldo!";
       res.render("error", { mensajeError });
