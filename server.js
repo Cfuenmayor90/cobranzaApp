@@ -16,6 +16,7 @@ const vistasRoutes = require('./routes/vistasRoutes');
 const clientRoutes = require('./routes/clientRoutes');
 const settingsRoutes = require('./routes/settingsRoutes');
 const calculadoraRoutes = require('./routes/calculadoraRoutes');
+const generalRoutes = require('./routes/generalRoutes');
 const {guardarBalanceDiario} = require('./controllers/cobranzaControllers');
 
 const app = express();
@@ -38,6 +39,7 @@ app.use(express.urlencoded({extended: false}));
  app.use('/client', clientRoutes);
  app.use('/settings', settingsRoutes);
  app.use('/calculadora', calculadoraRoutes);
+ app.use('/general', generalRoutes);
 
  app.get('/', (req, res) => {
    res.render('index');
