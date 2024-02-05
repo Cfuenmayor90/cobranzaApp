@@ -7,10 +7,12 @@ const ventas = require('../models/ventasModels');
 
 
 const cargarVentas = async(req, res) => {
+    const fechaHoy = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
      const usuarios = await users.find();
      const planPrest = await setPrest.find({categoria: 'prestamo'}).sort({porcentaje: 1});
      const planProd = await setPrest.find({categoria: 'financiamiento'}).sort({porcentaje: 1});
-     return res.render('ventas', {usuarios, planPrest, planProd});
+     const ventasT = await ventas.find({fechaInicio: fechaHoy}).sort({fechaInicio: 1}).limit(100);
+     return res.render('ventas', {usuarios, planPrest, planProd, ventasT});
 }
 
 const cotizarPlan = async(req, res) => {

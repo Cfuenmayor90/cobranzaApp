@@ -11,7 +11,7 @@ const cargarCobranza = async (req, res) => {
   const verifyToken = await verifyJWT(token);
   const prestamos = await ventas.find({ cobRuta: verifyToken.numRuta}).sort({fechaUltPago: 1});
   var dia = "dia";
-  switch (new Date().getDay()) {
+  switch (new Date().getDay("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'})) {
     case 1 :
        dia = "lunes";
       break;
@@ -37,7 +37,7 @@ const cargarCobranza = async (req, res) => {
   const diaD = [dia, 'todos'];
   const coRu = verifyToken.numRuta;
   const esperado = await ventas.find({ cobRuta: coRu, diaDeCobro: diaD});
-  const diaInici = new Date().toLocaleDateString();
+  const diaInici = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
   const pagosActuales = await pagoN.find({cobRuta: coRu, fecha: diaInici});
   var monCobrado = 0;
   var espeValor = 0;
@@ -55,7 +55,7 @@ const cargarCobranza = async (req, res) => {
 const pagoSave = async (req, res) => {
   const { codPres, pago } = req.body;
   try {
-    var fechaActual = new Date().toLocaleDateString();
+    var fechaActual = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     const prestamo = await ventas.findById({ _id: codPres });
     if (prestamo.mTotal > pago && fechaActual !== prestamo.fechaUltPago) {
       const pagoVa = new pagoN(req.body);
@@ -94,10 +94,10 @@ const listaPagos = async (req, res) => {
 //funcion para guardar los balances diarios
 const guardarBalanceDiario = async() =>{
   try {
-    var fechaAc = new Date().toLocaleDateString();
+    var fechaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     const buscarBalances = await balances.findOne({fecha: fechaAc});
     console.log("node cron cobranza");
-    const diA = new Date().getDay();
+    const diA = new Date().getDay("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     if (diA !==0 && !buscarBalances) {
       const ruCobro = await users.find({role:"cobrador"});
       var dia = "dia";
