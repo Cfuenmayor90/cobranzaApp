@@ -56,6 +56,7 @@ const pagoSave = async (req, res) => {
   const { codPres, pago } = req.body;
   try {
     var fechaActual = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+    console.log(fechaActual);
     const prestamo = await ventas.findById({ _id: codPres });
     if (prestamo.mTotal > pago && fechaActual !== prestamo.fechaUltPago) {
       const pagoVa = new pagoN(req.body);
