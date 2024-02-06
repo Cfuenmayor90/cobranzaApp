@@ -1,0 +1,40 @@
+
+    <nav class="navegacion">
+        <div>
+           <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a> 
+        </div>
+        <div>
+           <span>Cobranza</span>
+        </div>
+        <div class="iconMenuHamburguesa">
+            <i class="bi bi-menu-button-wide-fill"></i>
+        </div>
+    </nav>
+
+    <div class="contPres">
+      
+        <div class="divClienteBuscar">
+        <h3 class="tituloForm">Pagos Ingresados</h3>
+      </div>
+      <div class="tarjUser">
+      <br>
+        <table class="tableUsuarios" style="text-align: left;">
+          <tr class="tableUsuariosTr">
+          <th class="tableUsuariosThTitulo">Nombre</th>
+          <th class="tableUsuariosThTitulo">Pago</th>
+          </tr>
+        {{#each infoPagos}}
+          <tr>
+             <th class="tableUsuariosThRespuesta">{{nombre}}</th>
+             <th class="tableUsuariosThRespuesta">{{pago}}</th>
+          </tr>
+        {{/each}}
+         <tr>
+             <th class="tableUsuariosThTitulo">Total:</th>
+             <th class="tableUsuariosThRespuesta">{{monCobrado}}</th>
+          </tr>
+        </table>
+        <br>
+      </div>  
+    </div>
+

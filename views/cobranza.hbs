@@ -56,25 +56,10 @@
         </form>
         {{/each}}
         <br>
-        <div class="divClienteBuscar">
-        <h3 class="tituloForm">Pagos Ingresados</h3>
+        <div class="divClienteBuscar" style="height: auto; padding: 1.5em;">
+        <a href="/cobranza/pagoListDiario" class="btnError">Ver Pagos Totales</a>
       </div>
-      <div class="tarjUser">
-      <br>
-        <table class="tableUsuarios" style="text-align: left;">
-          <tr class="tableUsuariosTr">
-          <th class="tableUsuariosThTitulo">Nombre</th>
-          <th class="tableUsuariosThTitulo">Pago</th>
-          </tr>
-        {{#each infoPagos}}
-          <tr>
-             <th class="tableUsuariosThRespuesta">{{nombre}}</th>
-             <th class="tableUsuariosThRespuesta">{{pago}}</th>
-          </tr>
-        {{/each}}
-        </table>
-        <br>
-      </div>  
+     
     </div>
 
     <footer class="footerCobranza">
@@ -84,7 +69,7 @@
             </div>
     
             <div class="divFooter">
-              <spam>Dia: {{hora}}</spam>
+              <spam>Hora: {{timeInici}}</spam>
               <spam>Efectividad= {{efect}}%</spam>
             </div>
     </footer>

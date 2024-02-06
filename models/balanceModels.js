@@ -21,6 +21,9 @@ const balanceSchema = new Schema({
     esperado: {
         type: Number,
         require: true
+    },
+    categoria: {
+        type: String
     }
     
 });

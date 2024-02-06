@@ -5,71 +5,37 @@ const ventas = require("../models/ventasModels");
 const pagoN = require("../models/pagosModels");
 const { generarJWT, verifyJWT } = require("../middleware/jwt");
 const balances = require('../models/balanceModels');
-const dayjs = require('dayjs');
-const utc = require("dayjs/plugin/utc");
-const timezone = require("dayjs/plugin/timezone");
-const advanced = require("dayjs/plugin/advancedFormat");
 
-dayjs.extend(timezone)
-dayjs.extend(utc)
-dayjs.extend(advanced)
-dayjs().tz('America/Buenos_Aires').format('DD/MM/YYYY z')
+
 
 const cargarCobranza = async (req, res) => {
-  const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
-  const verifyToken = await verifyJWT(token);
-  const prestamos = await ventas.find({ cobRuta: verifyToken.numRuta}).sort({fechaUltPago: 1});
-  var dia = "dia";
-  const diaDat = dayjs().day();
-  
-  console.log("dia cobranza " + diaDat);
-  switch (diaDat) {
-    case 1 :
-       dia = "lunes";
-      break;
-    case 2 :
-         dia = "martes";
-      break;
-    case 3 :
-     dia = "miercoles";
-      break;
-    case 4 :
-     dia = "jueves";
-      break;
-    case 5 :
-      dia = "viernes" ;
-      break;
-    case 6 :
-      dia = "sabado";
-      break;
-    default:
-        dia = "domingo";
-      break;
+  try {
+    const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
+    const verifyToken = await verifyJWT(token);
+    const prestamos = await ventas.find({ cobRuta: verifyToken.numRuta}).sort({fechaUltPago: 1});
+    
+    const coRu = verifyToken.numRuta;
+    const diaInici = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+    const timeInici = new Date().toLocaleTimeString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+    const espe = await balances.findOne({ cobRuta:coRu, fecha:diaInici, categoria:"esperado"});
+    const pagosActuales = await pagoN.find({cobRuta:coRu, fecha: diaInici});
+    var monCobrado = 0;
+   var espeValor = (espe.esperado).toFixed(2);
+    var infoPagos = [];
+    for (let i = 0; i < pagosActuales.length; i++) {
+      const element = pagosActuales[i];
+      monCobrado = element.pago + monCobrado;
+      const infoPres = await ventas.findOne({_id:element.codPres});
+      infoPagos.push({nombre: infoPres.nombre, pago:element.pago});
+    };
+    monCobrado = monCobrado.toFixed(2);
+   //espeValor = espeValor.toFixed(2);
+    const efect = ((monCobrado / espeValor)*100).toFixed(2);
+    res.render("cobranza", { prestamos, espeValor,monCobrado, efect, infoPagos,diaInici, timeInici});
+    
+  } catch (error) {
+    
   }
-  const diaD = [dia, 'todos'];
-  const coRu = verifyToken.numRuta;
-  const esperado = await ventas.find({ cobRuta: coRu, diaDeCobro: diaD});
-  const diaInici = new Date().toLocaleString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-
-  const hora = dayjs().hour();
-  console.log("hora: " + hora);
-  const pagosActuales = await pagoN.find({cobRuta: coRu, fecha: diaInici});
-  var monCobrado = 0;
-  var espeValor = 0;
-  var infoPagos = [];
-  for (let i = 0; i < pagosActuales.length; i++) {
-    const element = pagosActuales[i];
-    monCobrado = element.pago + monCobrado;
-    const infoPres = await ventas.findOne({_id:element.codPres});
-    infoPagos.push({nombre: infoPres.nombre, pago:element.pago})
-  };
-  esperado.forEach(element => {
-      espeValor = element.cuota +espeValor;
-  });
-  monCobrado = monCobrado.toFixed(2);
-  espeValor = espeValor.toFixed(2);
-  const efect = ((monCobrado / espeValor)*100).toFixed(2);
-  res.render("cobranza", { prestamos, espeValor,monCobrado, dia, efect, infoPagos, hora});
 };
 const pagoSave = async (req, res) => {
   const { codPres, pago } = req.body;
@@ -94,6 +60,28 @@ const pagoSave = async (req, res) => {
     res.render("error");
   }
 };
+const listaPagosDiarios = async(req, res) =>{
+  try {
+    const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
+    const verifyToken = await verifyJWT(token);
+    const coRu = verifyToken.numRuta;
+    const diaInici = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+    const pagosActuales = await pagoN.find({cobRuta:coRu, fecha: diaInici});
+    var monCobrado = 0;
+    var infoPagos = [];
+    for (let i = 0; i < pagosActuales.length; i++) {
+      const element = pagosActuales[i];
+      monCobrado = element.pago + monCobrado;
+      const infoPres = await ventas.findOne({_id:element.codPres});
+      infoPagos.push({nombre: infoPres.nombre, pago:element.pago});
+    };
+    monCobrado = monCobrado.toFixed(2);
+    res.render("pagosListDiarios", { monCobrado, infoPagos});
+    
+  } catch (error) {
+    
+  }
+}
 const listaPagos = async (req, res) => {
   try {
     const { id } = req.params;
@@ -111,13 +99,65 @@ const listaPagos = async (req, res) => {
     return res.render("pagosList", { array, prestamo });
   } catch (error) {}
 };
+//funcion para guardar el esperado diario
+const esperadoDiario = async(req, res) =>{
+     try {
+      var fechaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+      const buscarEsperado = await balances.findOne({fecha: fechaAc, categoria: "esperado"});
+      const diA = new Date().getDay();
+      if (diA !==0 && !buscarEsperado) {
+        const ruCobro = await users.find({role:"cobrador"});
+        var dia = "dia";
+    switch (diA) {
+      case 1 :
+         dia = "lunes";
+        break;
+      case 2 :
+           dia = "martes";
+        break;
+      case 3 :
+       dia = "miercoles";
+        break;
+      case 4 :
+       dia = "jueves";
+        break;
+      case 5 :
+        dia = "viernes" ;
+        break;
+      case 6 :
+        dia = "sabado";
+        break;
+      default:
+          dia = "domingo";
+        break;
+    }
+    const diaD = [dia, 'todos'];
+    for (let i = 0; i < ruCobro.length; i++) {
+      const element = ruCobro[i];
+      var nRuta = element.numRuta;
+      var esperado = await ventas.find({ cobRuta: nRuta, diaDeCobro: diaD});
+      var espeT = 0;
+      esperado.forEach(element => {
+        espeT = element.cuota + espeT;
+      });
+      console.log("cron esperado total:" + espeT.toFixed(2));
+      const balanceNew = new balances({cobRuta: nRuta, fecha: fechaAc, nombre: element.nombre, esperado: espeT.toFixed(2), categoria: "esperado" });
+      await balanceNew.save();
+      console.log(balanceNew);
+    };  
+  }
+  
+     } catch (error) {
+      
+     }
+};
 //funcion para guardar los balances diarios
 const guardarBalanceDiario = async() =>{
   try {
     var fechaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-    const buscarBalances = await balances.findOne({fecha: fechaAc});
+    const buscarBalances = await balances.findOne({fecha: fechaAc, categoria: "balance_Diario"});
     console.log("node cron cobranza");
-    const diA = new Date().getDay("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+    const diA = new Date().getDay();
     if (diA !==0 && !buscarBalances) {
       const ruCobro = await users.find({role:"cobrador"});
       var dia = "dia";
@@ -150,20 +190,14 @@ const guardarBalanceDiario = async() =>{
         const element = ruCobro[i];
         var nRuta = element.numRuta;
         var pagos = await pagoN.find({cobRuta: nRuta, fecha: fechaAc});
-        var esperado = await ventas.find({ cobRuta: nRuta, diaDeCobro: diaD});
+        var esperado = await balances.findOne({ cobRuta: nRuta, diaDeCobro: diaD, categoria: "esperado"});
         var pagosT = 0;
         var espeT = 0;
         pagos.forEach(element => {
           pagosT = element.pago + pagosT;
         });
-        esperado.forEach(element => {
-          espeT = element.cuota + espeT;
-        });
-        console.log("cron pagos totales:" + pagosT.toFixed(2));
-        console.log("cron esperado total:" + espeT.toFixed(2));
-        const balanceNew = new balances({cobRuta: nRuta, fecha: fechaAc, nombre: element.nombre, cobrado: pagosT.toFixed(2), esperado: espeT.toFixed(2) });
+        const balanceNew = new balances({cobRuta: nRuta, fecha: fechaAc, nombre: element.nombre, cobrado: pagosT.toFixed(2), esperado: esperado.esperado.toFixed(2) });
         await balanceNew.save();
-        console.log(balanceNew);
       };  
     }
     
@@ -172,4 +206,4 @@ const guardarBalanceDiario = async() =>{
   }
 };
 
-module.exports = { cargarCobranza, pagoSave, listaPagos, guardarBalanceDiario };
+module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario };
