@@ -11,7 +11,10 @@ const cargarCobranza = async (req, res) => {
   const verifyToken = await verifyJWT(token);
   const prestamos = await ventas.find({ cobRuta: verifyToken.numRuta}).sort({fechaUltPago: 1});
   var dia = "dia";
-  switch (new Date().getDay("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'})) {
+  var diaDate = new Date().getDay("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+ 
+  console.log("dia cobranza " + diaDate);
+  switch (1) {
     case 1 :
        dia = "lunes";
       break;
@@ -54,7 +57,7 @@ const cargarCobranza = async (req, res) => {
   monCobrado = monCobrado.toFixed(2);
   espeValor = espeValor.toFixed(2);
   const efect = ((monCobrado / espeValor)*100).toFixed(2);
-  res.render("cobranza", { prestamos, espeValor,monCobrado, dia, efect, infoPagos});
+  res.render("cobranza", { prestamos, espeValor,monCobrado, dia, efect, infoPagos, diaDate});
 };
 const pagoSave = async (req, res) => {
   const { codPres, pago } = req.body;
