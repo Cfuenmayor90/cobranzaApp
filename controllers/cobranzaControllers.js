@@ -51,7 +51,7 @@ const cargarCobranza = async (req, res) => {
   const esperado = await ventas.find({ cobRuta: coRu, diaDeCobro: diaD});
   const diaInici = new Date().toLocaleString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
 
-  const hora = dayjs();
+  const hora = dayjs().hour();
   console.log("hora: " + hora);
   const pagosActuales = await pagoN.find({cobRuta: coRu, fecha: diaInici});
   var monCobrado = 0;
