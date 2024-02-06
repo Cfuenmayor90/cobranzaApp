@@ -13,7 +13,7 @@ const advanced = require("dayjs/plugin/advancedFormat");
 dayjs.extend(timezone)
 dayjs.extend(utc)
 dayjs.extend(advanced)
-dayjs().tz('America/Argentina/Buenos_Aires').format('DD/MM/YYYY z')
+dayjs().tz('America/Buenos_Aires').format('DD/MM/YYYY z')
 
 const cargarCobranza = async (req, res) => {
   const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
@@ -51,7 +51,8 @@ const cargarCobranza = async (req, res) => {
   const esperado = await ventas.find({ cobRuta: coRu, diaDeCobro: diaD});
   const diaInici = new Date().toLocaleString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
 
-  const hora = dayjs().hour();
+  const hora = dayjs();
+  console.log("hora: " + hora);
   const pagosActuales = await pagoN.find({cobRuta: coRu, fecha: diaInici});
   var monCobrado = 0;
   var espeValor = 0;
