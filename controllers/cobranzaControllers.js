@@ -5,14 +5,23 @@ const ventas = require("../models/ventasModels");
 const pagoN = require("../models/pagosModels");
 const { generarJWT, verifyJWT } = require("../middleware/jwt");
 const balances = require('../models/balanceModels');
+const dayjs = require('dayjs');
+const utc = require("dayjs/plugin/utc");
+const timezone = require("dayjs/plugin/timezone");
+const advanced = require("dayjs/plugin/advancedFormat");
+
+dayjs.extend(timezone)
+dayjs.extend(utc)
+dayjs.extend(advanced)
+dayjs().tz('America/Argentina/Buenos_Aires').format('DD/MM/YYYY z')
 
 const cargarCobranza = async (req, res) => {
   const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
   const verifyToken = await verifyJWT(token);
   const prestamos = await ventas.find({ cobRuta: verifyToken.numRuta}).sort({fechaUltPago: 1});
   var dia = "dia";
-  var diaDat = new Date().getDay().toLocaleString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-
+  const diaDat = dayjs().day();
+  
   console.log("dia cobranza " + diaDat);
   switch (diaDat) {
     case 1 :
@@ -40,7 +49,9 @@ const cargarCobranza = async (req, res) => {
   const diaD = [dia, 'todos'];
   const coRu = verifyToken.numRuta;
   const esperado = await ventas.find({ cobRuta: coRu, diaDeCobro: diaD});
-  const diaInici = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+  const diaInici = new Date().toLocaleString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+
+  const hora = dayjs().hour();
   const pagosActuales = await pagoN.find({cobRuta: coRu, fecha: diaInici});
   var monCobrado = 0;
   var espeValor = 0;
@@ -57,7 +68,7 @@ const cargarCobranza = async (req, res) => {
   monCobrado = monCobrado.toFixed(2);
   espeValor = espeValor.toFixed(2);
   const efect = ((monCobrado / espeValor)*100).toFixed(2);
-  res.render("cobranza", { prestamos, espeValor,monCobrado, dia, efect, infoPagos, diaDat});
+  res.render("cobranza", { prestamos, espeValor,monCobrado, dia, efect, infoPagos, hora});
 };
 const pagoSave = async (req, res) => {
   const { codPres, pago } = req.body;
