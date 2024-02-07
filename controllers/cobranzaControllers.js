@@ -165,8 +165,7 @@ const guardarBalanceDiario = async() =>{
     if (diA !==0 && !buscarBalances) {
       const ruCobro = await users.find({role:"cobrador"});
       var dia = "dia";
-      console.log("node cron cobranza if ok");
-  
+     
      for (let i = 0; i < ruCobro.length; i++) {
         const element = ruCobro[i];
         var nRuta = element.numRuta;
@@ -187,7 +186,14 @@ const guardarBalanceDiario = async() =>{
         ganan = (monTotal-venTotal).toFixed(2);
         const balanceNew = new balances({cobRuta: nRuta, fecha: fechaAc, nombre: element.nombre, cobrado: pagosT.toFixed(2), esperado: esperad.esperado.toFixed(2), categoria: "balance_diario", ventas: venTotal, ganancia: ganan });
         await balanceNew.save();
-      };  
+      }; 
+      //Codigo para eliminar los prestamos y pagos cancelados
+      const prestCancelados = await ventas.find({mTotal: 0});
+      for (let i = 0; i < prestCancelados.length; i++) {
+        const element = prestCancelados[i];
+         await pagoN.deleteMany({codPres: element._id});
+         await ventas.deleteMany({_id: element._id});
+      } 
     }
     
   } catch (error) {
