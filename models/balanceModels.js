@@ -15,12 +15,20 @@ const balanceSchema = new Schema({
         require: true
     },
     cobrado: {
-        type: Number,
-        require: true
+        type: Number
     },
     esperado: {
         type: Number,
         require: true
+    },
+    ventas:{
+        type: Number
+    },
+    ganancia:{
+        type: Number
+    },
+    gastos:{
+        type: Number
     },
     categoria: {
         type: String

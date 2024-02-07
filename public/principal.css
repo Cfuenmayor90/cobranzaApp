@@ -1,815 +1,805 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 .navegacion {
-
-    background-color: #009cfb;
-    display: flex;
-    height: 50px;
-    width: 100%;
-    justify-content: space-around;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    font-size: 30px;
-    color: white;
-    border-bottom: 2px solid orangered;
-
+  background-color: #009cfb;
+  display: flex;
+  height: 50px;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  font-size: 30px;
+  color: white;
+  border-bottom: 2px solid orangered;
 }
 
 .logoNav {
-    width: 150px;
+  width: 150px;
 }
 
 body {
-
-    background-color: gainsboro;
-    font-family: 'Roboto', sans-serif;
-    font-family: 'Roboto Condensed', sans-serif;
+  background-color: gainsboro;
+  font-family: "Roboto", sans-serif;
+  font-family: "Roboto Condensed", sans-serif;
 }
 
 .contMayorPrin {
-    display: flex;
-    justify-content: space-evenly;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .ContBotones {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    width: 20%;
-    height: auto;
-    padding: 1.5em;
-    margin: 1em;
-    background-color: rgb(103, 103, 151);
-
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  width: 20%;
+  height: auto;
+  padding: 1.5em;
+  margin: 1em;
+  background-color: rgb(103, 103, 151);
 }
 
 .sectionContPrin {
-    width: 80%;
-    height: 600px;
-    border-radius: 3px;
-    margin: 1em;
+  width: 80%;
+  height: 600px;
+  border-radius: 3px;
+  margin: 1em;
 }
 
 .divBarraPrincipal {
-    width: 100%;
-    height: auto;
-    background-color: rgb(103, 103, 151);
-    text-align: left;
-    padding: 5px;
-    color: white;
-
+  width: 100%;
+  height: auto;
+  background-color: rgb(103, 103, 151);
+  text-align: left;
+  padding: 5px;
+  color: white;
 }
 
 .botonesMenuPrincipal {
-    width: 120px;
-    height: 100px;
-    background-color: white;
-    padding: 5px;
-    font-size: 40px;
-    text-align: center;
-    border: 4px solid rgb(103, 103, 151);
-    border-radius: 5px;
-    color: black;
+  width: 120px;
+  height: 100px;
+  background-color: white;
+  padding: 5px;
+  font-size: 40px;
+  text-align: center;
+  border: 4px solid rgb(103, 103, 151);
+  border-radius: 5px;
+  color: black;
 }
 
 .botonesMenuPrincipal:hover {
-    background-color: orangered;
-    color: whitesmoke;
-    font-size: 50px;
-    border-color: orangered;
-    border-radius: 5px;
+  background-color: orangered;
+  color: whitesmoke;
+  font-size: 50px;
+  border-color: orangered;
+  border-radius: 5px;
 }
 
 .tituloBtn {
-    font-size: 15px;
+  font-size: 15px;
 }
 
 a {
-    text-decoration: none;
-    color: white;
+  text-decoration: none;
+  color: white;
+}
+/*codigo CobranzaGeneral*/
+.tableCobGeneral {
+  width: 90%;
+  border: 1px solid green;
+  margin: 0.5em auto;
+}
+.thTabletitleCobGen {
+  width: 20%;
+  border-bottom: 1px solid green;
+  border-right: 1px solid green;
+  text-align: left;
+  background-color: rgb(195, 255, 207);
+  padding: 0.3em;
+}
+.thTableCobGene {
+  width: 30%;
+  border-bottom: 1px solid green;
+  border-right: 1px solid green;
+  background-color: white;
 }
 
 /*Codigo de cobranza.html*/
-.contPres{
-    width: 90%;
-    height: auto;
-    margin: 1em auto;
-    background-color: white;
+.contPres {
+  width: 90%;
+  height: auto;
+  margin: 1em auto;
+  background-color: white;
 }
-.tablePres{
-    text-align: left;
-    width: 100%;
-   /* border: 1px solid black;*/
+.tablePres {
+  text-align: left;
+  width: 100%;
+  /* border: 1px solid black;*/
 }
-.thTitleTablePres{
-background-color: #bfe5fd; 
-font-size: 20px;
-padding: 0.2em;
+.thTitleTablePres {
+  background-color: #bfe5fd;
+  font-size: 20px;
+  padding: 0.2em;
 }
-.thTable{
-    padding: 0.2em;
+.thTable {
+  padding: 0.2em;
 }
-.trTablePres{
+.trTablePres {
   padding: 0.2em;
   font-size: 20px;
   text-align: center;
 }
-.inpPres{
-    width: 30%;
-    font-size: 20px;
-    text-align: center;
-    border: 1px solid black;
+.inpPres {
+  width: 30%;
+  font-size: 20px;
+  text-align: center;
+  border: 1px solid black;
 }
-.btnPagoCobra{
-    font-size: 20px;
-    padding: 0.2em 0.5em;
-    width: 40px;
-    border-radius: 2px;
-    background-color: #310f53;
+.btnPagoCobra {
+  font-size: 20px;
+  padding: 0.2em 0.5em;
+  width: 40px;
+  border-radius: 2px;
+  background-color: #310f53;
 }
 .footerCobranza {
-    width: 100%;
-    height: auto;
-    background-color: #009cfb;
-    color: white;
-    display: flex;
-    padding: 5px 10px;
-    justify-content: space-around;
-    position: sticky;
-    bottom: 0;
-    left: 0;
-    border-top: 2px solid orangered;
+  width: 100%;
+  height: auto;
+  background-color: #009cfb;
+  color: white;
+  display: flex;
+  padding: 5px 10px;
+  justify-content: space-around;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  border-top: 2px solid orangered;
 }
 .divFooter {
-    display: flex;
-    flex-direction: column;
-    position: sticky;
-    bottom: 0;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  bottom: 0;
 }
-
 
 /*Codigo de clientes.html*/
 .contMayorCli {
-    display: flex;
-    justify-content: space-evenly;
-    width: 100%;
-
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
 }
 
 .formCliente {
-    background-color: whitesmoke;
-    width: 30%;
-    margin: 1em;
+  background-color: whitesmoke;
+  width: 30%;
+  margin: 1em;
 }
 
 .formCliente2 {
-    padding: 2em;
+  padding: 2em;
 }
 
 .sectionContClientes {
-    width: 70%;
-    height: 450px;
-    margin: 1em;
-    border-radius: 3px;
+  width: 70%;
+  height: 450px;
+  margin: 1em;
+  border-radius: 3px;
 }
 
 .divClienteBuscar {
-    width: 100%;
-    height: auto;
-    background-color: #b9e4ff;
-    text-align: center;
-    padding: 5px;
+  width: 100%;
+  height: auto;
+  background-color: #b9e4ff;
+  text-align: center;
+  padding: 5px;
 }
 
 .divClienteBuscar2 {
-    width: 100%;
-    height: auto;
-    background-color: whitesmoke;
-    text-align: center;
-    padding: 5px;
+  width: 100%;
+  height: auto;
+  background-color: whitesmoke;
+  text-align: center;
+  padding: 5px;
 }
 
-
 .inpBuscarClientes {
-    width: 220px;
-    height: 30px;
-    padding: 2px;
-    text-align: center;
-    color: grey;
-    margin-top: 5px;
-    border-radius: 3px;
-    border: 1px solid #009cfb;
+  width: 220px;
+  height: 30px;
+  padding: 2px;
+  text-align: center;
+  color: grey;
+  margin-top: 5px;
+  border-radius: 3px;
+  border: 1px solid #009cfb;
 }
 
 .btnBuscarCliente {
-    width: 30px;
-    height: 30px;
-    background-color: green;
-    color: white;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    margin-left: -4px;
-
+  width: 30px;
+  height: 30px;
+  background-color: green;
+  color: white;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin-left: -4px;
 }
 
 .tarjCli {
-    width: 100%;
-    height: auto;
-    background-color: whitesmoke;
-    padding: 2em;
+  width: 100%;
+  height: auto;
+  background-color: whitesmoke;
+  padding: 2em;
 }
 
 .tituloFormCli {
-    width: 100%;
-    height: 50px;
-    background-color: #009cfb;
+  width: 100%;
+  height: 50px;
+  background-color: #009cfb;
 }
-
-
-
 
 /*codigo formulario.html*/
 
 .formulario {
-    width: 80%;
-    height: auto;
-    margin: auto;
-    margin-top: 10px;
-    background-color: white;
-    padding: 10px;
+  width: 80%;
+  height: auto;
+  margin: auto;
+  margin-top: 10px;
+  background-color: white;
+  padding: 10px;
 }
 
 .inpForm {
-    width: 100%;
-    padding: 3px;
-    margin-bottom: 10px;
-    border: 2px solid #009cfb;
-    border-radius: 3px;
-
+  width: 100%;
+  padding: 3px;
+  margin-bottom: 10px;
+  border: 2px solid #009cfb;
+  border-radius: 3px;
 }
 
 .title {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .btnFormReset {
-    width: 50%;
-    font-size: 20px;
-    background-color: red;
-    border: 3px solid whitesmoke;
-    color: white;
-    padding: 0.5em;
-    text-align: center;
-
+  width: 50%;
+  font-size: 20px;
+  background-color: red;
+  border: 3px solid whitesmoke;
+  color: white;
+  padding: 0.5em;
+  text-align: center;
 }
 
 .btnFormAceptar {
-    width: 50%;
-    font-size: 20px;
-    background-color: green;
-    border: 3px solid whitesmoke;
-    color: white;
-    padding: 0.5em;
+  width: 50%;
+  font-size: 20px;
+  background-color: green;
+  border: 3px solid whitesmoke;
+  color: white;
+  padding: 0.5em;
 }
 
 .btnFormReset:hover {
-    border-color: red;
-    cursor: pointer;
+  border-color: red;
+  cursor: pointer;
 }
 
 .btnFormAceptar:hover {
-    border-color: green;
-    cursor: pointer;
+  border-color: green;
+  cursor: pointer;
 }
 
 .cantBtnForm {
-    margin-top: 1em;
-    display: flex;
-
+  margin-top: 1em;
+  display: flex;
 }
 
 /*Codigo productos.html*/
 .contProduc {
-    background-color: green;
-    width: 80%;
-    height: 400px;
+  background-color: green;
+  width: 80%;
+  height: 400px;
 }
 
 .summaryProd {
-    text-align: center;
-    width: 400px;
-    background-color: darkorange;
-    padding: 1em;
+  text-align: center;
+  width: 400px;
+  background-color: darkorange;
+  padding: 1em;
 }
 
 .detailsProd {
-    width: 400px;
-    background-color: whitesmoke;
-    padding: 2em;
-
+  width: 400px;
+  background-color: whitesmoke;
+  padding: 2em;
 }
 
 /*Codigo ventas.html*/
 .formVenta {
-    background-color: whitesmoke;
-    width: 400px;
-    padding: 3em;
-    margin: 2em;
-
+  background-color: whitesmoke;
+  width: 400px;
+  padding: 3em;
+  margin: 2em;
 }
 
 /*Error */
 .btnError {
-    width: 100%;
-    background-color: greenyellow;
-    color: black;
-    text-align: center;
-    padding: 1em;
-    font-size: 2em;
+  width: 100%;
+  background-color: greenyellow;
+  color: black;
+  text-align: center;
+  padding: 1em;
+  font-size: 2em;
 }
 
 .divError {
-    background-color: whitesmoke;
-    width: 500px;
-    height: auto;
-    padding: 3em;
-    margin: auto;
-    margin-top: 2em;
-    text-align: center;
-
-
+  background-color: whitesmoke;
+  width: 500px;
+  height: auto;
+  padding: 3em;
+  margin: auto;
+  margin-top: 2em;
+  text-align: center;
 }
 
 .labelError {
-    color: red;
-    font-size: 6em;
-
+  color: red;
+  font-size: 6em;
 }
 
 .h2Error {
-    color: rgb(27, 27, 27);
-    font-size: 3em;
-    padding: 1em;
+  color: rgb(27, 27, 27);
+  font-size: 3em;
+  padding: 1em;
 }
 
 /*codigo index*/
 .logoNav {
-    width: 200px;
-
+  width: 200px;
 }
 
 .formIngresoLogin {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    height: 350px;
-    text-align: center;
-    background-color: #009cfb;
-    border-bottom-right-radius: 30px;
-    padding: 40px;
-    margin: auto;
-    margin-top: 80px;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 350px;
+  text-align: center;
+  background-color: #009cfb;
+  border-bottom-right-radius: 30px;
+  padding: 40px;
+  margin: auto;
+  margin-top: 80px;
 }
 
 .divInp {
-    text-align: start;
-    width: 100%;
-    margin-top: 20px;
+  text-align: start;
+  width: 100%;
+  margin-top: 20px;
 }
 
 .inpFormLogin {
-    width: 100%;
-    height: 30px;
-    margin: 0;
+  width: 100%;
+  height: 30px;
+  margin: 0;
 }
 
 .btnAceptar {
-    width: 100%;
-    height: 35px;
-    margin: 0;
-    background-color: #db0e00;
-    color: white;
-    border-bottom-right-radius: 15px;
-    margin-top: 20px;
-    margin-bottom: 10px;
-    border: none;
-
+  width: 100%;
+  height: 35px;
+  margin: 0;
+  background-color: #db0e00;
+  color: white;
+  border-bottom-right-radius: 15px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border: none;
 }
 
 .tituloInpLogin {
-    color: white;
+  color: white;
 }
 
 .tituloFormLogin {
-    color: white;
-    font-style: italic;
-
+  color: white;
+  font-style: italic;
 }
 
 .footerIngresoLogin {
-    height: 80px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    font-size: 20px;
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.294);
-    padding-top: 5px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  font-size: 20px;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.294);
+  padding-top: 5px;
 }
 
 .divContactosFooterLogin {
-
-    width: 120px;
-    display: flex;
-    justify-content: space-around;
-    margin: auto;
+  width: 120px;
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
 }
 
 /*Usuarios*/
 .tablaBuscar {
-    width: auto;
-    background-color: white;
-    margin: auto;
-    border: 1px solid #009cfb;
-
+  width: auto;
+  background-color: white;
+  margin: auto;
+  border: 1px solid #009cfb;
 }
 
 .tdTablaBuscar {
-    background-color: #b9e4ff;
-    color: rgb(0, 0, 0);
-    padding: 0.5em;
-    border-bottom: 1px solid #009cfb;
-    border-right: 1px solid #009cfb;
+  background-color: #b9e4ff;
+  color: rgb(0, 0, 0);
+  padding: 0.5em;
+  border-bottom: 1px solid #009cfb;
+  border-right: 1px solid #009cfb;
 }
 
 .tdResTablaBuscar {
-    padding: 0.5em;
-    min-width: 15em;
-    border-bottom: 1px solid #009cfb;
+  padding: 0.5em;
+  min-width: 15em;
+  border-bottom: 1px solid #009cfb;
 }
 
 .thContBtn {
-    padding: 1em;
-    background-color: #b9e4ff;
+  padding: 1em;
+  background-color: #b9e4ff;
 }
 .btnBusCliente {
-    font-size: 20px;
-    width: 25%;
-    padding: 5px;
-    color: white;
-    border-radius: 3px;
+  font-size: 20px;
+  width: 25%;
+  padding: 5px;
+  color: white;
+  border-radius: 3px;
 }
-.btnBusCliente:hover{
-    background-color: goldenrod;
+.btnBusCliente:hover {
+  background-color: goldenrod;
 }
 /*Botones de accion para busqueda de clientes y usuarios*/
-.btnWA{
-    background-color: green;
+.btnWA {
+  background-color: green;
 }
-.btnTelefono{
-    background-color: blue;
+.btnTelefono {
+  background-color: blue;
 }
-.btnVender{
-    background-color: orangered;
+.btnVender {
+  background-color: orangered;
 }
-.btnMapa{
-    background-color: #310f53;
+.btnMapa {
+  background-color: #310f53;
 }
 
 .tarjUser {
-    width: 100%;
-    height: auto;
-    background-color: whitesmoke;
-    padding: 2em;
+  width: 100%;
+  height: auto;
+  background-color: whitesmoke;
+  padding: 2em;
 }
 
 .tableUsuarios {
-    background-color: #ffffff;
-    margin: auto;
-    border: 1px solid #009cfb;
-
+  background-color: #ffffff;
+  margin: auto;
+  border: 1px solid #009cfb;
 }
 
-
 .tableUsuariosThTitulo {
-    padding: 0.5em 2em;
-    color: black;
-    border-bottom: 1px solid #009cfb;
-    border-right: 1px solid #009cfb;
-    background-color: #b9e4ff;
+  padding: 0.5em 2em;
+  color: black;
+  border-bottom: 1px solid #009cfb;
+  border-right: 1px solid #009cfb;
+  background-color: #b9e4ff;
 }
 
 .tableUsuariosThRespuesta {
-    padding: 0.5em 2em;
-    border-bottom: 1px solid #009cfb;
-    border-right: 1px solid #009cfb;
+  padding: 0.5em 2em;
+  border-bottom: 1px solid #009cfb;
+  border-right: 1px solid #009cfb;
 }
 
 .tableUsuariosBtnEliminar {
-    background-color: red;
-    color: white;
-    padding: 0.5em 1em;
-    margin:0.5em 0;
-    border-radius: 3px;
+  background-color: red;
+  color: white;
+  padding: 0.5em 1em;
+  margin: 0.5em 0;
+  border-radius: 3px;
 }
 
 .tableUsuariosBtnModificar {
-    background-color: green;
-    color: white;
-    padding: 0.5em 1em;
-    margin:0.5em 0;
-    border-radius: 3px;
+  background-color: green;
+  color: white;
+  padding: 0.5em 1em;
+  margin: 0.5em 0;
+  border-radius: 3px;
 }
 
 .tableUsuariosBtnEliminar:hover {
-    background-color: goldenrod;
+  background-color: goldenrod;
 }
 
 .tableUsuariosBtnModificar:hover {
-    background-color: goldenrod;
+  background-color: goldenrod;
 }
 /*pag Settings o configuraciones*/
-.inpFormSett{
+.inpFormSett {
+  width: 100%;
+  padding: 3px;
+  margin-bottom: 2px;
+  border: 3px solid #009cfb;
+  border-radius: 3px;
+}
+.formSetti {
+  text-align: center;
+  background-color: white;
+  height: auto;
+  margin: auto;
+  width: 30%;
+  padding: 0;
+}
+.tableSettings {
+  margin: 0 auto;
+}
+.btnFormSettings {
+  background-color: green;
+  color: white;
+  padding: 0.5em 2em;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+}
+.btnFormSettings:hover {
+  background-color: goldenrod;
+}
+.tablePlanesBtnEliminar {
+  background-color: orangered;
+  padding: 0.2em 1em;
+  border-radius: 3px;
+  font-size: 0.8em;
+}
+.tablePlanesBtnEliminar:hover {
+  background-color: goldenrod;
+}
+.tableSettPlanes {
+  width: 80%;
+  font-size: 12px;
+  margin: 0 auto;
+  background-color: whitesmoke;
+}
+.thTableSettPla {
+  border: 1px solid blue;
+  background-color: white;
+}
+
+@media (max-width: 440px) {
+  .navegacion {
+    font-size: 20px;
+  }
+
+  .contMayorPrin {
+    margin: 0.5em;
+    display: block;
+  }
+
+  .ContBotones {
+    display: inline-flex;
+    justify-content: center;
     width: 100%;
-    padding: 3px;
-    margin-bottom: 2px;
-    border: 3px solid #009cfb;
-    border-radius: 3px;
-}
-.formSetti{
-    text-align: center;
-    background-color: white;
     height: auto;
-    margin: auto;
-    width: 30%;
-    padding: 0;
-}
-.tableSettings{
-    margin: 0 auto;
-}
-.btnFormSettings{
-    background-color: green;
-    color: white;
-    padding: 0.5em 2em;
-    border-radius: 3px;
+    padding: 0.1em;
+    margin: 0.2em;
+  }
+
+  .botonesMenuPrincipal {
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    padding: auto;
+    font-size: 30px;
+    margin: 0.2em;
+    text-align: center;
     border: none;
-    cursor: pointer;
-}
-.btnFormSettings:hover{
-    background-color: goldenrod;
-}
-.tablePlanesBtnEliminar{
+  }
+
+  .botonesMenuPrincipal:hover {
     background-color: orangered;
-    padding: 0.2em 1em;
+    color: whitesmoke;
+    font-size: 32px;
+  }
+
+  .sectionContPrin {
+    width: 100%;
+    height: 600px;
     border-radius: 3px;
-    font-size: 0.8em;
-}
-.tablePlanesBtnEliminar:hover{
-    background-color: goldenrod;
-}
-.tableSettPlanes{
-    width: 80%;
+    margin: 0.2em;
+  }
+  /*codigo CobranzaGeneral*/
+  .tableCobGeneral {
+    width: 95%;
+    font-size: 13px;
+  }
+
+  /*Codigo de clientes.html*/
+  .tarjCli {
+    width: 100%;
+    height: auto;
+    background-color: whitesmoke;
+    padding: 0;
+  }
+  .tablaBuscar {
     font-size: 12px;
     margin: 0 auto;
+    width: 90%;
+  }
+
+  .tdTablaBuscar {
+    padding: 0.3em;
+  }
+
+  .tdResTablaBuscar {
+    padding: 0.3em;
+    width: auto;
+  }
+
+  .btnBusCliente {
+    font-size: 15px;
+    width: 25%;
+    padding: 0.8;
+  }
+
+  .contMayorCli {
+    display: block;
+    justify-content: center;
+  }
+
+  .formCliente {
     background-color: whitesmoke;
-}
-.thTableSettPla{
-    border: 1px solid blue;
-    background-color: white;
-}
+    width: 95%;
+    margin: 0.5em auto;
+  }
 
+  .formCliente2 {
+    padding: 2em;
+  }
 
-@media (max-width:440px) {
-    .navegacion {
-        font-size: 20px;
-    }
+  .sectionContClientes {
+    width: 95%;
+    height: auto;
+    margin: 0.5em auto;
+    padding: 0;
+  }
 
-    .contMayorPrin {
-        margin: 0.5em;
-        display: block;
-    }
+  .divClienteBuscar {
+    width: 100%;
+    height: auto;
+    background-color: #b9e4ff;
+    text-align: center;
+    padding: 0.5em;
+  }
 
-    .ContBotones {
-        display: inline-flex;
-        justify-content: center;
-        width: 100%;
-        height: auto;
-        padding: 0.1em;
-        margin: 0.2em;
-    }
+  .divClienteBuscar2 {
+    width: 100%;
+    height: auto;
+    background-color: whitesmoke;
+    text-align: center;
+    padding: 5px;
+  }
 
-    .botonesMenuPrincipal {
-        width: 80px;
-        height: 80px;
-        background-color: white;
-        padding: auto;
-        font-size: 30px;
-        margin: 0.2em;
-        text-align: center;
-        border: none;
-    }
+  .tarjCli {
+    width: 100%;
+    height: auto;
+    background-color: whitesmoke;
+    padding: 0.5em;
+  }
 
-    .botonesMenuPrincipal:hover {
-        background-color: orangered;
-        color: whitesmoke;
-        font-size: 32px;
-    }
+  /*codigo formulario.html*/
 
-    .sectionContPrin {
-        width: 100%;
-        height: 600px;
-        border-radius: 3px;
-        margin: 0.2em;
-    }
+  .inpForm {
+    padding: 3px;
+    margin-bottom: 0.5;
+  }
 
-    /*Codigo de clientes.html*/
-    .tarjCli {
-        width: 100%;
-        height: auto;
-        background-color: whitesmoke;
-        padding:0;
-    }
-    .tablaBuscar {
-      font-size: 12px;
-      margin: 0 auto;
-      width: 90%;
-    }
-    
-    .tdTablaBuscar {
-        padding: 0.3em;
-    }
-    
-    .tdResTablaBuscar {
-        padding: 0.3em;
-        width: auto;
-    }
-    
-    .btnBusCliente {
-        font-size: 15px;
-        width: 25%;
-        padding: 0.8;
-       
-    }
+  .btnFormReset {
+    font-size: 16px;
+  }
 
-    .contMayorCli {
-        display: block;
-        justify-content: center;
+  .btnFormAceptar {
+    font-size: 16px;
+  }
 
-    }
+  /*Error */
+  .btnError {
+    width: 100%;
+    padding: 0.5em;
+    font-size: 1.5em;
+  }
 
-    .formCliente {
-        background-color: whitesmoke;
-        width: 100%;
-        margin: 0.5em;
-    }
+  .divError {
+    width: 100%;
+    height: auto;
+    padding: 2em;
+    margin: 1.5em;
+  }
 
-    .formCliente2 {
-        padding: 2em;
-    }
+  .labelError {
+    font-size: 4em;
+  }
 
-    .sectionContClientes {
-        width: 100%;
-        height: auto;
-        margin: 0.5em;
-        padding: 0;
-    }
+  .h2Error {
+    font-size: 2em;
+    padding: 1em;
+  }
 
-    .divClienteBuscar {
-        width: 100%;
-        height: auto;
-        background-color: #b9e4ff;
-        text-align: center;
-        padding: 0.5em;
-    }
+  /*Usuarios*/
+  .tarjUser {
+    width: 100%;
+    height: auto;
+    background-color: whitesmoke;
+    padding: 0;
+  }
 
-    .divClienteBuscar2 {
-        width: 100%;
-        height: auto;
-        background-color: whitesmoke;
-        text-align: center;
-        padding: 5px;
-    }
+  .tableUsuarios {
+    margin: 0 auto;
+    width: 90%;
+  }
 
-    .tarjCli {
-        width: 100%;
-        height: auto;
-        background-color: whitesmoke;
-        padding: 0.5em;
-    }
+  .tableUsuariosThTitulo {
+    padding: 0.8em;
+    font-size: 0.8em;
+  }
 
-    /*codigo formulario.html*/
+  .tableUsuariosThRespuesta {
+    padding: 0.5em;
+    font-size: 0.9em;
+  }
 
-    .inpForm {
-        padding: 3px;
-        margin-bottom: 0.5;
-    }
+  .tableUsuariosBtnEliminar {
+    font-size: 17px;
+    padding: 0.3em;
+    margin: 0.1em;
+  }
 
-    .btnFormReset {
-        font-size: 16px;
-    }
-
-    .btnFormAceptar {
-        font-size: 16px;
-    }
-
-    /*Error */
-    .btnError {
-        width: 100%;
-        padding: 0.5em;
-        font-size: 1.5em;
-    }
-
-    .divError {
-        width: 100%;
-        height: auto;
-        padding: 2em;
-        margin: 1.5em;
-    }
-
-    .labelError {
-        font-size: 4em;
-    }
-
-    .h2Error {
-        font-size: 2em;
-        padding: 1em;
-    }
-
-    /*Usuarios*/
-    .tarjUser {
-        width: 100%;
-        height: auto;
-        background-color: whitesmoke;
-        padding: 0;
-    }
-
-    .tableUsuarios {
-        margin: 0 auto;
-        width: 90%;
-
-    }
-
-    .tableUsuariosThTitulo {
-        padding: 0.8em;
-        font-size: 0.8em;
-    }
-
-    .tableUsuariosThRespuesta {
-        padding: 0.5em;
-        font-size: 0.9em;
-    }
-
-    .tableUsuariosBtnEliminar {
-        font-size: 17px;
-        padding: 0.3em;
-        margin: 0.1em;
-      
-    }
-
-    .tableUsuariosBtnModificar {
-        font-size: 17px;
-        padding: 0.3em;
-        margin: 0.1em;
-      
-    }
-    /*pag Settings o configuraciones*/
-.inpFormSett{
-
+  .tableUsuariosBtnModificar {
+    font-size: 17px;
+    padding: 0.3em;
+    margin: 0.1em;
+  }
+  /*pag Settings o configuraciones*/
+  .inpFormSett {
     padding: 3px;
     margin-bottom: 2px;
     border: 3px solid #009cfb;
     border-radius: 3px;
-}
-.formSetti{
+  }
+  .formSetti {
     text-align: center;
     background-color: white;
     height: auto;
     margin: 1em auto;
     width: 95%;
     padding: 0;
-}
-.tableSettings{
+  }
+  .tableSettings {
     margin: 0 auto;
-}
-.btnFormSettings{
+  }
+  .btnFormSettings {
     padding: 0.5em 2em;
-}
-.tableSettPlanes{
+  }
+  .tableSettPlanes {
     width: 90%;
-}
-.thTableSettPla{
+  }
+  .thTableSettPla {
     border: 1px solid blue;
     font-size: 15px;
     padding: 0.2em;
-}
-
+  }
 }
