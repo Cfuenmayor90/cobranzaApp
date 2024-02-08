@@ -13,6 +13,7 @@ const f = new Intl.NumberFormat('es-AR', {
 
 
 const cargarCobranza = async (req, res) => {
+  console.log("cobranza");
   try {
     const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
     const verifyToken = await verifyJWT(token);
@@ -107,7 +108,7 @@ const listaPagos = async (req, res) => {
 const esperadoDiario = async(req, res) =>{
      try {
       var fechaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-      const buscarEsperado = await balances.findOne({fecha: fechaAc, categoria: "esperado"});
+      const buscarEsperado = await balances.find({fecha: fechaAc, categoria: "esperado"});
       const diA = new Date().getDay();
       if (diA !==0 && !buscarEsperado) {
         const ruCobro = await users.find({role:"cobrador"});
@@ -139,7 +140,7 @@ const esperadoDiario = async(req, res) =>{
     for (let i = 0; i < ruCobro.length; i++) {
       const element = ruCobro[i];
       var nRuta = element.numRuta;
-      var esperado = await ventas.find({ cobRuta: nRuta, diaDeCobro: diaD});
+      var esperado = await ventas.find({ cobRuta: nRuta, diaDeCobro: diaD, mTotal:{$gt: 0}});
       var espeT = 0;
       esperado.forEach(element => {
         espeT = element.cuota + espeT;
@@ -148,7 +149,8 @@ const esperadoDiario = async(req, res) =>{
       const balanceNew = new balances({cobRuta: nRuta, fecha: fechaAc, nombre: element.nombre, esperado: espeT.toFixed(2), categoria: "esperado" });
       await balanceNew.save();
       console.log(balanceNew);
-    };  
+    }; 
+    console.log("Balance esperado Ok"); 
   }
   
      } catch (error) {
@@ -192,7 +194,7 @@ const guardarBalanceDiario = async() =>{
       for (let i = 0; i < prestCancelados.length; i++) {
         const element = prestCancelados[i];
          await pagoN.deleteMany({codPres: element._id});
-         await ventas.deleteMany({_id: element._id});
+         await ventas.deleteOne({_id: element._id});
       } 
     }
     

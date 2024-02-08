@@ -11,7 +11,7 @@ const cargarVentas = async(req, res) => {
      const usuarios = await users.find();
      const planPrest = await setPrest.find({categoria: 'prestamo'}).sort({porcentaje: 1});
      const planProd = await setPrest.find({categoria: 'financiamiento'}).sort({porcentaje: 1});
-     const ventasT = await ventas.find({fechaInicio: fechaHoy}).sort({fechaInicio: 1}).limit(100);
+     const ventasT = await ventas.find({fechaInicio: fechaHoy});
      return res.render('ventas', {usuarios, planPrest, planProd, ventasT});
 }
 
@@ -38,7 +38,7 @@ const cotizarPlan = async(req, res) => {
 };
 const guardarVentas = async(req,res) => {
  const newVenta = new ventas(req.body);
- var diaAc = new Date().toLocaleDateString();
+ var diaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
  var fechaV = new Date();
  var fechaVencimiento = "";
  if (newVenta.plan === "diario") {
@@ -48,7 +48,7 @@ const guardarVentas = async(req,res) => {
   fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas * 7)));
  }
  newVenta.fechaInicio = diaAc;
- newVenta.fechaFinal = fechaVencimiento.toLocaleDateString();
+ newVenta.fechaFinal = fechaVencimiento.toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
  await newVenta.save();
  res.redirect('/ventas');
 };
