@@ -1,0 +1,99 @@
+
+
+    <nav class="navegacion">
+        <div>
+           <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a> 
+        </div>
+        <div>
+           <span>Alertas</span>
+        </div>
+        <div class="iconMenuHamburguesa">
+            <i class="bi bi-menu-button-wide-fill"></i>
+        </div>
+    </nav>
+
+
+   <div class="contMayorCli">
+<div class="formCliente">
+    <div class="divClienteBuscar">
+        <h3 class="tituloForm">Registrar Ventas</h3>
+      </div>
+    <form action="/ventas/cotizar" method="post" class="formCliente2">
+           
+            </select>
+               <div class="cantBtnForm">
+                <button class="btnFormReset" type="reset">Limpiar</button>
+                <button class="btnFormAceptar" type="submit">Cotizar</button>
+            </div>
+    </form>
+</div>
+    <section class="sectionContClientes">
+      <div class="divClienteBuscar">
+        <h3 class="tituloForm">Prestamos Cancelados</h3>
+      </div>
+      <div class="tarjUser">
+        <br>
+        <table class="tableUsuarios">
+          <tr class="tableUsuariosTr">
+          <th class="tableUsuariosThTitulo">Nombre</th>
+          <th class="tableUsuariosThTitulo">Saldo</th>
+          <th class="tableUsuariosThTitulo">Fecha</th>
+          <th class="tableUsuariosThTitulo">Ruta</th>
+          <th class="tableUsuariosThTitulo">Btn</th>
+          </tr>
+        {{#each presCancelados}}
+          <tr>
+             <th class="tableUsuariosThRespuesta">{{nombre}}</th>
+             <th class="tableUsuariosThRespuesta">{{mTotal}}</th>
+              <th class="tableUsuariosThRespuesta">{{fechaUltPago}}</th>
+             <th class="tableUsuariosThRespuesta">{{cobRuta}}</th>
+              <th class="">
+               <a href="/alertas/eliminarUno/{{_id}}" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El PRestamo Y Sus Pagos: {{{nombre}}}?')" class="tableUsuariosBtnEliminar"><i class="bi bi-trash"></i>
+               </a>
+            </th>
+          </tr>
+        {{/each}}
+         <tr class="tableUsuariosTr">
+          <th class="tableUsuariosThTitulo" colspan="4"><a href="/alertas/eliminarTodos/{{_id}}" style="font-size: 13px; padding: 0.5em;" class="btnError">Eliminar Todos</a></th>
+          </tr>
+
+        </table>
+        <br>
+      </div>  
+      <div class="divClienteBuscar">
+        <h3 class="tituloForm">Prestamos Vencidos</h3>
+      </div>
+      <div class="tarjUser">
+        <br>
+        <table class="tableUsuarios">
+          <tr class="tableUsuariosTr">
+          <th class="tableUsuariosThTitulo">Nombre</th>
+          <th class="tableUsuariosThTitulo">Saldo</th>
+          <th class="tableUsuariosThTitulo">Vencimiento</th>
+          <th class="tableUsuariosThTitulo">Ruta</th>
+          <th class="tableUsuariosThTitulo">Btn</th>
+          </tr>
+        {{#each presVencidos}}
+          <tr>
+             <th class="tableUsuariosThRespuesta">{{nombre}}</th>
+             <th class="tableUsuariosThRespuesta">{{mTotal}}</th>
+              <th class="tableUsuariosThRespuesta">{{fechaFinal}}</th>
+             <th class="tableUsuariosThRespuesta">{{cobRuta}}</th>
+              <th class="">
+               <a href="/alertas/eliminarUno/" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El PRestamo Y Sus Pagos: {{{nombre}}}?')" class="tableUsuariosBtnEliminar"><i class="bi bi-trash"></i>
+               </a>
+            </th>
+          </tr>
+        {{/each}}
+
+
+        </table>
+        <br>
+      </div>  
+    </section>
+  </div>
+
+
+
+
+

@@ -173,7 +173,7 @@ const guardarBalanceDiario = async() =>{
         var nRuta = element.numRuta;
         var pagos = await pagoN.find({cobRuta: nRuta, fecha: fechaAc});
         var esperad = await balances.findOne({ cobRuta: nRuta, fecha: fechaAc, categoria: "esperado"});
-        var venTas = await ventas.find({cobRuta: nRuta, fecha: fechaAc});
+        var venTas = await ventas.find({cobRuta: nRuta, fechaInicio: fechaAc});
         var pagosT = 0;
         var venTotal = 0;
         var monTotal = 0;
@@ -189,13 +189,7 @@ const guardarBalanceDiario = async() =>{
         const balanceNew = new balances({cobRuta: nRuta, fecha: fechaAc, nombre: element.nombre, cobrado: pagosT.toFixed(2), esperado: esperad.esperado.toFixed(2), categoria: "balance_diario", ventas: venTotal, ganancia: ganan });
         await balanceNew.save();
       }; 
-      //Codigo para eliminar los prestamos y pagos cancelados
-      const prestCancelados = await ventas.find({mTotal: 0});
-      for (let i = 0; i < prestCancelados.length; i++) {
-        const element = prestCancelados[i];
-         await pagoN.deleteMany({codPres: element._id});
-         await ventas.deleteOne({_id: element._id});
-      } 
+    
     }
     
   } catch (error) {

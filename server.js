@@ -17,6 +17,7 @@ const clientRoutes = require('./routes/clientRoutes');
 const settingsRoutes = require('./routes/settingsRoutes');
 const calculadoraRoutes = require('./routes/calculadoraRoutes');
 const generalRoutes = require('./routes/generalRoutes');
+const alertasRoutes = require('./routes/alertasRoutes');
 const {guardarBalanceDiario, esperadoDiario} = require('./controllers/cobranzaControllers');
 const { log } = require('console');
 
@@ -41,6 +42,7 @@ app.use(express.urlencoded({extended: false}));
  app.use('/settings', settingsRoutes);
  app.use('/calculadora', calculadoraRoutes);
  app.use('/general', generalRoutes);
+ app.use('/alertas', alertasRoutes);
 
  app.get('/', (req, res) => {
    res.render('index');
@@ -53,7 +55,7 @@ app.use(express.urlencoded({extended: false}));
   timezone: 'America/Argentina/Buenos_Aires'
  });
  //Node-cron para ejecutar funciones en tiempo especifico
- cron.schedule('00 8 * * *',() =>{
+ cron.schedule('00 1 * * *',() =>{
   esperadoDiario();
   console.log("esperado diario");
 },{
