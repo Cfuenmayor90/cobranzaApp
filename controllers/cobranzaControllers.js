@@ -167,7 +167,7 @@ const esperadoDiario = async(req, res) =>{
 //funcion para guardar los balances diarios
 const guardarBalanceDiario = async() =>{
   try {
-    var fechaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+    var fechaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Buenos_Aires'});
     const buscarBalances = await balances.findOne({fecha: fechaAc, categoria: 'balance_diario'});
     console.log("node cron cobranza"+ buscarBalances);
     const diA = new Date().getDay();

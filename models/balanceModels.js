@@ -14,6 +14,10 @@ const balanceSchema = new Schema({
         type: String,
         require: true
     },
+    timeStamp:{
+        type: Date,
+        default: Date.now()
+    },
     cobrado: {
         type: Number
     },

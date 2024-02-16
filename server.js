@@ -52,15 +52,15 @@ app.use(express.urlencoded({extended: false}));
       guardarBalanceDiario();
  },{
   scheduled: true,
-  timezone: 'America/Argentina/Buenos_Aires'
+  timezone: 'America/Buenos_Aires'
  });
  //Node-cron para ejecutar funciones en tiempo especifico
- cron.schedule('10 6 * * *',() =>{
+ cron.schedule('20 1 * * *',() =>{
   esperadoDiario();
   console.log("esperado diario");
 },{
 scheduled: true,
-timezone: 'America/Argentina/Buenos_Aires'
+timezone: 'America/Buenos_Aires'
 });
 
 app.listen(PORT, (req, res) => {

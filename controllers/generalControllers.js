@@ -14,9 +14,14 @@ const cargarGeneral = async(req, res) => {
        const usuario = await users.find({role: "cobrador"});
        const mesDate = (new Date().getMonth())+1;
        const añoDate = new Date().getFullYear();
-       var iniMes = `0/${mesDate}/${añoDate}`;
+       var iniMes = `1/${mesDate}/${añoDate}`;
        const prest = await ventas.find();
        var porCobrar = 0;
+
+       const fechaAc = new Date("2024/2/1");
+        console.log(fechaAc);
+       const vent = await ventas.findOne({fechaInicio:{$gte: fechaAc}});
+       console.log(vent);
 
        prest.forEach(element => {
            porCobrar = element.mTotal + porCobrar;

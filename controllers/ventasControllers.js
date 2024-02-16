@@ -40,6 +40,7 @@ const guardarVentas = async(req,res) => {
  const newVenta = new ventas(req.body);
  var diaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
  var fechaV = new Date();
+ console.log(diaAc);
  var fechaVencimiento = "";
  if (newVenta.plan === "diario") {
   var DiaDom = parseInt(newVenta.cuotas/6);
@@ -49,6 +50,7 @@ const guardarVentas = async(req,res) => {
  }
  newVenta.fechaInicio = diaAc;
  newVenta.fechaFinal = fechaVencimiento.toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+ newVenta.DateFinal= fechaVencimiento;
  await newVenta.save();
  res.redirect('/ventas');
 };

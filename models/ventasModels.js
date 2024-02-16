@@ -69,8 +69,16 @@ const ventaSchema = new Schema({
         require: true
     },
     fechaUltPago: {
-        type: String,
+        type: String
+    },
+    timeStamp:{
+        type: Date,
+        default: Date.now()
+    },
+    DateFinal:{
+        type: Date
     }
+
 });
 
 module.exports = mongoose.model('ventas', ventaSchema);

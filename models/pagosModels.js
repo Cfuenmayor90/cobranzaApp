@@ -17,6 +17,10 @@ const pagoSchema = new Schema({
     pago: {
         type: Number,
         require: true
+    },
+    timeStamp:{
+        type: Date,
+        default: Date.now()
     }
 
 });
