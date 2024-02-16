@@ -18,7 +18,7 @@ const cajaSchema = new Schema({
         type: String,
         require: true
     },
-    descripcion:{
+    detalle:{
         type: String
     }
 })

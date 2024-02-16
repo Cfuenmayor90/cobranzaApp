@@ -11,7 +11,7 @@ const cargarVentas = async(req, res) => {
      const usuarios = await users.find();
      const planPrest = await setPrest.find({categoria: 'prestamo'}).sort({porcentaje: 1});
      const planProd = await setPrest.find({categoria: 'financiamiento'}).sort({porcentaje: 1});
-     const ventasT = await ventas.find({fechaInicio: fechaHoy});
+     const ventasT = await ventas.find().sort({timeStamp: -1}).limit(10);;
      return res.render('ventas', {usuarios, planPrest, planProd, ventasT});
 }
 

@@ -59,7 +59,7 @@ const cargarGeneral = async(req, res) => {
         }
           porCobrar = f.format(porCobrar);
        
-    return res.render('generalCobranza', {porCobrar, ArrayUserGene});
+    return res.render('generalCobranza', {porCobrar, ArrayUserGene, usuario});
     
    } catch (error) {
     
