@@ -14,35 +14,35 @@
     </div>
     <br />
 
-    <table class="tableCobGeneral">
+    <table class="tableCobGeneralPrin">
       <tr>
-        <th class="thTabletitleCobGen">Inversion:</th>
+        <th class="thTabletitleCobGenPrin">Inversion:</th>
         <th class="thTableCobGene">00</th>
-        <th class="thTabletitleCobGen">Capital:</th>
+        <th class="thTabletitleCobGenPrin">Capital:</th>
         <th class="thTableCobGene">00</th>
       </tr>
       <tr>
-        <th class="thTabletitleCobGen">Por Cobrar:</th>
+        <th class="thTabletitleCobGenPrin">Por Cobrar:</th>
         <th class="thTableCobGene">{{porCobrar}}</th>
-        <th class="thTabletitleCobGen">Efectivo:</th>
+        <th class="thTabletitleCobGenPrin">Efectivo:</th>
         <th class="thTableCobGene">$00</th>
       </tr>
       <tr>
-        <th class="thTabletitleCobGen">Ventas:</th>
+        <th class="thTabletitleCobGenPrin">Ventas:</th>
         <th class="thTableCobGene">00</th>
-        <th class="thTabletitleCobGen">Cobrado:</th>
+        <th class="thTabletitleCobGenPrin">Cobrado:</th>
         <th class="thTableCobGene">$00</th>
       </tr>
       <tr>
-        <th class="thTabletitleCobGen">Ganancias:</th>
+        <th class="thTabletitleCobGenPrin">Ganancias:</th>
         <th class="thTableCobGene">00</th>
-        <th class="thTabletitleCobGen">Esperado:</th>
+        <th class="thTabletitleCobGenPrin">Esperado:</th>
         <th class="thTableCobGene">$00</th>
       </tr>
       <tr>
-        <th class="thTabletitleCobGen">Efectividad:</th>
+        <th class="thTabletitleCobGenPrin">Efectividad:</th>
         <th class="thTableCobGene">00</th>
-        <th class="thTabletitleCobGen">Gastos:</th>
+        <th class="thTabletitleCobGenPrin">Gastos:</th>
         <th class="thTableCobGene">$00</th>
       </tr>
 
@@ -99,7 +99,7 @@
       <h3 class="tituloForm">Operacion De Caja</h3>
     </div>
     <div class="tarjCli">
-      <form action="">
+      <form action="/general/cajaOperacion" method="post">
         <table class="tablaGeneCaja">
           <tr>
             <th class="tablaGeneCajaTh">Tipo</th>
@@ -113,10 +113,10 @@
             <th class="tablaGeneCajaTh">Usuario</th>
             <th class=""><select
                 class="tablaGeneCajaInp"
-                name="codUsers"
-                id="codUsers"
+                name="userCod"
+                id="userCod"
               >
-                <option value="">General</option>
+                <option value="10">General</option>
                 {{#each usuario}}
                   <option value="{{numRuta}}">{{numRuta}} - {{nombre}}</option>
                 {{/each}}
@@ -144,6 +144,29 @@
 
         </table>
       </form>
+    </div>
+     <div class="divClienteBuscar">
+      <h3 class="tituloForm">Operaciones Realizadas</h3>
+    </div>
+    <div class="tarjCli">
+  <table class="tableListCaja">
+    <tr>
+      <th class="tableListCajaTitle">Fecha</th>
+      <th class="tableListCajaTitle">Usuario</th>
+      <th class="tableListCajaTitle">Operacion</th>
+      <th class="tableListCajaTitle">Detalle</th>
+      <th class="tableListCajaTitle">Monto</th>
+    </tr>
+    {{#each cajaList}}
+     <tr>
+      <th class="tableListCajaRes">{{fecha}}</th>
+      <th class="tableListCajaRes">{{userCod}}</th>
+      <th class="tableListCajaRes">{{tipo}}</th>
+      <th class="tableListCajaRes">{{detalle}}</th>
+      <th class="tableListCajaRes">{{monto}}</th>
+    </tr>
+    {{/each}}
+  </table>
     </div>
   </section>
 

@@ -89,29 +89,36 @@ a {
   color: white;
 }
 /*codigo CobranzaGeneral*/
+.tableCobGeneralPrin{
+  width: 90%;
+  background-color: rgb(255, 141, 106);
+ margin: 0.5em auto;
+}
+.thTabletitleCobGenPrin{
+  width: 20%;
+  text-align: left;
+  background-color: rgb(255, 250, 237);
+  padding: 0.3em;
+}
 .tableCobGeneral {
   width: 90%;
-  border: 1px solid green;
+ background-color: rgb(132, 162, 102);
   margin: 0.5em auto;
 }
 .thTabletitleCobGen {
   width: 20%;
-  border-bottom: 1px solid green;
-  border-right: 1px solid green;
   text-align: left;
   background-color: rgb(195, 255, 207);
   padding: 0.3em;
 }
 .thTableCobGene {
   width: 30%;
-  border-bottom: 1px solid green;
-  border-right: 1px solid green;
   background-color: white;
 }
 .tablaGeneCaja{
   width: 60%;
   padding: 1em;
-  border: 2px solid #b9e4ff;
+  border: 2px solid #7f9fb3;
   margin: 0 auto;
   text-align: left;
   background-color: white;
@@ -136,6 +143,19 @@ a {
 .tablaGeneCajaBtn:hover{
   background-color: goldenrod;
 
+}
+.tableListCaja{
+  background-color: #7f9fb3;
+  width: 90%;
+  margin: 0 auto;
+}
+.tableListCajaTitle{
+  background-color: whitesmoke;
+  padding: 0.2em;
+}
+.tableListCajaRes{
+  background-color: white;
+  padding: 0.2em
 }
 /*Codigo de cobranza.html*/
 .contPres {
@@ -651,6 +671,14 @@ a {
     margin: 0.2em;
   }
   /*codigo CobranzaGeneral*/
+  .tableCobGeneralPrin{
+    width: 95%;
+    font-size: 13px;
+  }
+  .thTabletitleCobGenPrin{
+    width: 20%;
+    font-size: 13px;
+  }
   .tableCobGeneral {
     width: 95%;
     font-size: 13px;
@@ -672,8 +700,17 @@ a {
     border: none;
     border-radius: 3px;
     color: white;
-    padding:0;
+    padding:0.3em;
     font-size: 15px;
+  }
+  .tableListCaja{
+    width: 100%;
+  }
+  .tableListCajaTitle{
+   font-size: 14px;
+  }
+  .tableListCajaRes{
+    font-size: 13px;
   }
   /*Codigo de clientes.html*/
   .tarjCli {

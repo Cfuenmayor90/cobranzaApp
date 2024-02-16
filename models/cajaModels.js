@@ -5,10 +5,14 @@ const cajaSchema = new Schema({
     monto: {
         type: Number,
         require: true
-    },
-    fecha: {
+    },  
+    timeStamp: {
         type: Date,
         default: Date.now()
+    },
+    fecha:{
+        type: String,
+        require: true
     },
      userCod:{
         type: Number,

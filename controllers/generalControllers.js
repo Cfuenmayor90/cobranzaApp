@@ -2,6 +2,7 @@ const users = require("../models/userModels");
 const ventas = require('../models/ventasModels');
 const pagoN = require('../models/pagosModels');
 const balances = require('../models/balanceModels');
+const caja = require('../models/cajaModels');
 
 const f = new Intl.NumberFormat('es-AR', {
     style: 'currency',
@@ -16,6 +17,7 @@ const cargarGeneral = async(req, res) => {
        const añoDate = new Date().getFullYear();
        var iniMes = `1/${mesDate}/${añoDate}`;
        const prest = await ventas.find();
+       const cajaList = await caja.find();
        var porCobrar = 0;
 
        const fechaAc = new Date("2024/2/1");
@@ -59,12 +61,24 @@ const cargarGeneral = async(req, res) => {
         }
           porCobrar = f.format(porCobrar);
        
-    return res.render('generalCobranza', {porCobrar, ArrayUserGene, usuario});
+    return res.render('generalCobranza', {porCobrar, ArrayUserGene, usuario, cajaList});
     
    } catch (error) {
     
-   }
+}};
+const guardarCaja = async(req, res) => {
+    try {
+        const fechaAc = new Date().toLocaleDateString();
+        const newOperacion = new caja(req.body);
+        newOperacion.fecha = fechaAc;
+       await newOperacion.save();
 
+       res.redirect('/general');
+        
+    } catch (error) {
+        
+    }
 }
 
-module.exports = {cargarGeneral};
+
+module.exports = {cargarGeneral, guardarCaja};
