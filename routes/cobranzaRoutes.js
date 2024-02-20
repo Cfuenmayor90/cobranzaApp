@@ -12,6 +12,6 @@ router.get('/pagosList/:id', checkRole(['cobrador']), listaPagos);
 
 router.get('/pagoListDiario', checkRole(['cobrador']), listaPagosDiarios);
 
-router.get('/ticket/:id', checkRole(['cobrador', 'admin']), envioTicket);
+router.get('/ticket/:id', envioTicket);
 
 module.exports = router;
