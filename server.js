@@ -48,7 +48,7 @@ app.use(express.urlencoded({extended: false}));
    res.render('index');
  });
 //Node-cron para ejecutar funciones en tiempo especifico
- cron.schedule('30 23 * * *',() =>{
+ cron.schedule('30 20 * * *',() =>{
       guardarBalanceDiario();
  },{
   scheduled: true,

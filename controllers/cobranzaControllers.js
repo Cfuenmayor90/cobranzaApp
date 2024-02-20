@@ -134,7 +134,7 @@ const esperadoDiario = async(req, res) =>{
         dia = "viernes" ;
         break;
       case 6 :
-        dia = "sabado";
+        dia = "Sabado";
         break;
       default:
           dia = "domingo";
@@ -168,19 +168,22 @@ const esperadoDiario = async(req, res) =>{
 const guardarBalanceDiario = async() =>{
   try {
     var fechaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Buenos_Aires'});
+    console.log("fechaAc: " + fechaAc);
     const buscarBalances = await balances.findOne({fecha: fechaAc, categoria: 'balance_diario'});
     console.log("node cron cobranza"+ buscarBalances);
     const diA = new Date().getDay();
-    if (diA !==0 && !buscarBalances) {
+    if (dia !==0 && !buscarBalances) {
       const ruCobro = await users.find({role:"cobrador"});
       var dia = "dia";
-     
-     for (let i = 0; i < ruCobro.length; i++) {
+      
+      for (let i = 0; i < ruCobro.length; i++) {
         const element = ruCobro[i];
         var nRuta = element.numRuta;
         var pagos = await pagoN.find({cobRuta: nRuta, fecha: fechaAc});
         var esperad = await balances.findOne({ cobRuta: nRuta, fecha: fechaAc, categoria: "esperado"});
         var venTas = await ventas.find({cobRuta: nRuta, fechaInicio: fechaAc});
+        console.log("cobradores nRuta " + nRuta);
+        console.log("ventas " + venTas);
         var pagosT = 0;
         var venTotal = 0;
         var monTotal = 0;
@@ -192,8 +195,11 @@ const guardarBalanceDiario = async() =>{
         pagos.forEach(element => {
           pagosT = element.pago + pagosT;
         });
+        console.log("pagos " + pagosT);
+        console.log("venta" + venTotal);
         ganan = (monTotal-venTotal).toFixed(2);
         const balanceNew = new balances({cobRuta: nRuta, fecha: fechaAc, nombre: element.nombre, cobrado: pagosT.toFixed(2), esperado: esperad.esperado.toFixed(2), categoria: "balance_diario", ventas: venTotal, ganancia: ganan });
+        console.log("new balance " + balanceNew);
         await balanceNew.save();
       }; 
     
@@ -203,5 +209,16 @@ const guardarBalanceDiario = async() =>{
     
   }
 };
-
-module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario };
+const envioTicket = async(req, res) =>{
+ const {id} = req.params;
+ try {
+   const  pres = await ventas.findOne({_id: id});
+   const pagos = await pagoN.find({codPres: id});
+   console.log("pres "+ pres);
+   console.log("pagos "+ pagos);
+   res.render('ticket', {pres, pagos})
+ } catch (error) {
+  
+ }
+}
+module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket };

@@ -1,0 +1,58 @@
+
+
+
+   <div class="contMayorCli">
+    <div class="formCliente">
+         <div class="divClienteBuscar">
+      <h3 class="tituloForm">Estado De Cuenta</h3>
+    </div>
+
+
+   <table class="tableListCaja">
+    <tr>
+        <th class="tableListCajaTitle">Nombre:</th>
+        <th class="tableListCajaRes" colspan="2">{{pres.nombre}}</th>
+    </tr>
+    <tr>
+        <th class="tableListCajaTitle">Ruta:</th>
+        <th class="tableListCajaRes" colspan="2">{{pres.cobRuta}}</th>
+    </tr>
+    <tr>
+        <th class="tableListCajaTitle">Detalle:</th>
+        <th class="tableListCajaRes" colspan="2">{{pres.detalle}}</th>
+    </tr>
+    <tr>
+        <th class="tableListCajaTitle">Inicio:</th>
+        <th class="tableListCajaRes" colspan="2">{{pres.fechaInicio}}</th>
+    </tr>
+    <tr>
+        <th class="tableListCajaTitle">Vencimiento:</th>
+          <th class="tableListCajaRes" colspan="2">{{pres.fechaFinal}}</th>
+    </tr>
+      <tr>
+        <th class="tableListCajaTitle">Saldo:</th>
+          <th class="tableListCajaRes" colspan="2">{{pres.mTotal}}</th>
+    </tr>
+    <tr>
+        <th class="tableListCajaTitle" colspan="3">Lista de pagos</th>
+    </tr>
+    <tr>
+        <th class="tableListCajaTitle">Fecha</th>
+        <th class="tableListCajaTitle">Pago</th>
+        <th class="tableListCajaTitle">Codigo</th>
+    </tr>
+    {{#each pagos}}
+    <tr>
+        <th class="tableListCajaRes">{{fecha}}</th>
+        <th class="tableListCajaRes">{{pago}}</th>
+        <th class="tableListCajaRes">{{_id}}</th>
+    </tr>
+    {{/each}}
+   </table>
+    </div>
+  </div>
+
+
+
+
+
