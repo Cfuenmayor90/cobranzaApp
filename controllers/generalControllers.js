@@ -79,6 +79,18 @@ const guardarCaja = async(req, res) => {
         
     }
 }
+const cargarPrestamosRuta = async(req, res) =>{
+    try {
+       const {nRuta} = req.params;
+       console.log(nRuta);
+       const prestamos = await ventas.find({ cobRuta: nRuta}).sort({fechaUltPago: 1});
+       const usuario = await users.findOne({numRuta: nRuta}); 
+       res.render('cobranzaAdmin', {prestamos, usuario});
+    
+   } catch (error) {
+    
+   }
+}
 
 
-module.exports = {cargarGeneral, guardarCaja};
+module.exports = {cargarGeneral, guardarCaja, cargarPrestamosRuta};

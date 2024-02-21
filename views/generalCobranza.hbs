@@ -89,7 +89,14 @@
           <th class="thTabletitleCobGen">Gastos:</th>
           <th class="thTableCobGene">{{gastoT}}</th>
         </tr>
-      </table>
+           </table>
+      <div style="margin: 0 auto; width: 90%;">
+          <a href="https://wa.me/549{{telefono}}" class="btnBusCliente btnWA"><i class="bi bi-whatsapp"></i></a>
+            <a href="tel:+549{{telefono}}" class="btnBusCliente btnTelefono" ><i class="bi bi-telephone-outbound"></i></a>
+            <a href="" class="btnBusCliente btnVender"><i class="bi bi-shop"></i></a>
+            <a href="/general/cargarPres/{{nRuta}}" class="btnBusCliente btnMapa"><i class="bi bi-cash-coin"></i></a>
+      
+      </div>
       <br />
     {{/each}}
 
@@ -165,6 +172,7 @@
       <th class="tableListCajaRes">{{detalle}}</th>
       <th class="tableListCajaRes">{{monto}}</th>
     </tr>
+    
     {{/each}}
   </table>
     </div>
