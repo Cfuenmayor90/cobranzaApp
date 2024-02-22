@@ -1,4 +1,5 @@
 const client = require("../models/clientModels");
+const ventas = require('../models/ventasModels');
 const {verifyJWT} = require("../middleware/jwt");
 const { validationResult } = require("express-validator");
 
@@ -86,7 +87,20 @@ const cargarClientes = async(req, res) =>{
    try {
     const {id} = req.params;
     const clienteEdit = req.body;
+    const dniCli = clienteEdit.dni;
+    console.log("dni client "+ dniCli);
     await client.findByIdAndUpdate({_id:id}, clienteEdit);
+    //buscamos las ventas activas para actualizar la info
+    const presEditData = await ventas.find({dni:dniCli});
+    for (let i = 0; i < presEditData.length; i++) {
+      const element = presEditData[i];
+      element.celular = clienteEdit.celular;
+      element.direccion = `${clienteEdit.localidadComercial}/ ${clienteEdit.dirComercial}`;
+      await ventas.findByIdAndUpdate({_id: element._id}, element);
+      
+    }
+    console.log("prestamos " + presEditData);
+    
     res.redirect('/vistas/clientes');
     
    } catch (error) {

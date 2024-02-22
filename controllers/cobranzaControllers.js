@@ -269,6 +269,8 @@ const saveRefinanciarPres = async(req, res) =>{
   } catch (error) {
     
   }
-
 };
+const actualizarDataPres = async()=>{
+  
+}
 module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket, refinanciarPres, saveRefinanciarPres };
