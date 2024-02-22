@@ -1,0 +1,56 @@
+<nav class="navegacion">
+    <a href="javascript:history.back()"><i class="bi bi-box-arrow-left"></i></a>
+    <div>
+      <span>Clientes Vencidos</span>
+    </div>
+    <div class="iconMenuHamburguesa">
+      <i class="bi bi-menu-button-wide-fill"></i>
+    </div>
+  </nav>
+   <div class="contMayorCli">
+<div class="formCliente">
+    <div class="divClienteBuscar">
+        <h3 class="tituloForm">Refinanciar Credito</h3>
+      </div>
+    <form action="/cobranza/saveRefinanciar" method="post" class="formCliente2">
+           
+            <br>
+             <h4>{{press.nombre}}</h4>
+             <h4>Dni: {{press.dni}}</h4>
+             <h4>Inicio: {{press.fechaInicio}}</h4>
+             <h4>Vencimiento: {{press.fechaFinal}}</h4>
+             <input class="inpForm" type="text" id="idPres" value="{{press._id}}" name="idPres" required>
+            <br>
+            <label for="monto">Monto a refinanciar</label>
+            <input class="inpForm" type="number" id="monto" value="{{press.mTotal}}" name="monto" required>
+            <br>
+            <label for="detalle">Descripcion</label>
+            <input class="inpForm" type="text" id="detalle"  value="{{press.detalle}}" name="detalle">
+            <br>
+            <label for="plan">Plan De Cobro</label>
+            <select class="inpForm" name="planId" id="planId">
+                {{#each arrayPlanes}}
+                <option value="{{_id}}">{{categoria}}/{{plan}}/{{cuotas}}/Cuota: {{cuota}} / Total: {{mTotal}} </option>
+                {{/each}}
+    
+            </select>
+            <h3 style="color: green;">{{mensaje}}</h3>
+            <br>
+            <label for="diasDeCobro">Dia De Cobro</label>
+            <select class="inpForm" name="diaDeCobro" id="diaDeCobro">
+                <option value="lunes">Lunes</option>
+                <option value="martes">Martes</option>
+                <option value="miercoles">Miercoles</option>
+                <option value="jueves">Jueves</option>
+                <option value="viernes">Viernes</option>
+                <option value="Sabado">Sabado</option>
+                <option value="todos">Todos</option>
+            </select>
+               <div class="cantBtnForm">
+                <button class="btnFormReset" >Volver</button>
+                <button class="btnFormAceptar" type="submit">Guardar</button>
+            </div>
+    </form>
+</div>
+   
+  </div>

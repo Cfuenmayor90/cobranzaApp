@@ -219,4 +219,56 @@ const envioTicket = async(req, res) =>{
   
  }
 }
-module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket };
+const refinanciarPres = async(req,res) =>{
+  try {
+    const {id} = req.params;
+    const press = await ventas.findById({_id:id});
+    const planes = await setPrest.find();
+    const arrayPlanes = [];
+     planes.forEach(element => {
+       const mTo = parseInt(press.mTotal * ((element.porcentaje / 100)+1));
+       const cuo = parseInt(mTo / element.cuotas);
+       const plan = element.plan;
+       const cuotas = element.cuotas;
+       const porcentaje = element.porcentaje;
+       const categoria = element.categoria;
+      arrayPlanes.push({plan: plan,cuotas: cuotas,porcentaje: porcentaje,categoria: categoria, mTotal: mTo, cuota: cuo, _id: element._id});
+    });
+    res.render('refinanciar',{arrayPlanes, press});
+
+  } catch (error) {
+    res.render('error');
+  }
+};
+const saveRefinanciarPres = async(req, res) =>{
+  try {
+    const {idPres, monto, detalle, diaDeCobro, planId} = req.body;
+    const planInf = await setPrest.findById({_id: planId});
+    const presMod = await ventas.findById({_id: idPres});
+    const mTo = parseInt(monto * ((planInf.porcentaje / 100)+1));
+    const cuo = parseInt(monto / planInf.cuotas);
+    var fechaV = new Date();
+    var fechaVencimiento = "";
+    if (planInf.plan === "diario") {
+      var DiaDom = parseInt(planInf.cuotas/6);
+       fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (planInf.cuotas + DiaDom)));
+     } else {
+      fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (planInf.cuotas * 7)));
+     }
+    presMod.detalle = detalle;
+    presMod.fechaFinal = fechaVencimiento.toLocaleDateString();
+    presMod.DateFinal = fechaVencimiento;
+    presMod.mTotal= mTo;
+    presMod.cuotas= planInf.cuotas;
+    presMod.plan= planInf.plan;
+    presMod.cuota= cuo;
+    presMod.diaDeCobro= diaDeCobro;
+    const editPres = await ventas.findByIdAndUpdate({_id: idPres}, presMod );
+    const mensaje = "¡Credito Refinanciado Con Exito!";
+     res.render('refinanciar', {mensaje});
+  } catch (error) {
+    
+  }
+
+};
+module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket, refinanciarPres, saveRefinanciarPres };
