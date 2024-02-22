@@ -36,7 +36,7 @@ const cargarCobranza = async (req, res) => {
     const efect = ((monCobrado / espeValor)*100).toFixed(2);
     espeValor = f.format(espeValor);
     monCobrado = f.format(monCobrado);
-    res.render("cobranza", { prestamos, espeValor,monCobrado, efect, infoPagos,diaInici, timeInici});
+    res.render("cobranza", { prestamos, espeValor,monCobrado, efect, infoPagos,diaInici, timeInici, coRu});
     
   } catch (error) {
     
@@ -67,9 +67,7 @@ const pagoSave = async (req, res) => {
 };
 const listaPagosDiarios = async(req, res) =>{
   try {
-    const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
-    const verifyToken = await verifyJWT(token);
-    const coRu = verifyToken.numRuta;
+    const {coRu} = req.params;
     const diaInici = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     const pagosActuales = await pagoN.find({cobRuta:coRu, fecha: diaInici});
     var monCobrado = 0;

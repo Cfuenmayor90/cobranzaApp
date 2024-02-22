@@ -43,6 +43,7 @@
             </tr>
             <tr class="trTablePres">
                  <th colspan="3" class="trTablePres">
+                    <a href="/general/editCliente/{{dni}}"class="btnPagoCobra" style="background-color: rgb(255, 149, 0); border: none; color:white"><i class="bi bi-person-lines-fill"></i></a>
                     <a href="" class="btnPagoCobra" style="background-color: blue; border: none; color:white"><i class="bi bi-pencil-square"></i></a>
                     <a href="https://wa.me/549{{celular}}?text=¡Pulsa el link para ver tu estado de cuenta! https://proyectofinal-production-a7fb.up.railway.app/cobranza/ticket/{{_id}}" class="btnPagoCobra" style="background-color: rgb(3, 123, 123);"><i class="bi bi-ticket-perforated"></i></a>
                     <a href="https://wa.me/549{{celular}}" class="btnPagoCobra" style="background-color: green;"><i class="bi bi-whatsapp"></i></a>
@@ -53,7 +54,7 @@
         {{/each}}
         <br>
         <div class="divClienteBuscar" style="height: auto; padding: 1.5em;">
-        <a href="/cobranza/pagoListDiario" class="btnError">Ver Pagos Totales</a>
+        <a href="/cobranza/pagoListDiario/{{usuario.numRuta}}" class="btnError">Ver Pagos Totales</a>
       </div>
      
     </div>

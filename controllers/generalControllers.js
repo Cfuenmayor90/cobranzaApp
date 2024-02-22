@@ -3,6 +3,7 @@ const ventas = require('../models/ventasModels');
 const pagoN = require('../models/pagosModels');
 const balances = require('../models/balanceModels');
 const caja = require('../models/cajaModels');
+const client = require("../models/clientModels");
 
 const f = new Intl.NumberFormat('es-AR', {
     style: 'currency',
@@ -90,7 +91,12 @@ const cargarPrestamosRuta = async(req, res) =>{
    } catch (error) {
     
    }
+};
+const editCliente = async(req, res) =>{
+    const {dni} = req.params;
+    const cliente = await client.findOne({dni});
+    res.redirect(`/client/edit/${cliente._id}`);
 }
 
 
-module.exports = {cargarGeneral, guardarCaja, cargarPrestamosRuta};
+module.exports = {cargarGeneral, guardarCaja, cargarPrestamosRuta, editCliente};

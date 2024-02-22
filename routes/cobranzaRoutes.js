@@ -8,9 +8,9 @@ router.get('/', checkRole(['cobrador']), cargarCobranza);
 
 router.post('/savePago', checkRole(['cobrador']), timeOp,  pagoSave);
 
-router.get('/pagosList/:id', checkRole(['cobrador']), listaPagos);
+router.get('/pagosList/:id', checkRole(['cobrador', 'admin']), listaPagos);
 
-router.get('/pagoListDiario', checkRole(['cobrador']), listaPagosDiarios);
+router.get('/pagoListDiario/:coRu', checkRole(['cobrador', 'admin']), listaPagosDiarios);
 
 router.get('/ticket/:id', envioTicket);
 
