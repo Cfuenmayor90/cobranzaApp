@@ -92,6 +92,21 @@ const cargarPrestamosRuta = async(req, res) =>{
     
    }
 };
+   const cargarEstadisticas = async (req, res) => {
+    const {numRuta} = req.params;
+    const balance = await balances.find({ cobRuta: numRuta, categoria: "balance_diario" });
+    var cobradoT = 0;
+    var esperadoT = 0;
+    balance.forEach(element => {
+      cobradoT = element.cobrado + cobradoT;
+      esperadoT = element.esperado + esperadoT;
+    });
+    const porcentaje = parseInt((cobradoT / esperadoT)*100);
+    cobradoT = f.format(cobradoT);
+    esperadoT = f.format(esperadoT);
+    res.render('estadisticas', {balance, cobradoT, esperadoT, porcentaje});
+  
+  };
 const editCliente = async(req, res) =>{
     const {dni} = req.params;
     const cliente = await client.findOne({dni});
@@ -99,4 +114,4 @@ const editCliente = async(req, res) =>{
 }
 
 
-module.exports = {cargarGeneral, guardarCaja, cargarPrestamosRuta, editCliente};
+module.exports = {cargarGeneral, guardarCaja, cargarPrestamosRuta, editCliente, cargarEstadisticas};

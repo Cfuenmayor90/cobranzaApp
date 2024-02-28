@@ -3,7 +3,11 @@ const ventas = require("../models/ventasModels");
 const pagoN = require("../models/pagosModels");
 const { generarJWT, verifyJWT } = require("../middleware/jwt");
 const balances = require('../models/balanceModels');
-
+const f = new Intl.NumberFormat('es-AR', {
+  style: 'currency',
+  currency: 'ARS',
+  minimumFractionDigits: 2
+});
 
 const cargarEstadisticas = async (req, res) => {
     const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
@@ -16,6 +20,8 @@ const cargarEstadisticas = async (req, res) => {
       esperadoT = element.esperado + esperadoT;
     });
     const porcentaje = parseInt((cobradoT / esperadoT)*100);
+    cobradoT = f.format(cobradoT);
+    esperadoT = f.format(esperadoT);
     res.render('estadisticas', {balance, cobradoT, esperadoT, porcentaje});
   
   };

@@ -14,19 +14,7 @@
 
 
    <div class="contMayorCli">
-<div class="formCliente">
-    <div class="divClienteBuscar">
-        <h3 class="tituloForm">Registrar Ventas</h3>
-      </div>
-    <form action="/ventas/cotizar" method="post" class="formCliente2">
-           
-            </select>
-               <div class="cantBtnForm">
-                <button class="btnFormReset" type="reset">Limpiar</button>
-                <button class="btnFormAceptar" type="submit">Cotizar</button>
-            </div>
-    </form>
-</div>
+
     <section class="sectionContClientes">
       <div class="divClienteBuscar">
         <h3 class="tituloForm">Prestamos Cancelados</h3>
@@ -80,8 +68,7 @@
               <th class="tableUsuariosThRespuesta">{{fechaFinal}}</th>
              <th class="tableUsuariosThRespuesta">{{cobRuta}}</th>
               <th class="">
-               <a href="/alertas/eliminarUno/" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El PRestamo Y Sus Pagos: {{{nombre}}}?')" class="tableUsuariosBtnEliminar"><i class="bi bi-trash"></i>
-               </a>
+                   <a href="/cobranza/refinanciar/{{_id}}" class="btnPagoCobra" style="background-color: blue; border: none; color:white"><i class="bi bi-pencil-square"></i></a>
             </th>
           </tr>
         {{/each}}

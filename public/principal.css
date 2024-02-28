@@ -527,6 +527,9 @@ a {
 .btnMapa {
   background-color: #310f53;
 }
+.btnStadistica{
+  background-color: #1177ad;
+}
 
 .tarjUser {
   width: 100%;

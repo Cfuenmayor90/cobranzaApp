@@ -270,7 +270,4 @@ const saveRefinanciarPres = async(req, res) =>{
     
   }
 };
-const actualizarDataPres = async()=>{
-  
-}
 module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket, refinanciarPres, saveRefinanciarPres };
