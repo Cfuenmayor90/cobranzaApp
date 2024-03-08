@@ -2,7 +2,7 @@ const users = require("../models/userModels");
 const setPrest = require('../models/settingsModels');
 const client = require("../models/clientModels");
 const ventas = require('../models/ventasModels');
-
+const historyVentas = require('../models/historyVentas');
 
 
 
@@ -11,8 +11,13 @@ const cargarVentas = async(req, res) => {
      const usuarios = await users.find();
      const planPrest = await setPrest.find({categoria: 'prestamo'}).sort({porcentaje: 1});
      const planProd = await setPrest.find({categoria: 'financiamiento'}).sort({porcentaje: 1});
-     const ventasT = await ventas.find({fechaInicio: fechaHoy}).sort({timeStamp: -1}).limit(10);
+     const ventasT = await ventas.find().sort({timeStamp: -1}).limit(10);
      return res.render('ventas', {usuarios, planPrest, planProd, ventasT});
+}
+//cargar ventas especificas de usuarios como vendedore y cobradores
+const cargarVenCob = async(req, res) =>{
+  const {nRuta} = req.params;
+  res.send('ssss')
 }
 
 const cotizarPlan = async(req, res) => {
@@ -38,6 +43,7 @@ const cotizarPlan = async(req, res) => {
 };
 const guardarVentas = async(req,res) => {
  const newVenta = new ventas(req.body);
+ newVenta.total = newVenta.mTotal;
  var diaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
  var fechaV = new Date();
  console.log(diaAc);
@@ -52,6 +58,21 @@ const guardarVentas = async(req,res) => {
  newVenta.fechaFinal = fechaVencimiento.toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
  newVenta.DateFinal= fechaVencimiento;
  await newVenta.save();
+ if (newVenta.venRuta !== 1) {
+  const newHistoryVenta = new historyVentas({
+    nombre: newVenta.nombre,
+    dni: newVenta.dni,
+    venRuta: newVenta.venRuta,
+    cobRuta: newVenta.cobRuta,
+    codProd: newVenta.codProd,
+    detalle: newVenta.detalle,
+    mTotal: newVenta.mTotal,
+    categoria: newVenta.categoria,
+    plan: `${newVenta.plan} / Cuotas: ${newVenta.cuotas} / Cuota: ${newVenta.cuota}`,
+    fechaInicio: diaAc
+  });
+  await newHistoryVenta.save();
+ }
  res.redirect('/ventas');
 };
 
@@ -59,4 +80,4 @@ const guardarVentas = async(req,res) => {
 
 
 
-module.exports = {cotizarPlan, cargarVentas, guardarVentas};
+module.exports = {cotizarPlan, cargarVentas, guardarVentas, cargarVenCob};

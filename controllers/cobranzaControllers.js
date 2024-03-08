@@ -258,6 +258,7 @@ const saveRefinanciarPres = async(req, res) =>{
     presMod.detalle = detalle;
     presMod.fechaFinal = fechaVencimiento.toLocaleDateString();
     presMod.DateFinal = fechaVencimiento;
+    presMod.monto= monto;
     presMod.mTotal= mTo;
     presMod.cuotas= planInf.cuotas;
     presMod.plan= planInf.plan;

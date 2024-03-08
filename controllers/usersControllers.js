@@ -72,6 +72,7 @@ const validarIngresoUsuario = async (req, res) => {
 
      if(valiPassword){
       const nombre = userIngreso.nombre;
+      const nRuta = userIngreso.numRuta;
      
       const token = await generarJWT(userIngreso);
       res.cookie('token', token, {
@@ -81,13 +82,13 @@ const validarIngresoUsuario = async (req, res) => {
       const rol = userIngreso.role;
       switch (rol) {
         case 'admin':
-          return res.render("principal", { nombre});
+          return res.render("principal", { nombre, nRuta});
           break;
         case 'cobrador':
-          return res.render("principalCobrador", { nombre, fecha});
+          return res.render("principalCobrador", { nombre, fecha, nRuta});
           break;
         case 'vendedor':
-          return res.render("principalVendedor", { nombre});
+          return res.render("principalVendedor", { nombre, nRuta});
           break;
         default:
           mensajeError = 'Role Inexistente';

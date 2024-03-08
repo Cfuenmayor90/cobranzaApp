@@ -12,7 +12,10 @@ const f = new Intl.NumberFormat('es-AR', {
 const cargarEstadisticas = async (req, res) => {
     const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
     const verifyToken = await verifyJWT(token);
-    const balance = await balances.find({ cobRuta: verifyToken.numRuta, categoria: "balance_diario" });
+    const today = new Date("2024-03-01");
+    console.log(today);
+    //{ cobRuta: verifyToken.numRuta, categoria: "balance_diario"}
+    const balance = await balances.find({cobRuta: verifyToken.numRuta, categoria: 'balance_diario'});
     var cobradoT = 0;
     var esperadoT = 0;
     balance.forEach(element => {
