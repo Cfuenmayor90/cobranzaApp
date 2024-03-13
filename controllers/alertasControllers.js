@@ -3,11 +3,13 @@ const pagoN = require('../models/pagosModels');
 
 
 const cargarAlertas = async(req, res)=> {
-     var fechaAc = new Date().toLocaleDateString('es-AR', {timeZone: 'America/Buenos_Aires'});
-     console.log('fecha actual ' + fechaAc);
+     var anio = new Date().getFullYear();
+     var mes = new Date().getMonth();
+     var dia = new Date().getDate();
+     console.log(`fecha actual:` +  new Date(anio,mes,dia) );
     try {
         const presCancelados = await ventas.find({mTotal: 0});
-        const presVencidos = await ventas.find({fechaFinal:{$gte: fechaAc}});
+        const presVencidos = await ventas.find({DateFinal:{$lte: new Date(anio,mes,dia)}});
         res.render('alertas', {presCancelados, presVencidos});
     } catch (error) {
         
