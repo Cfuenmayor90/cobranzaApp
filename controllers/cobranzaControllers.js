@@ -246,7 +246,7 @@ const saveRefinanciarPres = async(req, res) =>{
     const planInf = await setPrest.findById({_id: planId});
     const presMod = await ventas.findById({_id: idPres});
     const mTo = parseInt(monto * ((planInf.porcentaje / 100)+1));
-    const cuo = parseInt(monto / planInf.cuotas);
+    const cuo = parseInt(mTo / planInf.cuotas);
     var fechaV = new Date();
     var fechaVencimiento = "";
     if (planInf.plan === "diario") {
