@@ -1,4 +1,5 @@
 const users = require("../models/userModels");
+const histVentas = require("../models/historyVentas");
 const { generarJWT, verifyJWT} = require('../middleware/jwt');
 const { validationResult } = require("express-validator");
 require('dotenv').config();
@@ -78,14 +79,18 @@ const validarIngresoUsuario = async (req, res) => {
       res.cookie('token', token, {
           httpOnly: true
       });
-      const fecha = new Date().toLocaleTimeString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+    
       const rol = userIngreso.role;
+      var anio = new Date().getFullYear();
+      var mes = new Date().getMonth();
+      var cantDias = new Date(anio, (mes+1), 0).getDate();
       switch (rol) {
         case 'admin':
           return res.render("principal", { nombre, nRuta});
           break;
         case 'cobrador':
-          return res.render("principalCobrador", { nombre, fecha, nRuta});
+          const hVentas = await histVentas.find({venRuta:userIngreso.numRuta, timeStamp:{$gte: new Date(anio, mes, 0), $lte: new Date(anio, mes, cantDias)}});
+          return res.render("principalCobrador", { nombre, nRuta, hVentas});
           break;
         case 'vendedor':
           return res.render("principalVendedor", { nombre, nRuta});

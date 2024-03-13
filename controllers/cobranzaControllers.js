@@ -17,7 +17,7 @@ const cargarCobranza = async (req, res) => {
   try {
     const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
     const verifyToken = await verifyJWT(token);
-    const prestamos = await ventas.find({ cobRuta: verifyToken.numRuta}).sort({fechaUltPago: 1});
+    const prestamos = await ventas.find({ cobRuta: verifyToken.numRuta}).sort({nombre: 1});
     
     const coRu = verifyToken.numRuta;
     const diaInici = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
@@ -25,7 +25,7 @@ const cargarCobranza = async (req, res) => {
     const espe = await balances.findOne({ cobRuta:coRu, fecha:diaInici, categoria:"esperado"});
     const pagosActuales = await pagoN.find({cobRuta:coRu, fecha: diaInici});
     var monCobrado = 0;
-   var espeValor = espe.esperado;
+    var espeValor = espe.esperado;
     var infoPagos = [];
     for (let i = 0; i < pagosActuales.length; i++) {
       const element = pagosActuales[i];
@@ -36,7 +36,8 @@ const cargarCobranza = async (req, res) => {
     const efect = ((monCobrado / espeValor)*100).toFixed(2);
     espeValor = f.format(espeValor);
     monCobrado = f.format(monCobrado);
-    res.render("cobranza", { prestamos, espeValor,monCobrado, efect, infoPagos,diaInici, timeInici, coRu});
+    const nPres = prestamos.length;
+    res.render("cobranza", { prestamos, espeValor,monCobrado, efect, infoPagos,diaInici, timeInici, coRu, nPres});
     
   } catch (error) {
     
@@ -188,7 +189,7 @@ const guardarBalanceDiario = async() =>{
         var ganan = 0;
         venTas.forEach(element => {
           venTotal = element.monto + venTotal;
-          monTotal = element.mTotal + monTotal;
+          monTotal = element.total + monTotal;
         });
         pagos.forEach(element => {
           pagosT = element.pago + pagosT;

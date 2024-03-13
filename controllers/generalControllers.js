@@ -12,18 +12,19 @@ const f = new Intl.NumberFormat('es-AR', {
 });
 
 const cargarGeneral = async(req, res) => {
-   try {
-       const usuario = await users.find({role: "cobrador"});
-       const mesDate = (new Date().getMonth())+1;
-       const añoDate = new Date().getFullYear();
-       var iniMes = `1/${mesDate}/${añoDate}`;
-       const prest = await ventas.find();
-       const cajaList = await caja.find();
-       var porCobrar = 0;
+  try {
+    const usuario = await users.find({role: "cobrador"});
+    var anio = new Date().getFullYear();
+    var mes = new Date().getMonth();
+    var cantDias = new Date(anio, (mes+1), 0).getDate();
+    console.log("cant de dias "+ cantDias);
+    const prest = await ventas.find();
+    const cajaList = await caja.find({timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
+    var porCobrar = 0;
 
-       const fechaAc = new Date("2024/2/1");
-        console.log(fechaAc);
-       const vent = await ventas.findOne({fechaInicio:{$gte: fechaAc}});
+    const fechaAc = new Date("2024/2/1");
+     console.log(fechaAc);
+    const vent = await ventas.find({timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
        console.log(vent);
 
        prest.forEach(element => {
@@ -40,7 +41,7 @@ const cargarGeneral = async(req, res) => {
             var gastoT = 0;
             var porCobrarT = 0;
             var prestT = await ventas.find({cobRuta: element.numRuta});
-            var balan = await balances.find({cobRuta: element.numRuta, fecha: {$gte:iniMes}, categoria: 'balance_diario'});
+            var balan = await balances.find({cobRuta: element.numRuta, timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}, categoria: 'balance_diario'});
             balan.forEach(element => {
                 espeT = element.esperado + espeT;
                 cobT = element.cobrado + cobT;
@@ -58,11 +59,12 @@ const cargarGeneral = async(req, res) => {
                 ganaT = f.format(ganaT);
                 gastoT = f.format(gastoT);
                 porCobrarT = f.format(porCobrarT);
-             ArrayUserGene.push({espeT, cobT, venT, ganaT, gastoT, nombre: element.nombre, nRuta: element.numRuta, efectividad, porCobrarT});
+                const cPres = prestT.length;
+             ArrayUserGene.push({espeT, cobT, venT, ganaT, gastoT, nombre: element.nombre, nRuta: element.numRuta, efectividad, porCobrarT, cPres});
         }
           porCobrar = f.format(porCobrar);
-       
-    return res.render('generalCobranza', {porCobrar, ArrayUserGene, usuario, cajaList});
+              var cantPres = prest.length;
+    return res.render('generalCobranza', {porCobrar, ArrayUserGene, usuario, cajaList, cantPres});
     
    } catch (error) {
     

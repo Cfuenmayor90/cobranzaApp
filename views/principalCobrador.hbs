@@ -65,10 +65,26 @@
           
       </div>  
        <div class="divBarraPrincipal">
-        <h3 class="tituloForm">Clientes Agregados Recientemente</h3>
+        <h3 class="tituloForm">Ventas Realizadas</h3>
       </div>
       <div class="tarjCli">
-        dfssdfds
+        <table class="tableListCaja">
+    <tr>
+      <th class="tableListCajaTitle">Fecha</th>
+      <th class="tableListCajaTitle">Nombre</th>
+      <th class="tableListCajaTitle">Detalle</th>
+      <th class="tableListCajaTitle">Monto</th>
+    </tr>
+    {{#each hVentas}}
+     <tr>
+      <th class="tableListCajaRes">{{fechaInicio}}</th>
+      <th class="tableListCajaRes">{{nombre}}</th>
+      <th class="tableListCajaRes">{{detalle}}</th>
+      <th class="tableListCajaRes">{{mTotal}}</th>
+    </tr>
+    
+    {{/each}}
+  </table>
       </div>  
 
     </section>
