@@ -59,6 +59,9 @@ const guardarVentas = async(req,res) => {
  newVenta.DateFinal= fechaVencimiento;
  await newVenta.save();
  if (newVenta.venRuta !== 1) {
+  if (newVenta.categoria == "prestamo") {
+    newVenta.mTotal = newVenta.monto;
+  }
   const newHistoryVenta = new historyVentas({
     nombre: newVenta.nombre,
     dni: newVenta.dni,
