@@ -48,14 +48,14 @@ app.use(express.urlencoded({extended: false}));
    res.render('index');
  });
 //Node-cron para ejecutar funciones en tiempo especifico
- cron.schedule('30 20 * * *',() =>{
+ cron.schedule('50 20 * * *',() =>{
       guardarBalanceDiario();
  },{
   scheduled: true,
   timezone: 'America/Buenos_Aires'
  });
  //Node-cron para ejecutar funciones en tiempo especifico
- cron.schedule('20 1 * * *',() =>{
+ cron.schedule('30 1 * * *',() =>{
   esperadoDiario();
   console.log("esperado diario");
 },{

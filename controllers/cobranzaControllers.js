@@ -106,54 +106,32 @@ const listaPagos = async (req, res) => {
 //funcion para guardar el esperado diario
 const esperadoDiario = async(req, res) =>{
   try {
+      var diA = new Date().getDay();
+      if(diA !==0) {
        const fechaAc =  new Date().toLocaleDateString("es-AR", {timeZone: 'America/Buenos_Aires'});
-       console.log("fecha" + fechaAc);
-       const buscarEsperado = await balances.findOne({fecha: fechaAc, categoria: "esperado"});
-       const diA = new Date().getDay();
-       console.log("dia  " + diA);
-      console.log("esperado diario 2"+ buscarEsperado);
-      if(diA !==0 && !buscarEsperado) {
-        const ruCobro = await users.find({role:"cobrador"});
-        console.log("esperado diario: 3" + ruCobro);
-        var dia = "dia";
-    switch (diA) {
-      case 1 :
-         dia = "lunes";
-        break;
-      case 2 :
-           dia = "martes";
-        break;
-      case 3 :
-       dia = "miercoles";
-        break;
-      case 4 :
-       dia = "jueves";
-        break;
-      case 5 :
-        dia = "viernes" ;
-        break;
-      case 6 :
-        dia = "Sabado";
-        break;
-      default:
-          dia = "domingo";
-        break;
-    };
+       const ruCobro = await users.find({role:"cobrador"});
+      var dia = "dia";
+      var semana = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado", "domingo"];
+      dia = semana[diA];
+     console.log("dia de semana" + dia);
     var diaD = [dia, 'todos'];
     for (let i = 0; i < ruCobro.length; i++) {
-      console.log("esperado diario for");
-      const element = ruCobro[i];
       var nRuta = element.numRuta;
-      var esperado = await ventas.find({ cobRuta: nRuta, diaDeCobro: diaD, mTotal:{$gt:0}});
-      console.log(esperado);
-      var espeT = 0;
-      esperado.forEach(element => {
-        espeT = element.cuota + espeT;
-      });
-      console.log("cron esperado total:" + espeT.toFixed(2));
-      const balanceNew = new balances({cobRuta: nRuta, fecha: fechaAc, nombre: element.nombre, esperado: espeT.toFixed(2), categoria: "esperado" });
-      await balanceNew.save();
-      console.log(balanceNew);
+      const element = ruCobro[i];
+      const buscarEsperado = await balances.findOne({fecha: fechaAc, categoria: "esperado", cobRuta: nRuta});
+      if (!buscarEsperado) {
+        console.log("esperado diario for");
+        var esperado = await ventas.find({ cobRuta: nRuta, diaDeCobro: diaD, mTotal:{$gt:0}});
+        console.log(esperado);
+        var espeT = 0;
+        esperado.forEach(element => {
+          espeT = element.cuota + espeT;
+        });
+        console.log("cron esperado total:" + espeT.toFixed(2));
+        const balanceNew = new balances({cobRuta: nRuta, fecha: fechaAc, nombre: element.nombre, esperado: espeT.toFixed(2), categoria: "esperado" });
+        await balanceNew.save();
+        console.log(balanceNew); 
+      }
     }; 
     console.log("Balance esperado Ok"); 
   }
@@ -166,45 +144,37 @@ const esperadoDiario = async(req, res) =>{
 //funcion para guardar los balances diarios
 const guardarBalanceDiario = async() =>{
   try {
-    var fechaAc =new Date().toLocaleDateString("es-AR", {timeZone: 'America/Buenos_Aires'});
-    console.log("fechaAc: " + fechaAc);
-    const buscarBalances = await balances.findOne({fecha: fechaAc, categoria: 'balance_diario'});
-    console.log("node cron cobranza"+ buscarBalances);
     const diA = new Date().getDay();
-    if (dia !==0 && !buscarBalances) {
-      const ruCobro = await users.find({role:"cobrador"});
-      var dia = "dia";
-      
-      for (let i = 0; i < ruCobro.length; i++) {
-        const element = ruCobro[i];
-        var nRuta = element.numRuta;
-        var pagos = await pagoN.find({cobRuta: nRuta, fecha: fechaAc});
-        var esperad = await balances.findOne({ cobRuta: nRuta, fecha: fechaAc, categoria: "esperado"});
-        var venTas = await ventas.find({cobRuta: nRuta, fechaInicio: fechaAc});
-        console.log("cobradores nRuta " + nRuta);
-        console.log("ventas " + venTas);
-        var pagosT = 0;
-        var venTotal = 0;
-        var monTotal = 0;
-        var ganan = 0;
-        venTas.forEach(element => {
-          venTotal = element.monto + venTotal;
-          monTotal = element.total + monTotal;
-        });
-        pagos.forEach(element => {
-          pagosT = element.pago + pagosT;
-        });
-        console.log("pagos " + pagosT);
-        console.log("venta" + venTotal);
-        ganan = (monTotal-venTotal).toFixed(2);
-        const balanceNew = new balances({cobRuta: nRuta, fecha: fechaAc, nombre: element.nombre, cobrado: pagosT.toFixed(2), esperado: esperad.esperado.toFixed(2), categoria: "balance_diario", ventas: venTotal, ganancia: ganan });
-        console.log("new balance " + balanceNew);
-        await balanceNew.save();
-      }; 
+    if (diA !==0){
+    const ruCobro = await users.find({role:"cobrador"});
+    var fechaAc =new Date().toLocaleDateString("es-AR", {timeZone: 'America/Buenos_Aires'});
+    var dia = "dia";
     
-    }
-    
-  } catch (error) {
+    for (let i = 0; i < ruCobro.length; i++) {
+      const element = ruCobro[i];
+      var nRuta = element.numRuta;
+       const buscarBalances = await balances.findOne({fecha: fechaAc, categoria: 'balance_diario', cobRuta: nRuta});
+       if (!buscarBalances) {
+         var pagos = await pagoN.find({cobRuta: nRuta, fecha: fechaAc});
+         var esperad = await balances.findOne({ cobRuta: nRuta, fecha: fechaAc, categoria: "esperado"});
+         var venTas = await ventas.find({cobRuta: nRuta, fechaInicio: fechaAc});
+         var pagosT = 0;
+         var venTotal = 0;
+         var monTotal = 0;
+         var ganan = 0;
+         venTas.forEach(element => {
+           venTotal = element.monto + venTotal;
+           monTotal = element.total + monTotal;
+         });
+         pagos.forEach(element => {
+           pagosT = element.pago + pagosT;
+         });
+         ganan = (monTotal-venTotal).toFixed(2);
+         const balanceNew = new balances({cobRuta: nRuta, fecha: fechaAc, nombre: element.nombre, cobrado: pagosT.toFixed(2), esperado: esperad.esperado.toFixed(2), categoria: "balance_diario", ventas: venTotal, ganancia: ganan });
+         await balanceNew.save();
+        
+       }}}} 
+    catch (error) {
     
   }
 };
