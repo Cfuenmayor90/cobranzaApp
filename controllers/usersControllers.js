@@ -1,5 +1,6 @@
 const users = require("../models/userModels");
 const histVentas = require("../models/historyVentas");
+const ventas = require("../models/ventasModels");
 const { generarJWT, verifyJWT} = require('../middleware/jwt');
 const { validationResult } = require("express-validator");
 require('dotenv').config();
@@ -84,13 +85,16 @@ const validarIngresoUsuario = async (req, res) => {
       var anio = new Date().getFullYear();
       var mes = new Date().getMonth();
       var cantDias = new Date(anio, (mes+1), 0).getDate();
+      var dia = new Date().getDate();
       switch (rol) {
         case 'admin':
           return res.render("principal", { nombre, nRuta});
           break;
         case 'cobrador':
-          const hVentas = await histVentas.find({venRuta:userIngreso.numRuta, timeStamp:{$gte: new Date(anio, mes, 0), $lte: new Date(anio, mes, cantDias)}});
-          return res.render("principalCobrador", { nombre, nRuta, hVentas});
+             const presVencidos = await ventas.find({cobRuta: nRuta, DateFinal:{$lte: new Date(anio,mes,dia)}});
+             const hVentas = await histVentas.find({venRuta:userIngreso.numRuta, timeStamp:{$gte: new Date(anio, mes, 0), $lte: new Date(anio, mes, cantDias)}});
+              console.log(presVencidos);
+             return res.render("principalCobrador", { nombre, nRuta, hVentas, presVencidos});
           break;
         case 'vendedor':
           return res.render("principalVendedor", { nombre, nRuta});

@@ -111,8 +111,11 @@ const cargarPrestamosRuta = async(req, res) =>{
    }
 };
    const cargarEstadisticas = async (req, res) => {
-    const {numRuta} = req.params;
-    const balance = await balances.find({ cobRuta: numRuta, categoria: "balance_diario" });
+    var {numRuta} = req.params;
+    var anio = new Date().getFullYear();
+     var mes = new Date().getMonth();
+     var cantDias = new Date(anio, (mes+1), 0).getDate();
+    const balance = await balances.find({cobRuta: numRuta, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,0), $lt: new Date(anio,mes,cantDias)}});
     var cobradoT = 0;
     var esperadoT = 0;
     balance.forEach(element => {
