@@ -156,8 +156,12 @@ const logOut = (req, res) => {
 const volverPrin = async (req, res) => {
 
   try {
-    token =  req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
-    verifyToken = await verifyJWT(token)
+    
+   const token =  req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
+    const verifyToken = await verifyJWT(token);
+    console.log("token" + token);
+    console.log("very" + verifyToken);
+    
     if (!verifyToken) {
       res.clearCookie('token'); // Borrar la cookie del token
       mensajeError = 'Tu sesion ha caducado'
@@ -165,14 +169,23 @@ const volverPrin = async (req, res) => {
       
     } else {
       const rol = verifyToken.role;
-      nombre = verifyToken.nombre;
+      const nombre = verifyToken.nombre;
+      const nRuta = verifyToken.numRuta;
       const fecha = new Date().toLocaleTimeString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+      var anio = new Date().getFullYear();
+      var mes = new Date().getMonth();
+      var cantDias = new Date(anio, (mes+1), 0).getDate();
+      var dia = new Date().getDate();
+      
       switch (rol) {
         case 'admin':
          res.render("principal", {fecha, nombre});
           break;
         case 'cobrador':
-          res.render("principalCobrador", {nombre, fecha});
+          const presVencidos = await ventas.find({cobRuta: nRuta, DateFinal:{$lte: new Date(anio,mes,dia)}});
+          const hVentas = await histVentas.find({venRuta: nRuta, timeStamp:{$gte: new Date(anio, mes, 0), $lte: new Date(anio, mes, cantDias)}});
+           console.log(presVencidos);
+          return res.render("principalCobrador", { nombre, nRuta, hVentas, presVencidos});
           break;
         case 'vendedor':
           res.render("principalVendedor", {nombre, fecha});
