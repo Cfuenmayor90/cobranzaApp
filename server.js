@@ -55,7 +55,7 @@ app.use(express.urlencoded({extended: false}));
   timezone: 'America/Buenos_Aires'
  });
  //Node-cron para ejecutar funciones en tiempo especifico
- cron.schedule('30 1 * * *',() =>{
+ cron.schedule('30 2 * * *',() =>{
   esperadoDiario();
   console.log("esperado diario");
 },{

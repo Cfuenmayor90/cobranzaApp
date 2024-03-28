@@ -17,7 +17,6 @@ const cargarGeneral = async(req, res) => {
     var anio = new Date().getFullYear();
     var mes = new Date().getMonth();
     var cantDias = new Date(anio, (mes+1), 0).getDate();
-    console.log("cant de dias "+ cantDias);
     const prest = await ventas.find();
     const ventasTo = await balances.find({categoria: "balance_diario", timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
     const cajaList = await caja.find({timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
@@ -34,10 +33,7 @@ const cargarGeneral = async(req, res) => {
       espeTotal = element.esperado + espeTotal;
     });
     const fechaAc = new Date("2024/2/1");
-     console.log(fechaAc);
     const vent = await ventas.find({timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
-       console.log(vent);
-
        prest.forEach(element => {
            porCobrar = element.mTotal + porCobrar;
         });
@@ -51,6 +47,8 @@ const cargarGeneral = async(req, res) => {
             var ganaT =0;
             var gastoT = 0;
             var porCobrarT = 0;
+            var cajaRendicion = await ventas.aggregate([{$group:{cobRuta: element.numRuta, montoTotal: {$sum: $mTotal}}}]);
+            console.log("Monto total: " + cajaRendicion);
             var prestT = await ventas.find({cobRuta: element.numRuta});
             var balan = await balances.find({cobRuta: element.numRuta, timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}, categoria: 'balance_diario'});
             balan.forEach(element => {
