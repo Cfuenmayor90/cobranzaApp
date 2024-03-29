@@ -47,10 +47,20 @@ const cargarGeneral = async(req, res) => {
             var ganaT =0;
             var gastoT = 0;
             var porCobrarT = 0;
-            var cajaRendicion = await ventas.aggregate([{$group:{cobRuta: element.numRuta, montoTotal: {$sum: $mTotal}}}]);
+            var mCaja = 0;
+            var mAdelantos = 0;
+            var cajaRendicion = await caja.find({userCod: element.numRuta,  timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}, tipo: "rendicion"});
+            var cajaAdelanto = await caja.find({userCod: element.numRuta,  timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}, tipo: "sueldos"})
             console.log("Monto total: " + cajaRendicion);
             var prestT = await ventas.find({cobRuta: element.numRuta});
             var balan = await balances.find({cobRuta: element.numRuta, timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}, categoria: 'balance_diario'});
+            cajaRendicion.forEach(element => {
+              mCaja = element.monto + mCaja;
+            });
+            cajaAdelanto.forEach(element => {
+              mAdelantos = element.monto + mAdelantos;
+            });
+            
             balan.forEach(element => {
                 espeT = element.esperado + espeT;
                 cobT = element.cobrado + cobT;
@@ -69,7 +79,7 @@ const cargarGeneral = async(req, res) => {
                 gastoT = f.format(gastoT);
                 porCobrarT = f.format(porCobrarT);
                 const cPres = prestT.length;
-             ArrayUserGene.push({espeT, cobT, venT, ganaT, gastoT, nombre: element.nombre, nRuta: element.numRuta, efectividad, porCobrarT, cPres});
+             ArrayUserGene.push({espeT, cobT, venT, ganaT, gastoT, nombre: element.nombre, nRuta: element.numRuta, efectividad, porCobrarT, cPres, mCaja, mAdelantos});
         }
           porCobrar = f.format(porCobrar);
               var cantPres = prest.length;
