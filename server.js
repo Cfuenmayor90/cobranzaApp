@@ -18,7 +18,7 @@ const settingsRoutes = require('./routes/settingsRoutes');
 const calculadoraRoutes = require('./routes/calculadoraRoutes');
 const generalRoutes = require('./routes/generalRoutes');
 const alertasRoutes = require('./routes/alertasRoutes');
-const {guardarBalanceDiario, esperadoDiario} = require('./controllers/cobranzaControllers');
+const {guardarBalanceDiario, esperadoDiario, balanceDelete} = require('./controllers/cobranzaControllers');
 const { log } = require('console');
 
 const app = express();
@@ -62,6 +62,12 @@ app.use(express.urlencoded({extended: false}));
 scheduled: true,
 timezone: 'America/Buenos_Aires'
 });
+cron.schedule('55 20 * * * ',()=>{
+    balanceDelete();
+},{
+  scheduled: true,
+  timezone: 'America/Buenos_Aires'
+  })
 
 app.listen(PORT, (req, res) => {
     console.log("servidor corriendo en el puerto" + PORT);

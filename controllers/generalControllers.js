@@ -89,16 +89,18 @@ const cargarGeneral = async(req, res) => {
                 const cPres = prestT.length;
                 ArrayUserGene.push({espeT, cobT, venT, ganaT, gastoT, nombre: element.nombre, nRuta: element.numRuta, efectividad, porCobrarT, cPres, mCaja, mAdelantos, efeCaja});
         }
+        efeCajaT = efeCajaT - venTotal;
+         var capital = porCobrar + efeCajaT;
+         var cantPres = prest.length;
+         var porcentajeT = ((cobraTotal/espeTotal)*100).toFixed(2);
          porCobrar = f.format(porCobrar);
-          var cantPres = prest.length;
-          var porcentajeT = ((cobraTotal/espeTotal)*100).toFixed(2);
-          efeCajaT = efeCajaT - venTotal;
           ganaTotal = f.format(ganaTotal);
           venTotal = f.format(venTotal);
           cobraTotal = f.format(cobraTotal);
           espeTotal = f.format(espeTotal);
           efeCajaT= f.format(efeCajaT);
-          return res.render('generalCobranza', {porCobrar, ArrayUserGene, usuario, cajaList, cantPres, venTotal, ganaTotal, cobraTotal, espeTotal, porcentajeT, efeCajaT});
+          capital= f.format(capital);
+          return res.render('generalCobranza', {porCobrar, ArrayUserGene, usuario, cajaList, cantPres, venTotal, ganaTotal, cobraTotal, espeTotal, porcentajeT, efeCajaT, capital});
     
    } catch (error) {
     
@@ -133,7 +135,7 @@ const cargarPrestamosRuta = async(req, res) =>{
     var anio = new Date().getFullYear();
      var mes = new Date().getMonth();
      var cantDias = new Date(anio, (mes+1), 0).getDate();
-    const balance = await balances.find({cobRuta: numRuta, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,0), $lt: new Date(anio,mes,cantDias)}});
+    const balance = await balances.find({cobRuta: numRuta, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
     var cobradoT = 0;
     var esperadoT = 0;
     balance.forEach(element => {

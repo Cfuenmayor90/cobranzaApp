@@ -176,6 +176,28 @@ const guardarBalanceDiario = async() =>{
     
   }
 };
+const balanceDelete = async() =>{
+    try {
+      var anio = new Date().getFullYear();
+      var mes = new Date().getMonth();
+      var dia = new Date().getDate();
+     const espeDelete = await balances.deleteMany({categoria: 'esperado', timeStamp:{$lt: new Date(anio,mes,dia)}});
+     console.log("esperados eliminados" + espeDelete.deletedCount);
+     const rutas = await users.find({role: "cobrador"});
+     for (let i = 0; i < rutas.length; i++) { //array de rutas para saber cuantos cobradores hay
+      const element = rutas[i];
+      const balanRuta = await balances.find({cobRuta: element.numRuta ,categoria: 'balance_diario', timeStamp:Date(anio,mes,dia)});
+        for (let i = 1; i < balanRuta.length; i++) { // Iniciamos el for en la posicion 1 del array asi no elimine el primero
+          const element = balanRuta[i];
+          const eleDelete = await balances.findByIdAndDelete({_id: element._id});
+          console.log("eliminados: " + eleDelete);
+        }
+     }
+    } catch (error) {
+      
+    }
+};
+
 const envioTicket = async(req, res) =>{
  const {id} = req.params;
  try {
@@ -240,4 +262,4 @@ const saveRefinanciarPres = async(req, res) =>{
     
   }
 };
-module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket, refinanciarPres, saveRefinanciarPres };
+module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, balanceDelete, envioTicket, refinanciarPres, saveRefinanciarPres };
