@@ -18,7 +18,7 @@ const cargarCobranza = async (req, res) => {
     const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
     const verifyToken = await verifyJWT(token);
     const prestamos = await ventas.find({ cobRuta: verifyToken.numRuta}).sort({nombre: 1});
-    
+    console.log(prestamos);
     const coRu = verifyToken.numRuta;
     const diaInici = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     const timeInici = new Date().toLocaleTimeString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
@@ -176,25 +176,28 @@ const guardarBalanceDiario = async() =>{
     
   }
 };
-const balanceDelete = async() =>{
+const balanceDelete = async(req, res) =>{
     try {
       var anio = new Date().getFullYear();
       var mes = new Date().getMonth();
       var dia = new Date().getDate();
      const espeDelete = await balances.deleteMany({categoria: 'esperado', timeStamp:{$lt: new Date(anio,mes,dia)}});
      console.log("esperados eliminados" + espeDelete.deletedCount);
-     const rutas = await users.find({role: "cobrador"});
-     for (let i = 0; i < rutas.length; i++) { //array de rutas para saber cuantos cobradores hay
-      const element = rutas[i];
-      const balanRuta = await balances.find({cobRuta: element.numRuta ,categoria: 'balance_diario', timeStamp:Date(anio,mes,dia)});
-        for (let i = 1; i < balanRuta.length; i++) { // Iniciamos el for en la posicion 1 del array asi no elimine el primero
+     const cobrador = await users.find({role: "cobrador"});
+     console.log("rutas: " + cobrador);
+     for (let i = 0; i < cobrador.length; i++) { //array de rutas para saber cuantos cobradores hay
+      var element = cobrador[i];
+      var balanRuta = await balances.find({cobRuta: 101 ,categoria: 'balance_diario', timeStamp: new Date(anio,mes,7)});
+        console.log("balances: " + balanRuta);
+      for (let i = 1; i < balanRuta.length; i++) { // Iniciamos el for en la posicion 1 del array asi no elimine el primero
           const element = balanRuta[i];
+          console.log("elemen balance:" + element);
           const eleDelete = await balances.findByIdAndDelete({_id: element._id});
           console.log("eliminados: " + eleDelete);
         }
      }
     } catch (error) {
-      
+      console.log(error);
     }
 };
 

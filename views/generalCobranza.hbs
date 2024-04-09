@@ -17,7 +17,7 @@
     <table class="tableCobGeneralPrin">
       <tr>
         <th class="thTabletitleCobGenPrin">Inversion:</th>
-        <th class="thTableCobGene">00</th>
+        <th class="thTableCobGene">{{invT}}</th>
         <th class="thTabletitleCobGenPrin">Capital:</th>
         <th class="thTableCobGene">{{capital}}</th>
       </tr>
@@ -143,11 +143,12 @@
           </tr>
           <tr>
             <th class="tablaGeneCajaTh">Monto</th>
-            <th class="" colspan="2"><input
+            <th class="" colspan="2" ><input
                 class="tablaGeneCajaInp"
                 type="number"
                 id="monto"
-                name="monto"
+                name="monto" 
+                required
               /></th>
             <th style="text-align: center;"><button class="tablaGeneCajaBtn" type="submit">Cargar</button></th>
           </tr>

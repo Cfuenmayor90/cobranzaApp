@@ -16,7 +16,7 @@ const cargarEstadisticas = async (req, res) => {
     var anio = new Date().getFullYear();
      var mes = new Date().getMonth();
      var cantDias = new Date(anio, (mes+1), 0).getDate();
-    const balance = await balances.find({cobRuta: verifyToken.numRuta, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,0), $lt: new Date(anio,mes,cantDias)}});
+    const balance = await balances.find({cobRuta: verifyToken.numRuta, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,2,0), $lt: new Date(anio,2,cantDias)}});
     var cobradoT = 0;
     var esperadoT = 0;
     balance.forEach(element => {

@@ -14,18 +14,24 @@ const f = new Intl.NumberFormat('es-AR', {
 const cargarGeneral = async(req, res) => {
   try {
     const usuario = await users.find({role: "cobrador"});
+    console.log(usuario);
     var anio = new Date().getFullYear();
     var mes = new Date().getMonth();
     var cantDias = new Date(anio, (mes+1), 0).getDate();
     const prest = await ventas.find();
     const ventasTo = await balances.find({categoria: "balance_diario", timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
     const cajaList = await caja.find({timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
-    const efeCajaTotal = await caja.find({timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}, tipo: ["rendicion", "inversion"]})
+    const efeCajaTotal = await caja.find({timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}, tipo: ["rendicion", "inversion"]});
+    var cajaGastos = await caja.find({timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}, tipo: ["sueldos", "gasto"]})
+    const inversion = await caja.find({tipo: "inversion"});
     var porCobrar = 0;
     var venTotal = 0; //ventas totales
     var ganaTotal = 0; //ganacias totales de todas las rutas
     var cobraTotal= 0; //cobrado total de todas las rutas
     var espeTotal = 0; //esperado total de todas las rutas
+    var invT = 0; //inversiones totales
+    var efeCajaT =0; // Efectivo total de caja
+    var gasCaja = 0; // gastos de caja general
     //sumamos todas las ventas y ganacias totales de las rutas
     ventasTo.forEach(element => {
       venTotal = element.ventas + venTotal;
@@ -33,9 +39,14 @@ const cargarGeneral = async(req, res) => {
       cobraTotal = element.cobrado + cobraTotal;
       espeTotal = element.esperado + espeTotal;
     });
-    var efeCajaT =0;
+    inversion.forEach(element => {
+      invT = element.monto + invT;
+    });
     efeCajaTotal.forEach(element => {
       efeCajaT = element.monto + efeCajaT;
+    });
+    cajaGastos.forEach(element => {
+      gasCaja = element.monto + gasCaja;
     });
     const fechaAc = new Date("2024/2/1");
     const vent = await ventas.find({timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
@@ -43,7 +54,7 @@ const cargarGeneral = async(req, res) => {
            porCobrar = element.mTotal + porCobrar;
         });
         const ArrayUserGene = [];
-        
+        // creamos el array de con los datos de cada ruta
         for (let i = 0; i < usuario.length; i++) {
             const element = usuario [i];
             var espeT = 0;
@@ -72,13 +83,13 @@ const cargarGeneral = async(req, res) => {
               cobT = element.cobrado + cobT;
               venT = element.ventas + venT;
               ganaT = element.ganancia + ganaT;
-              gastoT = element.gastos + gastoT;
+       
             });
             prestT.forEach(element => {
               porCobrarT = element.mTotal + porCobrarT;
             });
             const efectividad = ((cobT/espeT)*100).toFixed(2);
-                efeCaja = cobT - (mCaja + mAdelantos); 
+                efeCaja = cobT  - (mCaja + mAdelantos); 
                 efeCaja = f.format(efeCaja);
                 espeT = f.format(espeT);
                 cobT = f.format(cobT);
@@ -86,12 +97,14 @@ const cargarGeneral = async(req, res) => {
                 ganaT = f.format(ganaT);
                 gastoT = f.format(gastoT);
                 porCobrarT = f.format(porCobrarT);
+                mAdelantos = f.format(mAdelantos);
                 const cPres = prestT.length;
                 ArrayUserGene.push({espeT, cobT, venT, ganaT, gastoT, nombre: element.nombre, nRuta: element.numRuta, efectividad, porCobrarT, cPres, mCaja, mAdelantos, efeCaja});
         }
-        efeCajaT = efeCajaT - venTotal;
+        efeCajaT = efeCajaT - venTotal - gasCaja;
          var capital = porCobrar + efeCajaT;
          var cantPres = prest.length;
+         invT = f.format(invT);
          var porcentajeT = ((cobraTotal/espeTotal)*100).toFixed(2);
          porCobrar = f.format(porCobrar);
           ganaTotal = f.format(ganaTotal);
@@ -100,7 +113,7 @@ const cargarGeneral = async(req, res) => {
           espeTotal = f.format(espeTotal);
           efeCajaT= f.format(efeCajaT);
           capital= f.format(capital);
-          return res.render('generalCobranza', {porCobrar, ArrayUserGene, usuario, cajaList, cantPres, venTotal, ganaTotal, cobraTotal, espeTotal, porcentajeT, efeCajaT, capital});
+          return res.render('generalCobranza', {porCobrar, ArrayUserGene, usuario, cajaList, cantPres, venTotal, ganaTotal, cobraTotal, espeTotal, porcentajeT, efeCajaT, capital, invT});
     
    } catch (error) {
     
