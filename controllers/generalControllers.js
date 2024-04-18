@@ -20,7 +20,7 @@ const cargarGeneral = async(req, res) => {
     var cantDias = new Date(anio, (mes+1), 0).getDate();
     const prest = await ventas.find();
     const ventasTo = await balances.find({categoria: "balance_diario", timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
-    const cajaList = await caja.find({timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
+    const cajaList = await caja.find({timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}}).sort({timeStamp: -1});
     const efeCajaTotal = await caja.find({timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}, tipo: ["rendicion", "inversion"]});
     var cajaGastos = await caja.find({timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}, tipo: ["sueldos", "gasto"]})
     const inversion = await caja.find({tipo: "inversion"});
@@ -120,7 +120,7 @@ const cargarGeneral = async(req, res) => {
 }};
 const guardarCaja = async(req, res) => {
     try {
-        const fechaAc = new Date().toLocaleDateString();
+        const fechaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
         const newOperacion = new caja(req.body);
         newOperacion.fecha = fechaAc;
        await newOperacion.save();

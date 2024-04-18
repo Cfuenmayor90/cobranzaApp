@@ -26,9 +26,7 @@ router.get('/cobranza', checkRole(['cobrador']), (req, res) =>{
 router.get('/RutasDeCobranza', checkRole(['admin']), (req, res)=>{
     res.render('rutasCobranza')
 });
-router.get('/productos', checkRole(['admin']), (req, res)=>{
-    res.render('productos')
-});
+
 router.get('/estadisticas', checkRole(['admin',  'vendedor', 'cobrador']), cargarEstadisticas);
 router.get('/novedades', checkRole(['admin',  'vendedor', 'cobrador']), (req, res)=>{
     res.render('novedades')
