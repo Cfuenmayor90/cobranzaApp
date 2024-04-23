@@ -932,7 +932,7 @@ padding-top: 5px;
   .tarjetaProd{
     width: 110px;
     height: auto;
-    margin: 1px 2px;
+    margin: 4px auto;
   }
   .contLisProd{
     width: 100%;
@@ -941,6 +941,7 @@ padding-top: 5px;
     margin: auto;
     display: flex;
     flex-wrap: wrap;
+    padding: 1em;
   
   }
   .divLetrasTarjProd{
