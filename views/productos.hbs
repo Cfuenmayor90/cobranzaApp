@@ -15,37 +15,39 @@
     <div class="divClienteBuscar">
         <h3 class="tituloForm">Cargar Producto</h3>
       </div>
-    <form action="/client/crearCliente" method="post" class="formCliente2">
+    <form action="/products/saveProduct" method="post" enctype="multipart/form-data" class="formCliente2">
 
        <label for="codProd">Codigo</label>
             <br>
-            <input class="inpForm" type="text" id="codProd" name="codProd" required>
+            <input class="inpForm" type="text" id="cod" name="cod" required>
             <br>
             <label for="nameProd">Nombre</label>
             <br>
-            <input class="inpForm" type="text" id="nameProd" name="nameProd" required>
+            <input class="inpForm" type="text" id="nombre" name="nombre" required>
             <br>
             <label for="precioProd">Precio</label>
             <br>
-            <input class="inpForm" type="number" id="precioProd" name="precioProd" required>
+            <input class="inpForm" type="number" id="precio" name="precio" required>
             <br>
             <label for="cantProd">Cantidad</label>
             <br>
-            <input class="inpForm" type="number" id="cantProd" name="cantProd">
+            <input class="inpForm" type="number" id="stock" name="stock">
             <br>
             <label for="descProd">Descripción</label>
             <br>
-            <input class="inpForm" type="text" id="descProd" name="descProd" required>
+            <input class="inpForm" type="text" id="descripcion" name="descripcion" required>
             <br>
             <label for="cateProd">Categoria</label>
             <br>
-            <select class="inpForm" name="cateProd" id="cateProd">
+            <select class="inpForm" name="categoria" id="categoria">
                 <option value="electronica">Electronica</option>
                 <option value="hogar">Hogar</option>
                 <option value="comercial">Comercial</option>
                 <option value="herramientas">Herramientas</option>
             </select>
-           <input type="file" name="" id="" >
+            <label for="cateProd">Imagen Del Producto</label>
+            <br>
+           <input type="file" name="image" id="" accept=".png, .jpg, .jpeg">
               <div class="cantBtnForm">
                 <button class="btnFormReset" type="reset">Limpiar</button>
                 <button class="btnFormAceptar" type="submit">Aceptar</button>
@@ -53,32 +55,35 @@
   
     </form>
 </div>
-    <section class="sectionContClientes">
-         <div class="divClienteBuscar">
-             <h3 class="tituloForm">Buscar Producto</h3>
-          </div>
-         <div class="divClienteBuscar2">
-  
-             <input class="inpBuscarClientes" type="text" name="" id="" placeholder="Ingrese un DNI o Nombre" />
-             <button class="btnBuscarCliente"><i class="bi bi-search"></i></button>
-         </div>
-      <div class="tarjCli">
-        <h4 >Apellido y Nombre</h4>
-           <h5>DNI</h4>
-          <h5>Direccion Comercial:</h5>
-           <h5>Direccion Particular:</h5>
-          <h5>Tipo de comercio:</h5>
-           <h5>Celular:</h5>
-          <h5>Telefono:</h5>
-          <h5>Correo Electronico:</h5>
-          
-      </div>  
-       <div class="divClienteBuscar">
-        <h3 class="tituloForm">Productos Agregados Recientemente</h3>
-      </div>
-      <div class="tarjCli">
-        dfssdfds
-      </div>  
-
-    </section>
-  </div>
+     <section class="sectionContClientes">
+    <div class="divClienteBuscar">
+      <h3 class="tituloForm">Operacion De Caja</h3>
+    </div>
+    <div class="tarjCli">
+     dfdfdfdfdfdfdfdfdffd
+    </div>
+     <div class="divClienteBuscar">
+      <h3 class="tituloForm">Productos Agregados Recientemente</h3>
+    </div>
+    <div class="tarjCli">
+  <table class="tableListCaja">
+    <tr>
+      <th class="tableListCajaTitle">Cod</th>
+      <th class="tableListCajaTitle">Nombre</th>
+      <th class="tableListCajaTitle">Categoria</th>
+      <th class="tableListCajaTitle">Costo</th>
+      <th class="tableListCajaTitle">Cant.</th>
+    </tr>
+    {{#each productos}}
+     <tr>
+      <th class="tableListCajaRes">{{cod}}</th>
+      <th class="tableListCajaRes">{{nombre}}</th>
+      <th class="tableListCajaRes">{{categoria}}</th>
+      <th class="tableListCajaRes">{{precio}}</th>
+      <th class="tableListCajaRes">{{stock}}</th>
+    </tr>
+    
+    {{/each}}
+  </table>
+    </div>
+  </section>
