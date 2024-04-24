@@ -1,6 +1,14 @@
 const product = require('../models/productModels');
+const setting = require('../models/settingsModels'); //setting para ver los planes
+const settingValores = require('../models/settingValoresModels'); //sectin para valores de ganancia
 const multer = require('multer');
 const path = require('path');
+
+const f = new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    minimumFractionDigits: 2
+});
 
 //pag de productos para ADMIN
 const cargarProducts = async(req, res) =>{
@@ -25,12 +33,28 @@ const cargarPagProductos = async(req, res) =>{
 const cotizarProd = async(req, res) => {
     try {
         const {id} = req.params;
-        console.log("cotizar" + id);
         const prod = await product.findOne({_id: id});
-        const suma = prod.precio *4;
-        console.log("suma" + suma);
-        console.log("prod" + prod); 
-        res.render('cotizarProd', {prod})
+        const planesDiarios = await setting.find({categoria: "financiamiento",plan: "diario" }).sort({cuotas: 1});
+        const planesSemanales = await setting.find({categoria: "financiamiento",plan: "Semanal" }).sort({cuotas: 1});
+        const valores = await settingValores.findOne();
+        var precio = (prod.precio * valores.dolar) * ((valores.porcentaje * 0.01) + 1);
+        const arrayPlanes = [];
+        planesDiarios.forEach(element => {
+            var xcentaje = (element.porcentaje/100)+1;
+            var cuota = (precio*xcentaje)/element.cuotas;
+            var total = (element.cuotas * cuota).toFixed(2);
+            cuota = f.format(cuota)
+            arrayPlanes.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota, "total": total });
+        });
+        planesSemanales.forEach(element => {
+            var xcentaje= (element.porcentaje/100)+1;
+            var cuota =(precio*xcentaje)/element.cuotas;
+            cuota = f.format(cuota);
+            arrayPlanes.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota});
+    });
+    
+       precio = f.format(precio);
+        res.render('cotizarProd', {prod, precio , arrayPlanes})
     } catch (error) {
         
     }
