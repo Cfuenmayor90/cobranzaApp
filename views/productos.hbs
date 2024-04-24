@@ -37,13 +37,16 @@
             <br>
             <input class="inpForm" type="text" id="descripcion" name="descripcion" required>
             <br>
+            <label for="descProd">Garantia</label>
+            <br>
+            <input class="inpForm" type="text" id="garantia" name="garantia" required>
+            
             <label for="cateProd">Categoria</label>
             <br>
             <select class="inpForm" name="categoria" id="categoria">
-                <option value="electronica">Electronica</option>
-                <option value="hogar">Hogar</option>
-                <option value="comercial">Comercial</option>
-                <option value="herramientas">Herramientas</option>
+              {{#each arrayCategoriasProd}}
+                <option value="{{valor}}">{{valor}}</option>
+              {{/each}}
             </select>
             <label for="cateProd">Imagen Del Producto</label>
             <br>

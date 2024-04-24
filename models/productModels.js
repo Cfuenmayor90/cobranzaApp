@@ -29,6 +29,9 @@ const productSchema = new Schema({
     },
     stock:{
         type: Number
+    },
+    garantia:{
+        type: String
     }
 },
 {timestamps: true}

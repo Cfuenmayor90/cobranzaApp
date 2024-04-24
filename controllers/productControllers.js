@@ -9,13 +9,14 @@ const f = new Intl.NumberFormat('es-AR', {
     currency: 'ARS',
     minimumFractionDigits: 2
 });
+const arrayCategoriasProd = [{valor:'Electrodomesticos'}, {valor:'Hogar'}, {valor:'Equipamiento Comercial'}, {valor:'Electronica'}, {valor:'Celulares'}, {valor:'Accesorios Para Celulares'}, {valor:'Accesorios Para Vehiculos'}, {valor:'Herramientas' }];
 
 //pag de productos para ADMIN
 const cargarProducts = async(req, res) =>{
     try {
         const productos = await product.find();
         console.log(productos);
-        res.render('productos', {productos});
+        res.render('productos', {productos, arrayCategoriasProd});
         
     } catch (error) {
         
@@ -25,7 +26,17 @@ const cargarProducts = async(req, res) =>{
 const cargarPagProductos = async(req, res) =>{
     try {
         const productos = await product.find();
-        res.render('productosUsuarios', {productos});
+        res.render('productosUsuarios', {productos , arrayCategoriasProd});
+    } catch (error) {
+        
+    }
+};
+
+const filtrarProd = async(req, res) =>{
+    try {
+        const {categoria} = req.params;
+        const productos = await product.find({categoria});
+        res.render('productosUsuarios', {productos , arrayCategoriasProd});
     } catch (error) {
         
     }
@@ -95,4 +106,4 @@ const saveProducts = async(req, res) =>{
     }
 }
 
-module.exports = {cargarProducts, cargarPagProductos, upload, saveProducts, cotizarProd};
+module.exports = {cargarProducts, cargarPagProductos, upload, saveProducts, cotizarProd, filtrarProd};

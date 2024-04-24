@@ -1,7 +1,7 @@
 <nav class="navegacion">
     <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a>
     <div>
-      <span>Productos</span>
+      <span>Catalogo De Productos</span>
     </div>
     <div class="iconMenuHamburguesa">
       <i class="bi bi-menu-button-wide-fill"></i>
@@ -10,7 +10,12 @@
    <div class="contMayorCli">
     <section class="sectionContClientes">
          <div class="divClienteBuscar">
-             <h3 class="tituloForm">Catalogo De Productos</h3>
+      Categoria:
+             <select name="" id="">
+            {{#each arrayCategoriasProd}}
+                <option value="{{valor}}"><a href="/products/filtrarProd/{{valor}}">{{valor}}</a></option>
+              {{/each}}
+             </select>
           </div>
          <div class="contLisProd">
           {{#each productos}}
