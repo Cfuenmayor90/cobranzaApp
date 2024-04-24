@@ -670,6 +670,10 @@ padding-top: 5px;
 .btnCotizarProd:hover{
   background-color: #007b10;
 }
+.imgCotizarProd{
+  width: 50%;
+  margin: auto;
+}
 @media (max-width: 440px) {
   .navegacion {
     font-size: 20px;

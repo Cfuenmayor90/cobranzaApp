@@ -22,6 +22,19 @@ const cargarPagProductos = async(req, res) =>{
         
     }
 }
+const cotizarProd = async(req, res) => {
+    try {
+        const {id} = req.params;
+        console.log("cotizar" + id);
+        const prod = await product.findOne({_id: id});
+        const suma = prod.precio *4;
+        console.log("suma" + suma);
+        console.log("prod" + prod); 
+        res.render('cotizarProd', {prod})
+    } catch (error) {
+        
+    }
+}
 //midleware de MULTER   
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../public/uploads'),
@@ -58,4 +71,4 @@ const saveProducts = async(req, res) =>{
     }
 }
 
-module.exports = {cargarProducts, cargarPagProductos, upload, saveProducts};
+module.exports = {cargarProducts, cargarPagProductos, upload, saveProducts, cotizarProd};

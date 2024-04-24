@@ -1,0 +1,42 @@
+<nav class="navegacion">
+  <a href="javascript:history.back()"><i class="bi bi-box-arrow-left"></i></a>
+  <div>
+    <span>Clientes</span>
+  </div>
+  <div class="iconMenuHamburguesa">
+    <i class="bi bi-menu-button-wide-fill"></i>
+  </div>
+</nav>
+<div class="contMayorCli">
+  <div class="formCliente">
+    <div class="divClienteBuscar">
+      <h3 class="tituloForm">Información Del Producto</h3>
+    </div>
+    <div class="tarjUser">
+        <img class="imgCotizarProd" src="/uploads/{{prod.cod}}.jpg" alt="">
+       <h3>{{prod.nombre}}</h3>
+       <h4>{{prod.cod}}</h4>
+       <h5>{{prod.descripcion}}</h5>
+          
+       </div>    
+     <div class="divClienteBuscar">
+      <h3 class="tituloForm">Balance Por Dia</h3>
+    </div>
+    <div class="tarjUser">
+      <table class="tableListCaja">
+        <tr class="">
+          <th class="tableListCajaTitle">Fecha</th>
+          <th class="tableListCajaTitle">Esperado</th>
+          <th class="tableListCajaTitle">Cobrado</th>
+        </tr>
+       
+          <tr>
+            <th class="tableListCajaRes"></th>
+            <th class="tableListCajaRes">$</th>
+            <th class="tableListCajaRes">$</th>
+          </tr>
+     
+      </table>
+    </div>
+  </div>
+</div>
