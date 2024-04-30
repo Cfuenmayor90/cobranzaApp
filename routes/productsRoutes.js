@@ -3,7 +3,7 @@ const router = express.Router();
 const {checkRole} = require('../controllers/usersControllers');
 const {cargarProducts, cargarPagProductos, upload, saveProducts, cotizarProd, filtrarProd} = require('../controllers/productControllers');
 
-router.get('/productosUsuarios', checkRole(['admin', 'cobrador', 'vendedor']), cargarPagProductos);
+router.get('/productosUsuarios', cargarPagProductos);
 router.get('/productos', checkRole(['admin']), cargarProducts);
 router.get('/filtrarProd/:categoria', filtrarProd);
  

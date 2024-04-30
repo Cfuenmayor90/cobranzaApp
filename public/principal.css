@@ -656,16 +656,19 @@ a {
 }
 .divLetrasTarjProd{
 width: 90%;
+height: 100px;
 margin: auto;
-padding-bottom: 5px;
-padding-top: 5px;
+padding-bottom: 1px;
+padding-top: 1px;
+
+
 
 }
 .btnCotizarProd{
   background-color: #009cfb;
   width: 100px;
-  padding: 3px 5px;
-  margin: auto;
+  padding: 5px 5px;
+  margin: 3px auto;
 }
 .btnCotizarProd:hover{
   background-color: #007b10;
@@ -951,6 +954,7 @@ padding-top: 5px;
   }
   .divLetrasTarjProd{
     width: 90%;
+    height: 75px;
     margin: auto;
     padding-bottom: 2px;
     padding-top: 2px;

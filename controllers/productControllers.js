@@ -25,8 +25,9 @@ const cargarProducts = async(req, res) =>{
 //pag de productos para usuarios y clientes
 const cargarPagProductos = async(req, res) =>{
     try {
-        const productos = await product.find();
-        res.render('productosUsuarios', {productos , arrayCategoriasProd});
+        const productos = await product.find().sort({nombre: 1});
+        const cant = productos.length;
+        res.render('productosUsuarios', {productos , arrayCategoriasProd, cant});
     } catch (error) {
         
     }
@@ -36,7 +37,8 @@ const filtrarProd = async(req, res) =>{
     try {
         const {categoria} = req.params;
         const productos = await product.find({categoria});
-        res.render('productosUsuarios', {productos , arrayCategoriasProd});
+        const cant = productos.length;
+        res.render('productosUsuarios', {productos , arrayCategoriasProd, cant});
     } catch (error) {
         
     }

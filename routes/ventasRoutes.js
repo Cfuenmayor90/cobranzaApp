@@ -7,8 +7,8 @@ const {cotizarPlan, cargarVentas, guardarVentas, cargarVenCob} = require('../con
 
 router.get('/', checkRole(['admin']), cargarVentas);
 
-router.post('/cotizar', checkRole(['admin']), timeOp, cotizarPlan);
-router.post('/guardar', checkRole(['admin']),timeOp, guardarVentas);
+router.post('/cotizar', checkRole(['admin']), cotizarPlan);
+router.post('/guardar', checkRole(['admin']), guardarVentas);
 router.get('/listaVenCob/:nRuta', checkRole(['admin', 'cobrador', 'vendedor']), cargarVenCob);
 
 module.exports = router;
