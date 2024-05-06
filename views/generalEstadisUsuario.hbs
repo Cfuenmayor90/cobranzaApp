@@ -1,0 +1,105 @@
+<nav class="navegacion">
+    <a href="javascript:history.back()"><i class="bi bi-box-arrow-left"></i></a>
+    <div>
+      <span>Estadisticas De La RuTa: {{numRuta}}
+      </span>
+    </div>
+    <div class="iconMenuHamburguesa">
+      <i class="bi bi-menu-button-wide-fill"></i>
+    </div>
+  </nav>
+   <div class="contMayorCli">
+<div class="formCliente">
+       <div class="divClienteBuscar">
+        <h3 class="tituloForm">Estadisticas De Cobranza</h3>
+      </div>
+       <div class="tarjUser">
+      <form action="" class="formBuscarPeriodo">
+        <label for="" class="titlePeri">Seleccione Periodo</label>
+        <input type="month" class="inpFormPeriodo">
+        <button type="submit" class="buttonPeri">Buscar</button>
+      </form>
+      <br>
+      <table class="tableListCaja">
+        <tr class="">
+          <th class="tableListCajaTitle">Esperado:</th>
+          <th class="tableListCajaRes">{{esperadoT}}</th>
+          <th class="tableListCajaTitle">Cobrado:</th>
+          <th class="tableListCajaRes">{{cobradoT}}</th>
+        </tr>
+          <tr class="">
+          <th class="tableListCajaTitle">Efectividad:</th>
+          <th class="tableListCajaRes">{{porcentaje}}%</th>
+          <th class="tableListCajaTitle">Gastos:</th>
+          <th class="tableListCajaRes">{{gastoT}}</th>
+        </tr>
+           </table>    
+       </div>  
+        <div class="divClienteBuscar">
+      <h3 class="tituloForm">Balance Por Dia</h3>
+    </div>
+    <div class="tarjUser">
+      <table class="tableListCaja">
+        <tr class="">
+          <th class="tableListCajaTitle">Fecha</th>
+          <th class="tableListCajaTitle">Esperado</th>
+          <th class="tableListCajaTitle">Cobrado</th>
+        </tr>
+        {{#each balance}}
+          <tr>
+            <th class="tableListCajaRes">{{fecha}}</th>
+            <th class="tableListCajaRes">${{esperado}}</th>
+            <th class="tableListCajaRes">${{cobrado}}</th>
+          </tr>
+        {{/each}}
+      </table>
+    </div>
+</div>
+    <section class="sectionContClientes">
+         <div class="divClienteBuscar">
+             <h3 class="tituloForm">Ventas Realizadas</h3>
+          </div>
+    <div class="tarjUser">
+    <table class="tableListCaja">
+    <tr>
+      <th class="tableListCajaTitle">Fecha</th>
+      <th class="tableListCajaTitle">Nombre</th>
+      <th class="tableListCajaTitle">Detalle</th>
+      <th class="tableListCajaTitle">Monto</th>
+    </tr>
+    {{#each hisVent}}
+     <tr>
+      <th class="tableListCajaRes">{{fechaInicio}}</th>
+      <th class="tableListCajaRes">{{nombre}}</th>
+      <th class="tableListCajaRes">{{detalle}}</th>
+      <th class="tableListCajaRes">{{mTotal}}</th>
+    </tr> 
+    {{/each}}
+  </table>
+  </div>
+        <div class="divClienteBuscar">
+      <h3 class="tituloForm">Operaciones De Caja</h3>
+    </div>
+    <div class="tarjUser">
+      <table class="tableListCaja">
+        <tr class="">
+          <th class="tableListCajaTitle">Fecha</th>
+          <th class="tableListCajaTitle">Tipo</th>
+          <th class="tableListCajaTitle">Detalle</th>
+          <th class="tableListCajaTitle">Monto</th>
+        </tr>
+        {{#each opeCaja}}
+          <tr>
+            <th class="tableListCajaRes">{{fecha}}</th>
+            <th class="tableListCajaRes">{{tipo}}</th>
+            <th class="tableListCajaRes">{{detalle}}</th>
+            <th class="tableListCajaRes">${{monto}}</th>
+          </tr>
+        {{/each}}
+      </table>
+    </div>
+
+    
+
+    </section>
+  </div>

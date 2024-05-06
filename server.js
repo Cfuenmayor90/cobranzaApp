@@ -2,9 +2,8 @@ const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
 const hbs = require('hbs');
-const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const cron = require('node-cron');
+const cors = require('cors');
 dotenv.config();
 require('./dataBase/conexion');
 
@@ -18,7 +17,6 @@ const settingsRoutes = require('./routes/settingsRoutes');
 const calculadoraRoutes = require('./routes/calculadoraRoutes');
 const generalRoutes = require('./routes/generalRoutes');
 const alertasRoutes = require('./routes/alertasRoutes');
-const {guardarBalanceDiario, esperadoDiario, balanceDelete} = require('./controllers/cobranzaControllers');
 const { log } = require('console');
 
 const app = express();
@@ -47,27 +45,7 @@ app.use(express.urlencoded({extended: false}));
  app.get('/', (req, res) => {
    res.render('index');
  });
-//Node-cron para ejecutar funciones en tiempo especifico
- cron.schedule('50 20 * * *',() =>{
-      guardarBalanceDiario();
- },{
-  scheduled: true,
-  timezone: 'America/Buenos_Aires'
- });
- //Node-cron para ejecutar funciones en tiempo especifico
- cron.schedule('30 2 * * *',() =>{
-  esperadoDiario();
-  console.log("esperado diario");
-},{
-scheduled: true,
-timezone: 'America/Buenos_Aires'
-});
-cron.schedule('55 20 * * * ',()=>{
-    balanceDelete();
-},{
-  scheduled: true,
-  timezone: 'America/Buenos_Aires'
-  })
+
 
 app.listen(PORT, (req, res) => {
     console.log("servidor corriendo en el puerto" + PORT);
