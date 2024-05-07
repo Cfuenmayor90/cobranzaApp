@@ -16,7 +16,7 @@ const cargarEstadisticas = async (req, res) => {
     var anio = new Date().getFullYear();
      var mes = new Date().getMonth();
      var cantDias = new Date(anio, (mes+1), 0).getDate();
-    const balance = await balances.find({cobRuta: verifyToken.numRuta, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,0), $lt: new Date(anio,mes,cantDias)}});
+    const balance = await balances.find({cobRuta: verifyToken.numRuta, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,1), $lt: new Date(anio,mes,cantDias)}});
     var cobradoT = 0;
     var esperadoT = 0;
     balance.forEach(element => {
@@ -35,9 +35,9 @@ const cargarEstadisticas = async (req, res) => {
     var anio = new Date().getFullYear();
     var mes = new Date().getMonth();
     var cantDias = new Date(anio, (mes+1), 0).getDate();
-    const cajaOpe = await caja.find({userCod: cobRuta, tipo: ["sueldos", "rendicion"], timeStamp:{$gte: new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
-    const cajaGastos = await caja.find({userCod: cobRuta, tipo: "sueldos", timeStamp:{$gte: new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
-    const balance = await balances.find({cobRuta: cobRuta, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,0), $lt: new Date(anio,mes,cantDias)}});
+    const cajaOpe = await caja.find({userCod: cobRuta, tipo: ["sueldos", "rendicion"], timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}});
+    const cajaGastos = await caja.find({userCod: cobRuta, tipo: "sueldos", timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}});
+    const balance = await balances.find({cobRuta: cobRuta, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,1), $lt: new Date(anio,mes,cantDias)}});
     var cobradoT = 0;
     var esperadoT = 0;
     var operaT = 0;

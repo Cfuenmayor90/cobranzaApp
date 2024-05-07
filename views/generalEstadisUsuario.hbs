@@ -1,7 +1,7 @@
 <nav class="navegacion">
     <a href="javascript:history.back()"><i class="bi bi-box-arrow-left"></i></a>
     <div>
-      <span>Estadisticas De La RuTa: {{numRuta}}
+      <span>Estadisticas De La RuTa: {{numR}}
       </span>
     </div>
     <div class="iconMenuHamburguesa">
@@ -14,10 +14,32 @@
         <h3 class="tituloForm">Estadisticas De Cobranza</h3>
       </div>
        <div class="tarjUser">
-      <form action="" class="formBuscarPeriodo">
+      <form action="/general/estadisticaUserFecha" method="post" class="formBuscarPeriodo">
         <label for="" class="titlePeri">Seleccione Periodo</label>
-        <input type="month" class="inpFormPeriodo">
-        <button type="submit" class="buttonPeri">Buscar</button>
+        <select name="anioInp" id="anioInp">
+          {{#each arrayAnios}}
+          <option value="{{anio}}">{{anio}}</option>
+          {{/each}}
+        </select>
+        <label for="" class="titlePeri">Mes</label>
+        <select name="mesInp" id="mesInp">
+          <option value="0">Enero</option>
+          <option value="1">Febrero</option>
+          <option value="2">Marzo</option>
+          <option value="3">Abril</option>
+          <option value="4">Mayo</option>
+          <option value="5">Junio</option>
+          <option value="6">Julio</option>
+          <option value="7">Agosto</option>
+          <option value="8">Septiembre</option>
+          <option value="9">Octubre</option>
+          <option value="10">Noviembre</option>
+          <option value="11">Diciembre</option>
+        </select>
+        <br>
+         <label for="" class="titlePeri">Ruta</label>
+         <input type="number" name="numRutaInp" id="numRutaInp" value="{{numR}}">
+         <button type="submit" class="buttonPeri">Buscar</button>
       </form>
       <br>
       <table class="tableListCaja">

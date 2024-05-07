@@ -161,14 +161,19 @@ const cargarPrestamosRuta = async(req, res) =>{
    }
 };
    const cargarEstadisticas = async (req, res) => {
+    var arrayAnios = [{ anio:2023}, { anio:2024}, { anio:2025}, { anio: 2026}, { anio: 2027}, { anio:2028}, { anio:2029}, { anio:2030}]; 
     var {numRuta} = req.params;
-    var anio = new Date().getFullYear();
-     var mes =new Date().getMonth();
-     var cantDias = new Date(anio, (mes+1), 0).getDate();
-    const balance = await balances.find({cobRuta: numRuta, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
-    const hisVent = await hVentas.find({venRuta: numRuta, timeStamp:{$gte: new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
-    const opeCaja = await caja.find({userCod: numRuta, timeStamp:{$gte: new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}}).sort({timeStamp: -1});
-    const cajaGastos = await caja.find({userCod: numRuta, tipo: "sueldos", timeStamp:{$gte: new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
+    const {numRutaInp, mesInp, anioInp} = req.body;
+    console.log(`numRuta ${numRutaInp} mes ${mesInp} año ${anioInp}`);
+    var anio = anioInp || new Date().getFullYear();
+     var mes = mesInp || new Date().getMonth();
+     var cantDias = (new Date(anio, (mes+1), 0).getDate());
+     var numR = numRutaInp || numRuta;
+     console.log("fechaForm " + anio);
+    const balance = await balances.find({cobRuta: numR, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}});
+    const hisVent = await hVentas.find({venRuta: numR, timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}});
+    const opeCaja = await caja.find({userCod: numR, timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}}).sort({timeStamp: -1});
+    const cajaGastos = await caja.find({userCod: numR, tipo: "sueldos", timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}});
     var cobradoT = 0;
     var esperadoT = 0;
     var gastoT = 0;
@@ -183,7 +188,7 @@ const cargarPrestamosRuta = async(req, res) =>{
     cobradoT = f.format(cobradoT);
     esperadoT = f.format(esperadoT);
     gastoT = f.format(gastoT);
-    res.render('generalEstadisUsuario', {balance, cobradoT, esperadoT, porcentaje, hisVent, opeCaja, numRuta, gastoT});
+    res.render('generalEstadisUsuario', {balance, cobradoT, esperadoT, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios});
   
   };
 const editCliente = async(req, res) =>{
