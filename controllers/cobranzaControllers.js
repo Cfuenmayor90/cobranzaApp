@@ -22,7 +22,7 @@ const cargarCobranza = async (req, res) => {
     const coRu = verifyToken.numRuta;
     const diaInici = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     const timeInici = new Date().toLocaleTimeString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-    const espe = await balances.findOne({ cobRuta:coRu, fecha:diaInici, categoria:"esperado"});
+    const espe = await balances.findOne({ cobRuta:coRu, fecha:diaInici, categoria:"balance_diario"});
     const pagosActuales = await pagoN.find({cobRuta:coRu, fecha: diaInici});
     var monCobrado = 0;
     var espeValor = espe.esperado;
@@ -132,6 +132,7 @@ const esperadoDiario = async(req, res) =>{
       }
     }; 
     console.log("Balance esperado Ok"); 
+   res.redirect('/vistas/principal');
   }
   
      } 
