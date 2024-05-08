@@ -1,6 +1,7 @@
 const users = require("../models/userModels");
 const histVentas = require("../models/historyVentas");
 const ventas = require("../models/ventasModels");
+const balances = require("../models/balanceModels");
 const { generarJWT, verifyJWT} = require('../middleware/jwt');
 const { validationResult } = require("express-validator");
 require('dotenv').config();
@@ -88,7 +89,9 @@ const validarIngresoUsuario = async (req, res) => {
       var dia = new Date().getDate();
       switch (rol) {
         case 'admin':
-          return res.render("principal", { nombre, nRuta});
+          const fecha = new Date().toLocaleDateString();
+          const rutas = await balances.find({fecha});
+          return res.render("principal", { nombre, nRuta, rutas});
           break;
         case 'cobrador':
              const presVencidos = await ventas.find({cobRuta: nRuta, DateFinal:{$lte: new Date(anio,mes,dia)}});
@@ -179,7 +182,9 @@ const volverPrin = async (req, res) => {
       
       switch (rol) {
         case 'admin':
-         res.render("principal", {fecha, nombre});
+          const fecha = new Date().toLocaleDateString();
+          const rutas = await balances.find({fecha});
+         res.render("principal", {fecha, nombre, rutas});
           break;
         case 'cobrador':
           const presVencidos = await ventas.find({cobRuta: nRuta, DateFinal:{$lte: new Date(anio,mes,dia)}});

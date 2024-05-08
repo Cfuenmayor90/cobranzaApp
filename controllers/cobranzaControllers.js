@@ -118,7 +118,7 @@ const esperadoDiario = async(req, res) =>{
     for (let i = 0; i < ruCobro.length; i++) {
       const element = ruCobro[i];
       var nRuta = element.numRuta;
-      const buscarEsperado = await balances.findOne({fecha: fechaAc, categoria: "esperado", cobRuta: nRuta});
+      const buscarEsperado = await balances.findOne({fecha: fechaAc, categoria: "balance_diario", cobRuta: nRuta});
       if (!buscarEsperado) {
         console.log("esperado diario for");
         var esperado = await ventas.find({ cobRuta: nRuta, diaDeCobro: diaD, mTotal:{$gt:0}});
@@ -127,7 +127,7 @@ const esperadoDiario = async(req, res) =>{
           espeT = element.cuota + espeT;
         });
         console.log("cron esperado total:" + espeT.toFixed(2));
-        const balanceNew = new balances({cobRuta: nRuta, fecha: fechaAc, nombre: element.nombre, esperado: espeT.toFixed(2), categoria: "esperado" });
+        const balanceNew = new balances({cobRuta: nRuta,  nombre: element.nombre, fecha: fechaAc, cobrado: 0, esperado: espeT.toFixed(2), ventas: 0, ganancia: 0, categoria: "balance_diario" });
         await balanceNew.save();
       }
     }; 
@@ -136,7 +136,8 @@ const esperadoDiario = async(req, res) =>{
   
      } 
      catch (error) {
-      
+      const mensajeError = "No se pudo generar las planillas de cobranza"
+      res.render('error', {mensajeError})
      }
 };
 //funcion para guardar los balances diarios
@@ -144,34 +145,30 @@ const guardarBalanceDiario = async() =>{
   try {
     const diA = new Date().getDay();
     if (diA !==0){
-    const ruCobro = await users.find({role:"cobrador"});
     var fechaAc =new Date().toLocaleDateString("es-AR", {timeZone: 'America/Buenos_Aires'});
     var dia = "dia";
-    
-    for (let i = 0; i < ruCobro.length; i++) {
-      const element = ruCobro[i];
-      var nRuta = element.numRuta;
-       const buscarBalances = await balances.findOne({fecha: fechaAc, categoria: 'balance_diario', cobRuta: nRuta});
-       if (!buscarBalances) {
-         var pagos = await pagoN.find({cobRuta: nRuta, fecha: fechaAc});
-         var esperad = await balances.findOne({ cobRuta: nRuta, fecha: fechaAc, categoria: "esperado"});
-         var venTas = await ventas.find({cobRuta: nRuta, fechaInicio: fechaAc});
-         var pagosT = 0;
-         var venTotal = 0;
-         var monTotal = 0;
-         var ganan = 0;
-         venTas.forEach(element => {
-           venTotal = element.monto + venTotal;
-           monTotal = element.total + monTotal;
-         });
-         pagos.forEach(element => {
-           pagosT = element.pago + pagosT;
-         });
-         ganan = (monTotal-venTotal).toFixed(2);
-         const balanceNew = new balances({cobRuta: nRuta, fecha: fechaAc, nombre: element.nombre, cobrado: pagosT.toFixed(2), esperado: esperad.esperado.toFixed(2), categoria: "balance_diario", ventas: venTotal, ganancia: ganan });
-         await balanceNew.save();
-        
-       }}}} 
+    const balanUser = await balances.find({fecha: fechaAc, categoria: "balance_diario"})
+    console.log("balanUser --------------------------------------------------------- " + balanUser);
+    for (let i = 0; i < balanUser.length; i++) {
+      const element = balanUser[i];
+      var nRuta = element.cobRuta;
+      var pagos = await pagoN.find({cobRuta: nRuta, fecha: fechaAc});
+      var venTas = await ventas.find({cobRuta: nRuta, fechaInicio: fechaAc});
+      var pagosT = 0;
+      var venTotal = 0;
+      var monTotal = 0;
+      var ganan = 0;
+      venTas.forEach(element => {
+        venTotal = element.monto + venTotal;
+        monTotal = element.total + monTotal;
+      });
+      pagos.forEach(element => {
+        pagosT = element.pago + pagosT;
+      });
+      ganan = (monTotal-venTotal).toFixed(2);
+      const balanceNew = ({cobRuta: nRuta, fecha: fechaAc, nombre: element.nombre, cobrado: pagosT.toFixed(2), esperado: element.esperado.toFixed(2), categoria: "balance_diario", ventas: venTotal, ganancia: ganan });
+      const balanEdit = await balances.findByIdAndUpdate({_id: element._id}, balanceNew);
+    }}} 
     catch (error) {
     
   }

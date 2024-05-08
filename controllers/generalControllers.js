@@ -199,20 +199,14 @@ const editCliente = async(req, res) =>{
 
 
 //Node-cron para ejecutar funciones en tiempo especifico
- cron.schedule('50 20 * * *',() =>{
+ cron.schedule('55 20 * * *',() =>{
       guardarBalanceDiario();
  },{
   scheduled: true,
   timezone: 'America/Buenos_Aires'
  });
  //Node-cron para ejecutar funciones en tiempo especifico
- cron.schedule('30 2 * * *',() =>{
-  esperadoDiario();
-  console.log("esperado diario");
-},{
-scheduled: true,
-timezone: 'America/Buenos_Aires'
-});
+
 cron.schedule('55 20 * * * ',()=>{
     balanceDelete();
 },{

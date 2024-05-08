@@ -31,9 +31,6 @@ const balanceSchema = new Schema({
     ganancia:{
         type: Number
     },
-    gastos:{
-        type: Number
-    },
     categoria: {
         type: String
     }
