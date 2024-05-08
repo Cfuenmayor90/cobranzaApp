@@ -137,7 +137,7 @@ const guardarCaja = async(req, res) => {
       const dia = new Date(fecha).getUTCDate();
 
         
-      const fechaAc = new Date(anio, mes, dia).toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+      const fechaAc = new Date(anio, mes, (dia + 1)).toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
       newOperacion.timeStamp = new Date(anio, mes, dia).toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
       newOperacion.fecha =  fechaAc;
        await newOperacion.save();
