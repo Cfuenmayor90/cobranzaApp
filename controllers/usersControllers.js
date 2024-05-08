@@ -89,7 +89,7 @@ const validarIngresoUsuario = async (req, res) => {
       var dia = new Date().getDate();
       switch (rol) {
         case 'admin':
-          const fecha = new Date().toLocaleDateString();
+          const fecha = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Buenos_Aires'});
           const rutas = await balances.find({fecha});
           return res.render("principal", { nombre, nRuta, rutas});
           break;
@@ -182,7 +182,7 @@ const volverPrin = async (req, res) => {
       
       switch (rol) {
         case 'admin':
-          const fecha = new Date().toLocaleDateString();
+          const fecha = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Buenos_Aires'});
           const rutas = await balances.find({fecha});
          res.render("principal", {fecha, nombre, rutas});
           break;
