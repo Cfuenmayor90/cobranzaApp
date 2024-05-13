@@ -132,7 +132,7 @@ const esperadoDiario = async(req, res) =>{
       }
     }; 
     console.log("Balance esperado Ok"); 
-   res.redirect('/vistas/principal');
+   res.redirect('/vistas/volver');
   }
   
      } 
