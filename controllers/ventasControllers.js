@@ -3,16 +3,18 @@ const setPrest = require('../models/settingsModels');
 const client = require("../models/clientModels");
 const ventas = require('../models/ventasModels');
 const historyVentas = require('../models/historyVentas');
+const product = require('../models/productModels');
 
 
 
 const cargarVentas = async(req, res) => {
     const fechaHoy = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
      const usuarios = await users.find();
+     const productos = await product.find().sort({nombre: 1});
      const planPrest = await setPrest.find({categoria: 'prestamo'}).sort({porcentaje: 1});
      const planProd = await setPrest.find({categoria: 'financiamiento'}).sort({porcentaje: 1});
      const ventasT = await ventas.find().sort({timeStamp: -1}).limit(10);
-     return res.render('ventas', {usuarios, planPrest, planProd, ventasT});
+     return res.render('ventas', {usuarios, planPrest, planProd, ventasT, productos});
 }
 //cargar ventas especificas de usuarios como vendedore y cobradores
 const cargarVenCob = async(req, res) =>{
