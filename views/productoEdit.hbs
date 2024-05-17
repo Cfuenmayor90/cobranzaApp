@@ -1,0 +1,60 @@
+<nav class="navegacion">
+    <a href="javascript:history.back()"><i class="bi bi-box-arrow-left"></i></a>
+    <div>
+      <span>Clientes</span>
+    </div>
+    <div class="iconMenuHamburguesa">
+      <i class="bi bi-menu-button-wide-fill"></i>
+    </div>
+  </nav>
+   <div class="contMayorCli">
+<div class="formCliente">
+    <div class="divClienteBuscar">
+        <h3 class="tituloForm">Editar Producto</h3>
+      </div>
+     <form action="/products/prodEditSave/{{prod._id}}" method="post" enctype="multipart/form-data" class="formCliente2">
+
+            <label for="codProd">Codigo</label>
+            <br>
+            <input class="inpForm" value="{{prod.cod}}" type="text" id="cod" name="cod" required>
+            <br>
+            <label for="nameProd">Nombre</label>
+            <br>
+            <input class="inpForm" type="text" value="{{prod.nombre}}" id="nombre" name="nombre" required>
+            <br>
+            <label for="precioProd">Precio</label>
+            <br>
+            <input class="inpForm" type="number" value="{{prod.precio}}" id="precio" name="precio" required>
+            <br>
+            <label for="cantProd">Cantidad</label>
+            <br>
+            <input class="inpForm" type="number" value="{{prod.stock}}" id="stock" name="stock">
+            <br>
+            <label for="descProd">Descripción</label>
+            <br>
+            <input class="inpForm" type="text" value="{{prod.descripcion}}" id="descripcion" name="descripcion" required>
+            <br>
+            <label for="descProd">Garantia</label>
+            <br>
+            <input class="inpForm" type="text" value="{{prod.garantia}}" id="garantia" name="garantia" required>
+    
+            <label for="cateProd">Categoria</label>
+            <br>
+            <select class="inpForm" name="categoria" id="categoria">
+              {{#each arrayCategoriasProd}}
+                <option value="{{valor}}">{{valor}}</option>
+              {{/each}}
+            </select>
+            <label for="cateProd">Imagen Del Producto</label>
+            <br>
+           <input type="file" name="image" id="" accept=".png, .jpg, .jpeg">
+            <br>
+              <div class="cantBtnForm">
+                <button class="btnFormReset" type="reset">Limpiar</button>
+                <button class="btnFormAceptar" type="submit">Aceptar</button>
+            </div>
+  
+    </form>
+</div>
+   
+  </div>

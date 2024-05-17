@@ -50,7 +50,7 @@
             </select>
             <label for="cateProd">Imagen Del Producto</label>
             <br>
-           <input type="file" name="image" id="" accept=".png, .jpg, .jpeg">
+           <input type="file" name="image" id="image" required accept=".png, .jpg, .jpeg">
               <div class="cantBtnForm">
                 <button class="btnFormReset" type="reset">Limpiar</button>
                 <button class="btnFormAceptar" type="submit">Aceptar</button>
@@ -60,10 +60,26 @@
 </div>
      <section class="sectionContClientes">
     <div class="divClienteBuscar">
-      <h3 class="tituloForm">Operacion De Caja</h3>
+      <h3 class="tituloForm">Balance De Productos</h3>
     </div>
     <div class="tarjCli">
-     dfdfdfdfdfdfdfdfdffd
+       <table class="tableListCaja">
+    <tr>
+      <th class="tableListCajaTitle">Cantidad De Productos</th>
+      <th class="tableListCajaRes">{{cantProd}}</th>
+    </tr>
+  
+     <tr>
+       <th class="tableListCajaTitle">Stock Total</th>
+      <th class="tableListCajaRes">{{cantProdStock}}</th>
+    </tr>
+       <tr>
+       <th class="tableListCajaTitle">Capital En Productos</th>
+      <th class="tableListCajaRes">{{capiProd}} USD</th>
+    </tr>
+
+  </table>
+
     </div>
      <div class="divClienteBuscar">
       <h3 class="tituloForm">Productos Agregados Recientemente</h3>
@@ -79,7 +95,7 @@
     </tr>
     {{#each productos}}
      <tr>
-      <th class="tableListCajaRes">{{cod}}</th>
+      <th class="tableListCajaRes"><a href="/products/prodEdit/{{_id}}" style="color: rgb(0, 0, 148);">{{cod}}</a></th>
       <th class="tableListCajaRes">{{nombre}}</th>
       <th class="tableListCajaRes">{{categoria}}</th>
       <th class="tableListCajaRes">{{precio}}</th>

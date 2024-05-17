@@ -15,8 +15,17 @@ const arrayCategoriasProd = [{valor:'Electrodomesticos'}, {valor:'Hogar'}, {valo
 const cargarProducts = async(req, res) =>{
     try {
         const productos = await product.find();
-        console.log(productos);
-        res.render('productos', {productos, arrayCategoriasProd});
+        const prodStock = await product.find({stock: {$gte: 1}});
+        var capiProd = 0;
+        var cantProdStock = 0; //cantidad de productos totales en stock
+        var cantProd = prodStock.length; //cantidad de productos
+        prodStock.forEach(element => {
+            var prodM = element.stock * element.precio;
+            capiProd = capiProd + prodM;
+            cantProdStock = cantProdStock + element.stock;
+        });
+        console.log("productos en estock  " + capiProd);
+        res.render('productos', {productos, arrayCategoriasProd, capiProd, cantProd, cantProdStock});
         
     } catch (error) {
         
@@ -106,6 +115,30 @@ const saveProducts = async(req, res) =>{
     } catch (error) {
         console.log(error);
     }
+};
+
+const prodEditGet = async(req, res) =>{
+    try {
+        const {_id} =  req.params;
+        const prod = await product.findById({_id});
+        console.log(prod);
+        res.render('productoEdit', {prod, arrayCategoriasProd });
+
+    } catch (error) {
+        
+    }
+};
+
+const prodEditSave = async(req, res) =>{
+    try {
+        const prodEdit = req.body;
+        const {id} = req.params;
+         await product.findByIdAndUpdate({_id:id}, prodEdit);
+        //console.log("producto a editar" + prodEdit);
+        res.redirect('/products/productos');
+    } catch (error) {
+        
+    }
 }
 
-module.exports = {cargarProducts, cargarPagProductos, upload, saveProducts, cotizarProd, filtrarProd};
+module.exports = {cargarProducts, cargarPagProductos, upload, saveProducts, cotizarProd, filtrarProd, prodEditGet, prodEditSave};
