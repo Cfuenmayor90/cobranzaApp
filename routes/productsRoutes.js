@@ -9,7 +9,7 @@ router.get('/filtrarProd/:categoria', filtrarProd);
  
 router.post('/saveProduct', checkRole(['admin']), upload, saveProducts);
 
-router.get('/cotizarProd/:_id', cotizarProd);
+router.get('/cotizarProd/:id', cotizarProd);
 
 router.get('/prodEdit/:_id', checkRole(['admin']), prodEditGet);
 
