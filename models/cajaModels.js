@@ -8,7 +8,6 @@ const cajaSchema = new Schema({
     },  
     timeStamp: {
         type: Date,
-        default: Date.now
     },
     fecha:{
         type: String,

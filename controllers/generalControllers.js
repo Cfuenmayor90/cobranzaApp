@@ -86,7 +86,7 @@ const cargarGeneral = async(req, res) => {
             cajaAdelanto.forEach(element => {
               mAdelantos = element.monto + mAdelantos;
             });
-            console.log("balance por cobrador " + balan);
+          
             balan.forEach(element => {
               espeT = element.esperado + espeT;
               cobT = element.cobrado + cobT;
@@ -139,6 +139,7 @@ const guardarCaja = async(req, res) => {
         
       const fechaAc = new Date(anio, mes, (dia + 1)).toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
       newOperacion.timeStamp = new Date(anio, mes, dia).toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+      console.log("fecha timestamp" + newOperacion.timeStamp);
       newOperacion.fecha =  fechaAc;
        await newOperacion.save();
 

@@ -77,7 +77,6 @@ const ventaSchema = new Schema({
     },
     timeStamp:{
         type: Date,
-        default: Date.now
     },
     DateFinal:{
         type: Date

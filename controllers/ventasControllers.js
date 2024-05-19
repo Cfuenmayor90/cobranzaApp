@@ -4,6 +4,7 @@ const client = require("../models/clientModels");
 const ventas = require('../models/ventasModels');
 const historyVentas = require('../models/historyVentas');
 const product = require('../models/productModels');
+const balance = require('../models/balanceModels');
 
 
 
@@ -25,18 +26,28 @@ const cargarVenCob = async(req, res) =>{
 const cotizarPlan = async(req, res) => {
   try {
     const cot = req.body;
+    var mensajeError = '';
+    const fechaVent = new Date(cot.fecha).toLocaleDateString("Es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     const cliente = await client.findOne({dni:cot.dni});
-    if (cliente) {
+    const balanCEDiario = await balance.findOne({cobRuta: cot.cobRuta, fecha: fechaVent});
+    console.log("fecha de venta " + cot.fecha);
+    console.log("balance encontrado " + balanCEDiario);
+    if (!cliente) {
+      mensajeError = '¡El Cliente NO existe en la DATA BASE!';
+      res.render('error', {mensajeError});
+    }
+    if (balanCEDiario) {
       console.log(cot);
       const planCot = await setPrest.findById({_id:cot.planId});
       const mTotal = (cot.monto * ((planCot.porcentaje / 100)+1)).toFixed(2);
       const cuota = (mTotal / planCot.cuotas).toFixed(2);
       //res.send(`Monto:${cot.monto}, Cuotas: ${planCot.cuotas}, Cuota: ${cuota}, Total: ${mTotal}`);
       res.render('confirmarVenta', {cot, planCot, cuota, mTotal, cliente})
-      
-    } else {
-      const mensajeError = 'El Usuario No Existe';
-      res.render('error', {mensajeError})
+   
+    }
+    else{
+      mensajeError = '¡La fecha de venta ingresada no es permitida!, elija una fecha que tenga un BALANCE DIARIO generado en esa ruta de cobro';
+      res.render('error', {mensajeError});
     }
     
   } catch (error) {
@@ -44,41 +55,56 @@ const cotizarPlan = async(req, res) => {
   }
 };
 const guardarVentas = async(req,res) => {
- const newVenta = new ventas(req.body);
- newVenta.total = newVenta.mTotal;
- var diaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
- var fechaV = new Date();
- console.log(diaAc);
- var fechaVencimiento = "";
- if (newVenta.plan === "diario") {
-  var DiaDom = parseInt(newVenta.cuotas/6);
-   fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas + DiaDom)));
- } else {
-  fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas * 7)));
- }
- newVenta.fechaInicio = diaAc;
- newVenta.fechaFinal = fechaVencimiento.toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
- newVenta.DateFinal= fechaVencimiento;
- await newVenta.save();
- if (newVenta.venRuta !== 1) {
-  if (newVenta.categoria == "prestamo") {
-    newVenta.mTotal = newVenta.monto;
+try {
+  const {fecha} = req.body;
+  const newVenta = new ventas(req.body);
+  newVenta.total = newVenta.mTotal;
+  const anio = new Date(fecha).getFullYear();
+  const mes = new Date(fecha).getMonth();
+  const dia = new Date(fecha).getUTCDate();
+  const fechaAc = new Date(anio, mes, (dia + 1)).toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+  var fechaV  = new Date(anio, mes, dia);//.toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+ 
+  var fechaVencimiento = "";
+  if (newVenta.plan === "diario") {
+    var DiaDom = parseInt(newVenta.cuotas/6);
+    fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas + DiaDom)));
+   } else {
+     fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas * 7)));
+   }
+   newVenta.timeStamp =  new Date(anio, mes, dia).toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+   newVenta.fechaInicio = fechaAc;
+   newVenta.fechaFinal = fechaVencimiento.toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+   newVenta.DateFinal= fechaVencimiento;
+   var montGanancia = newVenta.total - newVenta.monto;
+   const balan = await balance.findOne({cobRuta: newVenta.cobRuta, fecha: fechaAc});
+  balan.ventas = balan.ventas + newVenta.monto;
+  balan.ganancia = balan.ganancia + montGanancia;
+  await balance.findByIdAndUpdate(balan._id, balan);
+  await newVenta.save();
+ 
+  if (newVenta.venRuta !== 1) {
+   if (newVenta.categoria == "prestamo") {
+     newVenta.mTotal = newVenta.monto;
+   }
+   const newHistoryVenta = new historyVentas({
+     nombre: newVenta.nombre,
+     dni: newVenta.dni,
+     venRuta: newVenta.venRuta,
+     cobRuta: newVenta.cobRuta,
+     codProd: newVenta.codProd,
+     detalle: newVenta.detalle,
+     mTotal: newVenta.mTotal,
+     categoria: newVenta.categoria,
+     plan: `${newVenta.plan} / Cuotas: ${newVenta.cuotas} / Cuota: ${newVenta.cuota}`,
+     fechaInicio: fechaAc
+   });
+   await newHistoryVenta.save();
   }
-  const newHistoryVenta = new historyVentas({
-    nombre: newVenta.nombre,
-    dni: newVenta.dni,
-    venRuta: newVenta.venRuta,
-    cobRuta: newVenta.cobRuta,
-    codProd: newVenta.codProd,
-    detalle: newVenta.detalle,
-    mTotal: newVenta.mTotal,
-    categoria: newVenta.categoria,
-    plan: `${newVenta.plan} / Cuotas: ${newVenta.cuotas} / Cuota: ${newVenta.cuota}`,
-    fechaInicio: diaAc
-  });
-  await newHistoryVenta.save();
- }
- res.redirect('/ventas');
+  res.redirect('/ventas');
+  } catch (error) {
+  res.send(error)
+}
 };
 
 
