@@ -26,6 +26,7 @@ const cargarGeneral = async(req, res) => {
     //ventas totales mensuales
     const ventasTo = await balances.find({categoria: "balance_diario",timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}});
     const cajaList = await caja.find({timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}}).sort({timeStamp: -1});
+    const cajaListGastos = await caja.find({timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}, tipo: ["gasto", "Adelanto de sueldo"]});
     const efeCajaTotal = await caja.find({tipo: ["rendicion", "inversion"]});
     var cajaGastos = await caja.find({tipo: ["sueldos", "gasto"]})
     const inversion = await caja.find({tipo: ["inversion", "ingreso"]});
@@ -38,9 +39,13 @@ const cargarGeneral = async(req, res) => {
     var invT = 0; //inversiones totales
     var efeCajaT =0; // Efectivo total de caja
     var gasCaja = 0; // gastos de caja general
+    var gastocajaMes = 0; // gastos de caja mes actual
     //sumamos todas las ventas en general desde el inicio
     venTotalT.forEach(element => {
       venTotalTo = element.ventas + venTotalTo;
+    });
+    cajaListGastos.forEach(element => {
+      gastocajaMes = element.monto + gastocajaMes;
     });
     //sumamos todas las ventas y ganacias totales de las rutas en el MES  en curso
     ventasTo.forEach(element => {
@@ -123,7 +128,8 @@ const cargarGeneral = async(req, res) => {
           espeTotal = f.format(espeTotal);
           efeCajaT= f.format(efeCajaT);
           capital= f.format(capital);
-          return res.render('generalCobranza', {porCobrar, ArrayUserGene, usuario, cajaList, cantPres, venTotal, ganaTotal, cobraTotal, espeTotal, porcentajeT, efeCajaT, capital, invT});
+          gastocajaMes = f.format(gastocajaMes);
+          return res.render('generalCobranza', {porCobrar, ArrayUserGene, usuario, cajaList, cantPres, venTotal, ganaTotal, cobraTotal, espeTotal, porcentajeT, efeCajaT, capital, invT,  gastocajaMes});
     
    } catch (error) {
     
