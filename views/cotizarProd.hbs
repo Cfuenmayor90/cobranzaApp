@@ -18,7 +18,10 @@
        <h4>Codigo: {{prod.cod}}</h4>
        <h5>{{prod.descripcion}}</h5>
        <h4>Disponibles: {{prod.stock}}</h4>
-       <h2 style="color: green;">Precio: {{precio}}</h3>
+       <div style="display: flex; justify-content: space-between;">
+       <h2 style="color: green; font-size: 25px;">Precio: {{precio}}</h3>
+       <a href="https://api.whatsapp.com/send?text=[text]" class="btnCompartirCotizarPro"> <i class="bi bi-whatsapp"></i></i></a>   
+       </div>
           
        </div>    
     
