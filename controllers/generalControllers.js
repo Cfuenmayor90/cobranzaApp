@@ -119,6 +119,7 @@ const cargarGeneral = async(req, res) => {
         efeCajaT = efeCajaT - venTotalTo - gasCaja;
          var capital = porCobrar + efeCajaT;
          var cantPres = prest.length;
+         var gananCobTotal = cobraTotal * 0.35;
          invT = f.format(invT);
          var porcentajeT = ((cobraTotal/espeTotal)*100).toFixed(2);
          porCobrar = f.format(porCobrar);
@@ -128,8 +129,9 @@ const cargarGeneral = async(req, res) => {
           espeTotal = f.format(espeTotal);
           efeCajaT= f.format(efeCajaT);
           capital= f.format(capital);
+          gananCobTotal = f.format(gananCobTotal);
           gastocajaMes = f.format(gastocajaMes);
-          return res.render('generalCobranza', {porCobrar, ArrayUserGene, usuario, cajaList, cantPres, venTotal, ganaTotal, cobraTotal, espeTotal, porcentajeT, efeCajaT, capital, invT,  gastocajaMes});
+          return res.render('generalCobranza', {porCobrar, ArrayUserGene, usuario, cajaList, cantPres, venTotal, ganaTotal, cobraTotal, espeTotal, porcentajeT, efeCajaT, capital, invT,  gastocajaMes, gananCobTotal});
     
    } catch (error) {
     

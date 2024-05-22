@@ -66,12 +66,16 @@
           <th class="tableListCajaTitle">Fecha</th>
           <th class="tableListCajaTitle">Esperado</th>
           <th class="tableListCajaTitle">Cobrado</th>
+            <th class="tableListCajaTitle">Ventas</th>
+              <th class="tableListCajaTitle">Ganancias</th>
         </tr>
         {{#each balance}}
           <tr>
             <th class="tableListCajaRes">{{fecha}}</th>
             <th class="tableListCajaRes">${{esperado}}</th>
             <th class="tableListCajaRes">${{cobrado}}</th>
+             <th class="tableListCajaRes">${{ventas}}</th>
+              <th class="tableListCajaRes">${{ganancia}}</th>
           </tr>
         {{/each}}
       </table>
