@@ -27,7 +27,11 @@ const cotizarPlan = async(req, res) => {
   try {
     const cot = req.body;
     var mensajeError = '';
-    const fechaVent = new Date(cot.fecha).toLocaleDateString("Es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+    const fecha = cot.fecha;
+    const anio = new Date(fecha).getFullYear();
+    const mes = new Date(fecha).getMonth();
+    const dia = new Date(fecha).getUTCDate();
+    const fechaVent = new Date(anio, mes, (dia + 1)).toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     const cliente = await client.findOne({dni:cot.dni});
     const balanCEDiario = await balance.findOne({cobRuta: cot.cobRuta, fecha: fechaVent});
     console.log("fecha de venta " + cot.fecha);
@@ -94,7 +98,7 @@ try {
      cobRuta: newVenta.cobRuta,
      codProd: newVenta.codProd,
      detalle: newVenta.detalle,
-     mTotal: newVenta.mTotal,
+     mTotal: newVenta.total,
      categoria: newVenta.categoria,
      plan: `${newVenta.plan} / Cuotas: ${newVenta.cuotas} / Cuota: ${newVenta.cuota}`,
      fechaInicio: fechaAc

@@ -175,6 +175,7 @@
       <th class="tableListCajaTitle">Operacion</th>
       <th class="tableListCajaTitle">Detalle</th>
       <th class="tableListCajaTitle">Monto</th>
+      <th class="tableListCajaTitle"><i style="color: rgb(0, 0, 0);" class="bi bi-trash"></i></th>
     </tr>
     {{#each cajaList}}
      <tr>
@@ -183,6 +184,7 @@
       <th class="tableListCajaRes">{{tipo}}</th>
       <th class="tableListCajaRes">{{detalle}}</th>
       <th class="tableListCajaRes">{{monto}}</th>
+      <th class="tableListCajaRes"><a onclick="return confirm('¿Desea Eliminar La OPERACION?')" href="/general/deleteCajaOperacion/{{_id}}"><i style="color: red;" class="bi bi-file-earmark-x"></i></a></th>
     </tr>
     
     {{/each}}

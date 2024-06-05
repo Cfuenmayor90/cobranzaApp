@@ -66,6 +66,39 @@ const pagoSave = async (req, res) => {
     res.render("error");
   }
 };
+const filterSem = async(req, res) =>{
+  try {
+    const {coRu} = req.params;
+    const dia = new Date().getDay();
+    console.log(dia);
+    const arrayDias = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+    const diaDeCobro = arrayDias[dia]
+    const prestamos = await ventas.find({ cobRuta: coRu, diaDeCobro}).sort({nombre: 1});
+    console.log('prestamos ' + prestamos);
+    const diaInici = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+    const timeInici = new Date().toLocaleTimeString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+    const espe = await balances.findOne({ cobRuta:coRu, fecha:diaInici, categoria:"balance_diario"});
+    const pagosActuales = await pagoN.find({cobRuta:coRu, fecha: diaInici});
+    var monCobrado = 0;
+    var espeValor = espe.esperado;
+    var infoPagos = [];
+    for (let i = 0; i < pagosActuales.length; i++) {
+      const element = pagosActuales[i];
+      monCobrado = element.pago + monCobrado;
+      const infoPres = await ventas.findOne({_id:element.codPres});
+      infoPagos.push({nombre: infoPres.nombre, pago:element.pago});
+    };
+    const efect = ((monCobrado / espeValor)*100).toFixed(2);
+    espeValor = f.format(espeValor);
+    monCobrado = f.format(monCobrado);
+    const nPres = prestamos.length;
+    res.render("cobranza", { prestamos, espeValor,monCobrado, efect, infoPagos,diaInici, timeInici, coRu, nPres});
+    
+    
+  } catch (error) {
+    
+  }
+}
 const listaPagosDiarios = async(req, res) =>{
   try {
     const {coRu} = req.params;
@@ -263,4 +296,4 @@ const saveRefinanciarPres = async(req, res) =>{
     
   }
 };
-module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, balanceDelete, envioTicket, refinanciarPres, saveRefinanciarPres };
+module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, balanceDelete, envioTicket, refinanciarPres, saveRefinanciarPres, filterSem};

@@ -1,7 +1,7 @@
 const express = require('express');
 const { checkRole } = require('../controllers/usersControllers');
 const router = express.Router();
-const {cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, envioTicket, refinanciarPres, saveRefinanciarPres, esperadoDiario} = require('../controllers/cobranzaControllers');
+const {cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, envioTicket, refinanciarPres, saveRefinanciarPres, esperadoDiario, filterSem} = require('../controllers/cobranzaControllers');
 const {timeOp} = require("../middleware/timeOpe");
 
 router.get('/', checkRole(['cobrador']), cargarCobranza);
@@ -11,6 +11,8 @@ router.post('/savePago', checkRole(['cobrador']), timeOp,  pagoSave);
 router.get('/pagosList/:id', checkRole(['cobrador', 'admin']), listaPagos);
 
 router.get('/pagoListDiario/:coRu', checkRole(['cobrador', 'admin']), listaPagosDiarios);
+
+router.get('/filterSem/:coRu', checkRole(['admin', 'cobrador']), filterSem);
 
 router.get('/ticket/:id', envioTicket);
 

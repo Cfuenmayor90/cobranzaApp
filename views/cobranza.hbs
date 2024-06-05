@@ -7,11 +7,12 @@
            <span>Cobranza</span>
         </div>
         <div class="iconMenuHamburguesa">
-            <i class="bi bi-menu-button-wide-fill"></i>
+           <i class="bi bi-filter-square"></i>
         </div>
     </nav>
 
     <div class="contPres">
+      
         {{#each prestamos}}
         <form action="/cobranza/savePago" method="post"> 
 
@@ -57,7 +58,9 @@
         {{/each}}
         <br>
         <div class="divClienteBuscar" style="height: auto; padding: 1.5em;">
-        <a href="/cobranza/pagoListDiario/{{coRu}}" class="btnError">Ver Pagos Totales</a>
+        <a href="/cobranza/pagoListDiario/{{coRu}}" class="btnOptionCob">Ver Pagos Totales</a>
+        <a href="/cobranza/filterSem/{{coRu}}" class="btnOptionCob">Semanales Por Cobrar Hoy</a>
+
       </div>
      
     </div>

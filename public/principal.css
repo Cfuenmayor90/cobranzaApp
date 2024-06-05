@@ -158,6 +158,12 @@ a {
   padding: 0.2em
 }
 /*Codigo de cobranza.html*/
+.btnOptionCob{
+ background-color: rgb(20, 7, 205);
+border-radius: 3px;
+ padding: 5px;
+ font-size: 16px;
+}
 .contPres {
   width: 90%;
   height: auto;

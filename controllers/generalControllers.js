@@ -157,6 +157,18 @@ const guardarCaja = async(req, res) => {
         
     }
 }
+const deleteCajaOpe = async(req, res)=>{
+try {
+  const {_id} = req.params;
+  const opeDelete = await caja.findByIdAndDelete(_id);
+  console.log("Delete: " + opeDelete);
+  res.redirect('/general/');
+} catch (error) {
+  const mensajeError = error;
+  res.render('error', {mensajeError});
+}
+}
+
 const cargarPrestamosRuta = async(req, res) =>{
     try {
        const {nRuta} = req.params;
@@ -170,13 +182,14 @@ const cargarPrestamosRuta = async(req, res) =>{
    }
 };
    const cargarEstadisticas = async (req, res) => {
-    var arrayAnios = [{ anio:2023}, { anio:2024}, { anio:2025}, { anio: 2026}, { anio: 2027}, { anio:2028}, { anio:2029}, { anio:2030}]; 
+    var arrayAnios = [{anio:2024}, { anio:2025}, { anio: 2026}, { anio: 2027}, { anio:2028}, { anio:2029}, { anio:2030}]; 
     var {numRuta} = req.params;
     const {numRutaInp, mesInp, anioInp} = req.body;
     console.log(`numRuta ${numRutaInp} mes ${mesInp} año ${anioInp}`);
     var anio = anioInp || new Date().getFullYear();
      var mes = mesInp || new Date().getMonth();
      var cantDias = (new Date(anio, (mes+1), 0).getDate());
+     cantDias = cantDias + 1;
      var numR = numRutaInp || numRuta;
      console.log("fechaForm " + anio);
     const balance = await balances.find({cobRuta: numR, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}});
@@ -223,4 +236,4 @@ cron.schedule('55 20 * * * ',()=>{
   timezone: 'America/Buenos_Aires'
   });
 
-module.exports = {cargarGeneral, guardarCaja, cargarPrestamosRuta, editCliente, cargarEstadisticas};
+module.exports = {cargarGeneral, guardarCaja, cargarPrestamosRuta, editCliente, cargarEstadisticas, deleteCajaOpe};
