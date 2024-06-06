@@ -27,7 +27,10 @@ router.get('/RutasDeCobranza', checkRole(['admin']), (req, res)=>{
     res.render('rutasCobranza')
 });
 
-router.get('/estadisticas', checkRole(['admin',  'vendedor', 'cobrador']), cargarEstadisticas);
+router.get('/estadisticas/:numRuta', checkRole(['admin',  'vendedor', 'cobrador']), cargarEstadisticas);
+
+router.get('/estadisticasTime', checkRole(['cobrador']), )
+
 router.get('/novedades', checkRole(['admin',  'vendedor', 'cobrador']), (req, res)=>{
     res.render('novedades')
 });

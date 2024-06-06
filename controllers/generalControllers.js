@@ -6,6 +6,7 @@ const balances = require('../models/balanceModels');
 const caja = require('../models/cajaModels');
 const client = require("../models/clientModels");
 const cron = require('node-cron');
+const {verifyJWT} = require('../middleware/jwt');
 const {guardarBalanceDiario, esperadoDiario, balanceDelete} = require('./cobranzaControllers');
 const f = new Intl.NumberFormat('es-AR', {
     style: 'currency',
@@ -184,6 +185,10 @@ const cargarPrestamosRuta = async(req, res) =>{
    const cargarEstadisticas = async (req, res) => {
     var arrayAnios = [{anio:2024}, { anio:2025}, { anio: 2026}, { anio: 2027}, { anio:2028}, { anio:2029}, { anio:2030}]; 
     var {numRuta} = req.params;
+    const token =  req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
+    const verifyToken = await verifyJWT(token);
+    const user = verifyToken.role;
+    console.log("rol............." + user);
     const {numRutaInp, mesInp, anioInp} = req.body;
     console.log(`numRuta ${numRutaInp} mes ${mesInp} año ${anioInp}`);
     var anio = anioInp || new Date().getFullYear();
@@ -210,8 +215,10 @@ const cargarPrestamosRuta = async(req, res) =>{
     cobradoT = f.format(cobradoT);
     esperadoT = f.format(esperadoT);
     gastoT = f.format(gastoT);
-    res.render('generalEstadisUsuario', {balance, cobradoT, esperadoT, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios});
-  
+    if (user == "admin") {
+      res.render('generalEstadisUsuario', {balance, cobradoT, esperadoT, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios});
+    }
+    res.render('estadisticas', {balance, cobradoT, esperadoT, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios});
   };
 const editCliente = async(req, res) =>{
     const {dni} = req.params;

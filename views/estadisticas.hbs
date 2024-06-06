@@ -1,18 +1,47 @@
 <nav class="navegacion">
-  <a href="javascript:history.back()"><i class="bi bi-box-arrow-left"></i></a>
-  <div>
-    <span>Clientes</span>
-  </div>
-  <div class="iconMenuHamburguesa">
-    <i class="bi bi-menu-button-wide-fill"></i>
-  </div>
-</nav>
-<div class="contMayorCli">
-  <div class="formCliente">
-    <div class="divClienteBuscar">
-      <h3 class="tituloForm">Estadisticas De Cobranza</h3>
+    <a href="javascript:history.back()"><i class="bi bi-box-arrow-left"></i></a>
+    <div>
+      <span>Estadisticas De La RuTa: {{numR}}
+      </span>
     </div>
-    <div class="tarjUser">
+    <div class="iconMenuHamburguesa">
+      <i class="bi bi-menu-button-wide-fill"></i>
+    </div>
+  </nav>
+   <div class="contMayorCli">
+<div class="formCliente">
+       <div class="divClienteBuscar">
+        <h3 class="tituloForm">Estadisticas De Cobranza</h3>
+      </div>
+       <div class="tarjUser">
+      <form action="/general/estadisticaUserFecha" method="post" class="formBuscarPeriodo">
+        <label for="" class="titlePeri">Seleccione Periodo</label>
+        <select name="anioInp" id="anioInp">
+          {{#each arrayAnios}}
+          <option value="{{anio}}">{{anio}}</option>
+          {{/each}}
+        </select>
+        <label for="" class="titlePeri">Mes</label>
+        <select name="mesInp" id="mesInp">
+          <option value="0">Enero</option>
+          <option value="1">Febrero</option>
+          <option value="2">Marzo</option>
+          <option value="3">Abril</option>
+          <option value="4">Mayo</option>
+          <option value="5">Junio</option>
+          <option value="6">Julio</option>
+          <option value="7">Agosto</option>
+          <option value="8">Septiembre</option>
+          <option value="9">Octubre</option>
+          <option value="10">Noviembre</option>
+          <option value="11">Diciembre</option>
+        </select>
+        <br>
+         <label for="" class="titlePeri">Ruta</label>
+         <input type="number" name="numRutaInp" id="numRutaInp" value="{{numR}}">
+         <button type="submit" class="buttonPeri">Buscar</button>
+      </form>
+      <br>
       <table class="tableListCaja">
         <tr class="">
           <th class="tableListCajaTitle">Esperado:</th>
@@ -24,12 +53,11 @@
           <th class="tableListCajaTitle">Efectividad:</th>
           <th class="tableListCajaRes">{{porcentaje}}%</th>
           <th class="tableListCajaTitle">Gastos:</th>
-          <th class="tableListCajaRes">$0</th>
+          <th class="tableListCajaRes">{{gastoT}}</th>
         </tr>
-           </table>
-          
-       </div>    
-     <div class="divClienteBuscar">
+           </table>    
+       </div>  
+        <div class="divClienteBuscar">
       <h3 class="tituloForm">Balance Por Dia</h3>
     </div>
     <div class="tarjUser">
@@ -48,5 +76,52 @@
         {{/each}}
       </table>
     </div>
-  </div>
 </div>
+    <section class="sectionContClientes">
+         <div class="divClienteBuscar">
+             <h3 class="tituloForm">Ventas Realizadas</h3>
+          </div>
+    <div class="tarjUser">
+    <table class="tableListCaja">
+    <tr>
+      <th class="tableListCajaTitle">Fecha</th>
+      <th class="tableListCajaTitle">Nombre</th>
+      <th class="tableListCajaTitle">Detalle</th>
+      <th class="tableListCajaTitle">Monto</th>
+    </tr>
+    {{#each hisVent}}
+     <tr>
+      <th class="tableListCajaRes">{{fechaInicio}}</th>
+      <th class="tableListCajaRes">{{nombre}}</th>
+      <th class="tableListCajaRes">{{detalle}}</th>
+      <th class="tableListCajaRes">{{mTotal}}</th>
+    </tr> 
+    {{/each}}
+  </table>
+  </div>
+        <div class="divClienteBuscar">
+      <h3 class="tituloForm">Operaciones De Caja</h3>
+    </div>
+    <div class="tarjUser">
+      <table class="tableListCaja">
+        <tr class="">
+          <th class="tableListCajaTitle">Fecha</th>
+          <th class="tableListCajaTitle">Tipo</th>
+          <th class="tableListCajaTitle">Detalle</th>
+          <th class="tableListCajaTitle">Monto</th>
+        </tr>
+        {{#each opeCaja}}
+          <tr>
+            <th class="tableListCajaRes">{{fecha}}</th>
+            <th class="tableListCajaRes">{{tipo}}</th>
+            <th class="tableListCajaRes">{{detalle}}</th>
+            <th class="tableListCajaRes">${{monto}}</th>
+          </tr>
+        {{/each}}
+      </table>
+    </div>
+
+    
+
+    </section>
+  </div>
