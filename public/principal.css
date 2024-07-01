@@ -337,6 +337,15 @@ border-radius: 3px;
   color: white;
   padding: 0.5em;
 }
+.btnFormOpti{
+  width: 50%;
+  font-size: 20px;
+  background-color: rgb(255, 107, 2);
+  border: 3px solid whitesmoke;
+  color: white;
+  padding: 0.5em;
+  text-align: center;
+}
 
 .btnFormReset:hover {
   border-color: red;
@@ -345,6 +354,10 @@ border-radius: 3px;
 
 .btnFormAceptar:hover {
   border-color: green;
+  cursor: pointer;
+}
+.btnFormOpti:hover {
+  border-color: rgb(255, 107, 2);
   cursor: pointer;
 }
 

@@ -11,7 +11,7 @@
 
 <div class="contMayorCli">
   <div class="formSetti">
-     <div class="divClienteBuscar">
+    <div class="divClienteBuscar">
       <h3 class="tituloForm">Calculadora De Prestamos</h3>
     </div>
     <form action="/calculadora/calcular" method="post">
@@ -19,58 +19,75 @@
       <table class="tableSettings">
         <tr>
           <th><label class="title" for="nombre">Monto</label></th>
-          <th><input type="number" class="inpFormSett" placeholder="Monto Del Prestamo" id="monto" name="monto"
-              required /></th>
-        </tr>
-         <tr>
-          <th><label class="title" for="nombre">Descripcion</label></th>
-          <th><input type="text" class="inpFormSett" placeholder="Solo Para Productos" id="desc" name="desc"
-               /></th>
+          <th><input
+              type="number"
+              class="inpFormSett"
+              placeholder="Monto Del Prestamo"
+              id="monto"
+              name="monto"
+              required
+            /></th>
         </tr>
         <tr>
-          <th colspan="2" class=""><button type="submit" class="btnFormSettings">Calcular</button></th>
+          <th><label class="title" for="nombre">Descripcion</label></th>
+          <th><input
+              type="text"
+              class="inpFormSett"
+              placeholder="Solo Para Productos"
+              id="desc"
+              name="desc"
+            /></th>
+        </tr>
+        <tr>
+          <th colspan="2" class=""><button
+              type="submit"
+              class="btnFormSettings"
+            >Calcular</button></th>
         </tr>
       </table>
       <br />
     </form>
     <p>Tabla De Pagos Para Prestamos, Monto: ${{monto}}</p>
-      <table class="tableSettPlanes">
-        <tr>
-          <th class="thTableSettPla">Plan</th>
-          <th class="thTableSettPla">Cuotas</th>
-          <th class="thTableSettPla">Porcentaje</th>
-          <th class="thTableSettPla">Valor De Cuota</th>
-          <th class="thTableSettPla">Total</th>
-        </tr>
-      
-        {{#each array}}
-        <tr>
-          <th class="thTableSettPla">{{plan}}</th>
-          <th class="thTableSettPla">{{cuotas}}</th>
-          <th class="thTableSettPla">{{porcentaje}}%</th>
-          <th class="thTableSettPla">${{cuota}}</th>
-          <th class="thTableSettPla">${{total}}</th>
-        </tr>
-        {{/each}}
-      </table>
 
-       <p>Tabla De Pagos Para: {{desc}}</p>
-      <table class="tableSettPlanes">
+    <table class="tableListCaja">
+      <tr>
+        <th class="tableListCajaTitle">Plan</th>
+        <th class="tableListCajaTitle">Cuotas</th>
+        <th class="tableListCajaTitle">Porcentaje</th>
+        <th class="tableListCajaTitle">Valor De Cuota</th>
+        <th class="tableListCajaTitle">Total</th>
+      </tr>
+      {{#each array}}
         <tr>
-          <th class="thTableSettPla">Plan</th>
-          <th class="thTableSettPla">Cuotas</th>
-          <th class="thTableSettPla">Valor De Cuota</th>
+          <th class="tableListCajaRes">{{plan}}</th>
+          <th class="tableListCajaRes">{{cuotas}}</th>
+          <th class="tableListCajaRes">{{porcentaje}}%</th>
+          <th class="tableListCajaRes">{{cuota}}</th>
+          <th class="tableListCajaRes">{{total}}</th>
         </tr>
-      
-        {{#each arrayProd}}
+
+      {{/each}}
+
+    </table>
+    <br />
+    <p>Tabla De Pagos Para: {{desc}}</p>
+
+    <table class="tableListCaja">
+      <tr>
+        <th class="tableListCajaTitle">Plan</th>
+        <th class="tableListCajaTitle">Cuotas</th>
+        <th class="tableListCajaTitle">Valor De Cuota</th>
+      </tr>
+      {{#each arrayProd}}
         <tr>
-          <th class="thTableSettPla">{{plan}}</th>
-          <th class="thTableSettPla">{{cuotas}}</th>
-          <th class="thTableSettPla">${{cuota}}</th>
+          <th class="tableListCajaRes">{{plan}}</th>
+          <th class="tableListCajaRes">{{cuotas}}</th>
+          <th class="tableListCajaRes">{{cuota}}</th>
         </tr>
-        {{/each}}
-      </table>
- <br>
+
+      {{/each}}
+
+    </table>
+    <br />
   </div>
-  </div>
-    
+</div>

@@ -38,7 +38,7 @@
         </select>
         <br>
          <label for="" class="titlePeri">Ruta</label>
-         <input type="number" name="numRutaInp" id="numRutaInp" value="{{numR}}">
+         <input type="number" name="numRutaInp" id="numRutaInp" value="{{numR}}" readonly>
          <button type="submit" class="buttonPeri">Buscar</button>
       </form>
       <br>
@@ -54,6 +54,11 @@
           <th class="tableListCajaRes">{{porcentaje}}%</th>
           <th class="tableListCajaTitle">Gastos:</th>
           <th class="tableListCajaRes">{{gastoT}}</th>
+        </tr>
+         <tr class="">
+          <th class="tableListCajaTitle">Efectivo:</th>
+          <th class="tableListCajaRes" colspan="">{{efectivo}}</th>
+           <th class="tableListCajaRes" colspan="2"></th>
         </tr>
            </table>    
        </div>  

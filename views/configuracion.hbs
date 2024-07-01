@@ -53,38 +53,40 @@
       <br />
     </form>
     <p>Planes De Pago De Prestamos De Dinero</p>
-      <table class="tableSettPlanes">
-        <tr>
-          <th class="thTableSettPla">Plan</th>
-          <th class="thTableSettPla">Cuotas</th>
-          <th class="thTableSettPla">Porcentaje</th>
-          <th class="thTableSettPla">Opcion</th>
-        </tr>
+    <table class="tableListCaja">
+    <tr>
+      <th class="tableListCajaTitle">Plan</th>
+      <th class="tableListCajaTitle">Cuotas</th>
+      <th class="tableListCajaTitle">Porcentaje</th>
+      <th class="tableListCajaTitle"><i style="color: rgb(0, 0, 0);" class="bi bi-trash"></i></th>
+    </tr>
         {{#each planActualPres}}
-        <tr>
-          <th class="thTableSettPla">{{plan}}</th>
-          <th class="thTableSettPla">{{cuotas}}</th>
-          <th class="thTableSettPla">{{porcentaje}}%</th>
-          <th class="thTableSettPla"> <a href="/settings/deletePlan/{{_id}}" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El Plan?: {{{nombre}}}?')" class="tablePlanesBtnEliminar">Eliminar</a></th>
-        </tr>
+          <tr>
+      <th class="tableListCajaRes">{{plan}}</th>
+      <th class="tableListCajaRes">{{cuotas}}</th>
+      <th class="tableListCajaRes">{{porcentaje}}</th>
+      <th class="tableListCajaRes"><a href="/settings/deletePlan/{{_id}}" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El Plan?: {{{nombre}}}?')" ><i style="color: red;" class="bi bi-file-earmark-x"></i></a></th>
+      </tr>
+ 
         {{/each}}
       </table>
       <br>
       <p>Planes De Pago De Financiamiento De Productos</p>
-     <table class="tableSettPlanes">
-        <tr>
-          <th class="thTableSettPla">Plan</th>
-          <th class="thTableSettPla">Cuotas</th>
-          <th class="thTableSettPla">Porcentaje</th>
-          <th class="thTableSettPla">Opcion</th>
-        </tr>
+         <table class="tableListCaja">
+    <tr>
+      <th class="tableListCajaTitle">Plan</th>
+      <th class="tableListCajaTitle">Cuotas</th>
+      <th class="tableListCajaTitle">Porcentaje</th>
+      <th class="tableListCajaTitle"><i style="color: rgb(0, 0, 0);" class="bi bi-trash"></i></th>
+    </tr>
         {{#each planActualProd}}
-        <tr>
-          <th class="thTableSettPla">{{plan}}</th>
-          <th class="thTableSettPla">{{cuotas}}</th>
-          <th class="thTableSettPla">{{porcentaje}}%</th>
-          <th class="thTableSettPla"> <a href="/settings/deletePlan/{{_id}}" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El Plan?: {{{nombre}}}?')" class="tablePlanesBtnEliminar">Eliminar</a></th>
-        </tr>
+          <tr>
+      <th class="tableListCajaRes">{{plan}}</th>
+      <th class="tableListCajaRes">{{cuotas}}</th>
+      <th class="tableListCajaRes">{{porcentaje}}</th>
+      <th class="tableListCajaRes"><a href="/settings/deletePlan/{{_id}}" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El Plan?: {{{nombre}}}?')" ><i style="color: red;" class="bi bi-file-earmark-x"></i></a></th>
+      </tr>
+ 
         {{/each}}
       </table>
 
