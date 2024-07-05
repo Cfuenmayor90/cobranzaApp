@@ -31,7 +31,7 @@
           </tr>
         {{#each presCancelados}}
           <tr>
-             <th class="tableUsuariosThRespuesta">{{nombre}}</th>
+             <th class="tableUsuariosThRespuesta"><a href="general/statusPresClient/{{dni}}" class="etiquetaNombre">{{nombre}}</a></th>
              <th class="tableUsuariosThRespuesta">{{mTotal}}</th>
               <th class="tableUsuariosThRespuesta">{{fechaUltPago}}</th>
              <th class="tableUsuariosThRespuesta">{{cobRuta}}</th>
@@ -63,8 +63,8 @@
           </tr>
         {{#each presVencidos}}
           <tr>
-             <th class="tableUsuariosThRespuesta">{{nombre}}</th>
-             <th class="tableUsuariosThRespuesta">{{mTotal}}</th>
+            <th class="tableUsuariosThRespuesta"><a href="/general/statusPresClient/{{dni}}" class="etiquetaNombre">{{nombre}}</a></th>
+             <th class="tableUsuariosThRespuesta" style="color: red;">{{mTotal}}</th>
               <th class="tableUsuariosThRespuesta">{{fechaFinal}}</th>
              <th class="tableUsuariosThRespuesta">{{cobRuta}}</th>
               <th class="">

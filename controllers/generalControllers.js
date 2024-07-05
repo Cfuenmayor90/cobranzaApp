@@ -172,7 +172,7 @@ try {
   const mensajeError = error;
   res.render('error', {mensajeError});
 }
-}
+};
 
 const cargarPrestamosRuta = async(req, res) =>{
     try {
@@ -185,6 +185,18 @@ const cargarPrestamosRuta = async(req, res) =>{
    } catch (error) {
     
    }
+  };
+const cargarEstadoClient = async(req, res) => {
+  
+  try {
+    const {dni} = req.params;
+    console.log("dni del perno:" + dni);
+    const prestamos = await ventas.find({dni: dni});
+    const historyVentas = await hVentas.find({dni});
+    res.render('listPresClient', {prestamos, dni, historyVentas}) ;
+  } catch (error) {
+    
+  }
 };
    const cargarEstadisticas = async (req, res) => {
     var arrayAnios = [{anio:2024}, { anio:2025}, { anio: 2026}, { anio: 2027}, { anio:2028}, { anio:2029}, { anio:2030}]; 
@@ -253,4 +265,4 @@ cron.schedule('55 20 * * * ',()=>{
   timezone: 'America/Buenos_Aires'
   });
 
-module.exports = {cargarGeneral, guardarCaja, cargarPrestamosRuta, editCliente, cargarEstadisticas, deleteCajaOpe, load};
+module.exports = {cargarGeneral, guardarCaja, cargarPrestamosRuta, editCliente, cargarEstadisticas, deleteCajaOpe, load, cargarEstadoClient};

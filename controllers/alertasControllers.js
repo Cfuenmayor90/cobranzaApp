@@ -1,6 +1,10 @@
 const ventas = require('../models/ventasModels');
 const pagoN = require('../models/pagosModels');
-
+const f = new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    minimumFractionDigits: 2
+});
 
 const cargarAlertas = async(req, res)=> {
      var anio = new Date().getFullYear();
@@ -10,6 +14,8 @@ const cargarAlertas = async(req, res)=> {
     try {
         const presCancelados = await ventas.find({mTotal: 0});
         const presVencidos = await ventas.find({DateFinal:{$lte: new Date(anio,mes,dia)}});
+        
+
         res.render('alertas', {presCancelados, presVencidos});
     } catch (error) {
         

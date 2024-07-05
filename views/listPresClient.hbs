@@ -4,7 +4,7 @@
            <a href="javascript:history.back()"><i class="bi bi-box-arrow-left"></i></a> 
         </div>
         <div>
-           <span>Cobranza {{usuario.nombre}}</span>
+           <span>Historial Del Cliente</span>
         </div>
         <div class="iconMenuHamburguesa">
             <i class="bi bi-menu-button-wide-fill"></i>
@@ -12,17 +12,20 @@
     </nav>
 
     <div class="contPres">
+      <div class="divClienteBuscar">
+        <h3 class="tituloForm">Prestamos Activos</h3>
+      </div>
         {{#each prestamos}}
 
         <table class="tablePres">
             <tr>
-                <th colspan="3" class="thTitleTablePres"><a href="/general/statusPresClient/{{dni}}" class="etiquetaNombre">{{nombre}}</a></th>
+                <th colspan="3" class="thTitleTablePres" style="background-color: gold;">Descripción: {{detalle}}</th>
             </tr>
              <tr>
                 <th colspan="3" class="thTable">Direccion: {{direccion}}</th>
             </tr>
                <tr>
-                <th colspan="3" class="thTable">Descripción: {{detalle}}</th>
+                <th colspan="3" class="thTable"></th>
             </tr>
               <tr>
                 <th class="thTable">Monto: ${{monto}}</th>
@@ -55,11 +58,30 @@
         </table>
         {{/each}}
         <br>
-         <div class="divClienteBuscar" style="height: auto; padding: 1.5em;">
-        <a href="/cobranza/pagoListDiario/{{coRu}}" class="btnOptionCob">Ver Pagos Totales</a>
-        <a href="/cobranza/filterSem/{{coRu}}" class="btnOptionCob">Semanales Por Cobrar Hoy</a>
-         </div>
-     
+        <div class="divClienteBuscar">
+        <h3 class="tituloForm">Historial De Compras</h3>
+       </div>
+       <table class="tableListCaja">
+        <tr class="">
+          <th class="tableListCajaTitle">Fecha</th>
+          <th class="tableListCajaTitle">Producto</th>
+          <th class="tableListCajaTitle">Plan</th>
+          <th class="tableListCajaTitle">Total</th>
+          <th class="tableListCajaTitle">Vendedor</th>
+          <th class="tableListCajaTitle">Cobrador</th>
+        </tr>
+        {{#each historyVentas}}
+          <tr>
+            <th class="tableListCajaRes">{{fechaInicio}}</th>
+            <th class="tableListCajaRes">{{detalle}}</th>
+            <th class="tableListCajaRes">{{plan}}</th>
+            <th class="tableListCajaRes">${{mTotal}}</th>
+            <th class="tableListCajaRes">{{venRuta}}</th>
+            <th class="tableListCajaRes">{{cobRuta}}</th>
+          </tr>
+        {{/each}}
+        </table>
+       <br>
     </div>
 
 
