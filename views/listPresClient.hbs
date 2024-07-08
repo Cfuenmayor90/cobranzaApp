@@ -4,7 +4,7 @@
            <a href="javascript:history.back()"><i class="bi bi-box-arrow-left"></i></a> 
         </div>
         <div>
-           <span>Historial Del Cliente</span>
+           <span>Historial Del Cliente: {{cliente.nombre}}</span>
         </div>
         <div class="iconMenuHamburguesa">
             <i class="bi bi-menu-button-wide-fill"></i>
@@ -12,6 +12,42 @@
     </nav>
 
     <div class="contPres">
+    <div class="divClienteBuscar">
+        <h3 class="tituloForm">Datos Del Cliente</h3>
+      </div>
+      
+           <table class="tableListCaja">
+        <tr class="">
+          <th class="tableListCajaTitle">Nombre:</th>
+          <th class="tableListCajaRes">{{cliente.nombre}}</th>
+        </tr>
+          <tr>
+            <th class="tableListCajaTitle">DNI:</th>
+          <th class="tableListCajaRes">{{cliente.dni}}</th>
+          </tr>
+          <tr>
+            <th class="tableListCajaTitle">Rubro:</th>
+          <th class="tableListCajaRes">{{cliente.rubro}}</th>
+          </tr>
+          <tr>
+            <th class="tableListCajaTitle">Dirección Comercial:</th>
+          <th class="tableListCajaRes">{{cliente.localidadComercial}} / {{cliente.dirComercial}}</th>
+          </tr>
+           <tr>
+            <th class="tableListCajaTitle">Dirección Particular:</th>
+          <th class="tableListCajaRes">{{cliente.localidadParticular}} / {{cliente.dirParticular}}</th>
+          </tr>
+          <tr>
+            <th class="tableListCajaTitle">Telefono:</th>
+          <th class="tableListCajaRes">{{cliente.celular}}</th>
+          </tr>
+          <tr>
+            <th class="tableListCajaTitle">Alta:</th>
+          <th class="tableListCajaRes">{{cliente.timeStamp}}</th>
+          </tr>
+          
+        </table>
+      <br>
       <div class="divClienteBuscar">
         <h3 class="tituloForm">Prestamos Activos</h3>
       </div>

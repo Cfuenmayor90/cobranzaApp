@@ -190,10 +190,11 @@ const cargarEstadoClient = async(req, res) => {
   
   try {
     const {dni} = req.params;
-    console.log("dni del perno:" + dni);
     const prestamos = await ventas.find({dni: dni});
     const historyVentas = await hVentas.find({dni});
-    res.render('listPresClient', {prestamos, dni, historyVentas}) ;
+    const cliente = await client.findOne({dni});
+    console.log("dni del perno:" + cliente);
+    res.render('listPresClient', {prestamos, dni, historyVentas, cliente}) ;
   } catch (error) {
     
   }
