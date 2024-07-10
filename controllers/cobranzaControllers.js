@@ -296,4 +296,29 @@ const saveRefinanciarPres = async(req, res) =>{
     
   }
 };
-module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, balanceDelete, envioTicket, refinanciarPres, saveRefinanciarPres, filterSem};
+
+const note = async(req, res)=>{
+  try {
+    const {id} = req.params;
+    const press = await ventas.findOne({_id: id});
+    res.render('nota', {press});
+  } catch (error) {
+    
+  }
+};
+const saveNote = async(req, res)=>{
+  try {
+    const {id} = req.params;
+    const {nota, cobRuta} = req.body;
+    console.log("Ruta" + cobRuta);
+    const fecha = new Date().toLocaleDateString();
+    const not = `${fecha} - ${nota}`;
+    const newNota = await ventas.findOneAndUpdate({_id: id}, {nota: not});
+    const prestamos = await ventas.find({cobRuta}).sort({nombre: 1});
+    const usuario = await users.findOne({numRuta: cobRuta}); 
+    res.render('cobranzaAdmin', {prestamos, usuario});
+  } catch (error) {
+    
+  }
+}
+module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, balanceDelete, envioTicket, refinanciarPres, saveRefinanciarPres, filterSem, note, saveNote};

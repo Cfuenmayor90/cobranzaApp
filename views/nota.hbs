@@ -1,0 +1,37 @@
+<nav class="navegacion">
+    <a href="javascript:history.back()"><i class="bi bi-box-arrow-left"></i></a>
+    <div>
+      <span>Guardar Nota De Supervisión</span>
+    </div>
+    <div class="iconMenuHamburguesa">
+      <i class="bi bi-menu-button-wide-fill"></i>
+    </div>
+  </nav>
+   <div class="contMayorCli">
+<div class="formCliente">
+    <div class="divClienteBuscar">
+        <h3 class="tituloForm">Nota</h3>
+      </div>
+    <form action="/cobranza/saveNote/{{press._id}}" method="post" class="formCliente2">
+           
+        
+             <h2>{{press.nombre}}</h2>
+             <h3>Dni: {{press.dni}}</h3>
+              <h3>Dirección: {{press.direccion}}</h3>
+             <h3>Detalle: {{press.detalle}}</h3>
+             <h3>Inicio: {{press.fechaInicio}}</h3>
+             <h3>Vencimiento: {{press.fechaFinal}}</h3>
+             <h3>Saldo: {{press.mTotal}}</h3>
+             <h3>Plan: {{press.categoria}} / {{press.plan}} / {{press.cuotas}} / {{press.cuota}}</h3>
+            <h3>Ruta De Cobranza:<input type="text" id="cobRuta" name="cobRuta" value="{{press.cobRuta}}" style="border: none; font-size: 18px; background: transparent;" readonly></h3>
+             <h2>Ingresar Nota:</h2>
+             <input class="inpForm" type="text" id="nota" value="{{press.note}}" name="nota">
+               <div class="cantBtnForm">
+                <a href="javascript:history.back()" class="btnFormReset" >Volver</a>
+                <button class="btnFormAceptar" type="submit">Guardar</button>
+            </div>
+    </form>
+</div>
+   
+  </div>
+

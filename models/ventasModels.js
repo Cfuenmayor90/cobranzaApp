@@ -80,6 +80,9 @@ const ventaSchema = new Schema({
     },
     DateFinal:{
         type: Date
+    },
+    nota:{
+        type: String
     }
 
 });
