@@ -1,35 +1,55 @@
-
-  <nav class="navegacion">
-    <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a>
-    <div>
-      <span>Clientes</span>
+<nav class="navegacion">
+  <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a>
+  <div>
+    <span>Clientes</span>
+  </div>
+  <div class="iconMenuHamburguesa">
+    <i class="bi bi-menu-button-wide-fill"></i>
+  </div>
+</nav>
+<div class="contMayorCli">
+  <div class="formCliente">
+    <div class="divClienteBuscar">
+      <h3 class="tituloForm">Registrar Cliente</h3>
     </div>
-    <div class="iconMenuHamburguesa">
-      <i class="bi bi-menu-button-wide-fill"></i>
-    </div>
-  </nav>
-   <div class="contMayorCli">
-<div class="formCliente">
-       <div class="divClienteBuscar">
-        <h3 class="tituloForm">Registrar Cliente</h3>
-      </div>
     <form action="/client/crearCliente" method="post" class="formCliente2">
-       
-        <h2 style="color: rgb(36, 114, 17);">{{mensaje}}</h2>
+
+      <h2 style="color: rgb(36, 114, 17);">{{mensaje}}</h2>
       <p>Ingresa los datos para dar de alta al cliente</p>
       <br />
 
       <label class="title" for="nombre">Apellido y Nombre</label>
       <br />
-      <input type="text" class="inpForm" placeholder="Escribe Apellido y Nombre" id="nombre" name="nombre" required />
+      <input
+        type="text"
+        class="inpForm"
+        placeholder="Escribe Apellido y Nombre"
+        id="nombre"
+        name="nombre"
+        required
+      />
       <br />
       <label class="title" for="dni">DNI</label>
       <br />
-      <input type="number" class="inpForm" placeholder="Escribe el DNI" id="dni" name="dni" required />
+      <input
+        type="number"
+        class="inpForm"
+        placeholder="Escribe el DNI"
+        id="dni"
+        name="dni"
+        required
+      />
       <br />
       <label class="title" for="rubro">Rubro</label>
       <br />
-      <input type="text" class="inpForm" placeholder="Rubro" id="rubro" name="rubro" required />
+      <input
+        type="text"
+        class="inpForm"
+        placeholder="Rubro"
+        id="rubro"
+        name="rubro"
+        required
+      />
       <br />
       <label class="title" for="direccion comercial">Localidad Comercial</label>
       <select class="inpForm" name="localidadComercial" id="localidadComercial">
@@ -38,130 +58,196 @@
       </select>
       <label class="title" for="direccion comercial">Direccion Comercial</label>
       <br />
-      <input type="text" class="inpForm" placeholder="Barrio/ calle y numero" id="dirComercial" name="dirComercial"
-        required />
+      <input
+        type="text"
+        class="inpForm"
+        placeholder="Barrio/ calle y numero"
+        id="dirComercial"
+        name="dirComercial"
+        required
+      />
       <br />
-       <label class="title" for="direccion particular">Localidad Particular</label>
+      <label class="title" for="direccion particular">Localidad Particular</label>
       <select class="inpForm" name="localidadParticular" id="localidParticular">
         <option value="Capital">Capital</option>
         <option value="La Banda">La Banda</option>
       </select>
-      <br>
+      <br />
       <label class="title" for="direccion particular">Direccion Particular</label>
       <br />
-      <input type="text" class="inpForm" placeholder="Barrio/ calle y numero" id="dirParticular" name="dirParticular"
-        required />
+      <input
+        type="text"
+        class="inpForm"
+        placeholder="Barrio/ calle y numero"
+        id="dirParticular"
+        name="dirParticular"
+        required
+      />
       <br />
       <label class="title" for="celular">Celular</label>
       <br />
-      <input type="text" class="inpForm" placeholder="Numero de Celular" id="celular" name="celular" required />
+      <input
+        type="text"
+        class="inpForm"
+        placeholder="Numero de Celular"
+        id="celular"
+        name="celular"
+        required
+      />
       <br />
       <label class="title" for="telefono">Telefono</label>
       <br />
-      <input type="text" class="inpForm" placeholder="Numero de Telefono" id="telefono" name="telefono" required />
+      <input
+        type="text"
+        class="inpForm"
+        placeholder="Numero de Telefono"
+        id="telefono"
+        name="telefono"
+        required
+      />
       <br />
       <label class="title" for="email">Email</label>
       <br />
-      <input type="email" class="inpForm" placeholder="Escribe tu Email" id="email" name="email" />
+      <input
+        type="email"
+        class="inpForm"
+        placeholder="Escribe tu Email"
+        id="email"
+        name="email"
+      />
       <br />
-       <h2 style="color: rgb(36, 114, 17);">{{mensaje}}</h2>
+      <h2 style="color: rgb(36, 114, 17);">{{mensaje}}</h2>
       <div class="cantBtnForm">
         <button class="btnFormReset" type="reset">Limpiar</button>
 
         <button class="btnFormAceptar" type="submit">Guardar</button>
       </div>
-  
-    </form>
-</div>
-    <section class="sectionContClientes">
-         <div class="divClienteBuscar">
-             <h3 class="tituloForm">Buscar Cliente</h3>
-          </div>
-         <form action="/client/buscar" method="post" class="divClienteBuscar2">
-             <input class="inpBuscarClientes" type="number" name="dni" id="dni" placeholder="Ingrese el DNI " />
-             <button class="btnBuscarCliente" type="submit"><i class="bi bi-search"></i></button>
-             <h2 style="color: rgb(195, 58, 0);">{{mensajeBuscar}}</h2>
-         </form>
-      <div class="tarjCli">
-       <table class="tablaBuscar">
-        
-          <tr>
-            <td class="tdTablaBuscar">Nombre</td>
-            <td class="tdResTablaBuscar">{{clienteBuscado.nombre}}</td>
-          </tr>
-          <tr>
-            <td class="tdTablaBuscar">DNI</td>
-            <td class="tdResTablaBuscar">{{clienteBuscado.dni}}</td>
-          </tr>
-          <tr>
-            <td class="tdTablaBuscar">Direccion Comercial</td>
-            <td class="tdResTablaBuscar">{{clienteBuscado.dirComercial}}</td>
-          </tr>
-          <tr>
-            <td class="tdTablaBuscar">Direccion Particular</td>
-            <td class="tdResTablaBuscar">{{clienteBuscado.dirParticular}}</td>
-          </tr>
-          <tr>
-            <td class="tdTablaBuscar">Actividad</td>
-            <td class="tdResTablaBuscar">{{clienteBuscado.rubro}}</td>
-          </tr>
-          <tr>
-            <td class="tdTablaBuscar">Celular</td>
-            <td class="tdResTablaBuscar">{{clienteBuscado.celular}}</td>
-          </tr>
-          <tr>
-            <td class="tdTablaBuscar">Telefono</td>
-            <td class="tdResTablaBuscar">{{clienteBuscado.telefono}}</td>
-          </tr>
-          <tr>
-            <td class="tdTablaBuscar">Email</td>
-            <td class="tdResTablaBuscar">{{clienteBuscado.email}}</td>
-          </tr>
-          <tr>
-           <th  colspan="2" class="thContBtn">
-            <a href="https://wa.me/549{{clienteBuscado.celular}}" class="btnBusCliente btnWA"><i class="bi bi-whatsapp"></i> Whatsapp</a>
-            <a href="tel:+549{{clienteBuscado.telefono}}" class="btnBusCliente btnTelefono" ><i class="bi bi-telephone-outbound"></i> Llamar</a>
-            <a href="" class="btnBusCliente btnVender"><i class="bi bi-shop"></i> Vender</a>
-            <!--<a href="" class="btnBusCliente btnMapa"><i class="bi bi-geo-alt-fill"></i> Mapa</a>-->
-            <a href="/client/edit/{{clienteBuscado._id}}" class="btnBusCliente btnMapa"><i class="bi bi-pencil-square"></i> Editar</a>
-            
-            </th>
-            
-        
-            
-          </tr>
-       </table>       
-      </div>  
 
-       <div class="divClienteBuscar">
-        <h3 class="tituloForm">Clientes Agregados Recientemente</h3>
-      </div>
-      <div class="tarjUser">
-      <br>
-        <table class="tableUsuarios">
-          <tr class="tableUsuariosTr">
+    </form>
+  </div>
+  <section class="sectionContClientes">
+    <div class="divClienteBuscar">
+      <h3 class="tituloForm">Buscar Cliente</h3>
+    </div>
+    <form action="/client/buscar" method="post" class="divClienteBuscar2">
+      <input
+        class="inpBuscarClientes"
+        type="number"
+        name="dni"
+        id="dni"
+        placeholder="Ingrese el DNI "
+      />
+      <button class="btnBuscarCliente" type="submit"><i
+          class="bi bi-search"
+        ></i></button>
+      <h2 style="color: rgb(195, 58, 0);">{{mensajeBuscar}}</h2>
+    </form>
+    <div class="tarjCli">
+      <table class="tablaBuscar">
+
+        <tr>
+          <td class="tdTablaBuscar">Nombre</td>
+          <td class="tdResTablaBuscar">{{clienteBuscado.nombre}}</td>
+        </tr>
+        <tr>
+          <td class="tdTablaBuscar">DNI</td>
+          <td class="tdResTablaBuscar">{{clienteBuscado.dni}}</td>
+        </tr>
+        <tr>
+          <td class="tdTablaBuscar">Direccion Comercial</td>
+          <td class="tdResTablaBuscar">{{clienteBuscado.dirComercial}}</td>
+        </tr>
+        <tr>
+          <td class="tdTablaBuscar">Direccion Particular</td>
+          <td class="tdResTablaBuscar">{{clienteBuscado.dirParticular}}</td>
+        </tr>
+        <tr>
+          <td class="tdTablaBuscar">Actividad</td>
+          <td class="tdResTablaBuscar">{{clienteBuscado.rubro}}</td>
+        </tr>
+        <tr>
+          <td class="tdTablaBuscar">Celular</td>
+          <td class="tdResTablaBuscar">{{clienteBuscado.celular}}</td>
+        </tr>
+        <tr>
+          <td class="tdTablaBuscar">Telefono</td>
+          <td class="tdResTablaBuscar">{{clienteBuscado.telefono}}</td>
+        </tr>
+        <tr>
+          <td class="tdTablaBuscar">Email</td>
+          <td class="tdResTablaBuscar">{{clienteBuscado.email}}</td>
+        </tr>
+        <tr>
+          <th colspan="2" class="thContBtn">
+            <a
+              href="https://wa.me/549{{clienteBuscado.celular}}"
+              class="btnBusCliente btnWA"
+            ><i class="bi bi-whatsapp"></i> Whatsapp</a>
+            <a
+              href="tel:+549{{clienteBuscado.telefono}}"
+              class="btnBusCliente btnTelefono"
+            ><i class="bi bi-telephone-outbound"></i> Llamar</a>
+            <a href="" class="btnBusCliente btnVender"><i
+                class="bi bi-shop"
+              ></i>
+              Vender</a>
+            <!--<a href="" class="btnBusCliente btnMapa"><i class="bi bi-geo-alt-fill"></i> Mapa</a>-->
+            <a
+              href="/client/edit/{{clienteBuscado._id}}"
+              class="btnBusCliente btnMapa"
+            ><i class="bi bi-pencil-square"></i> Editar</a>
+
+          </th>
+
+        </tr>
+      </table>
+    </div>
+
+    <div class="divClienteBuscar">
+      <h3 class="tituloForm">Clientes Agregados Recientemente</h3>
+    </div>
+    <div class="tarjUser">
+      <br />
+      <table class="tableUsuarios">
+        <tr class="tableUsuariosTr">
           <th class="tableUsuariosThTitulo">Apellido y Nombre</th>
           <th class="tableUsuariosThTitulo">Direccion</th>
-        
-          <th class="tableUsuariosThTitulo">Opciones</th>
-          </tr>
-        {{#each clientes }}
-          <tr>
-             <th class="tableUsuariosThRespuesta">{{nombre}}</th>
-             <th class="tableUsuariosThRespuesta">{{dirComercial}}</th>
 
-             
-             <th class="">
-               <a href="/client/delete/{{_id}}" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El Cliente: {{{nombre}}}?')" class="tableUsuariosBtnEliminar"><i class="bi bi-trash"></i>
-               </a>
-               <a href="/client/edit/{{_id}}" class="tableUsuariosBtnModificar"><i class="bi bi-pencil-square"></i></a>
+          <th class="tableUsuariosThTitulo">Opciones</th>
+        </tr>
+        {{#each clientes}}
+          <tr>
+            <th class="tableUsuariosThRespuesta"><a
+                href="/general/statusPresClient/{{dni}}"
+                class="etiquetaNombre"
+              >{{nombre}}</a></th>
+            <th class="tableUsuariosThRespuesta">{{dirComercial}}</th>
+
+            <th class="">
+              <a
+                href="/client/delete/{{_id}}"
+                onclick="return confirm('¿Esta Seguro Que Desea Eliminar El Cliente: {{{nombre}}}?')"
+                class="tableUsuariosBtnEliminar"
+              ><i class="bi bi-trash"></i>
+              </a>
+              <a
+                href="/client/edit/{{_id}}"
+                class="tableUsuariosBtnModificar"
+              ><i class="bi bi-pencil-square"></i></a>
             </th>
           </tr>
         {{/each}}
-        </table>
-        <br>
-      </div>  
+        <tr>
+          <th colspan="3" style="height: 50px;">
+          <a href="/client/listClient" class="btnBusCliente btnTelefono" ><i class="bi bi-person-video2"></i>
+            Mostrar Todos Los Clientes</a>
 
+          </th>
+        </tr>
+      </table>
 
-    </section>
-  </div>
+      <br />
+    </div>
+
+  </section>
+</div>

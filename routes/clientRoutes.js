@@ -5,7 +5,8 @@ const {
    editClientGet,
    editClientPost,
    deleteClient,
-   buscarCliente
+   buscarCliente,
+   listClient
 } = require('../controllers/clientControllers');
 const {checkRole} = require('../controllers/usersControllers');
 
@@ -18,6 +19,8 @@ router.post('/edit/:id', checkRole(['admin']), editClientPost);
 router.get('/delete/:id', checkRole(['admin']), deleteClient);
 
 router.post('/buscar', checkRole(['admin', 'cobrador', 'vendedor']), buscarCliente);
+
+router.get('/listClient', checkRole(['admin']), listClient);
 
 
 module.exports = router;

@@ -112,7 +112,17 @@ const cargarClientes = async(req, res) =>{
      const {id} = req.params;
      await client.findByIdAndDelete(id);
      res.redirect('/vistas/clientes');
+  };
+
+  const listClient = async(req, res)=>{
+    try {
+      const clientes = await client.find().sort({nombre: 1});
+      res.render('clientesList', {clientes});
+    } catch (error) {
+      
+    }
   }
+
 
 module.exports = {
   crearCliente,
@@ -120,5 +130,6 @@ module.exports = {
   editClientGet,
   editClientPost,
   deleteClient,
-  buscarCliente
+  buscarCliente,
+  listClient
 };
