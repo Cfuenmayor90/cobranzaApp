@@ -4,7 +4,7 @@
            <a href="javascript:history.back()"><i class="bi bi-box-arrow-left"></i></a> 
         </div>
         <div>
-           <span>Todos Los Clientes</span>
+           <span>Todos Los Clientes {{cant}}</span>
         </div>
         <div class="iconMenuHamburguesa">
             <i class="bi bi-menu-button-wide-fill"></i>
@@ -16,7 +16,7 @@
 
         <table class="tablePres">
             <tr>
-                <th colspan="3" class="thTitleTablePres"><a href="/general/statusPresClient/{{dni}}" class="etiquetaNombre">{{nombre}}</a></th>
+                <th colspan="3" class="thTitleTablePres" style="background-color: rgb(189, 255, 122);"><a href="/general/statusPresClient/{{dni}}" class="etiquetaNombre" >{{nombre}}</a></th>
             </tr>
              <tr>
                 <th colspan="3" class="thTable">Direccion Comercial:{{localidadComercial}} / {{dirComercial}}</th>
@@ -35,13 +35,16 @@
             <tr>
                 <th colspan="3" class="thTable">Cod: <input type="text" style="border: none;" readonly id="codPres" name="codPres" value="{{_id}}"></th>
             </tr>
+              <tr>
+                <th colspan="3" class="thTable" style="color: red;">Nota: {{nota}}</th>
+            </tr>
           
             <tr class="trTablePres">
                  <th colspan="3" class="trTablePres">
                     <a href="/general/editCliente/{{dni}}"class="btnPagoCobra" style="background-color: rgb(255, 149, 0); border: none; color:white"><i class="bi bi-person-lines-fill"></i></a>
                     <a href="tel:+549{{celular}}" class="btnPagoCobra" style="background-color: rgb(3, 123, 123);"><i class="bi bi-telephone-forward"></i></a>
                     <a href="https://wa.me/549{{telefono}}" class="btnPagoCobra" style="background-color: green;"><i class="bi bi-whatsapp"></i></a>
-                     <a href="/cobranza/note/{{_id}}" class="btnPagoCobra" style="background-color: rgb(148, 0, 116);"><i class="bi bi-journal-bookmark"></i></a>
+                     <a href="/client/noteClient/{{_id}}" class="btnPagoCobra" style="background-color: rgb(148, 0, 116);"><i class="bi bi-journal-bookmark"></i></a>
                
                 </th> 
             </tr>

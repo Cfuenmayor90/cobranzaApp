@@ -1,0 +1,33 @@
+<nav class="navegacion">
+    <a href="javascript:history.back()"><i class="bi bi-box-arrow-left"></i></a>
+    <div>
+      <span>Reseña Del Clientre</span>
+    </div>
+    <div class="iconMenuHamburguesa">
+      <i class="bi bi-menu-button-wide-fill"></i>
+    </div>
+  </nav>
+   <div class="contMayorCli">
+<div class="formCliente">
+    <div class="divClienteBuscar">
+        <h3 class="tituloForm">Nota</h3>
+      </div>
+    <form action="/client/saveNoteClient/{{cliente._id}}" method="post" class="formCliente2">
+           
+        
+             <h2>{{cliente.nombre}}</h2>
+             <h3>Dni: {{cliente.dni}}</h3>
+              <h3>Dirección Comercial: {{cliente.dirComercial}}</h3>
+             <h3>Dirección Particular: {{cliente.dirParticular}}</h3>
+             <h3>Rubro: {{cliente.rubro}}</h3>
+             <h2>Ingresar Nota:</h2>
+             <input class="inpForm" type="text" id="nota" value="{{cliente.note}}" name="nota">
+               <div class="cantBtnForm">
+                <a href="javascript:history.back()" class="btnFormReset" >Volver</a>
+                <button class="btnFormAceptar" type="submit">Guardar</button>
+            </div>
+    </form>
+</div>
+   
+  </div>
+

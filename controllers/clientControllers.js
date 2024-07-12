@@ -117,7 +117,31 @@ const cargarClientes = async(req, res) =>{
   const listClient = async(req, res)=>{
     try {
       const clientes = await client.find().sort({nombre: 1});
-      res.render('clientesList', {clientes});
+      const cant = clientes.length;
+      res.render('clientesList', {clientes, cant});
+    } catch (error) {
+      
+    }
+  };
+
+  const  noteClient =async(req,res)=>{
+    try {
+      const {id} = req.params;
+      const cliente = await client.findById({_id:id});
+      res.render('notaClient', {cliente});
+    } catch (error) {
+      
+    }
+  };
+
+  const saveNoteClient = async(req, res)=>{
+    try {
+      const {id} = req.params;
+      const {nota} = req.body;
+      const fecha = new Date().toLocaleDateString();
+    const not = `${fecha} - ${nota}`;
+    const newNota = await client.findOneAndUpdate({_id: id}, {nota: not});
+    res.redirect('/client/listClient');
     } catch (error) {
       
     }
@@ -131,5 +155,7 @@ module.exports = {
   editClientPost,
   deleteClient,
   buscarCliente,
-  listClient
+  listClient,
+  noteClient,
+  saveNoteClient
 };
