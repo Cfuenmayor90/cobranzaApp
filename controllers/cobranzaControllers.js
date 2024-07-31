@@ -12,6 +12,7 @@ const f = new Intl.NumberFormat('es-AR', {
 });
 
 
+
 const cargarCobranza = async (req, res) => {
   console.log("cobranza");
   try {
@@ -43,6 +44,8 @@ const cargarCobranza = async (req, res) => {
     
   }
 };
+
+
 const pagoSave = async (req, res) => {
   const { codPres, pago } = req.body;
   try {

@@ -76,12 +76,15 @@ const ventaSchema = new Schema({
         type: String
     },
     timeStamp:{
-        type: Date,
+        type: Date
     },
     DateFinal:{
         type: Date
     },
     nota:{
+        type: String
+    },
+    atraso:{
         type: String
     }
 
