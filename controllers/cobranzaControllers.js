@@ -284,7 +284,7 @@ const saveRefinanciarPres = async(req, res) =>{
       fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (planInf.cuotas * 7)));
      }
     presMod.detalle = detalle;
-    presMod.fechaFinal = fechaVencimiento.toLocaleDateString();
+    presMod.fechaFinal = fechaVencimiento.toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     presMod.DateFinal = fechaVencimiento;
     presMod.monto= monto;
     presMod.mTotal= mTo;
