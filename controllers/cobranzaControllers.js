@@ -147,7 +147,7 @@ const esperadoDiario = async(req, res) =>{
        const fechaAc =  new Date().toLocaleDateString("es-AR", {timeZone: 'America/Buenos_Aires'});
        const ruCobro = await users.find({role:"cobrador"});
     
-      var semana = ["domingo", "lunes", "martes", "miercoles", "jueves", "viernes", "sabado"];
+      var semana = ["domingo", "lunes", "martes", "miercoles", "jueves", "viernes", "Sabado"];
       var dia = semana[diA];
      console.log("dia de semana " + dia);
     var diaD = [dia, 'todos'];
