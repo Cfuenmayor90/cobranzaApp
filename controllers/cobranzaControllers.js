@@ -50,6 +50,7 @@ const pagoSave = async (req, res) => {
   const { codPres, pago } = req.body;
   try {
     var fechaActual = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+    var time = new Date();
     console.log(fechaActual);
     const prestamo = await ventas.findById({ _id: codPres });
     if (prestamo.mTotal >= pago && fechaActual !== prestamo.fechaUltPago) {
@@ -210,30 +211,7 @@ const guardarBalanceDiario = async() =>{
     
   }
 };
-const balanceDelete = async(req, res) =>{
-    try {
-      var anio = new Date().getFullYear();
-      var mes = new Date().getMonth();
-      var dia = new Date().getDate();
-     const espeDelete = await balances.deleteMany({categoria: 'esperado', timeStamp:{$lt: new Date(anio,mes,dia)}});
-     console.log("esperados eliminados" + espeDelete.deletedCount);
-     const cobrador = await users.find({role: "cobrador"});
-     console.log("rutas: " + cobrador);
-     for (let i = 0; i < cobrador.length; i++) { //array de rutas para saber cuantos cobradores hay
-      var element = cobrador[i];
-      var balanRuta = await balances.find({cobRuta: 101 ,categoria: 'balance_diario', timeStamp: new Date(anio,mes,7)});
-        console.log("balances: " + balanRuta);
-      for (let i = 1; i < balanRuta.length; i++) { // Iniciamos el for en la posicion 1 del array asi no elimine el primero
-          const element = balanRuta[i];
-          console.log("elemen balance:" + element);
-          const eleDelete = await balances.findByIdAndDelete({_id: element._id});
-          console.log("eliminados: " + eleDelete);
-        }
-     }
-    } catch (error) {
-      console.log(error);
-    }
-};
+
 
 const envioTicket = async(req, res) =>{
  const {id} = req.params;
@@ -324,4 +302,4 @@ const saveNote = async(req, res)=>{
     
   }
 }
-module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, balanceDelete, envioTicket, refinanciarPres, saveRefinanciarPres, filterSem, note, saveNote};
+module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket, refinanciarPres, saveRefinanciarPres, filterSem, note, saveNote};
