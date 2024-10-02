@@ -211,7 +211,6 @@ const cargarEstadoClient = async(req, res) => {
     var anio = anioInp || new Date().getFullYear();
      var mes = mesInp || new Date().getMonth();
      var cantDias = (new Date(anio, (mes+1), 0).getDate());
-     cantDias = cantDias + 1 ;
      var numR = numRutaInp || nRuta;
      console.log("fechaForm " + anio);
     const balance = await balances.find({cobRuta: numR, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias,23,59,59,0)}});
