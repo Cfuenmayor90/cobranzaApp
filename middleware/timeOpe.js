@@ -2,9 +2,8 @@ const timeOp = (req,res,next) => {
     const hrFinal = "20:30:00";
     const hrActual = new Date().toLocaleTimeString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     const diaOp = new Date().getDay(); //obtenemos el numero de dia actual, si es domingo sera 0
-    const hrInicial = "02:00:00";
     console.log(hrActual);
-    if (hrInicial <= hrActual && hrActual <= hrFinal && diaOp !== 0) {
+    if ( hrActual <= hrFinal && diaOp !== 0) {
         console.log("fecha timeOp");
         next();
     } else {
