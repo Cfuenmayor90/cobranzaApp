@@ -19,7 +19,6 @@ const cargarCobranza = async (req, res) => {
     const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
     const verifyToken = await verifyJWT(token);
     const prestamos = await ventas.find({ cobRuta: verifyToken.numRuta}).sort({nombre: 1});
-    console.log(prestamos);
     const coRu = verifyToken.numRuta;
     const diaInici = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     const timeInici = new Date().toLocaleTimeString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
