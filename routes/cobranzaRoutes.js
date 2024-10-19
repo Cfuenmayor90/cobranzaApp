@@ -18,7 +18,7 @@ const { timeOp } = require("../middleware/timeOpe");
 
 router.get("/", checkRole(["cobrador"]), cargarCobranza);
 
-router.post("/savePago", checkRole(["cobrador"]), pagoSave);
+router.post("/savePago", checkRole(["cobrador"]), timeOp, pagoSave);
 
 router.get("/pagosList/:id", checkRole(["cobrador", "admin"]), listaPagos);
 
