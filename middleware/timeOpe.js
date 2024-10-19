@@ -1,7 +1,7 @@
 const timeOp = (req,res,next) => {
     const hrFinal = new Date();
     hrFinal.setHours(20);
-    hrFinal.setMinutes(0);
+    hrFinal.setMinutes(30);
     hrFinal.setSeconds(0);
     const hrActual = new Date();
     const diaOp = new Date().getDay(); //obtenemos el numero de dia actual, si es domingo sera 0
