@@ -1,6 +1,6 @@
 const timeOp = (req,res,next) => {
     const hrFinal = "20:30:00";
-    const hrActual = new Date().toLocaleTimeString();
+    const hrActual = new Date().getMonth
     const diaOp = new Date().getDay(); //obtenemos el numero de dia actual, si es domingo sera 0
     console.log(hrActual);
     console.log(hrFinal);
