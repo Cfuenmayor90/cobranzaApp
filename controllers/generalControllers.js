@@ -256,6 +256,21 @@ const editCliente = async(req, res) =>{
   scheduled: true,
   timezone: 'America/Buenos_Aires'
  });
+ //Node-cron para ejecutar funciones en tiempo especifico
+ cron.schedule('55 23 * * *',() =>{
+  guardarBalanceDiario();
+},{
+scheduled: true,
+timezone: 'America/Buenos_Aires'
+});
+
+cron.schedule('20 22 * * *',() =>{
+  guardarBalanceDiario();
+},{
+scheduled: true,
+timezone: 'America/Buenos_Aires'
+});
+
 
 
 module.exports = {cargarGeneral, guardarCaja, cargarPrestamosRuta, editCliente, cargarEstadisticas, deleteCajaOpe, load, cargarEstadoClient};
