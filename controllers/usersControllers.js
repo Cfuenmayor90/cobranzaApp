@@ -12,23 +12,28 @@ const secretKey = process.env.CLAVE_JWT;
 
 
 const crearUsuario = async (req, res) => {
-   const errores = validationResult(req);
-   const mensajeError = 'Campos Vacios';
-   if (!errores.isEmpty()) {
-    return res.render('error', {mensajeError});
-  }
-
-  const { nombre, dni, password, rol, direccion, telefono } = req.body;
 
   try {
+    var { nombre, dni, password, rol, direccion, telefono } = req.body;
+    
     let usuarioNuevo = await users.findOne({ dni });
     if (usuarioNuevo) {
       mensajeError = 'Usuario existente';
       return res.render('error', {mensajeError});
     }
     //creamos el usuario en la base de datos
-    const userNumRuta = await users.findOne().sort({numRuta: -1});
-    const nRuta = userNumRuta.numRuta || 100;
+  var userNumRuta = "";
+  var nRuta = "";
+if (rol == "vendedor") {
+  userNumRuta = await users.findOne({role: "vendedor"}).sort({numRuta: -1});
+  nRuta = userNumRuta.numRuta || 200;
+  console.log("vendedor" + userNumRuta);
+} else {
+  userNumRuta = await users.findOne({role: "cobrador"}).sort({numRuta: -1});
+  nRuta = userNumRuta.numRuta || 100;
+  console.log("cobrador");
+  console.log("cobrador" + userNumRuta);
+}
 
      const nuRuta = nRuta + 1;
     usuarioNuevo = new users(req.body);

@@ -60,6 +60,8 @@ const cotizarProd = async(req, res) => {
         const planesSemanales = await setting.find({categoria: "financiamiento",plan: "Semanal" }).sort({cuotas: 1});
         const valores = await settingValores.findOne();
         var precio = (prod.precio * valores.dolar) * ((valores.porcentaje * 0.01) + 1);
+        var precioTartj = precio *((valores.tcredito * 0.01) + 1);
+        var vCuota = precioTartj / 3;
         const arrayPlanes = [];
         planesDiarios.forEach(element => {
             var xcentaje = (element.porcentaje/100)+1;
@@ -76,7 +78,9 @@ const cotizarProd = async(req, res) => {
     });
     
        precio = f.format(precio);
-        res.render('cotizarProd', {prod, precio , arrayPlanes})
+       vCuota = f.format(vCuota);
+       precioTartj = f.format(precioTartj);
+        res.render('cotizarProd', {prod, precio, precioTartj, vCuota, arrayPlanes})
     } catch (error) {
         
     }

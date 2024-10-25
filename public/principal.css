@@ -239,9 +239,12 @@ border-radius: 3px;
 .formCliente {
   background-color: whitesmoke;
   width: 30%;
+  height: auto;
   margin: 1em;
 }
-
+.infoCotizarProd{
+  padding: 2em;
+}
 .formCliente2 {
   padding: 2em;
 }
@@ -849,6 +852,7 @@ padding-top: 1px;
   .formCliente {
     background-color: whitesmoke;
     width: 95%;
+    height: auto;
     margin: 0.5em auto;
   }
 
@@ -1022,6 +1026,6 @@ padding-top: 1px;
       background-color: #007b10;
     }
     .infoCotizarProd{
-      padding: 8px;
+      padding: 1.5em;
     }
 }

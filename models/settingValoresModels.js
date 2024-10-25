@@ -9,6 +9,10 @@ const setValores = new Schema({
     porcentaje:{
         type: Number,
         require: true
+    },
+    tcredito:{
+        type: Number,
+        require: true
     }
 })
 

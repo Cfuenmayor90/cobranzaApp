@@ -16,12 +16,18 @@
     <div class="infoCotizarProd">
        <h2>{{prod.nombre}}</h2>
        <h4>Codigo: {{prod.cod}}</h4>
-       <h5>{{prod.descripcion}}</h5>
        <h4>Disponibles: {{prod.stock}}</h4>
-       <div style="display: flex; justify-content: space-between;">
-       <h2 style="color: green; font-size: 25px;">Precio: {{precio}}</h3>
-       <a href="https://api.whatsapp.com/send?text=[text]" class="btnCompartirCotizarPro"> <i class="bi bi-whatsapp"></i></i></a>   
+       <h2 style="color: rgb(2, 0, 143); font-size: 35px;">{{precioTartj}}</h2>
+       <h2 style="color: rgb(0, 181, 69); font-size: 25px;">Oferta Contado: {{precio}}</h2>
+       <h3>3 cuotas sin interes de  <span style="color: rgb(14, 139, 0);">{{vCuota}}</span></h3>
+       <div style="display:flex; justify-content: flex-start;">
+      <img src="/tnx.svg" alt="">
+      <img src="/tvisa.svg" alt="">
+      <img src="/tmaster.svg" alt="">
+      <img src="/tamex.svg" alt="">
        </div>
+       <h5>{{prod.descripcion}}</h5>
+      <!-- <a href="https://api.whatsapp.com/send?text=[text]" class="btnCompartirCotizarPro"> <i class="bi bi-whatsapp"></i></i></a>    -->
           
        </div>    
     
