@@ -24,7 +24,7 @@
             <select class="inpForm" name="venRuta" id="venRuta" required>
                 <option value="001">Renovacion</option>
                  <option value="002">Piso De Venta</option>
-                {{#each usuarios}}
+                {{#each usuariosVent}}
                 <option value="{{numRuta}}">{{numRuta}}/{{nombre}}</option>
                 {{/each}}
             </select>
@@ -32,7 +32,7 @@
             <label for="ruta">Ruta De Cobro</label>
             <select class="inpForm" name="cobRuta" id="cobRuta" required>
                  <option value="0002">Pago De Contado</option>
-                {{#each usuarios}}
+                {{#each usuariosCob}}
                 <option value="{{numRuta}}">{{numRuta}}/{{nombre}}</option>
                 {{/each}}
             </select>

@@ -10,12 +10,13 @@ const balance = require('../models/balanceModels');
 
 const cargarVentas = async(req, res) => {
     const fechaHoy = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-     const usuarios = await users.find();
+     const usuariosVent = await users.find({role: ['cobrador','vendedor']});
+     const usuariosCob = await users.find({role: 'cobrador'});
      const productos = await product.find().sort({nombre: 1});
      const planPrest = await setPrest.find({categoria: 'prestamo'}).sort({porcentaje: 1});
      const planProd = await setPrest.find({categoria: 'financiamiento'}).sort({porcentaje: 1});
      const ventasT = await ventas.find().sort({timeStamp: -1}).limit(10);
-     return res.render('ventas', {usuarios, planPrest, planProd, ventasT, productos});
+     return res.render('ventas', {usuariosVent,usuariosCob, planPrest, planProd, ventasT, productos});
 }
 //cargar ventas especificas de usuarios como vendedore y cobradores
 const cargarVenCob = async(req, res) =>{

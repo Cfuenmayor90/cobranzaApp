@@ -257,14 +257,14 @@ const editCliente = async(req, res) =>{
   timezone: 'America/Buenos_Aires'
  });
  //Node-cron para ejecutar funciones en tiempo especifico
- cron.schedule('55 23 * * *',() =>{
+ cron.schedule('59 23 * * *',() =>{
   guardarBalanceDiario();
 },{
 scheduled: true,
 timezone: 'America/Buenos_Aires'
 });
 
-cron.schedule('20 22 * * *',() =>{
+cron.schedule('10 22 * * *',() =>{
   guardarBalanceDiario();
 },{
 scheduled: true,

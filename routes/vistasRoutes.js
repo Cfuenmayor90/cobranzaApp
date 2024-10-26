@@ -41,5 +41,5 @@ router.get('/caja/:cobRuta', checkRole(['admin',  'vendedor', 'cobrador']), carg
 
 router.get('/Exit', logOut);
 
-router.get('/volver', volverPrin)
+router.get('/volver',checkRole(['admin',  'vendedor', 'cobrador']), volverPrin)
 module.exports = router;

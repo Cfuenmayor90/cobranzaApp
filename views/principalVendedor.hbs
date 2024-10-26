@@ -15,17 +15,17 @@
     <div class="contMayorPrin">
   
         <div class="ContBotones">
-        <a class="botonesMenuPrincipal" href="/vistas/productos/">
+          <a class="botonesMenuPrincipal" href="/products/productosUsuarios">
             <i class="bi bi-shop"></i>
             <h2 class="tituloBtn">Productos</h2>
         </a>
-        <a class="botonesMenuPrincipal" href="/ventas">
+        <a class="botonesMenuPrincipal" href="/ventas/listaVenCob/{{nRuta}}">
             <i class="bi bi-receipt-cutoff"></i>
             <h2 class="tituloBtn">Ventas</h2>
         </a>
-        <a class="botonesMenuPrincipal" href="/vistas/novedades">
-            <i class="bi bi-envelope-exclamation"></i>
-            <h2 class="tituloBtn">Novedades</h2>
+          <a class="botonesMenuPrincipal" href="/vistas/Clientes">
+            <i class="bi bi-people"></i>
+            <h2 class="tituloBtn">Clientes</h2>
         </a>
         <a class="botonesMenuPrincipal" href="/calculadora/">
             <i class="bi bi-calculator"></i>
@@ -40,27 +40,29 @@
      </div>
 
      <section class="sectionContPrin">
+      
        <div class="divBarraPrincipal">
-        <h3 class="tituloForm"></h3>
+        <h3 class="tituloForm">Ventas Realizadas</h3>
       </div>
       <div class="tarjCli">
-        <h4 >{{ nombre }}</h4>
-           <h5>d</h4>
-          <h5>Direccion Comercial:</h5>
-           <h5>Direccion Particular:</h5>
-          <h5>Tipo de comercio:</h5>
-           <h5>Celular:</h5>
-          <h5>Telefono:</h5>
-          <h5>Correo Electronico:</h5>
-          
+        <table class="tableListCaja">
+    <tr>
+      <th class="tableListCajaTitle">Fecha</th>
+      <th class="tableListCajaTitle">Nombre</th>
+      <th class="tableListCajaTitle">Detalle</th>
+      <th class="tableListCajaTitle">Monto</th>
+    </tr>
+    {{#each hVentas}}
+     <tr>
+      <th class="tableListCajaRes">{{fechaInicio}}</th>
+      <th class="tableListCajaRes">{{nombre}}</th>
+      <th class="tableListCajaRes">{{detalle}}</th>
+      <th class="tableListCajaRes">{{mTotal}}</th>
+    </tr>
+    
+    {{/each}}
+  </table>
       </div>  
-       <div class="divBarraPrincipal">
-        <h3 class="tituloForm">Clientes Agregados Recientemente</h3>
-      </div>
-      <div class="tarjCli">
-        dfssdfds
-      </div>  
-
     </section>
 </div>
     

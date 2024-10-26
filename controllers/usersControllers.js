@@ -14,7 +14,7 @@ const secretKey = process.env.CLAVE_JWT;
 const crearUsuario = async (req, res) => {
 
   try {
-    var { nombre, dni, password, rol, direccion, telefono } = req.body;
+    var { nombre, dni, password, role, direccion, telefono } = req.body;
     
     let usuarioNuevo = await users.findOne({ dni });
     if (usuarioNuevo) {
@@ -22,15 +22,13 @@ const crearUsuario = async (req, res) => {
       return res.render('error', {mensajeError});
     }
     //creamos el usuario en la base de datos
-  var userNumRuta = "";
+    var userNumRuta = users.findOne().sort({numRuta: -1});
   var nRuta = "";
-if (rol == "vendedor") {
-  userNumRuta = await users.findOne({role: "vendedor"}).sort({numRuta: -1});
-  nRuta = userNumRuta.numRuta || 200;
+if (role == "vendedor") {
+   nRuta = userNumRuta.numRuta || 200;
   console.log("vendedor" + userNumRuta);
 } else {
-  userNumRuta = await users.findOne({role: "cobrador"}).sort({numRuta: -1});
-  nRuta = userNumRuta.numRuta || 100;
+   nRuta = userNumRuta.numRuta || 100;
   console.log("cobrador");
   console.log("cobrador" + userNumRuta);
 }
@@ -195,20 +193,20 @@ const volverPrin = async (req, res) => {
           const presVencidos = await ventas.find({cobRuta: nRuta, DateFinal:{$lte: new Date(anio,mes,dia)}});
           const hVentas = await histVentas.find({venRuta: nRuta, timeStamp:{$gte: new Date(anio, mes, 0), $lte: new Date(anio, mes, cantDias)}});
            console.log(presVencidos);
-          return res.render("principalCobrador", { nombre, nRuta, hVentas, presVencidos});
+          res.render("principalCobrador", { nombre, nRuta, hVentas, presVencidos});
           break;
-        case 'vendedor':
-          res.render("principalVendedor", {nombre, fecha});
-          break;
+          case 'vendedor':
+            return res.render("principalVendedor", { nombre, nRuta});
+            break;
         default:
           mensajeError = 'Role Inexistente';
-          return res.render('error');
+           res.render('error');
           break;
     } 
     }
 } catch (error) {
   mensajeError = 'No cuentas con autorizacion'
-  return render('errorToken', {mensajeError})
+   res.render('errorToken', {mensajeError})
 }};
 
 const cargarUsuarios = async(req, res) => {
