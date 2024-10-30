@@ -14,7 +14,7 @@ const arrayCategoriasProd = [{valor:'Electrodomesticos'}, {valor:'Hogar'}, {valo
 //pag de productos para ADMIN
 const cargarProducts = async(req, res) =>{
     try {
-        const productos = await product.find();
+        const productos = await product.find().sort({nombre: 1});
         const prodStock = await product.find({stock: {$gte: 1}});
         var capiProd = 0;
         var cantProdStock = 0; //cantidad de productos totales en stock
