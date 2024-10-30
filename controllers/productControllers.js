@@ -143,6 +143,15 @@ const prodEditSave = async(req, res) =>{
     } catch (error) {
         
     }
+};
+const prodDelete = async(req, res) =>{
+    try {
+        const {id} = req.params;
+        await product.findByIdAndDelete({_id: id});
+        res.redirect('/products/productos');
+    } catch (error) {
+        
+    }
 }
 
-module.exports = {cargarProducts, cargarPagProductos, upload, saveProducts, cotizarProd, filtrarProd, prodEditGet, prodEditSave};
+module.exports = {cargarProducts, cargarPagProductos, upload, saveProducts, cotizarProd, filtrarProd, prodEditGet, prodEditSave, prodDelete };
