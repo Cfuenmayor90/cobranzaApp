@@ -103,7 +103,10 @@ const validarIngresoUsuario = async (req, res) => {
              return res.render("principalCobrador", { nombre, nRuta, hVentas, presVencidos});
           break;
         case 'vendedor':
-          return res.render("principalVendedor", { nombre, nRuta});
+          const Ventas = await histVentas.find({venRuta:userIngreso.numRuta, timeStamp:{$gte: new Date(anio, mes, 0), $lte: new Date(anio, mes, cantDias)}});
+              
+          return res.render("principalVendedor", { nombre, Ventas});
+
           break;
         default:
           mensajeError = 'Role Inexistente';
@@ -196,7 +199,9 @@ const volverPrin = async (req, res) => {
           res.render("principalCobrador", { nombre, nRuta, hVentas, presVencidos});
           break;
           case 'vendedor':
-            return res.render("principalVendedor", { nombre, nRuta});
+            const Ventas = await histVentas.find({venRuta:userIngreso.numRuta, timeStamp:{$gte: new Date(anio, mes, 0), $lte: new Date(anio, mes, cantDias)}});
+      
+            return res.render("principalVendedor", { nombre, Ventas});
             break;
         default:
           mensajeError = 'Role Inexistente';
