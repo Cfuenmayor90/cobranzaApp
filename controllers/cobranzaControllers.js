@@ -292,22 +292,22 @@ const saveNote = async(req, res)=>{
     const {nota, cobRuta} = req.body;
     const token =  req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
     const verifyToken = await verifyJWT(token);
-    const rol = verifyToken.role;
-    const fecha = new Date().toLocaleDateString();
-    const not = `${fecha} - ${nota}`;
-    const newNota = "";
+    var rol = verifyToken.role;
+    const fecha = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Buenos_Aires'});
+    var not = `${fecha} - ${nota}`;
+    var usuario = verifyToken.nombre;
     console.log("rol " + rol);
     
 switch (rol) {
   case 'cobrador':
-    newNota = await ventas.findOneAndUpdate({_id: id}, {notaCobrador: not});
-    res.redirect('/cobranza');
+    const newNota = await ventas.findOneAndUpdate({_id: id}, {notaCobrador: not});
+     res.redirect('/cobranza');
     break;
     case 'admin':
-      newNota = await ventas.findOneAndUpdate({_id: id}, {nota: not});
+     const newNotAd= await ventas.findOneAndUpdate({_id: id}, {nota: not});
       const prestamos = await ventas.find({cobRuta}).sort({nombre: 1});
       usuario = await users.findOne({numRuta: cobRuta}); 
-      res.render('cobranzaAdmin', {prestamos, usuario});
+      return res.render('cobranzaAdmin', {prestamos, usuario});
     break;
     case 'supervisor':
     
