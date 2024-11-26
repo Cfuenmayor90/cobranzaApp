@@ -775,6 +775,10 @@ padding-top: 1px;
     margin: 0.2em;
   }
   /*codigo CobranzaGeneral*/
+  .inpPres{
+    width: 50%;
+    border-color: #007b10;
+  }
   .tableCobGeneralPrin{
     width: 95%;
     font-size: 13px;
