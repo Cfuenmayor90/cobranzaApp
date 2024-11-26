@@ -84,6 +84,9 @@ const ventaSchema = new Schema({
     nota:{
         type: String
     },
+    notaCobrador:{
+       type: String
+    },
     atraso:{
         type: String
     }

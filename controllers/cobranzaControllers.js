@@ -290,13 +290,32 @@ const saveNote = async(req, res)=>{
   try {
     const {id} = req.params;
     const {nota, cobRuta} = req.body;
-    console.log("Ruta" + cobRuta);
+    const token =  req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
+    const verifyToken = await verifyJWT(token);
+    const rol = verifyToken.role;
     const fecha = new Date().toLocaleDateString();
     const not = `${fecha} - ${nota}`;
-    const newNota = await ventas.findOneAndUpdate({_id: id}, {nota: not});
-    const prestamos = await ventas.find({cobRuta}).sort({nombre: 1});
-    const usuario = await users.findOne({numRuta: cobRuta}); 
-    res.render('cobranzaAdmin', {prestamos, usuario});
+    const newNota = "";
+    console.log("rol " + rol);
+    
+switch (rol) {
+  case 'cobrador':
+    newNota = await ventas.findOneAndUpdate({_id: id}, {notaCobrador: not});
+    res.redirect('/cobranza');
+    break;
+    case 'admin':
+      newNota = await ventas.findOneAndUpdate({_id: id}, {nota: not});
+      const prestamos = await ventas.find({cobRuta}).sort({nombre: 1});
+      usuario = await users.findOne({numRuta: cobRuta}); 
+      res.render('cobranzaAdmin', {prestamos, usuario});
+    break;
+    case 'supervisor':
+    
+    break;
+
+  default:
+    break;
+}
   } catch (error) {
     
   }

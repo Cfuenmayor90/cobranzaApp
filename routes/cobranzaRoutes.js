@@ -38,8 +38,8 @@ router.post("/saveRefinanciar", checkRole(["admin"]), saveRefinanciarPres);
 
 router.get("/generarBalance", checkRole(["admin"]), esperadoDiario);
 
-router.get("/note/:id", checkRole(["admin"]), note);
+router.get("/note/:id", checkRole(["admin", "cobrador", "supervisor"]), note);
 
-router.post("/saveNote/:id", checkRole(["admin"]), saveNote);
+router.post("/saveNote/:id", checkRole(["admin", "cobrador", "supervisor"]), saveNote);
 
 module.exports = router;
