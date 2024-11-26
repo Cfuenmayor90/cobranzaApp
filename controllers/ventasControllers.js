@@ -64,6 +64,8 @@ try {
   const {fecha} = req.body;
   const newVenta = new ventas(req.body);
   newVenta.total = newVenta.mTotal;
+  const cliente = await client.findOne({dni: newVenta.dni});
+  newVenta = cliente.geolocalizacion;
   const anio = new Date(fecha).getFullYear();
   const mes = new Date(fecha).getMonth();
   const dia = new Date(fecha).getUTCDate();

@@ -89,6 +89,9 @@ const ventaSchema = new Schema({
     },
     atraso:{
         type: String
+    },
+    geolocalizacion:{
+        type: String
     }
 
 });

@@ -48,6 +48,9 @@ const clientSchema = new Schema({
     },
     nota:{
         type: String
+    },
+    geolocalizacion:{
+        type: String
     }
 });
 
