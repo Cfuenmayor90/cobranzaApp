@@ -9,7 +9,7 @@ router.get('/deleteCajaOperacion/:_id', checkRole(['admin']), deleteCajaOpe);
 router.get('/cargarPres/:nRuta', checkRole(['admin']), cargarPrestamosRuta);
 router.get('/statusPresClient/:dni', checkRole(['admin']), cargarEstadoClient);
 router.get('/editCliente/:dni', checkRole(['admin']), editCliente);
-router.get('/estadisticaUser/:nRuta', checkRole(['admin', 'cobrador']), cargarEstadisticas);
-router.post('/estadisticaUserFecha', checkRole(['admin', 'cobrador']), cargarEstadisticas);
+router.get('/estadisticaUser/:nRuta', checkRole(['admin', 'cobrador', 'vendedor']), cargarEstadisticas);
+router.post('/estadisticaUserFecha', checkRole(['admin', 'cobrador', 'vendedor']), cargarEstadisticas);
 
 module.exports = router;

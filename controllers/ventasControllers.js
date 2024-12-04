@@ -110,6 +110,9 @@ try {
    });
    await newHistoryVenta.save();
   }
+  const prod = await product.findOne({cod: newVenta.codProd});
+ prod.stock = prod.stock -1;
+  await product.findByIdAndUpdate({_id: prod._id}, prod);
   res.redirect('/ventas');
   } catch (error) {
   res.send(error)
