@@ -15,7 +15,7 @@ const cargarVentas = async(req, res) => {
      const productos = await product.find().sort({nombre: 1});
      const planPrest = await setPrest.find({categoria: 'prestamo'}).sort({porcentaje: 1});
      const planProd = await setPrest.find({categoria: 'financiamiento'}).sort({porcentaje: 1});
-     const ventasT = await ventas.find().sort({timeStamp: -1}).limit(10);
+     const ventasT = await ventas.find().sort({timeStamp: -1}).limit(30);
      return res.render('ventas', {usuariosVent,usuariosCob, planPrest, planProd, ventasT, productos});
 }
 //cargar ventas especificas de usuarios como vendedore y cobradores
@@ -110,12 +110,15 @@ try {
    });
    await newHistoryVenta.save();
   }
-  const prod = await product.findOne({cod: newVenta.codProd});
-  prod.stock = prod.stock -1;
-  await product.findByIdAndUpdate({_id: prod._id}, prod);
+  if (newVenta.codProd =! "prestamo") {
+    const prod = await product.findOne({cod: newVenta.codProd});
+    prod.stock = prod.stock -1;
+    await product.findByIdAndUpdate({_id: prod._id}, prod);
+  }
   res.redirect('/ventas');
   } catch (error) {
-  res.send(error)
+    const mensajeError = error;
+    res.render('error', {mensajeError});
 }
 };
 
