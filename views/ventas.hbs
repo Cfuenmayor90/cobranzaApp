@@ -47,7 +47,7 @@
             <input class="inpForm" type="text" id="detalle" placeholder="Inf. Solo para productos" name="detalle">
             <br>
             <label for="detalle">Codigo De Producto</label>
-            <select name="codProd" id="codProd" class="inpForm">
+            <select multiple size="1" name="codProd" id="codProd" class="inpForm" data-placeholder="Escoja El Producto">
               <option value="prestamo">Prestamo De Dinero</option>
               {{#each productos}}
               <option value="{{cod}}">{{cod}} // {{nombre}}</option>

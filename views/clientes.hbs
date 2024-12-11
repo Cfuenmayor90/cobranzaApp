@@ -52,11 +52,7 @@
       />
       <br />
       <label class="title" for="direccion comercial">Localidad Comercial</label>
-      <select class="inpForm" name="localidadComercial" id="localidadComercial">
-        <option value="Capital">Capital</option>
-        <option value="La Banda">La Banda</option>
-        <option value="La Banda">Interior</option>
-      </select>
+      <input class="inpForm" name="localidadComercial" id="localidadComercial"/>
       <label class="title" for="direccion comercial">Direccion Comercial</label>
       <br />
       <input
@@ -69,11 +65,8 @@
       />
       <br />
       <label class="title" for="direccion particular">Localidad Particular</label>
-      <select class="inpForm" name="localidadParticular" id="localidParticular">
-        <option value="Capital">Capital</option>
-        <option value="La Banda">La Banda</option>
-        <option value="La Banda">Interior</option>
-      </select>
+      <input class="inpForm" name="localidadParticular" id="localidParticular"/>
+      
       <br />
       <label class="title" for="direccion particular">Direccion Particular</label>
       <br />
@@ -195,21 +188,24 @@
             <a
               href="https://wa.me/549{{clienteBuscado.celular}}"
               class="btnBusCliente btnWA"
-            ><i class="bi bi-whatsapp"></i> Whatsapp</a>
+            ><i class="bi bi-whatsapp"></i></a>
             <a
-              href="tel:+549{{clienteBuscado.telefono}}"
+              href="tel:+549{{clienteBuscado.celular}}"
               class="btnBusCliente btnTelefono"
-            ><i class="bi bi-telephone-outbound"></i> Llamar</a>
+            ><i class="bi bi-telephone-outbound"></i></a>
             <a href="" class="btnBusCliente btnVender"><i
                 class="bi bi-shop"
-              ></i>
-              Vender</a>
+              ></i></a>
             <!--<a href="" class="btnBusCliente btnMapa"><i class="bi bi-geo-alt-fill"></i> Mapa</a>-->
             <a
               href="/client/edit/{{clienteBuscado._id}}"
               class="btnBusCliente btnMapa"
-            ><i class="bi bi-pencil-square"></i> Editar</a>
-
+            ><i class="bi bi-pencil-square"></i></a>
+            
+             <a
+              href="{{clienteBuscado.geolocalizacion}}"
+              class="btnBusCliente btnMapa"
+            ><i class="bi bi-pin-map"></i></a>
           </th>
 
         </tr>
