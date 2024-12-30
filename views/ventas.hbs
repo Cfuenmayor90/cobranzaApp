@@ -43,11 +43,14 @@
             <label for="monto">Monto</label>
             <input class="inpForm" type="number" id="monto" name="monto" required>
             <br>
+             <label for="monto">Adelanto</label>
+            <input class="inpForm" type="number" id="adelanto" name="adelanto" >
+            <br>
             <label for="detalle">Descripcion</label>
             <input class="inpForm" type="text" id="detalle" placeholder="Inf. Solo para productos" name="detalle">
             <br>
             <label for="detalle">Codigo De Producto</label>
-            <select multiple size="1" name="codProd" id="codProd" class="inpForm" data-placeholder="Escoja El Producto">
+            <select  name="codProd" id="codProd" class="inpForm"  multiple>
               <option value="prestamo">Prestamo De Dinero</option>
               {{#each productos}}
               <option value="{{cod}}">{{cod}} // {{nombre}}</option>
@@ -63,6 +66,9 @@
                 <option value="{{_id}}">{{categoria}} / {{plan}} / Cuotas: {{cuotas}} / {{porcentaje}}% </option>
                 {{/each}}
             </select>
+            <br>
+            <label for="detalle">Porcentaje De Descuento</label>
+            <input class="inpForm" type="number" id="descuento" placeholder="%" name="descuento">
             <br>
             <label for="diasDeCobro">Dia De Cobro</label>
             <select class="inpForm" name="diaDeCobro" id="diaDeCobro">

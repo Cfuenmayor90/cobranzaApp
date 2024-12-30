@@ -22,8 +22,11 @@ const ventaSchema = new Schema({
         type: Number,
         require: true
     },
+    adelanto:{
+        type: Number
+    },
     codProd:{
-        type: String
+        type: Array
     },
     detalle:{
         type: String
@@ -51,6 +54,9 @@ const ventaSchema = new Schema({
     cuota:{
         type: Number,
         require: true
+    },
+    descuento:{
+        type: Number
     },
     diaDeCobro:{
         type: String,

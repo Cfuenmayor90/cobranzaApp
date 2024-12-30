@@ -7,7 +7,7 @@ const caja = require('../models/cajaModels');
 const client = require("../models/clientModels");
 const cron = require('node-cron');
 const {verifyJWT} = require('../middleware/jwt');
-const {guardarBalanceDiario, esperadoDiario, balanceDelete} = require('./cobranzaControllers');
+const {guardarBalanceDiario, esperadoDiario} = require('./cobranzaControllers');
 const f = new Intl.NumberFormat('es-AR', {
     style: 'currency',
     currency: 'ARS',
@@ -250,21 +250,28 @@ const editCliente = async(req, res) =>{
 
 
 //Node-cron para ejecutar funciones en tiempo especifico
- cron.schedule('55 20 * * *',() =>{
+ cron.schedule('0 20 * * *',() =>{
       guardarBalanceDiario();
  },{
   scheduled: true,
   timezone: 'America/Buenos_Aires'
  });
  //Node-cron para ejecutar funciones en tiempo especifico
- cron.schedule('59 23 * * *',() =>{
+ cron.schedule('0 21 * * *',() =>{
+  guardarBalanceDiario();
+},{
+scheduled: true,
+timezone: 'America/Buenos_Aires'
+});
+ //Node-cron para ejecutar funciones en tiempo especifico
+ cron.schedule('10 22 * * *',() =>{
   guardarBalanceDiario();
 },{
 scheduled: true,
 timezone: 'America/Buenos_Aires'
 });
 
-cron.schedule('10 22 * * *',() =>{
+cron.schedule('59 23 * * *',() =>{
   guardarBalanceDiario();
 },{
 scheduled: true,

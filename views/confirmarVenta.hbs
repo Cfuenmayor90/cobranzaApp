@@ -29,17 +29,24 @@
       <label class="title" for="dni">Celular</label>
       <input type="number" class="inpForm" value="{{cliente.celular}}" id="celular" name="celular" required />
       <br />
-      <label class="title" for="nombre">Vendedor</label>
+      <label class="title" for="venRuta">Vendedor</label>
       <input type="number" class="inpForm" value="{{cot.venRuta}}" id="venRuta" name="venRuta" required />
       <br />
-        <label class="title" for="nombre">Cobrador</label>
+        <label class="title" for="cobRuta">Cobrador</label>
         <input type="number" class="inpForm" value="{{cot.cobRuta}}" id="cobRuta" name="cobRuta" required />
       <br />
-      <label class="title" for="dni">Monto</label>
+      <label class="title" for="monto">Monto</label>
         <input type="number" class="inpForm" value="{{cot.monto}}" id="monto" name="monto" required />
       <br />
+            <label class="title" for="monto">Adelanto</label>
+        <input type="number" class="inpForm" value="{{cot.adelanto}}" id="adelanto" name="adelanto"/>
+      <br />
       <label class="title" for="codProd">Codigo De Producto</label>
-      <input type="text" class="inpForm" value="{{cot.codProd}}" id="codProd" name="codProd"/>
+      <select type="text" class="inpForm"  id="codProd" name="codProd" multiple>
+        {{#each arrayCod}}
+           <option value="{{cod}}" selected>{{cod}}</option>
+        {{/each}}
+      </select>
       <br />
       <label class="title" for="telefono">Descripcion</label>
       <input type="text" class="inpForm" value="{{cot.detalle}}" id="detalle" name="detalle"/>
@@ -47,10 +54,13 @@
       <label class="title" for="email">Total</label>
       <input type="number" class="inpForm" value="{{mTotal}}" id="mTotal" name="mTotal" />
       <br />
-      <label class="title" for="cuotas">Categoria</label>
+      <label class="title" for="descuento">Descuento Aplicado En %</label>
+      <input type="number" class="inpForm" value="{{cot.descuento}}" id="descuento" name="descuento" />
+      <br />
+      <label class="title" for="categoria">Categoria</label>
        <input type="text" class="inpForm" value="{{planCot.categoria}}" id="categoria" name="categoria" />
       <br />
-       <label class="title" for="cuotas">Plan</label>
+       <label class="title" for="plan">Plan</label>
        <input type="text" class="inpForm" value="{{planCot.plan}}" id="plan" name="plan" />
       <br />
        <label class="title" for="cuotas">N° de Cuotas</label>
@@ -59,10 +69,10 @@
         <label class="title" for="cuota">Valor Cuota</label>
        <input type="number" class="inpForm" value="{{cuota}}" id="cuota" name="cuota" />
       <br />
-        <label class="title" for="cuota">Dia De Cobro</label>
+        <label class="title" for="diaDeCobro">Dia De Cobro</label>
        <input type="text" class="inpForm" value="{{cot.diaDeCobro}}" id="diaDeCobro" name="diaDeCobro" />
       <br />
-      <label class="title" for="cuota">Fecha De Inicio</label>
+      <label class="title" for="fecha">Fecha De Inicio</label>
     <input type="text" name="fecha" id="fecha" value="{{cot.fecha}}" class="inpForm" readonly>
 
       <div class="cantBtnForm">
