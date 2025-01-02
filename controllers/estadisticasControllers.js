@@ -71,7 +71,8 @@ const cargarEstadisticas = async (req, res) => {
     gastoT = f.format(gastoT);
     cobradoT = f.format(cobradoT);
     esperadoT = f.format(esperadoT);
-    console.log(cajaOpe);
+
+
     res.render('cajaCobrador', {cajaOpe, cobradoT, esperadoT, porcentaje, efectivo, gastoT});
   }
   module.exports = {cargarEstadisticas, cargarCajaCobrador};
