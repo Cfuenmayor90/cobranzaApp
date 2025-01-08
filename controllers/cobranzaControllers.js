@@ -60,6 +60,25 @@ const pagoSave = async (req, res) => {
       prestamo.mTotal = prestamo.mTotal - pago;
       prestamo.fechaUltPago = fechaActual;
       await ventas.findByIdAndUpdate({ _id: codPres }, prestamo);
+      //codigo para editar balance diario
+      var nRuta = prestamo.cobRuta; 
+      const balance = await balances.findOne({cobRuta: nRuta, fecha: fechaActual});
+      var pagos = await pagoN.find({cobRuta: nRuta, fecha: fechaActual});
+      var venTas = await ventas.find({cobRuta: nRuta, fechaInicio: fechaActual});
+      var pagosT = 0;
+      var venTotal = 0;
+      var monTotal = 0;
+      var ganan = 0;
+      venTas.forEach(element => {
+        venTotal = element.monto + venTotal;
+        monTotal = element.total + monTotal;
+      });
+      pagos.forEach(element => {
+        pagosT = element.pago + pagosT;
+      });
+      ganan = (monTotal-venTotal).toFixed(2);
+      const balanceNew = ({cobRuta: nRuta, fecha: fechaActual, nombre: balance.nombre, cobrado: pagosT.toFixed(2), esperado: balance.esperado, categoria: "balance_diario", ventas: venTotal, ganancia: ganan });
+      const balanEdit = await balances.findByIdAndUpdate({_id: balance._id}, balanceNew);
       res.redirect('/cobranza');
     } else {
       const mensajeError = "¡No puedes ingresar 2 o mas pagos para el mismo credito en un mismo dia, el monto del pago debe ser menor al saldo!";
