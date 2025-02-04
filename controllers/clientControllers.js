@@ -94,7 +94,10 @@ const cargarClientes = async(req, res) =>{
     const presEditData = await ventas.find({dni:dniCli});
     for (let i = 0; i < presEditData.length; i++) {
       const element = presEditData[i];
+      element.dni = clienteEdit.dni;
+      element.nombre = clienteEdit.nombre;
       element.celular = clienteEdit.celular;
+      element.geolocalizacion= clienteEdit.geolocalizacion;
       element.direccion = `${clienteEdit.localidadComercial}/ ${clienteEdit.dirComercial}`;
       await ventas.findByIdAndUpdate({_id: element._id}, element);
       
