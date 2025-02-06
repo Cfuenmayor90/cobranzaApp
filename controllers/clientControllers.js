@@ -104,7 +104,7 @@ const cargarClientes = async(req, res) =>{
     }
     console.log("prestamos " + presEditData);
     
-    res.redirect('/vistas/clientes');
+    res.redirect('javascript:history.back()');
     
    } catch (error) {
     

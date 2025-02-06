@@ -25,7 +25,8 @@
           <tr class="tableUsuariosTr">
           <th class="tableUsuariosThTitulo">Nombre</th>
           <th class="tableUsuariosThTitulo">Saldo</th>
-          <th class="tableUsuariosThTitulo">Fecha</th>
+          <th class="tableUsuariosThTitulo">Cancelado</th>
+          <th class="tableUsuariosThTitulo">Vcto</th>
           <th class="tableUsuariosThTitulo">Ruta</th>
           <th class="tableUsuariosThTitulo">Btn</th>
           </tr>
@@ -34,15 +35,18 @@
              <th class="tableUsuariosThRespuesta"><a href="general/statusPresClient/{{dni}}" class="etiquetaNombre">{{nombre}}</a></th>
              <th class="tableUsuariosThRespuesta">{{mTotal}}</th>
               <th class="tableUsuariosThRespuesta">{{fechaUltPago}}</th>
+               <th class="tableUsuariosThRespuesta">{{fechaFinal}}</th>
              <th class="tableUsuariosThRespuesta">{{cobRuta}}</th>
               <th class="">
-               <a href="/alertas/eliminarUno/{{_id}}" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El PRestamo Y Sus Pagos: {{{nombre}}}?')" class="tableUsuariosBtnEliminar"><i class="bi bi-trash"></i>
-               </a>
+               <a href="/alertas/eliminarUno/{{_id}}" style="background-color: red;" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El PRestamo Y Sus Pagos: {{{nombre}}}?')" class="btnPagoCobra"><i class="bi bi-trash"></i></a>
+               <a href="https://wa.me/549{{celular}}" class="btnPagoCobra" style="background-color: green;"><i class="bi bi-whatsapp"></i></a>
             </th>
           </tr>
         {{/each}}
          <tr class="tableUsuariosTr">
-          <th class="tableUsuariosThTitulo" colspan="4"><a href="/alertas/eliminarTodos/{{_id}}" style="font-size: 13px; padding: 0.5em;" class="btnError">Eliminar Todos</a></th>
+          <th class="tableUsuariosThTitulo" colspan="4">
+            <a href="/alertas/eliminarTodos/{{_id}}" style="font-size: 13px; padding: 0.5em;" class="btnError">Eliminar Todos</a>
+            </th>
           </tr>
 
         </table>
@@ -69,6 +73,7 @@
              <th class="tableUsuariosThRespuesta">{{cobRuta}}</th>
               <th class="">
                    <a href="/cobranza/refinanciar/{{_id}}" class="btnPagoCobra" style="background-color: blue; border: none; color:white"><i class="bi bi-pencil-square"></i></a>
+                   <a href="https://wa.me/549{{celular}}" class="btnPagoCobra" style="background-color: green;"><i class="bi bi-whatsapp"></i></a>
             </th>
           </tr>
         {{/each}}
