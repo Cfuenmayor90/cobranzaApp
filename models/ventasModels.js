@@ -98,6 +98,9 @@ const ventaSchema = new Schema({
     },
     geolocalizacion:{
         type: String
+    },
+    posicion:{
+        type: Number
     }
 
 });

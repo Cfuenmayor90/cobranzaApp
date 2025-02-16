@@ -38,9 +38,19 @@ const eliminarTodos = async(req, res) =>{
 const eliminarUno = async(req, res)=>{
     const {id} = req.params;
     try {
-       const pagosElim = await pagoN.deleteMany({codPres:id});
-       const ventaElim =  await ventas.findByIdAndDelete(id);
-        res.redirect('/alertas');
+        const dia = new Date().toLocaleDateString();
+        const pres = await ventas.findById(id);
+        console.log("dia " + dia);
+        console.log("ultimo pago: " + pres.fechaUltPago);
+        
+        
+        if (pres.fechaUltPago != dia) {
+            const pagosElim = await pagoN.deleteMany({codPres:id});
+            const ventaElim =  await ventas.findByIdAndDelete(id);
+             res.redirect('/alertas');
+        }
+        const mensajeError = "No se puede eliminar una cuenta cancelada el dia de hoy, espere hasta el dia siguiente";
+        res.render('error', {mensajeError});
         
     } catch (error) {
         res.render('error');

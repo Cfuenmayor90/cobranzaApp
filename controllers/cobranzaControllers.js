@@ -93,7 +93,7 @@ const filterSem = async(req, res) =>{
     const {coRu} = req.params;
     const dia = new Date().getDay();
     console.log(dia);
-    const arrayDias = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
+    const arrayDias = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'Sabado'];
     const diaDeCobro = arrayDias[dia]
     const prestamos = await ventas.find({ cobRuta: coRu, diaDeCobro}).sort({nombre: 1});
     console.log('prestamos ' + prestamos);
@@ -117,6 +117,15 @@ const filterSem = async(req, res) =>{
     res.render("cobranza", { prestamos, espeValor,monCobrado, efect, infoPagos,diaInici, timeInici, coRu, nPres});
     
     
+  } catch (error) {
+    
+  }
+};
+const filterPosicion = async(req, res)=>{
+  try {
+    const {coRu} = req.params;
+    const prestamos = await ventas.find({ cobRuta: coRu}).sort({posicion: 1});
+    res.render("cobranza", { prestamos, coRu});
   } catch (error) {
     
   }
@@ -338,5 +347,26 @@ switch (rol) {
   } catch (error) {
     
   }
+};
+const posicionNumber = async(req, res) =>{
+  try {
+    const {id} = req.params;
+    const pres = await ventas.findById({_id: id});
+    res.render('posicionPres', {pres});
+  } catch (error) {
+    
+  }
+};
+const savePosicion = async(req, res)=>{
+  try {
+    const {codPres, number} = req.body;
+    const presEdit = await ventas.findByIdAndUpdate({_id: codPres}, {posicion: number});
+    const cobRuta = presEdit.cobRuta;
+    const prestamos = await ventas.find({cobRuta}).sort({posicion: 1});
+    const usuario = cobRuta;
+    return res.render('cobranzaAdmin', {prestamos, usuario});
+  } catch (error) {
+    
+  }
 }
-module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket, refinanciarPres, saveRefinanciarPres, filterSem, note, saveNote};
+module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket, refinanciarPres, saveRefinanciarPres, filterSem, note, saveNote, posicionNumber, savePosicion, filterPosicion};

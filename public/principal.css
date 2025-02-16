@@ -731,7 +731,19 @@ padding-top: 1px;
   background-color: green;
   padding: 2px 6px;
 }
+    /*Alertas*/
+    .thAlert{
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
 
+    }
+.btnAlert{
+
+  padding: 0.5em;
+
+}
 @media (max-width: 440px) {
   .navegacion {
     font-size: 20px;
@@ -1032,4 +1044,17 @@ padding-top: 1px;
     .infoCotizarProd{
       padding: 1.5em;
     }
+    /*Alertas*/
+    .thAlert{
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+
+    }
+.btnAlert{
+
+  padding: 0.5em;
+
+}
 }

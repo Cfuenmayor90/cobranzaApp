@@ -24,7 +24,7 @@
         <table class="tableUsuarios">
           <tr class="tableUsuariosTr">
           <th class="tableUsuariosThTitulo">Nombre</th>
-          <th class="tableUsuariosThTitulo">Saldo</th>
+    
           <th class="tableUsuariosThTitulo">Cancelado</th>
           <th class="tableUsuariosThTitulo">Vcto</th>
           <th class="tableUsuariosThTitulo">Ruta</th>
@@ -33,13 +33,13 @@
         {{#each presCancelados}}
           <tr>
              <th class="tableUsuariosThRespuesta"><a href="general/statusPresClient/{{dni}}" class="etiquetaNombre">{{nombre}}</a></th>
-             <th class="tableUsuariosThRespuesta">{{mTotal}}</th>
+             
               <th class="tableUsuariosThRespuesta">{{fechaUltPago}}</th>
                <th class="tableUsuariosThRespuesta">{{fechaFinal}}</th>
              <th class="tableUsuariosThRespuesta">{{cobRuta}}</th>
-              <th class="">
-               <a href="/alertas/eliminarUno/{{_id}}" style="background-color: red;" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El PRestamo Y Sus Pagos: {{{nombre}}}?')" class="btnPagoCobra"><i class="bi bi-trash"></i></a>
-               <a href="https://wa.me/549{{celular}}" class="btnPagoCobra" style="background-color: green;"><i class="bi bi-whatsapp"></i></a>
+             <th class="thAlert">
+               <a href="/alertas/eliminarUno/{{_id}}" style="background-color: red;" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El PRestamo Y Sus Pagos: {{{nombre}}}?')" class="btnAlert"><i class="bi bi-trash"></i></a>
+               <a href="https://wa.me/549{{celular}}" class="btnAlert" style="background-color: rgb(4, 178, 4);"><i class="bi bi-whatsapp"></i></a>
             </th>
           </tr>
         {{/each}}
@@ -71,9 +71,9 @@
              <th class="tableUsuariosThRespuesta" style="color: red;">{{mTotal}}</th>
               <th class="tableUsuariosThRespuesta">{{fechaFinal}}</th>
              <th class="tableUsuariosThRespuesta">{{cobRuta}}</th>
-              <th class="">
-                   <a href="/cobranza/refinanciar/{{_id}}" class="btnPagoCobra" style="background-color: blue; border: none; color:white"><i class="bi bi-pencil-square"></i></a>
-                   <a href="https://wa.me/549{{celular}}" class="btnPagoCobra" style="background-color: green;"><i class="bi bi-whatsapp"></i></a>
+              <th class="thAlert">
+                   <a href="/cobranza/refinanciar/{{_id}}" class="btnAlert" style="background-color: blue; border: none; color:white"><i class="bi bi-pencil-square"></i></a>
+                   <a href="https://wa.me/549{{celular}}" class="btnAlert" style="background-color: rgb(4, 178, 4);"><i class="bi bi-whatsapp"></i></a>
             </th>
           </tr>
         {{/each}}
