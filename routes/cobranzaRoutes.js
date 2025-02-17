@@ -33,7 +33,7 @@ router.get(
 
 router.get("/filterSem/:coRu", checkRole(["admin", "cobrador"]), filterSem);
 
-router.get("filterPosicion/:coRu", checkRole(["admin", "cobrador"]), filterPosicion)
+router.get("/filterPosicion/:coRu", checkRole(["admin", "cobrador"]), filterPosicion)
 
 router.get("/ticket/:id", envioTicket);
 

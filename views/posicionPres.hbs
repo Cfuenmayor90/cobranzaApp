@@ -4,10 +4,10 @@
      <h2 class="h2Error"> Ingrese un numero de posición para el prestamo</h2>
      <form action="/cobranza/savePosicion" method="post">
        <label for="">Numero De Posicion</label>
-        <input class="inpForm" type="number" id="posPres">
+        <input class="inpForm" type="number" id="number" name="number">
         <label for="">Codigo Prestamo</label>
-        <input class="inpForm" type="text" id="codPres" placeholder="{{pres._id}}" readonly>
-        <a class="btnError" href="javascript:history.back()"> Volver Atrás</a>
+        <input class="inpForm" type="text" id="id" name="id" value="{{pres._id}}" readonly>
+        <a class="btnFormAceptar" style="background-color: rgb(182, 93, 4);" href="javascript:history.back()"> Volver Atrás</a>
          <button class="btnFormAceptar" type="submit">Guardar</button>
      </form>
   

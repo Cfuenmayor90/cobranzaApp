@@ -124,12 +124,14 @@ const filterSem = async(req, res) =>{
 const filterPosicion = async(req, res)=>{
   try {
     const {coRu} = req.params;
+    console.log("cobranza ruta " + coRu);
+    
     const prestamos = await ventas.find({ cobRuta: coRu}).sort({posicion: 1});
     res.render("cobranza", { prestamos, coRu});
   } catch (error) {
     
   }
-}
+};
 const listaPagosDiarios = async(req, res) =>{
   try {
     const {coRu} = req.params;
@@ -149,7 +151,7 @@ const listaPagosDiarios = async(req, res) =>{
   } catch (error) {
     
   }
-}
+};
 const listaPagos = async (req, res) => {
   try {
     const { id } = req.params;
@@ -359,12 +361,16 @@ const posicionNumber = async(req, res) =>{
 };
 const savePosicion = async(req, res)=>{
   try {
-    const {codPres, number} = req.body;
-    const presEdit = await ventas.findByIdAndUpdate({_id: codPres}, {posicion: number});
+    const {id, number} = req.body;
+    console.log("save posicion " + number);
+    const presEdit =await ventas.findOneAndUpdate({_id: id}, {posicion: number});
     const cobRuta = presEdit.cobRuta;
+    console.log(presEdit);
+    
     const prestamos = await ventas.find({cobRuta}).sort({posicion: 1});
     const usuario = cobRuta;
-    return res.render('cobranzaAdmin', {prestamos, usuario});
+    
+    return res.render('cobranza', {prestamos, usuario});
   } catch (error) {
     
   }
