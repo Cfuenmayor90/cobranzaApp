@@ -168,8 +168,8 @@ a {
 .btnOptionCob{
  background-color: rgb(20, 7, 205);
 border-radius: 3px;
- padding: 5px;
- font-size: 16px;
+ padding: 1px;
+ font-size: 14px;
 }
 .contPres {
   width: 90%;
@@ -221,6 +221,14 @@ border-radius: 3px;
   left: 0;
   border-top: 2px solid orangered;
 
+}
+
+.divFilterPres {
+  width: 100%;
+  height: auto;
+  background-color: #b9e4ff;
+  text-align: center;
+  padding: 0.5px;
 }
 .divFooter {
   display: flex;

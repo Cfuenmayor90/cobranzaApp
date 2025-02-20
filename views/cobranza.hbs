@@ -12,6 +12,12 @@
     </nav>
 
     <div class="contPres">
+       <div class="divFilterPres" style="height: auto; padding: 1.5em;">
+        <h3>Ordenar Por:</h>
+        <a href="/cobranza/pagoListDiario/{{coRu}}" class="btnOptionCob">Pagos Totales</a>
+        <a href="/cobranza/filterSem/{{coRu}}" class="btnOptionCob">Semanales Por Cobrar Hoy</a>
+        <a href="/cobranza/filterPosicion/{{coRu}}" class="btnOptionCob">Posicion</a>
+      </div>
       
         {{#each prestamos}}
         <form action="/cobranza/savePago" method="post"> 
@@ -68,8 +74,8 @@
         </form>
         {{/each}}
         <br>
-        <div class="divClienteBuscar" style="height: auto; padding: 1.5em;">
-        <h1>Ordenar Por:</h1>
+        <div class="divFilterPres" style="height: auto; padding: 1.5em;">
+        <h3>Ordenar Por:</h>
         <a href="/cobranza/pagoListDiario/{{coRu}}" class="btnOptionCob">Pagos Totales</a>
         <a href="/cobranza/filterSem/{{coRu}}" class="btnOptionCob">Semanales Por Cobrar Hoy</a>
         <a href="/cobranza/filterPosicion/{{coRu}}" class="btnOptionCob">Posicion</a>
