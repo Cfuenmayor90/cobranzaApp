@@ -124,7 +124,7 @@ const filterSem = async(req, res) =>{
 const filterPosicion = async(req, res)=>{
   try {
 
-    const diaActual = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});//ssssssss
+    const diaActual = new Date().toLocaleDateString("es-AR", {timeZone: 'Argentina/Buenos_Aires'});//ssssssss
     const {coRu} = req.params;
     console.log("cobranza ruta " + coRu);
     
