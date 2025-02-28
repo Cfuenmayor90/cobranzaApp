@@ -124,7 +124,7 @@ const filterSem = async(req, res) =>{
 const filterPosicion = async(req, res)=>{
   try {
 
-    const diaActual = new Date().toLocaleDateString("es-AR", {timeZone: 'Argentina/Buenos_Aires'});//ssssssss
+    const diaActual = new Date().toLocaleDateString("es-AR", {timeZone:'Argentina/Buenos_Aires'});//ssssssss
     const {coRu} = req.params;
     console.log("cobranza ruta " + coRu);
     
@@ -365,7 +365,17 @@ const savePosicion = async(req, res)=>{
   try {
     const {id, number} = req.body;
     console.log("save posicion " + number);
+    const prestamosEditar = await ventas.find({posicion:{$gte:number}});
     const presEdit =await ventas.findOneAndUpdate({_id: id}, {posicion: number});
+  number = number + 1;
+    var num = parseInt(number);
+    for (let i = 0; i < prestamosEditar.length; i++) {
+      const element = prestamosEditar[i];
+      var n = i + num;
+      console.log(n);
+      
+      const posEdit = await ventas.findOneAndUpdate({_id: element._id}, {posicion: n});
+    }
     const cobRuta = presEdit.cobRuta;
     console.log(presEdit);
     
