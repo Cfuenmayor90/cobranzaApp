@@ -123,12 +123,13 @@ const filterSem = async(req, res) =>{
 };
 const filterPosicion = async(req, res)=>{
   try {
-
-    const diaActual = new Date().toLocaleDateString("es-AR", {timeZone:'Argentina/Buenos_Aires'});//ssssssss
+ console.log("filter posicion");
+   const diaActual = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+ 
     const {coRu} = req.params;
     console.log("cobranza ruta " + coRu);
     
-    const prestamos = await ventas.find({ cobRuta: coRu, fechaUltPago:{$ne: diaActual}}).sort({posicion: 1});
+    const prestamos = await ventas.find({ cobRuta: coRu, fechaUltPago:{$ne:diaActual}}).sort({posicion: 1});
     res.render("cobranza", { prestamos, coRu});
   } catch (error) {
     
