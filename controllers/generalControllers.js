@@ -209,8 +209,17 @@ const cargarEstadoClient = async(req, res) => {
     const {numRutaInp, mesInp, anioInp} = req.body;
     console.log(`numRuta ${numRutaInp} mes ${mesInp} año ${anioInp}`);
     var anio = anioInp || new Date().getFullYear();
+    console.log(anio);
+    
      var mes = mesInp || new Date().getMonth();
-     var cantDias = (new Date(anio, (mes+1), 0).getDate());
+     console.log(mes);
+      var m = parseInt(mes) + 1;
+     console.log(mes);
+     
+     var cantDias = new Date(anio,m,0);
+     cantDias = cantDias.getDate();
+     console.log(cantDias);
+     
      var numR = numRutaInp || nRuta;
      console.log("fechaForm " + anio);
     const balance = await balances.find({cobRuta: numR, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias,23,59,59,0)}});
