@@ -364,26 +364,28 @@ const posicionNumber = async(req, res) =>{
 };
 const savePosicion = async(req, res)=>{
   try {
-    const {id, number} = req.body;
-    console.log("save posicion " + number);
-    const prestamosEditar = await ventas.find({posicion:{$gte:number}});
-    const presEdit =await ventas.findOneAndUpdate({_id: id}, {posicion: number});
-  number = number + 1;
-    var num = parseInt(number);
+    const {id, number, cobRu} = req.body;
+    console.log("save posicion " );
+    const prestamosEditar = await ventas.find({cobRuta:cobRu, posicion:{$gte:number}});
+    console.log("number " + number);
+    var num = parseInt(number) + 1;
+    console.log(num);
+    
     for (let i = 0; i < prestamosEditar.length; i++) {
       const element = prestamosEditar[i];
       var n = i + num;
       console.log(n);
       
-      const posEdit = await ventas.findOneAndUpdate({_id: element._id}, {posicion: n});
+      var posEdit = await ventas.findOneAndUpdate({_id: element._id}, {posicion: n});
     }
-    const cobRuta = presEdit.cobRuta;
+    const presEdit =await ventas.findOneAndUpdate({_id: id}, {posicion: number});
     console.log(presEdit);
     
-    const prestamos = await ventas.find({cobRuta}).sort({posicion: 1});
-    const usuario = cobRuta;
     
-    return res.render('cobranza', {prestamos, usuario});
+    const prestamos = await ventas.find({cobRuta: cobRu}).sort({posicion: 1});
+    const usuario = cobRu;
+    
+    res.render('cobranza', {prestamos, usuario});
   } catch (error) {
     
   }
