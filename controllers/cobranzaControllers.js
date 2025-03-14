@@ -365,11 +365,12 @@ const posicionNumber = async(req, res) =>{
 const savePosicion = async(req, res)=>{
   try {
     const {id, number, cobRu} = req.body;
+    var num1 = parseInt(number);
     console.log("save posicion " );
-    const prestamosEditar = await ventas.find({cobRuta:cobRu, posicion:{$gte:number}});
-    console.log("number " + number);
-    var num = parseInt(number) + 1;
+    const prestamosEditar = await ventas.find({cobRuta:cobRu, posicion:{$gte:num1}});
+    console.log("number " + num);
     console.log(num);
+    var num = num1 + 1;
     
     for (let i = 0; i < prestamosEditar.length; i++) {
       const element = prestamosEditar[i];
@@ -378,10 +379,7 @@ const savePosicion = async(req, res)=>{
       
       var posEdit = await ventas.findOneAndUpdate({_id: element._id}, {posicion: n});
     }
-    const presEdit =await ventas.findOneAndUpdate({_id: id}, {posicion: number});
-    console.log(presEdit);
-    
-    
+    const presEdit =await ventas.findOneAndUpdate({_id: id}, {posicion: num1});
     const prestamos = await ventas.find({cobRuta: cobRu}).sort({posicion: 1});
     const usuario = cobRu;
     
