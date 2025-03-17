@@ -38,7 +38,7 @@ const eliminarTodos = async(req, res) =>{
 const eliminarUno = async(req, res)=>{
     const {id} = req.params;
     try {
-        const dia = new Date().toLocaleDateString();
+        const dia = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
         const pres = await ventas.findById(id);
         console.log("dia " + dia);
         console.log("ultimo pago: " + pres.fechaUltPago);
