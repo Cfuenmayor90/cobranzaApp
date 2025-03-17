@@ -367,7 +367,7 @@ const savePosicion = async(req, res)=>{
     const {id, number, cobRu} = req.body;
     var num1 = parseInt(number);
     console.log("save posicion " );
-    const prestamosEditar = await ventas.find({cobRuta:cobRu, posicion:{$gte:num1}});
+    const prestamosEditar = await ventas.find({cobRuta:cobRu, posicion:{$gte:num1}}).sort({posicion: 1});
     console.log("number " + num);
     console.log(num);
     var num = num1 + 1;
