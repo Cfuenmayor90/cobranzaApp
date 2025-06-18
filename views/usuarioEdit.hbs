@@ -84,9 +84,11 @@
       <br />
       <label for="rol" class="title">Rol del usuario</label>
       <select class="inpForm" name="role" id="role" required>
+        <option value="{{usuario.role}}">{{usuario.role}}</option>
         <option value="cobrador">Cobrador</option>
         <option value="vendedor">Vendedor</option>
         <option value="admin">Administrador</option>
+        <option value="pisoDeVenta">Piso De Venta</option>
       </select>
       <br>
       <label class="title" for="password">Codigo De Ruta: {{usuario.numRuta}}</label>
