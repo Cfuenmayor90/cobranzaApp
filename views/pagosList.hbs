@@ -13,25 +13,69 @@
 
     <div class="contPres">
 
-        <table class="tablePres">
-            <tr>
-                <th colspan="3" class="thTitleTablePres"> {{prestamo.nombre}}</th>
-            </tr>
-              <tr>
-                <th class="thTable" style="border-bottom: 1px solid orange;">Codigo</th>
-                 <th class="thTable" style="border-bottom: 1px solid orange;">Fecha</th>
-                  <th class="thTable" style="border-bottom: 1px solid orange;">Pago</th>
-            </tr>
-        {{#each array}}
-                 <tr>
-                <th class="thTable">{{id}}</th>
-                 <th class="thTable">{{fechaString}}</th>
-                  <th class="thTable">${{pagO}}</th>
-            </tr>
-        {{/each}}
+        
+   <table class="tableListCaja">
+    <tr>
+        <th class="tableListCajaTitle">Nombre:</th>
+        <th class="tableListCajaRes" colspan="2">{{prestamo.nombre}}</th>
+    </tr>
+      <tr>
+        <th class="tableListCajaTitle">Direccion:</th>
+        <th class="tableListCajaRes" colspan="2">{{prestamo.direccion}}</th>
+    </tr>
+    <tr>
+        <th class="tableListCajaTitle">Ruta:</th>
+        <th class="tableListCajaRes" colspan="2">{{prestamo.cobRuta}}</th>
+    </tr>
+    <tr>
+        <th class="tableListCajaTitle">Detalle:</th>
+        <th class="tableListCajaRes" colspan="2">{{prestamo.detalle}}</th>
+    </tr>
+    <tr>
+        <th class="tableListCajaTitle">Monto:</th>
+        <th class="tableListCajaRes" colspan="2">{{prestamo.monto}}</th>
+    </tr>
+    <tr>
+        <th class="tableListCajaTitle">Plan:</th>
+        <th class="tableListCajaRes" colspan="2">{{prestamo.plan}} / cuotas: {{pres.cuotas}} / cuota: {{pres.cuota}}</th>
+    </tr>
+    <tr>
+        <th class="tableListCajaTitle">Adelanto:</th>
+        <th class="tableListCajaRes" colspan="2">{{prestamo.adelanto}}</th>
+    </tr>
+    <tr>
+        <th class="tableListCajaTitle">Inicio:</th>
+        <th class="tableListCajaRes" colspan="2">{{prestamo.fechaInicio}}</th>
+    </tr>
+    <tr>
+        <th class="tableListCajaTitle">Vencimiento:</th>
+          <th class="tableListCajaRes" colspan="2">{{prestamo.fechaFinal}}</th>
+    </tr>
+    <tr>
+        <th class="tableListCajaTitle">Total:</th>
+        <th class="tableListCajaRes" colspan="2">{{prestamo.total}}</th>
+    </tr>
+      <tr>
+        <th class="tableListCajaTitle">Saldo:</th>
+          <th class="tableListCajaRes" colspan="2">{{prestamo.mTotal}}</th>
+    </tr>
+    <tr>
+        <th class="tableListCajaTitle" colspan="3">Lista de pagos</th>
+    </tr>
+    <tr>
+        <th class="tableListCajaTitle">Fecha</th>
+        <th class="tableListCajaTitle">Pago</th>
+        <th class="tableListCajaTitle">Codigo</th>
+    </tr>
+    {{#each array}}
+    <tr>
+        <th class="tableListCajaRes">{{fechaString}}</th>
+        <th class="tableListCajaRes">{{pago}}</th>
+        <th class="tableListCajaRes">{{id}}</th>
+    </tr>
+    {{/each}}
+   </table>
 
-
-         
-        </table>
+  
 
     </div>
