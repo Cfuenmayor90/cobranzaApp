@@ -22,7 +22,7 @@ const crearUsuario = async (req, res) => {
       return res.render('error', {mensajeError});
     }
     //creamos el usuario en la base de datos
-    var userNumRuta = users.findOne().sort({numRuta: -1});
+    const userNumRuta = users.findOne().sort({numRuta: -1});
   var nRuta = "";
 if (role == "vendedor") {
    nRuta = userNumRuta.numRuta || 200;
@@ -102,6 +102,12 @@ const validarIngresoUsuario = async (req, res) => {
               console.log(presVencidos);
              return res.render("principalCobrador", { nombre, nRuta, hVentas, presVencidos});
           break;
+          case 'pisoDeVenta':
+          const pVencidos = await ventas.find({cobRuta: nRuta, DateFinal:{$lte: new Date(anio,mes,dia)}});
+          const hisVentas =  await histVentas.find({venRuta:userIngreso.numRuta, timeStamp:{$gte: new Date(anio, mes, 0), $lte: new Date(anio, mes, cantDias)}});
+          console.log(pVencidos);
+            return res.render("pisoDeVenta", {nombre, nRuta, pVencidos, hisVentas});
+         break;
         case 'vendedor':
           const Ventas = await histVentas.find({venRuta:userIngreso.numRuta, timeStamp:{$gte: new Date(anio, mes, 0), $lte: new Date(anio, mes, cantDias)}});
               
@@ -198,6 +204,12 @@ const volverPrin = async (req, res) => {
            console.log(presVencidos);
           res.render("principalCobrador", { nombre, nRuta, hVentas, presVencidos});
           break;
+        case 'pisoDeVenta':
+          const pVencidos = await ventas.find({cobRuta: nRuta, DateFinal:{$lte: new Date(anio,mes,dia)}});
+          const hisVentas =  await histVentas.find({venRuta:nRuta, timeStamp:{$gte: new Date(anio, mes, 0), $lte: new Date(anio, mes, cantDias)}});
+          console.log(pVencidos);
+            return res.render("pisoDeVenta", {nombre, nRuta, pVencidos, hisVentas});
+         break;
           case 'vendedor':
             const Ventas = await histVentas.find({venRuta:userIngreso.numRuta, timeStamp:{$gte: new Date(anio, mes, 0), $lte: new Date(anio, mes, cantDias)}});
       
