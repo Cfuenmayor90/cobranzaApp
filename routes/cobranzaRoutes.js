@@ -21,9 +21,9 @@ const { timeOp } = require("../middleware/timeOpe");
 
 router.get("/", checkRole(["cobrador", 'pisoDeVenta']), cargarCobranza);
 
-router.post("/savePago", checkRole(["cobrador"]), pagoSave);
+router.post("/savePago", checkRole(["cobrador", "pisoDeVenta"]), pagoSave);
 
-router.get("/pagosList/:id", checkRole(["cobrador", "admin"]), listaPagos);
+router.get("/pagosList/:id", checkRole(["cobrador", "admin", "pisoDeVenta"]), listaPagos);
 
 router.get(
   "/pagoListDiario/:coRu",
@@ -43,11 +43,11 @@ router.post("/saveRefinanciar", checkRole(["admin"]), saveRefinanciarPres);
 
 router.get("/generarBalance", checkRole(["admin"]), esperadoDiario);
 
-router.get("/note/:id", checkRole(["admin", "cobrador", "supervisor"]), note);
+router.get("/note/:id", checkRole(["admin", "cobrador", "pisoDeVenta"]), note);
 
-router.post("/saveNote/:id", checkRole(["admin", "cobrador", "supervisor"]), saveNote);
+router.post("/saveNote/:id", checkRole(["admin", "cobrador", "pisoDeVenta"]), saveNote);
 
-router.get("/posicionNumber/:id", checkRole(["admin", "cobrador"]), posicionNumber);
+router.get("/posicionNumber/:id", checkRole(["admin", "cobrador", "pisoDeVenta"]), posicionNumber);
 
-router.post("/savePosicion", checkRole(["admin", "cobrador"]), savePosicion);
+router.post("/savePosicion", checkRole(["admin", "cobrador", "pisoDeVenta"]), savePosicion);
 module.exports = router;
