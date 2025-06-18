@@ -19,7 +19,7 @@ const {
 } = require("../controllers/cobranzaControllers");
 const { timeOp } = require("../middleware/timeOpe");
 
-router.get("/", checkRole(["cobrador"]), cargarCobranza);
+router.get("/", checkRole(["cobrador", 'pisoDeVenta']), cargarCobranza);
 
 router.post("/savePago", checkRole(["cobrador"]), pagoSave);
 
@@ -27,17 +27,17 @@ router.get("/pagosList/:id", checkRole(["cobrador", "admin"]), listaPagos);
 
 router.get(
   "/pagoListDiario/:coRu",
-  checkRole(["cobrador", "admin"]),
+  checkRole(["cobrador", "admin", 'pisoDeVenta']),
   listaPagosDiarios
 );
 
-router.get("/filterSem/:coRu", checkRole(["admin", "cobrador"]), filterSem);
+router.get("/filterSem/:coRu", checkRole(["admin", "cobrador", 'pisoDeVenta']), filterSem);
 
-router.get("/filterPosicion/:coRu", checkRole(["admin", "cobrador"]), filterPosicion)
+router.get("/filterPosicion/:coRu", checkRole(["admin", "cobrador", 'pisoDeVenta']), filterPosicion)
 
 router.get("/ticket/:id", envioTicket);
 
-router.get("/refinanciar/:id", checkRole(["admin"]), refinanciarPres);
+router.get("/refinanciar/:id", checkRole(["admin", "pisoDeVenta"]), refinanciarPres);
 
 router.post("/saveRefinanciar", checkRole(["admin"]), saveRefinanciarPres);
 

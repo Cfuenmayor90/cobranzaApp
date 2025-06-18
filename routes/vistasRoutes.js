@@ -18,7 +18,10 @@ router.get('/principalCobrador', checkRole(['cobrador']), (req, res)=>{
 router.get('/principalVendedor', checkRole(['vendedor']), (req, res)=>{
     res.render('principalVendedor')
 });
-router.get('/clientes', checkRole(['admin', 'cobrador', 'vendedor']), cargarClientes);
+router.get('/principalPiso', checkRole(['pisoDeVenta']), (req, res)=>{
+    res.render('pisoDeVenta')
+});
+router.get('/clientes', checkRole(['admin', 'cobrador', 'vendedor', 'pisoDeVenta']), cargarClientes);
 
 router.get('/cobranza', checkRole(['cobrador']), (req, res) =>{
     res.render('cobranza')
@@ -27,7 +30,7 @@ router.get('/RutasDeCobranza', checkRole(['admin']), (req, res)=>{
     res.render('rutasCobranza')
 });
 
-router.get('/estadisticas/:numRuta', checkRole(['admin',  'vendedor', 'cobrador']), cargarEstadisticas);
+router.get('/estadisticas/:numRuta', checkRole(['admin',  'vendedor', 'cobrador', 'pisoDeVenta']), cargarEstadisticas);
 
 router.get('/estadisticasTime', checkRole(['cobrador']), )
 
@@ -41,5 +44,5 @@ router.get('/caja/:cobRuta', checkRole(['admin',  'vendedor', 'cobrador']), carg
 
 router.get('/Exit', logOut);
 
-router.get('/volver', checkRole(['admin',  'vendedor', 'cobrador']), volverPrin);
+router.get('/volver', checkRole(['admin',  'vendedor', 'cobrador', 'pisoDeVenta']), volverPrin);
 module.exports = router;
