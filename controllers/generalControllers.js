@@ -20,7 +20,7 @@ const load = (res, next) => {
 }
 const cargarGeneral = async(req, res) => {
   try {
-    const usuario = await users.find({role: "cobrador"});
+    const usuario = await users.find({role: ["cobrador", "pisoDeVenta"]});
     var anio = new Date().getFullYear();
     var mes = new Date().getMonth();
     var cantDias = new Date(anio, (mes+1), 0).getDate();
