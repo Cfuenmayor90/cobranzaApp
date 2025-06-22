@@ -10,8 +10,8 @@ const setValores = require('../models/settingValoresModels');
 
 const cargarVentas = async(req, res) => {
     const fechaHoy = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-     const usuariosVent = await users.find({role: ['cobrador','vendedor']});
-     const usuariosCob = await users.find({role: 'cobrador'});
+     const usuariosVent = await users.find({role: ['cobrador','vendedor', 'pisoDeVenta']});
+     const usuariosCob = await users.find({role: ['cobrador', 'pisoDeVenta']});
      const productos = await product.find().sort({nombre: 1});
      const planPrest = await setPrest.find({categoria: 'prestamo'}).sort({porcentaje: 1});
      const planProd = await setPrest.find({categoria: 'financiamiento'}).sort({porcentaje: 1});
