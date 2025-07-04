@@ -1,0 +1,70 @@
+<nav class="navegacion">
+    <a href="javascript:history.back()"><i class="bi bi-box-arrow-left"></i></a>
+    <div>
+      <span>Ventas</span>
+    </div>
+    <div class="iconMenuHamburguesa">
+      <i class="bi bi-menu-button-wide-fill"></i>
+    </div>
+  </nav>
+   <div class="contMayorCli">
+<div class="formCliente">
+    <div class="divClienteBuscar">
+        <h3 class="tituloForm">Confirmar Venta</h3>
+      </div>
+    <form action="/ventas/guardarContado" method="post" class="formCliente2">
+
+      <p>Verifique los datos de la venta de contado</p>
+      <br />
+
+      <label class="title" for="nombre">Apellido y Nombre</label>
+      <input type="text" class="inpForm" value="{{cliente.nombre}}" id="nombre" name="nombre"/>
+      <br />
+      <label class="title" for="dni">DNI</label>
+      <input type="number" class="inpForm" value="{{cliente.dni}}" id="dni" name="dni" />
+      <br />
+     
+      <label class="title" for="dni">Celular</label>
+      <input type="number" class="inpForm" value="{{cliente.celular}}" id="celular" name="celular" />
+      <br />
+      <label class="title" for="venRuta">Vendedor</label>
+      <input type="number" class="inpForm" value="{{cot.venRuta}}" id="venRuta" name="venRuta" required />
+      <br />
+      <label class="title" for="monto">Monto A Cobrar</label>
+        <input type="number" class="inpForm" value="{{precioTotal}}" id="mT" name="mT" readonly required />
+      <br />
+       <label class="title" for="plan">Medio De Pago</label>
+      <select type="text" class="inpForm"  id="plan" name="plan">
+       
+           <option value="efectivo" >Efectivo</option>
+           <option value="transferencia" >Transferencia</option>
+           <option value="TDC" >Tarjeta De Credito</option>
+      </select>
+      <br />
+      <label class="title" for="codProd">Codigo De Producto</label>
+      <select type="text" class="inpForm"  id="codProd" name="codProd" multiple>
+        {{#each arrayCod}}
+           <option value="{{cod}}" selected>{{cod}}</option>
+        {{/each}}
+      </select>
+      <br />
+      <label class="title" for="telefono">Descripcion</label>
+      <input type="text" class="inpForm" value="{{cot.detalle}}" id="detalle" name="detalle"/>
+      <br />
+      <label class="title" for="descuento">Descuento Aplicado En %</label>
+      <input type="number" class="inpForm" value="{{cot.descuento}}" id="descuento" name="descuento" readonly/>
+      <br />
+      <label class="title" for="fecha">Fecha</label>
+    <input type="text" name="fecha" id="fecha" value="{{cot.fecha}}" class="inpForm" readonly>
+
+      <div class="cantBtnForm">
+    
+        <a class="btnFormReset" href="javascript:history.back()"> Volver Atrás</a>
+
+        <button class="btnFormAceptar" type="submit">Guardar</button>
+      </div>
+  
+    </form>
+</div>
+   
+  </div>

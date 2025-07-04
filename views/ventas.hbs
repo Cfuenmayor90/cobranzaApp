@@ -16,7 +16,7 @@
    <div class="contMayorCli">
 <div class="formCliente">
     <div class="divClienteBuscar">
-        <h3 class="tituloForm">Registrar Ventas</h3>
+        <h3 class="tituloForm">Registro De Ventas Financiadas</h3>
       </div>
     <form action="/ventas/cotizar" method="post" class="formCliente2">
            
@@ -31,7 +31,6 @@
             <br>
             <label for="ruta">Ruta De Cobro</label>
             <select class="inpForm" name="cobRuta" id="cobRuta" required>
-                 <option value="0002">Pago De Contado</option>
                 {{#each usuariosCob}}
                 <option value="{{numRuta}}">{{numRuta}}/{{nombre}}</option>
                 {{/each}}
@@ -87,10 +86,46 @@
                 <button class="btnFormAceptar" type="submit">Cotizar</button>
             </div>
     </form>
+    <div class="divClienteBuscar">
+        <h3 class="tituloForm">Registro De Ventas De Contado</h3>
+      </div>
+    <form action="/ventas/cotizarContado" method="post" class="formCliente2">
+           
+            <label for="ruta">Vendedor</label>
+            <select class="inpForm" name="venRuta" id="venRuta">
+                <option value="">Otro</option>
+                {{#each usuariosVent}}
+                <option value="{{numRuta}}">{{numRuta}}/{{nombre}}</option>
+                {{/each}}
+            </select>
+            <br>
+            <label for="dni">DNI</label><br>
+            <input class="inpForm" type="number" id="dni" name="dni">
+            <br>
+            <label for="detalle">Descripcion</label>
+            <input class="inpForm" type="text" id="detalle" placeholder="Inf. Solo para productos" name="detalle">
+            <br>
+            <label for="detalle">Codigo De Producto</label>
+            <select  name="codProd" id="codProd" class="inpForm"  multiple>
+              {{#each productos}}
+              <option value="{{cod}}">{{cod}} // {{nombre}}</option>
+              {{/each}}
+            </select>
+            <br>
+            <label for="detalle">Porcentaje De Descuento</label>
+            <input class="inpForm" type="number" id="descuento" placeholder="%" name="descuento">
+            <br>
+       
+               <div class="cantBtnForm">
+                <button class="btnFormReset" type="reset">Limpiar</button>
+                <button class="btnFormAceptar" type="submit">Cotizar</button>
+            </div>
+    </form>
+    
 </div>
     <section class="sectionContClientes">
       <div class="divClienteBuscar">
-        <h3 class="tituloForm">Ventas Agregados Recientemente</h3>
+        <h3 class="tituloForm">Ventas Financiadas Agregados Recientemente</h3>
       </div>
       <div class="tarjUser">
         <br>
@@ -99,6 +134,7 @@
           <th class="tableUsuariosThTitulo">Apellido y Nombre</th>
           <th class="tableUsuariosThTitulo">Monto</th>
           <th class="tableUsuariosThTitulo">Fecha</th>
+           <th class="tableUsuariosThTitulo">% Dto</th>
           <th class="tableUsuariosThTitulo">Ruta C.</th>
 
           </tr>
@@ -107,12 +143,52 @@
              <th class="tableUsuariosThRespuesta" style="background-color: rgb(211, 235, 227);">{{nombre}}</th>
              <th class="tableUsuariosThRespuesta">{{monto}}</th>
              <th class="tableUsuariosThRespuesta">{{fechaInicio}}</th>
+             <th class="tableUsuariosThRespuesta">{{descuento}}</th>
              <th class="tableUsuariosThRespuesta">{{cobRuta}}</th>
           </tr>
+
            <th class="tableUsuariosThRespuesta">Detalle</th>
-           <th class="tableUsuariosThRespuesta" colspan="3">{{detalle}}</th>
+           <th class="tableUsuariosThRespuesta" colspan="4">{{detalle}}</th>
           <tr>
 
+          </tr>
+        {{/each}}
+        </table>
+        <br>
+      </div>  
+
+  
+      <div class="divClienteBuscar">
+        <h3 class="tituloForm">Ventas De Contado Agregados Recientemente</h3>
+      </div>
+      <div class="tarjUser">
+        <br>
+        <table class="tableUsuarios">
+          <tr class="tableUsuariosTr">
+          <th class="tableUsuariosThTitulo">Nombre</th>
+          <th class="tableUsuariosThTitulo">Monto</th>
+           <th class="tableUsuariosThTitulo">% Dto</th>
+          <th class="tableUsuariosThTitulo">Fecha</th>
+          <th class="tableUsuariosThTitulo">Medio De Pgo</th>
+          <th class="tableUsuariosThTitulo">Usuario</th>
+
+          </tr>
+        {{#each ventasCont}}
+          <tr>
+             <th class="tableUsuariosThRespuesta" style="background-color: rgb(211, 235, 227);">{{nombre}}</th>
+             <th class="tableUsuariosThRespuesta">{{mTotal}}</th>
+             <th class="tableUsuariosThRespuesta">{{descuento}}</th>
+             <th class="tableUsuariosThRespuesta">{{fechaInicio}}</th>
+             <th class="tableUsuariosThRespuesta">{{plan}}</th>
+             <th class="tableUsuariosThRespuesta">{{user}}</th>
+          </tr>
+          <tr>
+         <th class="tableUsuariosThRespuesta">Detalle</th>
+           <th class="tableUsuariosThRespuesta" colspan="5">{{detalle}}</th>
+          </tr>
+          <tr>
+           <th class="tableUsuariosThRespuesta">Codigo</th>
+           <th class="tableUsuariosThRespuesta" colspan="5">{{codProd}}</th>
           </tr>
         {{/each}}
         </table>
