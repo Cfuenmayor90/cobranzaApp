@@ -26,7 +26,11 @@ const balanceSchema = new Schema({
         require: true
     },
     ventas:{
-        type: Number
+        type: Number,
+        require: true
+    },
+    vtaCtdo:{
+       type: Number
     },
     ganancia:{
         type: Number

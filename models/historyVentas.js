@@ -18,8 +18,11 @@ const historyVentaSchema = new Schema({
         type: Number,
         require: true
     },
+    user:{
+        type: Number
+    },
     codProd:{
-        type: String
+        type: Array
     },
     detalle:{
         type: String
@@ -33,10 +36,6 @@ const historyVentaSchema = new Schema({
         require: true
     },
     plan:{
-        type: String,
-        require: true
-    },
-    direccion:{
         type: String,
         require: true
     },
