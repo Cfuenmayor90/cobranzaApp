@@ -195,7 +195,7 @@ const esperadoDiario = async(req, res) =>{
           espeT = element.cuota + espeT;
         });
         console.log("cron esperado total:" + espeT.toFixed(2));
-        const balanceNew = new balances({cobRuta: nRuta,  nombre: element.nombre, fecha: fechaAc, cobrado: 0, esperado: espeT.toFixed(2), ventas: 0, ganancia: 0, categoria: "balance_diario" });
+        const balanceNew = new balances({cobRuta: nRuta,  nombre: element.nombre, fecha: fechaAc, cobrado: 0, esperado: espeT.toFixed(2), ventas: 0, vtaCtdo: 0, ganancia: 0, categoria: "balance_diario" });
         await balanceNew.save();
       }
     }; 

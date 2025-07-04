@@ -37,6 +37,7 @@ const cargarGeneral = async(req, res) => {
     const inversion = await caja.find({tipo: ["inversion", "ingreso"]});
     var porCobrar = 0;
     var venTotalTo = 0;
+    var vtaCtdoTo = 0; //ventan total de contado en caso que sea piso de venta
     var venTotal = 0; //ventas totales en el mes
     var ganaTotal = 0; //ganacias totales de todas las rutas
     var cobraTotal= 0; //cobrado total de todas las rutas
@@ -58,6 +59,7 @@ const cargarGeneral = async(req, res) => {
       ganaTotal = element.ganancia + ganaTotal;
       cobraTotal = element.cobrado + cobraTotal;
       espeTotal = element.esperado + espeTotal;
+      vtaCtdoTo = element.vtaCtdo + vtaCtdoTo;
     });
     inversion.forEach(element => {
       invT = element.monto + invT;
@@ -73,12 +75,13 @@ const cargarGeneral = async(req, res) => {
            porCobrar = element.mTotal + porCobrar;
         });
         const ArrayUserGene = [];
-        // creamos el array de con los datos de cada ruta
+        // creamos el array con los datos de cada ruta
         for (let i = 0; i < usuario.length; i++) {
             const element = usuario [i];
             var espeT = 0;
             var cobT = 0;
             var venT = 0;
+            var vtaCtd = 0;
             var ganaT =0;
             var gastoT = 0;
             var porCobrarT = 0;
@@ -102,23 +105,25 @@ const cargarGeneral = async(req, res) => {
               cobT = element.cobrado + cobT;
               venT = element.ventas + venT;
               ganaT = element.ganancia + ganaT;
+              vtaCtd = element.vtaCtdo + vtaCtd;
        
             });
             prestT.forEach(element => {
               porCobrarT = element.mTotal + porCobrarT;
             });
             const efectividad = ((cobT/espeT)*100).toFixed(2);
-                efeCaja = cobT  - (mCaja + mAdelantos); 
+                efeCaja = (cobT + vtaCtd) - (mCaja + mAdelantos); 
                 efeCaja = f.format(efeCaja);
                 espeT = f.format(espeT);
                 cobT = f.format(cobT);
                 venT = f.format(venT);
                 ganaT = f.format(ganaT);
                 gastoT = f.format(gastoT);
+                vtaCtd = f.format(vtaCtd);
                 porCobrarT = f.format(porCobrarT);
                 mAdelantos = f.format(mAdelantos);
                 const cPres = prestT.length;
-                ArrayUserGene.push({espeT, cobT, venT, ganaT, gastoT, nombre: element.nombre, nRuta: element.numRuta, efectividad, porCobrarT, cPres, mCaja, mAdelantos, efeCaja});
+                ArrayUserGene.push({espeT, cobT, venT,vtaCtd, ganaT, gastoT, nombre: element.nombre, nRuta: element.numRuta, efectividad, porCobrarT, cPres, mCaja, mAdelantos, efeCaja});
         } //finaliza el for de usuarios
 
         efeCajaT = efeCajaT - venTotalTo - gasCaja;
@@ -130,13 +135,14 @@ const cargarGeneral = async(req, res) => {
          porCobrar = f.format(porCobrar);
           ganaTotal = f.format(ganaTotal);
           venTotal = f.format(venTotal);
+          vtaCtdoTo = f.format(vtaCtdoTo);
           cobraTotal = f.format(cobraTotal);
           espeTotal = f.format(espeTotal);
           efeCajaT= f.format(efeCajaT);
           capital= f.format(capital);
           gananCobTotal = f.format(gananCobTotal);
           gastocajaMes = f.format(gastocajaMes);
-          return res.render('generalCobranza', {porCobrar, ArrayUserGene, usuario, cajaList, cantPres, venTotal, ganaTotal, cobraTotal, espeTotal, porcentajeT, efeCajaT, capital, invT,  gastocajaMes, gananCobTotal});
+          return res.render('generalCobranza', {porCobrar, ArrayUserGene, usuario, cajaList, cantPres, venTotal, ganaTotal, cobraTotal, espeTotal, vtaCtdoTo, porcentajeT, efeCajaT, capital, invT,  gastocajaMes, gananCobTotal});
     
    } catch (error) {
     

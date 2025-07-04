@@ -6,7 +6,8 @@ const historyVentas = require('../models/historyVentas');
 const product = require('../models/productModels');
 const balance = require('../models/balanceModels');
 const setValores = require('../models/settingValoresModels');
-
+const cajaOp = require('../models/cajaModels');
+const { generarJWT, verifyJWT} = require('../middleware/jwt');
 
 const cargarVentas = async(req, res) => {
     const fechaHoy = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
@@ -15,8 +16,9 @@ const cargarVentas = async(req, res) => {
      const productos = await product.find().sort({nombre: 1});
      const planPrest = await setPrest.find({categoria: 'prestamo'}).sort({porcentaje: 1});
      const planProd = await setPrest.find({categoria: 'financiamiento'}).sort({porcentaje: 1});
-     const ventasT = await ventas.find().sort({timeStamp: -1}).limit(30);
-     return res.render('ventas', {usuariosVent,usuariosCob, planPrest, planProd, ventasT, productos});
+     const ventasT = await ventas.find().sort({timeStamp: -1}).limit(20);
+     const ventasCont = await historyVentas.find({categoria: "contado"}).sort({timeStamp: -1}).limit(20);
+     return res.render('ventas', {usuariosVent,usuariosCob, planPrest, planProd, ventasT, ventasCont, productos});
 }
 //cargar ventas especificas de usuarios como vendedore y cobradores
 const cargarVenCob = async(req, res) =>{
@@ -100,6 +102,12 @@ const cotizarPlan = async(req, res) => {
 };
 const guardarVentas = async(req,res) => {
 try {
+  //jwt para determinar el usuario que hace la operacion
+   const token =  req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
+    const verifyToken = await verifyJWT(token);
+    const rol = verifyToken.role;
+    const nRuta = verifyToken.numRuta;
+    //.........................
   const {fecha} = req.body;
   const newVenta = new ventas(req.body);
   const cdp = req.body.codProd;
@@ -143,7 +151,7 @@ try {
       dni: newVenta.dni,
       venRuta: newVenta.venRuta,
       cobRuta: newVenta.cobRuta,
-      codProd: cdp,
+      codProd: newVenta.codProd,
       detalle: newVenta.detalle,
       mTotal: newVenta.total,
       categoria: newVenta.categoria,
@@ -152,7 +160,22 @@ try {
     });
     await newHistoryVenta.save();
   }
-
+  //operacion para sumar el ingreso de un adelanto cuando es venta de productos
+  switch (rol) {
+      case "pisoDeVenta":
+        const balan = await balance.findOne({cobRuta: nRuta, fecha: fechaAc});
+      const Tt = (((balan.vtaCtdo)*1) + ((newVenta.adelanto)*1)).toFixed(2);
+      balan.vtaCtdo = Tt;
+     const newBalan = await balance.findByIdAndUpdate({_id: balan._id}, balan);
+        break;
+       case "admin":
+          const newCaja = new cajaOp({monto: newVenta.adelanto, fecha: fechaAc, userCod: nRuta, tipo: "ingreso", detalle: vent.detalle, timeStamp: new Date()});
+          await newCaja.save();
+        break;
+      default:
+        break;
+     }
+ //....................................................
   var prod= 0;
   if (Array.isArray(cdp)) {
     for (let i = 0; i < cdp.length; i++) {
@@ -160,16 +183,13 @@ try {
       prod = await product.findOne({cod: element});
       prod.stock = prod.stock -1;
       await product.findByIdAndUpdate({_id: prod._id}, prod);
-      console.log("new venta");
+      console.log("new element");
       console.log(element);
     }
-  } else if (cdp != 'prestamo') {
-      console.log("else if");
-      
+  } else if (cdp != 'prestamo') { 
       prod = await product.findOne({cod: cdp});
       prod.stock = prod.stock -1;
-      await product.findByIdAndUpdate({_id: prod._id}, prod);
-      
+      await product.findByIdAndUpdate({_id: prod._id}, prod); 
     } 
   
   res.redirect('/ventas');
@@ -179,8 +199,119 @@ try {
 }
 };
 
+const cotizarContado = async(req, res)=>{
+try {
+   const cot = req.body;
+   const codProducts = cot.codProd;
+   console.log("codigos de productos: ");
+   const cliente = await client.findOne({dni:cot.dni});
+   const valores = await setValores.findOne();
+   var precio = 0;
+   const arrayCod = [];
+   if (Array.isArray(codProducts)) {
+          for (let i = 0; i < codProducts.length; i++) {
+            const element = codProducts[i];
+            var prod = await product.findOne({cod: element}); 
+            precio = prod.precio + precio;
+            arrayCod.push({"cod":element});
+          }
+        }
+        else{
+          var prod = await product.findOne({cod: codProducts});
+          arrayCod.push({"cod":codProducts});
+          precio= prod.precio;
+        }
+        console.log(cliente);
+        console.log("precio: " + precio);
+        
+        const precioT = (precio * valores.dolar) * ((valores.porcentaje / 100) +1);
+        const des = (cot.descuento / 100);
+        const precioTotal = (precioT - (des * precioT)).toFixed(2);
+     
+   
+        console.log("precio: " + precioTotal);
+       
+   res.render('confirmarVenContado', {precioTotal, cliente, cot, arrayCod});
+} catch (error) {
+  var mensajeError = "Seleccione un producto"
+   res.render("error", {mensajeError})
+}
+};
+
+const guardarVentasContado = async(req, res)=>{
+  try {
+    const vent = req.body;
+    const m = ((vent.mT)*1).toFixed(2);
+    const cdp = vent.codProd;
+    console.log("monto:  " + m);
+    
+    const anio = new Date().getFullYear();
+    const mes = new Date().getMonth();
+    const dia = new Date().getUTCDate();
+    const fechaAc = new Date(anio, mes, dia).toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+    console.log(fechaAc);
+    
+    const token =  req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
+    const verifyToken = await verifyJWT(token);
+    const rol = verifyToken.role;
+    const nRuta = verifyToken.numRuta;
+ 
+   
+    const newHistoryVenta = new historyVentas({
+      nombre: vent.nombre,
+      dni: vent.dni,
+      venRuta: vent.venRuta,
+      codProd: vent.codProd,
+      detalle: vent.detalle,
+      mTotal: m,
+      categoria: "contado",
+      plan: vent.plan,
+      fechaInicio: fechaAc,
+      user: nRuta
+    });
+    await newHistoryVenta.save();
+
+     switch (rol) {
+      case "pisoDeVenta":
+        const balan = await balance.findOne({cobRuta: nRuta, fecha: fechaAc});
+      const Tt = (((balan.vtaCtdo)*1) + ((m)*1)).toFixed(2);
+      balan.vtaCtdo = Tt;
+     const newBalan = await balance.findByIdAndUpdate({_id: balan._id}, balan);
+        break;
+       case "admin":
+          const newCaja = new cajaOp({monto: m, fecha: fechaAc, userCod: nRuta, tipo: "ingreso", detalle: vent.detalle, timeStamp: new Date()});
+          await newCaja.save();
+        break;
+      default:
+        break;
+     }
+    
+   
+  if (Array.isArray(cdp)) {
+    for (let i = 0; i < cdp.length; i++) {
+      const element = cdp[i];
+      var prod = await product.findOne({cod: element});
+      prod.stock = prod.stock -1;
+      await product.findByIdAndUpdate({_id: prod._id}, prod);
+      console.log("new element");
+      console.log(element);
+    
+ } } else { 
+      var prod = await product.findOne({cod: cdp});
+      prod.stock = prod.stock -1;
+      await product.findByIdAndUpdate({_id: prod._id}, prod); 
+    } 
+       
+
+    res.redirect('/ventas');
+  } catch (error) {
+    var mensajeError = error;
+    res.render('error', {mensajeError});
+  }
+};
 
 
 
 
-module.exports = {cotizarPlan, cargarVentas, guardarVentas, cargarVenCob};
+
+module.exports = {cotizarPlan, cotizarContado, cargarVentas, guardarVentasContado, guardarVentas, cargarVenCob};
