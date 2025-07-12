@@ -110,9 +110,10 @@ try {
     //.........................
   const {fecha} = req.body;
   const newVenta = new ventas(req.body);
+  const ade = newVenta.adelanto;
   const cdp = req.body.codProd;
   console.log("New venta......................");
-  console.log(newVenta);
+  console.log(cdp);
   newVenta.total = newVenta.mTotal;
   newVenta.mTotal = newVenta.mTotal - newVenta.adelanto;
  console.log("codigos productos  ");
@@ -152,29 +153,38 @@ try {
       venRuta: newVenta.venRuta,
       cobRuta: newVenta.cobRuta,
       codProd: newVenta.codProd,
+       user: nRuta,
       detalle: newVenta.detalle,
       mTotal: newVenta.total,
+      descuento: newVenta.descuento,
       categoria: newVenta.categoria,
       plan: `${newVenta.plan} / Cuotas: ${newVenta.cuotas} / Cuota: ${newVenta.cuota}`,
       fechaInicio: fechaAc
     });
     await newHistoryVenta.save();
   }
+  console.log("adelanto; " + ade);
+  
+  if (ade > 0) {
+    console.log("dentro delif adelantos");
+    
+    switch (rol) {
+        case "pisoDeVenta":
+          const balan = await balance.findOne({cobRuta: nRuta, fecha: fechaAc});
+        const Tt = (((balan.vtaCtdo)*1) + ((newVenta.adelanto)*1)).toFixed(2);
+        balan.vtaCtdo = Tt;
+       const newBalan = await balance.findByIdAndUpdate({_id: balan._id}, balan);
+          break;
+         case "admin":
+              console.log("dentro delif adelantos / case");
+            const newCaja = new cajaOp({monto: newVenta.adelanto, fecha: fechaAc, userCod: nRuta, tipo: "ingreso", detalle: newVenta.detalle, timeStamp: new Date()});
+            await newCaja.save();
+          break;
+        default:
+          break;
+       }
+  }
   //operacion para sumar el ingreso de un adelanto cuando es venta de productos
-  switch (rol) {
-      case "pisoDeVenta":
-        const balan = await balance.findOne({cobRuta: nRuta, fecha: fechaAc});
-      const Tt = (((balan.vtaCtdo)*1) + ((newVenta.adelanto)*1)).toFixed(2);
-      balan.vtaCtdo = Tt;
-     const newBalan = await balance.findByIdAndUpdate({_id: balan._id}, balan);
-        break;
-       case "admin":
-          const newCaja = new cajaOp({monto: newVenta.adelanto, fecha: fechaAc, userCod: nRuta, tipo: "ingreso", detalle: vent.detalle, timeStamp: new Date()});
-          await newCaja.save();
-        break;
-      default:
-        break;
-     }
  //....................................................
   var prod= 0;
   if (Array.isArray(cdp)) {
