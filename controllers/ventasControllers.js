@@ -143,7 +143,7 @@ try {
   await balance.findByIdAndUpdate(balan._id, balan);
   await newVenta.save();
   
-  if (newVenta.venRuta !== 1) {
+  if (newVenta.venRuta !== 1) { 
     if (newVenta.categoria == "prestamo") {
       newVenta.monto = newVenta.monto;
     }
@@ -284,7 +284,7 @@ const guardarVentasContado = async(req, res)=>{
      switch (rol) {
       case "pisoDeVenta":
         const balan = await balance.findOne({cobRuta: nRuta, fecha: fechaAc});
-      const Tt = (((balan.vtaCtdo)*1) + ((m)*1)).toFixed(2);
+      const Tt = (((balan.vtaCtdo)*1) + ((m)*1));
       balan.vtaCtdo = Tt;
      const newBalan = await balance.findByIdAndUpdate({_id: balan._id}, balan);
         break;
