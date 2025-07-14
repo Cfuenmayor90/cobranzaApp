@@ -284,7 +284,7 @@ const guardarVentasContado = async(req, res)=>{
      switch (rol) {
       case "pisoDeVenta":
         const balan = await balance.findOne({cobRuta: nRuta, fecha: fechaAc});
-      const Tt = (((balan.vtaCtdo)*1) + ((m)*1));
+      const Tt = ((balan.vtaCtdo)*1) + ((vent.mT)*1);
       balan.vtaCtdo = Tt;
      const newBalan = await balance.findByIdAndUpdate({_id: balan._id}, balan);
         break;
