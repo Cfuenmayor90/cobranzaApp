@@ -253,18 +253,31 @@ const guardarVentasContado = async(req, res)=>{
     const vent = req.body;
     const m = ((vent.mT)*1).toFixed(2);
     const cdp = vent.codProd;
-    console.log("monto:  " + m);
-    
-    const anio = new Date().getFullYear();
-    const mes = new Date().getMonth();
-    const dia = new Date().getUTCDate();
-    const fechaAc = new Date(anio, mes, dia).toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-    console.log(fechaAc);
+
+  const fechaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     
     const token =  req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
     const verifyToken = await verifyJWT(token);
     const rol = verifyToken.role;
     const nRuta = verifyToken.numRuta;
+    
+         switch (rol) {
+    
+               case "pisoDeVenta":
+              const balan = await balance.findOne({cobRuta: nRuta}).sort({timeStamp: -1});
+              console.log("balance encontrado:" + balan);
+              
+            const Tt = (((balan.vtaCtdo)*1) + ((vent.mT)*1)).toFixed(2);
+            balan.vtaCtdo = Tt;
+           const newBalan = await balance.findByIdAndUpdate({_id: balan._id}, balan);
+              break;
+           case "admin":
+              const newCaja = new cajaOp({monto: m, fecha: fechaAc, userCod: nRuta, tipo: "ingreso", detalle: vent.detalle, timeStamp: new Date()});
+              await newCaja.save();
+            break;
+          default:
+            break;
+         }
  
    
     const newHistoryVenta = new historyVentas({
@@ -280,21 +293,6 @@ const guardarVentasContado = async(req, res)=>{
       user: nRuta
     });
     await newHistoryVenta.save();
-
-     switch (rol) {
-      case "pisoDeVenta":
-        const balan = await balance.findOne({cobRuta: nRuta, fecha: fechaAc});
-      const Tt = ((balan.vtaCtdo)*1) + ((vent.mT)*1);
-      balan.vtaCtdo = Tt;
-     const newBalan = await balance.findByIdAndUpdate({_id: balan._id}, balan);
-        break;
-       case "admin":
-          const newCaja = new cajaOp({monto: m, fecha: fechaAc, userCod: nRuta, tipo: "ingreso", detalle: vent.detalle, timeStamp: new Date()});
-          await newCaja.save();
-        break;
-      default:
-        break;
-     }
     
    
   if (Array.isArray(cdp)) {
@@ -315,7 +313,7 @@ const guardarVentasContado = async(req, res)=>{
 
     res.redirect('/ventas');
   } catch (error) {
-    var mensajeError = error;
+    var mensajeError = error + "no se encuentra un balance diario";
     res.render('error', {mensajeError});
   }
 };
