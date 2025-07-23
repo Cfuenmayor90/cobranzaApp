@@ -235,10 +235,12 @@ const cargarEstadoClient = async(req, res) => {
     var cobradoT = 0;
     var esperadoT = 0;
     var gastoT = 0;
+    var ventCtdoTo = 0;
     var opeT = 0;
     balance.forEach(element => {
       cobradoT = element.cobrado + cobradoT;
       esperadoT = element.esperado + esperadoT;
+      ventCtdoTo = element.vtaCtdo + ventCtdoTo
     });
     cajaGastos.forEach(element => {
       gastoT = element.monto + gastoT;
@@ -247,15 +249,16 @@ const cargarEstadoClient = async(req, res) => {
       opeT = element.monto + opeT;
     });
     const porcentaje = parseInt((cobradoT / esperadoT)*100);
-    var efectivo = cobradoT - opeT;
+    var efectivo = (cobradoT + ventCtdoTo) - opeT;
     cobradoT = f.format(cobradoT);
     esperadoT = f.format(esperadoT);
     gastoT = f.format(gastoT);
     efectivo = f.format(efectivo);
+    ventCtdoTo = f.format(ventCtdoTo);
     if (user == "admin") {
-      res.render('generalEstadisUsuario', {balance, cobradoT, esperadoT, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo});
+      res.render('generalEstadisUsuario', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo});
     }
-    res.render('estadisticas', {balance, cobradoT, esperadoT, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo});
+    res.render('estadisticas', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo});
   };
 const editCliente = async(req, res) =>{
     const {dni} = req.params;
