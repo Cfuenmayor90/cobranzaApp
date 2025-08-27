@@ -1,0 +1,87 @@
+<nav class="navegacion">
+    <a href="javascript:history.back()"><i class="bi bi-box-arrow-left"></i></a>
+    <div>
+      <span>Ventas</span>
+    </div>
+    <div class="iconMenuHamburguesa">
+      <i class="bi bi-menu-button-wide-fill"></i>
+    </div>
+  </nav>
+   <div class="contMayorCli">
+<div class="formCliente">
+    <div class="divClienteBuscar">
+        <h3 class="tituloForm">Cantidad De Productos</h3>
+      </div>
+    <form action="/ventas/cotizar" method="post" class="formCliente2">
+
+      <p>Ingresar Cantidad De Productos</p>
+      <br />
+
+      <label class="title" for="nombre">Apellido y Nombre</label>
+      <input type="text" class="inpForm" value="{{cliente.nombre}}" id="nombre" name="nombre" readonly required />
+      <br />
+      <label class="title" for="dni">DNI</label>
+      <input type="number" class="inpForm" value="{{cliente.dni}}" id="dni" name="dni" readonly required />
+      <br />
+      <label class="title" for="direccion">Direccion</label>
+      <input type="text" class="inpForm" value="{{cliente.localidadComercial}} / {{cliente.dirComercial}}" id="direccion" name="direccion" readonly required />
+      <br />
+      <label class="title" for="dni">Celular</label>
+      <input type="number" class="inpForm" value="{{cliente.celular}}" id="celular" name="celular" readonly required />
+      <br />
+      <label class="title" for="venRuta">Vendedor</label>
+      <input type="number" class="inpForm" value="{{cot.venRuta}}" id="venRuta" name="venRuta" readonly required />
+      <br />
+        <label class="title" for="cobRuta">Cobrador</label>
+        <input type="number" class="inpForm" value="{{cot.cobRuta}}" id="cobRuta" name="cobRuta" readonly required />
+      <br />
+      <label class="title" for="monto">Monto</label>
+        <input type="number" class="inpForm" value="{{cot.monto}}" id="monto" name="monto" readonly required />
+      <br />
+            <label class="title" for="monto">Adelanto</label>
+        <input type="number" class="inpForm" value="{{cot.adelanto}}" id="adelanto" name="adelanto" readonly/>
+      <br />
+      <label class="title" for="codProd">Codigo De Producto</label>
+      <select type="text" class="inpForm"  id="codProd" name="codProd" multiple>
+        {{#each arrayCod}}
+           <option value="{{cod}}" selected>{{cod}}</option>
+        {{/each}}
+      </select>
+        <br>
+         <label class="title" for="telefono">Cantidad De Productos:</label>
+        {{#each arrayCod}}
+        <br>
+      <input type="number" class="inpForm" style="width: 12%;" id="{{cod}}" name="{{cod}}" required/>
+      <label class="title" for="">{{cod}} / {{nombre}}</label>
+        {{/each}}
+        <br>
+     <br>
+      <label class="title" for="telefono">Descripcion</label>
+      <input type="text" class="inpForm" value="{{cot.detalle}}" id="detalle" name="detalle" />
+      <br />
+     
+
+       <label class="title" for="plan">Plan De Cobro</label>
+       <input type="text" class="inpForm" value="{{cot.planId}}" id="planId" name="planId" readonly/>
+      <br />
+      <label class="title" for="descuento">Descuento Aplicado En %</label>
+      <input type="number" class="inpForm" value="{{cot.descuento}}" id="descuento" name="descuento" readonly/>
+      <br />
+   
+        <label class="title" for="diaDeCobro">Dia De Cobro</label>
+       <input type="text" class="inpForm" value="{{cot.diaDeCobro}}" id="diaDeCobro" name="diaDeCobro" readonly/>
+      <br />
+      <label class="title" for="fecha">Fecha De Inicio</label>
+    <input type="text" name="fecha" id="fecha" value="{{cot.fecha}}" class="inpForm" readonly>
+
+      <div class="cantBtnForm">
+    
+        <a class="btnFormReset" href="javascript:history.back()"> Volver Atrás</a>
+
+        <button class="btnFormAceptar" type="submit">Continuar</button>
+      </div>
+  
+    </form>
+</div>
+   
+  </div>

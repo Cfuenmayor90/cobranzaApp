@@ -10,11 +10,11 @@
    <div class="contMayorCli">
 <div class="formCliente">
     <div class="divClienteBuscar">
-        <h3 class="tituloForm">Confirmar Venta</h3>
+        <h3 class="tituloForm">Venta De Contado</h3>
       </div>
-    <form action="/ventas/guardarContado" method="post" class="formCliente2">
+    <form action="/ventas/cotizarContado" method="post" class="formCliente2">
 
-      <p>Verifique los datos de la venta de contado</p>
+      <p>Ingresar Cantidades De Productos</p>
       <br />
 
       <label class="title" for="nombre">Apellido y Nombre</label>
@@ -30,14 +30,6 @@
       <label class="title" for="venRuta">Vendedor</label>
       <input type="number" class="inpForm" value="{{cot.venRuta}}" id="venRuta" name="venRuta" required />
       <br />
-       <label class="title" for="plan">Medio De Pago</label>
-      <select type="text" class="inpForm"  id="plan" name="plan">
-       
-           <option value="efectivo" >Efectivo</option>
-           <option value="transferencia" >Transferencia</option>
-           <option value="TDC" >Tarjeta De Credito</option>
-      </select>
-      <br />
       <label class="title" for="codProd">Codigo De Producto</label>
       <select type="text" class="inpForm"  id="codProd" name="codProd" multiple>
         {{#each arrayCod}}
@@ -45,28 +37,23 @@
         {{/each}}
       </select>
       <br />
-          <label class="title" for="">Cantidad De Productos:</label>
-          <br>
+         <label class="title" for="telefono">Cantidad De Productos:</label>
         {{#each arrayCod}}
         <br>
-      <input type="number" class="inpForm" style="width: 12%;" id="{{cod}}" name="{{cod}}" value="{{cant}}" required readonly/>
+      <input type="number" class="inpForm" style="width: 12%;" id="{{cod}}" name="{{cod}}" required/>
       <label class="title" for="">{{cod}} / {{nombre}}</label>
         {{/each}}
-          <br>
-    
+        <br>
+
       <label class="title" for="descuento">Descuento Aplicado En %</label>
-      <input type="number" class="inpForm" value="{{cot.descuento}}" id="descuento" name="descuento" readonly/>
+      <input type="number" class="inpForm" value="{{cot.descuento}}" id="descuento" name="descuento"/>
       <br />
-
-      <label class="title" for="monto">Monto A Cobrar</label>
-        <input type="number" class="inpForm" value="{{precioTotal}}" id="mT" name="mT" readonly required />
-      <br />
-
+      
       <div class="cantBtnForm">
     
         <a class="btnFormReset" href="javascript:history.back()"> Volver Atrás</a>
 
-        <button class="btnFormAceptar" type="submit">Guardar</button>
+        <button class="btnFormAceptar" type="submit">Continuar</button>
       </div>
   
     </form>
