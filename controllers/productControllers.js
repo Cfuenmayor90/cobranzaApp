@@ -9,7 +9,7 @@ const f = new Intl.NumberFormat('es-AR', {
     currency: 'ARS',
     minimumFractionDigits: 2
 });
-const arrayCategoriasProd = [{valor:'Electrodomesticos'},{valor: 'Indumentaria'}, {valor:'Hogar'}, {valor:'Equipamiento Comercial'}, {valor:'Electronica'}, {valor:'Celulares'}, {valor:'Accesorios Para Celulares'}, {valor:'Accesorios Para Vehiculos'}, {valor:'Herramientas' }, {valor:'Cables y Conectores' }];
+const arrayCategoriasProd = [{valor:'Electrodomesticos'},{valor:'Infantil'}   ,{valor: 'Indumentaria'}, {valor:'Hogar'}, {valor:'Equipamiento Comercial'}, {valor:'Electronica'}, {valor:'Celulares'}, {valor:'Accesorios Para Celulares'}, {valor:'Accesorios Para Vehiculos'}, {valor:'Herramientas' }, {valor:'Cables y Conectores' }];
 
 //pag de productos para ADMIN
 const cargarProducts = async(req, res) =>{

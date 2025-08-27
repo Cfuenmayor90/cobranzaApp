@@ -49,37 +49,46 @@ const pagoSave = async (req, res) => {
   const { codPres, pago } = req.body;
   try {
     var fechaActual = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+  
     var time = new Date();
     console.log(fechaActual);
     const prestamo = await ventas.findById({ _id: codPres });
     if (prestamo.mTotal >= pago && fechaActual !== prestamo.fechaUltPago) {
-      const pagoVa = new pagoN(req.body);
-      pagoVa.fecha = fechaActual;
-      pagoVa.cobRuta = prestamo.cobRuta;
-      await pagoVa.save();
-      prestamo.mTotal = prestamo.mTotal - pago;
-      prestamo.fechaUltPago = fechaActual;
-      await ventas.findByIdAndUpdate({ _id: codPres }, prestamo);
-      //codigo para editar balance diario
-      var nRuta = prestamo.cobRuta; 
+
       const balance = await balances.findOne({cobRuta: nRuta, fecha: fechaActual});
-      var pagos = await pagoN.find({cobRuta: nRuta, fecha: fechaActual});
-      var venTas = await ventas.find({cobRuta: nRuta, fechaInicio: fechaActual});
-      var pagosT = 0;
-      var venTotal = 0;
-      var monTotal = 0;
-      var ganan = 0;
-      venTas.forEach(element => {
-        venTotal = element.monto + venTotal;
-        monTotal = element.total + monTotal;
-      });
-      pagos.forEach(element => {
-        pagosT = element.pago + pagosT;
-      });
-      ganan = (monTotal-venTotal).toFixed(2);
-      const balanceNew = ({cobRuta: nRuta, fecha: fechaActual, nombre: balance.nombre, cobrado: pagosT.toFixed(2), esperado: balance.esperado, categoria: "balance_diario", ventas: venTotal, ganancia: ganan });
-      const balanEdit = await balances.findByIdAndUpdate({_id: balance._id}, balanceNew);
-      res.redirect('/cobranza');
+      if (balance) {
+        const pagoVa = new pagoN(req.body);
+        pagoVa.fecha = fechaActual;
+        pagoVa.cobRuta = prestamo.cobRuta;
+        prestamo.mTotal = prestamo.mTotal - pago;
+        prestamo.fechaUltPago = fechaActual;
+        await ventas.findByIdAndUpdate({ _id: codPres }, prestamo);
+        //codigo para editar balance diario
+        var nRuta = prestamo.cobRuta; 
+        var pagos = await pagoN.find({cobRuta: nRuta, fecha: fechaActual});
+        var venTas = await ventas.find({cobRuta: nRuta, fechaInicio: fechaActual});
+        var pagosT = 0;
+        var venTotal = 0;
+        var monTotal = 0;
+        var ganan = 0;
+        venTas.forEach(element => {
+          venTotal = element.monto + venTotal;
+          monTotal = element.total + monTotal;
+        });
+        pagos.forEach(element => {
+          pagosT = element.pago + pagosT;
+        });
+        ganan = (monTotal-venTotal).toFixed(2);
+        const balanceNew = ({cobRuta: nRuta, fecha: fechaActual, nombre: balance.nombre, cobrado: pagosT.toFixed(2), esperado: balance.esperado, categoria: "balance_diario", ventas: venTotal, ganancia: ganan });
+        const balanEdit = await balances.findByIdAndUpdate({_id: balance._id}, balanceNew);
+        pagoVa.timeStamp = new Date().toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+        await pagoVa.save();
+        res.redirect('/cobranza');
+        
+      } else {
+           const mensajeError = "¡No se encontro el Balance, espere a que su admin genere la planilla de cobranza!";
+            res.render("error", { mensajeError });
+      }
     } else {
       const mensajeError = "¡No puedes ingresar 2 o mas pagos para el mismo credito en un mismo dia, el monto del pago debe ser menor al saldo!";
       res.render("error", { mensajeError });

@@ -26,10 +26,65 @@ const cargarVenCob = async(req, res) =>{
   res.send('ssss')
 }
 
+const preCotizar = async(req, res) =>{
+  try {
+     const cot = req.body;
+    console.log(cot);
+    var mensajeError = '';
+    const fecha = cot.fecha;
+    const anio = new Date(fecha).getFullYear();
+    const mes = new Date(fecha).getMonth();
+    const dia = new Date(fecha).getUTCDate();
+    const fechaVent = new Date(anio, mes, (dia + 1)).toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+    const cliente = await client.findOne({dni:cot.dni});
+    const balanCEDiario = await balance.findOne({cobRuta: cot.cobRuta, fecha: fechaVent});
+    console.log("fecha de venta " + cot.fecha);
+    console.log("balance encontrado " + balanCEDiario);
+    if (!cliente) {
+      mensajeError = '¡El Cliente NO existe en la DATA BASE!';
+      res.render('error', {mensajeError});
+    }
+     if (balanCEDiario) {
+       const arrayCod = [];
+         if (cot.codProd == "prestamo"){
+          const planCot = await setPrest.findById({_id:cot.planId});
+        const mTotal = (cot.monto * ((planCot.porcentaje / 100)+1)).toFixed(2);
+        const cuota = (mTotal / planCot.cuotas).toFixed(2);
+        arrayCod.push({"cod": cot.codProd, "cant": 1});
+        res.render('confirmarVenta', {cot, planCot, cuota, mTotal, cliente, arrayCod});
+         }
+         else{
+        const codProducts = cot.codProd;
+        if (Array.isArray(codProducts)) {
+          for (let i = 0; i < codProducts.length; i++) {
+            const element = codProducts[i];
+            console.log(element);
+            
+            var prod = await product.findOne({cod: element});
+            console.log("producto");
+            console.log(prod);
+            arrayCod.push({"cod":element,"nombre": prod.nombre});
+          };  
+          res.render('cantProdVenta', {cot,arrayCod, cliente});
+        }
+        else{
+          var prod = await product.findOne({cod: codProducts});
+          arrayCod.push({"cod":codProducts, "nombre": prod.nombre});
+          precio= prod.precio;
+          res.render('cantProdVenta', {cot,arrayCod, cliente});
+        }
+         }
+     }
+  } catch (error) {
+    
+  }
+}
+
+
+
 const cotizarPlan = async(req, res) => {
   try {
     const cot = req.body;
-    console.log(cot);
     
     var mensajeError = '';
     const fecha = cot.fecha;
@@ -63,24 +118,33 @@ const cotizarPlan = async(req, res) => {
         const codProducts = cot.codProd;
         var precio = 0;
         if (Array.isArray(codProducts)) {
+          console.log("is array");
+          
           for (let i = 0; i < codProducts.length; i++) {
             const element = codProducts[i];
-            console.log(element);
             
             var prod = await product.findOne({cod: element});
-            console.log("producto");
+           var el = element;
+            
+            var cantProd = req.body[element];
+            console.log("elemento: " + cantProd);
+            
+            console.log("producto cantidad: " + cantProd);
             console.log(prod);
-            precio = prod.precio + precio;
+            precio = ((prod.precio) * cantProd) + precio;
             console.log(precio);
-            arrayCod.push({"cod":element});
+            arrayCod.push({"cod":element,"nombre": prod.nombre, "precio": prod.precio, "cant": cantProd, "Total": (prod.precio * cantProd)});
+            console.log("array productos " + arrayCod);
           };  
         }
         else{
           var prod = await product.findOne({cod: codProducts});
-          arrayCod.push({"cod":codProducts});
-          precio= prod.precio;
+          var cantProd = req.body[codProducts];
+          precio= prod.precio * cantProd;
+          arrayCod.push({"cod":codProducts, "nombre": prod.nombre, "precio": prod.precio, "cant": cantProd, "Total": (prod.precio * cantProd) });
         }
-       
+
+        
         const precioT = (precio * valores.dolar) * ((valores.porcentaje / 100) +1);
         const des = (cot.descuento / 100);
     
@@ -100,6 +164,8 @@ const cotizarPlan = async(req, res) => {
     res.render('error');
   }
 };
+
+
 const guardarVentas = async(req,res) => {
 try {
   //jwt para determinar el usuario que hace la operacion
@@ -163,7 +229,8 @@ try {
     });
     await newHistoryVenta.save();
   }
-  console.log("adelanto; " + ade);
+  //operacion para sumar el ingreso de un adelanto cuando es venta de productos
+ //....................................................
   
   if (ade > 0) {
     console.log("dentro delif adelantos");
@@ -184,21 +251,22 @@ try {
           break;
        }
   }
-  //operacion para sumar el ingreso de un adelanto cuando es venta de productos
+  //operacion restar stock de productos
  //....................................................
   var prod= 0;
   if (Array.isArray(cdp)) {
     for (let i = 0; i < cdp.length; i++) {
       const element = cdp[i];
       prod = await product.findOne({cod: element});
-      prod.stock = prod.stock -1;
+     var cantProd = req.body[element];
+
+      prod.stock = prod.stock - cantProd;
       await product.findByIdAndUpdate({_id: prod._id}, prod);
-      console.log("new element");
-      console.log(element);
     }
   } else if (cdp != 'prestamo') { 
       prod = await product.findOne({cod: cdp});
-      prod.stock = prod.stock -1;
+      var cantProd = req.body[cdp];
+      prod.stock = prod.stock - cantProd;
       await product.findByIdAndUpdate({_id: prod._id}, prod); 
     } 
   
@@ -209,30 +277,62 @@ try {
 }
 };
 
+const preCotizarCont = async(req, res) =>{
+  try {
+    const cot = req.body;
+    const codProducts = cot.codProd;
+    const cliente = await client.findOne({dni:cot.dni});
+     const arrayCod = [];
+     if (Array.isArray(codProducts)) {
+          for (let i = 0; i < codProducts.length; i++) {
+            const element = codProducts[i];
+            console.log(element);
+            
+            var prod = await product.findOne({cod: element});
+            arrayCod.push({"cod":element,"nombre": prod.nombre});
+          };  
+          res.render('cantProdVentCont', {cot,arrayCod, cliente});
+        }
+        else{
+          var prod = await product.findOne({cod: codProducts});
+          arrayCod.push({"cod":codProducts, "nombre": prod.nombre});
+          precio= prod.precio;
+          res.render('cantProdVentCont', {cot,arrayCod, cliente});
+        }
+
+  } catch (error) {
+    
+  }
+} 
+
 const cotizarContado = async(req, res)=>{
 try {
    const cot = req.body;
+    const cliente = await client.findOne({dni:cot.dni});
    const codProducts = cot.codProd;
-   console.log("codigos de productos: ");
-   const cliente = await client.findOne({dni:cot.dni});
    const valores = await setValores.findOne();
    var precio = 0;
    const arrayCod = [];
    if (Array.isArray(codProducts)) {
+    console.log("array");
+    
           for (let i = 0; i < codProducts.length; i++) {
             const element = codProducts[i];
             var prod = await product.findOne({cod: element}); 
-            precio = prod.precio + precio;
-            arrayCod.push({"cod":element});
+            const cantProd = req.body[element];
+            precio = (prod.precio * cantProd) + precio;
+            console.log(arrayCod);
+            
+            arrayCod.push({"cod":element, "nombre": prod.nombre, "precio": prod.precio, "cant": cantProd, "Total": (prod.precio * cantProd) });
           }
         }
         else{
           var prod = await product.findOne({cod: codProducts});
-          arrayCod.push({"cod":codProducts});
-          precio= prod.precio;
+          const cantProd = req.body[codProducts];
+          precio= prod.precio * cantProd;
+          arrayCod.push({"cod":codProducts, "nombre": prod.nombre, "precio": prod.precio, "cant": cantProd, "Total": (prod.precio * cantProd) });
         }
-        console.log(cliente);
-        console.log("precio: " + precio);
+        console.log("corizar contado");
         
         const precioT = (precio * valores.dolar) * ((valores.porcentaje / 100) +1);
         const des = (cot.descuento / 100);
@@ -253,63 +353,63 @@ const guardarVentasContado = async(req, res)=>{
     const vent = req.body;
     const m = ((vent.mT)*1).toFixed(2);
     const cdp = vent.codProd;
-
+   var detalle = "";
   const fechaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     
     const token =  req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
     const verifyToken = await verifyJWT(token);
     const rol = verifyToken.role;
     const nRuta = verifyToken.numRuta;
-    
-         switch (rol) {
-    
-               case "pisoDeVenta":
-              const balan = await balance.findOne({cobRuta: nRuta}).sort({timeStamp: -1});
-              console.log("balance encontrado:" + balan);
-              
-            const Tt = (((balan.vtaCtdo)*1) + ((vent.mT)*1)).toFixed(2);
-            balan.vtaCtdo = Tt;
-           const newBalan = await balance.findByIdAndUpdate({_id: balan._id}, balan);
-              break;
-           case "admin":
-              const newCaja = new cajaOp({monto: m, fecha: fechaAc, userCod: nRuta, tipo: "ingreso", detalle: vent.detalle, timeStamp: new Date()});
-              await newCaja.save();
-            break;
-          default:
-            break;
-         }
- 
+     var cantProd = 0;
+      if (Array.isArray(cdp)) {
+      for (let i = 0; i < cdp.length; i++) {
+        const element = cdp[i];
+        cantProd = req.body[element];
+        var prod = await product.findOne({cod: element});
+        prod.stock = prod.stock - cantProd;
+        await product.findByIdAndUpdate({_id: prod._id}, prod);
+        detalle = detalle + "Cant: " + cantProd + ", "+ prod.nombre + ", Cod: " + prod.cod + " || ";
+        
+      } } else { 
+        var prod = await product.findOne({cod: cdp});
+        cantProd = req.body[cdp];
+        prod.stock = prod.stock - cantProd;
+         detalle = "Cant: " + cantProd + ", "+ prod.nombre + ", Cod: " + prod.cod + " || ";
+        console.log("new prod");
+        await product.findByIdAndUpdate({_id: prod._id}, prod); 
+      } 
+      
+      const newHistoryVenta = new historyVentas({
+        nombre: vent.nombre,
+        dni: vent.dni,
+        venRuta: vent.venRuta,
+        codProd: vent.codProd,
+        detalle: detalle,
+        mTotal: m,
+        categoria: "contado",
+        plan: vent.plan,
+        fechaInicio: fechaAc,
+        user: nRuta
+      });
+      await newHistoryVenta.save();
+      
+      switch (rol) {
    
-    const newHistoryVenta = new historyVentas({
-      nombre: vent.nombre,
-      dni: vent.dni,
-      venRuta: vent.venRuta,
-      codProd: vent.codProd,
-      detalle: vent.detalle,
-      mTotal: m,
-      categoria: "contado",
-      plan: vent.plan,
-      fechaInicio: fechaAc,
-      user: nRuta
-    });
-    await newHistoryVenta.save();
-    
-   
-  if (Array.isArray(cdp)) {
-    for (let i = 0; i < cdp.length; i++) {
-      const element = cdp[i];
-      var prod = await product.findOne({cod: element});
-      prod.stock = prod.stock -1;
-      await product.findByIdAndUpdate({_id: prod._id}, prod);
-      console.log("new element");
-      console.log(element);
-    
- } } else { 
-      var prod = await product.findOne({cod: cdp});
-      prod.stock = prod.stock -1;
-      await product.findByIdAndUpdate({_id: prod._id}, prod); 
-    } 
-       
+            case "pisoDeVenta":
+           const balan = await balance.findOne({cobRuta: nRuta}).sort({timeStamp: -1});
+           console.log("balance encontrado:" + balan);
+           
+         const Tt = (((balan.vtaCtdo)*1) + ((vent.mT)*1)).toFixed(2);
+         balan.vtaCtdo = Tt;
+        const newBalan = await balance.findByIdAndUpdate({_id: balan._id}, balan);
+           break;
+        case "admin":
+           const newCaja = new cajaOp({monto: m, fecha: fechaAc, userCod: nRuta, tipo: "ingreso", detalle: detalle, timeStamp: new Date()});
+           await newCaja.save();
+         break;
+       default:
+         break;
+      }
 
     res.redirect('/ventas');
   } catch (error) {
@@ -322,4 +422,4 @@ const guardarVentasContado = async(req, res)=>{
 
 
 
-module.exports = {cotizarPlan, cotizarContado, cargarVentas, guardarVentasContado, guardarVentas, cargarVenCob};
+module.exports = {preCotizar, preCotizarCont, cotizarPlan, cotizarContado, cargarVentas, guardarVentasContado, guardarVentas, cargarVenCob};
