@@ -61,11 +61,12 @@ const pagoSave = async (req, res) => {
         const pagoVa = new pagoN(req.body);
         pagoVa.fecha = fechaActual;
         pagoVa.cobRuta = prestamo.cobRuta;
+        pagoVa.timeStamp = new Date().toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
         prestamo.mTotal = prestamo.mTotal - pago;
         prestamo.fechaUltPago = fechaActual;
         await ventas.findByIdAndUpdate({ _id: codPres }, prestamo);
+        await pagoVa.save();
         //codigo para editar balance diario
-        var pagos = await pagoN.find({cobRuta: nRuta, fecha: fechaActual});
         var venTas = await ventas.find({cobRuta: nRuta, fechaInicio: fechaActual});
         var pagosT = 0;
         var venTotal = 0;
@@ -75,14 +76,13 @@ const pagoSave = async (req, res) => {
           venTotal = element.monto + venTotal;
           monTotal = element.total + monTotal;
         });
+        const pagos = await pagoN.find({cobRuta: nRuta, fecha: fechaActual});
         pagos.forEach(element => {
           pagosT = element.pago + pagosT;
         });
         ganan = (monTotal-venTotal).toFixed(2);
         const balanceNew = ({cobRuta: nRuta, fecha: fechaActual, nombre: balance.nombre, cobrado: pagosT.toFixed(2), esperado: balance.esperado, categoria: "balance_diario", ventas: venTotal, ganancia: ganan });
         const balanEdit = await balances.findByIdAndUpdate({_id: balance._id}, balanceNew);
-        pagoVa.timeStamp = new Date().toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-        await pagoVa.save();
         res.redirect('/cobranza');
         
       } else {
