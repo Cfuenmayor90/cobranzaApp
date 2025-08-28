@@ -49,12 +49,13 @@ const pagoSave = async (req, res) => {
   const { codPres, pago } = req.body;
   try {
     var fechaActual = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-  
+    
     var time = new Date();
     console.log(fechaActual);
     const prestamo = await ventas.findById({ _id: codPres });
     if (prestamo.mTotal >= pago && fechaActual !== prestamo.fechaUltPago) {
-
+      
+      var nRuta = prestamo.cobRuta; 
       const balance = await balances.findOne({cobRuta: nRuta, fecha: fechaActual});
       if (balance) {
         const pagoVa = new pagoN(req.body);
@@ -64,7 +65,6 @@ const pagoSave = async (req, res) => {
         prestamo.fechaUltPago = fechaActual;
         await ventas.findByIdAndUpdate({ _id: codPres }, prestamo);
         //codigo para editar balance diario
-        var nRuta = prestamo.cobRuta; 
         var pagos = await pagoN.find({cobRuta: nRuta, fecha: fechaActual});
         var venTas = await ventas.find({cobRuta: nRuta, fechaInicio: fechaActual});
         var pagosT = 0;
