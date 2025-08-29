@@ -204,9 +204,16 @@
             
              <a
               href="{{clienteBuscado.geolocalizacion}}"
-              class="btnBusCliente btnMapa"
+              class="btnBusCliente btnMapa" style="background-color: rgb(154, 178, 0);"
             ><i class="bi bi-pin-map"></i></a>
+
+             <a
+              href="/general/statusPresClient/{{clienteBuscado.dni}}"
+              class="btnBusCliente btnMapa" style="background-color: red;"
+            ><i class="bi bi-question-octagon"></i></a>
           </th>
+
+
 
         </tr>
       </table>
