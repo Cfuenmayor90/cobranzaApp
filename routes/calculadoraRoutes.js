@@ -4,5 +4,5 @@ const {cargarCalculadora, calcular} = require('../controllers/calculadoraControl
 const {checkRole} = require('../controllers/usersControllers');
 
 router.get('/', checkRole(['admin', 'vendedor', 'cobrador', 'pisoDeVenta']), cargarCalculadora);
-router.post('/calcular', checkRole(['admin', 'vendedor', 'cobrador', 'pisoDeVenta']), calcular);
+router.post('/calcular', checkRole(['admin', 'cobrador', 'pisoDeVenta']), calcular);
 module.exports = router;
