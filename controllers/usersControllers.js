@@ -94,7 +94,10 @@ const validarIngresoUsuario = async (req, res) => {
         case 'admin':
           const fecha = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Buenos_Aires'});
           const rutas = await balances.find({fecha});
-          return res.render("principal", { nombre, nRuta, rutas});
+          return res.render("principal", { nombre, nRuta});
+          break;
+          case 'supervisor':
+          return res.render("principalSuper", { nombre, nRuta});
           break;
         case 'cobrador':
              const presVencidos = await ventas.find({cobRuta: nRuta, DateFinal:{$lte: new Date(anio,mes,dia)}});
@@ -197,6 +200,9 @@ const volverPrin = async (req, res) => {
           const fecha = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Buenos_Aires'});
           const rutas = await balances.find({fecha});
          res.render("principal", {fecha, nombre, rutas});
+          break;
+           case 'supervisor':
+           res.render("principalSuper", { nombre, nRuta});
           break;
         case 'cobrador':
           const presVencidos = await ventas.find({cobRuta: nRuta, DateFinal:{$lte: new Date(anio,mes,dia)}});

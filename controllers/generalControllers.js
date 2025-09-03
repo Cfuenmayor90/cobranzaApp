@@ -147,6 +147,81 @@ const cargarGeneral = async(req, res) => {
    } catch (error) {
     
 }};
+
+const cargarGeneralSuper = async(req, res) => {
+  try {
+    const usuario = await users.find({role: ["cobrador", "pisoDeVenta"]});
+    var anio = new Date().getFullYear();
+    var mes = new Date().getMonth();
+    var cantDias = new Date(anio, (mes+1), 0).getDate();
+        cantDias = cantDias + 1;
+            var porCobrar = 0;
+
+    var cobraTotal= 0; //cobrado total de todas las rutas
+    var espeTotal = 0; //esperado total de todas las rutas
+    var invT = 0; //inversiones totales
+    var efeCajaT =0; // Efectivo total de caja
+    var gasCaja = 0; // gastos de caja general
+    var gastocajaMes = 0; // gastos de caja mes actual
+    //sumamos todas las ventas en general desde el inicio
+    const ArrayUserGene = [];
+        // creamos el array con los datos de cada ruta
+        for (let i = 0; i < usuario.length; i++) {
+            const element = usuario [i];
+            var espeT = 0;
+            var cobT = 0;
+            var venT = 0;
+            var vtaCtd = 0;
+            var ganaT =0;
+            var gastoT = 0;
+            var porCobrarT = 0;
+            var mCaja = 0;
+            var mAdelantos = 0;
+            var efeCaja = 0;
+            var cajaRendicion = await caja.find({userCod: element.numRuta,  timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}, tipo: "rendicion"});
+            var cajaAdelanto = await caja.find({userCod: element.numRuta,  timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}, tipo: "sueldos"});
+          
+            var prestT = await ventas.find({cobRuta: element.numRuta});
+            var balan = await balances.find({cobRuta: element.numRuta, timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}, categoria: 'balance_diario'});
+            cajaRendicion.forEach(element => {
+              mCaja = element.monto + mCaja;
+            });
+            cajaAdelanto.forEach(element => {
+              mAdelantos = element.monto + mAdelantos;
+            });
+          
+            balan.forEach(element => {
+              espeT = element.esperado + espeT;
+              cobT = element.cobrado + cobT;
+              venT = element.ventas + venT;
+              ganaT = element.ganancia + ganaT;
+              vtaCtd = element.vtaCtdo + vtaCtd;
+       
+            });
+            prestT.forEach(element => {
+              porCobrarT = element.mTotal + porCobrarT;
+            });
+            const efectividad = ((cobT/espeT)*100).toFixed(2);
+                efeCaja = (cobT + vtaCtd) - (mCaja + mAdelantos); 
+                efeCaja = f.format(efeCaja);
+                espeT = f.format(espeT);
+                cobT = f.format(cobT);
+                venT = f.format(venT);
+                ganaT = f.format(ganaT);
+                gastoT = f.format(gastoT);
+                vtaCtd = f.format(vtaCtd);
+                porCobrarT = f.format(porCobrarT);
+                mAdelantos = f.format(mAdelantos);
+                const cPres = prestT.length;
+                ArrayUserGene.push({espeT, cobT, venT,vtaCtd, ganaT, gastoT, nombre: element.nombre, nRuta: element.numRuta, efectividad, porCobrarT, cPres, mCaja, mAdelantos, efeCaja});
+        } //finaliza el for de usuarios
+
+       return res.render('cobranzaRutasSuper', { ArrayUserGene});
+  } catch (error) {
+    
+  }
+};
+
 const guardarCaja = async(req, res) => {
     try {
       const newOperacion = new caja(req.body);
@@ -298,4 +373,4 @@ timezone: 'America/Buenos_Aires'
 
 
 
-module.exports = {cargarGeneral, guardarCaja, cargarPrestamosRuta, editCliente, cargarEstadisticas, deleteCajaOpe, load, cargarEstadoClient};
+module.exports = {cargarGeneral, cargarGeneralSuper, guardarCaja, cargarPrestamosRuta, editCliente, cargarEstadisticas, deleteCajaOpe, load, cargarEstadoClient};

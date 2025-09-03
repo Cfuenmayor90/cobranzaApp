@@ -344,7 +344,7 @@ const saveNote = async(req, res)=>{
     var not = `${fecha} - ${nota}`;
     var usuario = verifyToken.nombre;
     console.log("rol " + rol);
-    
+     var prestamos ="";
 switch (rol) {
   case 'cobrador':
     const newNota = await ventas.findOneAndUpdate({_id: id}, {notaCobrador: not});
@@ -352,12 +352,17 @@ switch (rol) {
     break;
     case 'admin':
      const newNotAd= await ventas.findOneAndUpdate({_id: id}, {nota: not});
-      const prestamos = await ventas.find({cobRuta}).sort({nombre: 1});
+     prestamos = await ventas.find({cobRuta}).sort({nombre: 1});
+     
       usuario = await users.findOne({numRuta: cobRuta}); 
       return res.render('cobranzaAdmin', {prestamos, usuario});
     break;
     case 'supervisor':
-    
+      const newNotAdd= await ventas.findOneAndUpdate({_id: id}, {nota: not});
+      prestamos = await ventas.find({cobRuta}).sort({nombre: 1});
+     
+      usuario = await users.findOne({numRuta: cobRuta}); 
+      return res.render('cobranzaAdmin', {prestamos, usuario});
     break;
 
   default:
