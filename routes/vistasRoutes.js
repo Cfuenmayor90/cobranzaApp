@@ -12,6 +12,9 @@ const {cargarEstadisticas, cargarCajaCobrador} = require('../controllers/estadis
 router.get('/principal', checkRole(['admin']), (req, res)=>{
     res.render('principal')
 });
+router.get('/principalSuper', checkRole(['supervisor']), (req, res)=>{
+    res.render('principalSuper')
+});
 router.get('/principalCobrador', checkRole(['cobrador']), (req, res)=>{
     res.render('principalCobrador')
 });
@@ -21,7 +24,8 @@ router.get('/principalVendedor', checkRole(['vendedor']), (req, res)=>{
 router.get('/principalPiso', checkRole(['pisoDeVenta']), (req, res)=>{
     res.render('pisoDeVenta')
 });
-router.get('/clientes', checkRole(['admin', 'cobrador', 'vendedor', 'pisoDeVenta']), cargarClientes);
+
+router.get('/clientes', checkRole(['admin', 'cobrador', 'vendedor', 'pisoDeVenta', 'supervisor']), cargarClientes);
 
 router.get('/cobranza', checkRole(['cobrador']), (req, res) =>{
     res.render('cobranza')
@@ -30,7 +34,7 @@ router.get('/RutasDeCobranza', checkRole(['admin']), (req, res)=>{
     res.render('rutasCobranza')
 });
 
-router.get('/estadisticas/:numRuta', checkRole(['admin',  'vendedor', 'cobrador', 'pisoDeVenta']), cargarEstadisticas);
+router.get('/estadisticas/:numRuta', checkRole(['admin',  'vendedor', 'cobrador', 'pisoDeVenta', 'supervisor']), cargarEstadisticas);
 
 router.get('/estadisticasTime', checkRole(['cobrador']), )
 
@@ -44,5 +48,5 @@ router.get('/caja/:cobRuta', checkRole(['admin',  'vendedor', 'cobrador']), carg
 
 router.get('/Exit', logOut);
 
-router.get('/volver', checkRole(['admin',  'vendedor', 'cobrador', 'pisoDeVenta']), volverPrin);
+router.get('/volver', checkRole(['admin',  'vendedor', 'cobrador', 'pisoDeVenta', 'supervisor']), volverPrin);
 module.exports = router;
