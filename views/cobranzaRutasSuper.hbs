@@ -1,0 +1,136 @@
+<nav class="navegacion">
+  <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a>
+  <div>
+    <span>Rutas De Cobranza</span>
+  </div>
+  <div class="iconMenuHamburguesa">
+    <i class="bi bi-menu-button-wide-fill"></i>
+  </div>
+</nav>
+<div class="contMayorCli">
+  <div class="formCliente">
+    <div class="divClienteBuscar">
+      <h3 class="tituloForm">Datos Generales</h3>
+    </div>
+    <br />
+
+    <table class="tableCobGeneralPrin">
+   
+    
+        <tr>
+      
+        <th class="thTabletitleCobGenPrin">Cobrado:</th>
+        <th class="thTableCobGene">{{cobraTotal}}</th>
+        <th class="thTabletitleCobGenPrin">Esperado:</th>
+        <th class="thTableCobGene">{{espeTotal}}</th>
+      </tr>
+      <tr>
+        <th class="thTabletitleCobGenPrin">Vta Pres:</th>
+        <th class="thTableCobGene">{{venTotal}}</th>
+          <th class="thTabletitleCobGenPrin">Vta Ctdo:</th>
+        <th class="thTableCobGene">{{vtaCtdoTo}}</th>
+      </tr>
+       
+    
+      <tr>
+        <th class="thTabletitleCobGenPrin">Efectividad:</th>
+        <th class="thTableCobGene">{{porcentajeT}}%</th>
+        <th class="thTabletitleCobGenPrin">Ganancias:</th>
+        <th class="thTableCobGene">{{gananCobTotal}}</th>
+      </tr>
+
+
+    </table>
+    <br />
+    <div class="divClienteBuscar">
+      <h3 class="tituloForm">Datos De Rutas De Cobro</h3>
+    </div>
+    <br />
+
+    {{#each ArrayUserGene}}
+      <table class="tableCobGeneral">
+        <tr>
+          <th class="thTabletitleCobGen" colspan="3">{{nombre}}</th>
+          <th class="thTabletitleCobGen" colspan="3">CodRuta: {{nRuta}}</th>
+        </tr>
+        <tr>
+          <th class="thTabletitleCobGen">Por Cobrar:</th>
+          <th class="thTableCobGene"></th>
+          <th class="thTabletitleCobGen">Efectivo:</th>
+          <th class="thTableCobGene">{{efeCaja}}</th>
+        </tr>
+        <tr>
+          <th class="thTabletitleCobGen">Vta Prest:</th>
+          <th class="thTableCobGene">{{venT}}</th>
+          <th class="thTabletitleCobGen">Cobrado:</th>
+          <th class="thTableCobGene">{{cobT}}</th>
+        </tr>
+        <tr>
+          <th class="thTabletitleCobGen">Vta Ctdo:</th>
+          <th class="thTableCobGene">{{vtaCtd}}</th>
+          <th class="thTabletitleCobGen">Esperado:</th>
+          <th class="thTableCobGene">{{espeT}}</th>
+        </tr>
+        <tr>
+          <th class="thTabletitleCobGen">Ganancias:</th>
+          <th class="thTableCobGene">{{ganaT}}</th>
+          <th class="thTabletitleCobGen">Gastos:</th>
+          <th class="thTableCobGene">{{mAdelantos}}</th>
+        </tr>
+        <tr>
+          <th class="thTabletitleCobGen">Efectividad:</th>
+          <th class="thTableCobGene">{{efectividad}}%</th>
+          <th class="thTabletitleCobGen">Otro:</th>
+          <th class="thTableCobGene"></th>
+        </tr>
+              
+ <tr>
+        <th colspan="3" class="thTabletitleCobGen">Cantidad De Prestamos:</th>
+        <th class="thTableCobGene">{{cPres}}</th>
+      </tr>
+           </table>
+      <div style="margin: 0 auto; width: 90%;">
+          <a href="https://wa.me/549{{telefono}}" class="btnBusCliente btnWA"><i class="bi bi-whatsapp"></i></a>
+            <a href="tel:+549{{telefono}}" class="btnBusCliente btnTelefono" ><i class="bi bi-telephone-outbound"></i></a>
+            <a href="" class="btnBusCliente btnVender"><i class="bi bi-shop"></i></a>
+            <a href="/general/cargarPres/{{nRuta}}" class="btnBusCliente btnMapa"><i class="bi bi-cash-coin"></i></a>
+            <a href="/general/estadisticaUser/{{nRuta}}" class="btnBusCliente btnStadistica"><i class="bi bi-graph-up-arrow"></i></a>
+      
+      </div>
+      <br />
+    {{/each}}
+     
+    
+  </div>
+  <section class="sectionContClientes">
+  
+     <div class="divClienteBuscar">
+      <h3 class="tituloForm">Operaciones Realizadas</h3>
+    </div>
+    <div class="tarjCli">
+  <table class="tableListCaja">
+    <tr>
+      <th class="tableListCajaTitle">Fecha</th>
+      <th class="tableListCajaTitle">Usuario</th>
+      <th class="tableListCajaTitle">Operacion</th>
+      <th class="tableListCajaTitle">Detalle</th>
+      <th class="tableListCajaTitle">Monto</th>
+      <th class="tableListCajaTitle"><i style="color: rgb(0, 0, 0);" class="bi bi-trash"></i></th>
+    </tr>
+    {{#each cajaList}}
+     <tr>
+      <th class="tableListCajaRes">{{fecha}}</th>
+      <th class="tableListCajaRes">{{userCod}}</th>
+      <th class="tableListCajaRes">{{tipo}}</th>
+      <th class="tableListCajaRes">{{detalle}}</th>
+      <th class="tableListCajaRes">{{monto}}</th>
+      <th class="tableListCajaRes"><a onclick="return confirm('¿Desea Eliminar La OPERACION?')" href="/general/deleteCajaOperacion/{{_id}}"><i style="color: red;" class="bi bi-file-earmark-x"></i></a></th>
+    </tr>
+    
+
+    {{/each}}
+  </table>
+    </div>
+  </section>
+
+</div>

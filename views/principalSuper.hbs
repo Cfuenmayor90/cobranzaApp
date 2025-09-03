@@ -1,0 +1,101 @@
+
+
+    <nav class="navegacion">
+        <div>
+            
+           <a href="/vistas/exit" onclick="return confirm('¿Desea cerrar sesion?')" ><i class="bi bi-x-square"></i></i></a> 
+        </div>
+        <div>
+           <span>Cobranza App</span>
+        </div>
+        <div class="iconMenuHamburguesa">
+        <span>{{nombre}}</span>
+        </div>
+    </nav>
+    <div class="contMayorPrin">
+  
+        <div class="ContBotones">
+        <a class="botonesMenuPrincipal" href="/general/super">
+            <i class="bi bi-cash-coin"></i>
+            <h2 class="tituloBtn">Rutas De Cobranza</h2>
+        </a>
+        <a class="botonesMenuPrincipal" href="/products/productosUsuarios">
+            <i class="bi bi-shop"></i>
+            <h2 class="tituloBtn">Productos</h2>
+        </a>
+        <a class="botonesMenuPrincipal" href="/ventas/listaVenCob/{{nRuta}}">
+            <i class="bi bi-receipt-cutoff"></i>
+            <h2 class="tituloBtn">Ventas</h2>
+        </a>
+          <a class="botonesMenuPrincipal" href="/vistas/Clientes">
+            <i class="bi bi-people"></i>
+            <h2 class="tituloBtn">Clientes</h2>
+        </a>
+        <a class="botonesMenuPrincipal" href="/vistas/novedades">
+            <i class="bi bi-envelope-exclamation"></i>
+            <h2 class="tituloBtn">Novedades</h2>
+        </a>
+        <a class="botonesMenuPrincipal" href="/calculadora/">
+            <i class="bi bi-calculator"></i>
+            <h2 class="tituloBtn">Calculadora</h2>
+        </a>
+            <a class="botonesMenuPrincipal" href="/alertas" >
+            <i class="bi bi-exclamation-octagon"></i>
+            <h2 class="tituloBtn">Alertas</h2>
+        </a>
+        <a class="botonesMenuPrincipal" href="">
+            <i class="bi bi-graph-up-arrow"></i>
+            <h2 class="tituloBtn">Estadisticas</h2>
+        </a>
+   
+     </div>
+
+     <section class="sectionContPrin">
+       <div class="divBarraPrincipal">
+        <h3 class="tituloForm">Prestamos Vencidos</h3>
+      </div>
+      <div class="tarjCli">
+         <table class="tableListCaja">
+    <tr>
+      <th class="tableListCajaTitle">Fecha</th>
+      <th class="tableListCajaTitle">Nombre</th>
+      <th class="tableListCajaTitle">Detalle</th>
+      <th class="tableListCajaTitle">Monto</th>
+    </tr>
+    {{#each presVencidos}}
+     <tr>
+      <th class="tableListCajaRes">{{fechaFinal}}</th>
+      <th class="tableListCajaRes">{{nombre}}</th>
+      <th class="tableListCajaRes">{{detalle}}</th>
+      <th class="tableListCajaRes">{{mTotal}}</th>
+    </tr>
+    
+    {{/each}}
+  </table>
+      </div>  
+       <div class="divBarraPrincipal">
+        <h3 class="tituloForm">Ventas Realizadas</h3>
+      </div>
+      <div class="tarjCli">
+        <table class="tableListCaja">
+    <tr>
+      <th class="tableListCajaTitle">Fecha</th>
+      <th class="tableListCajaTitle">Nombre</th>
+      <th class="tableListCajaTitle">Detalle</th>
+      <th class="tableListCajaTitle">Monto</th>
+    </tr>
+    {{#each hVentas}}
+     <tr>
+      <th class="tableListCajaRes">{{fechaInicio}}</th>
+      <th class="tableListCajaRes">{{nombre}}</th>
+      <th class="tableListCajaRes">{{detalle}}</th>
+      <th class="tableListCajaRes">{{mTotal}}</th>
+    </tr>
+    
+    {{/each}}
+  </table>
+      </div>  
+
+    </section>
+</div>
+    
