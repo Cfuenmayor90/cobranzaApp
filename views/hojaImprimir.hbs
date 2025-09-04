@@ -1,0 +1,29 @@
+
+   <div class="contMayorCli">
+   <table class="tableListImp">
+    <tr>
+      <th class="" colspan="4" >{{usuario.nombre}}, Ruta: {{usuario.numRuta}}, Fecha: {{fecha}}</th>
+    </tr>
+    <tr>
+      <th class="tableListImpTitle">Nombre</th>
+      <th class="tableListImpTitle">Detalle</th>
+      <th class="tableListImpTitle">Saldo</th>
+      <th class="tableListImpTitle">Vence</th>
+      <th class="tableListImpTitle">Cuota</th>
+      <th class="tableListImpTitle">Pago____</th>
+    </tr>
+    {{#each prestamos}}
+     <tr>
+      <th class="tableListImp">{{nombre}}</th>
+       <th class="tableListImp">{{detalle}}</th>
+        <th class="tableListImp">{{mTotal}}</th>
+      <th class="tableListImp">{{fechaFinal}}</th>
+      <th class="tableListImp">{{cuota}}</th>
+      <th class="tableListImp"></th>
+    </tr>
+    
+    {{/each}}   
+   </table>
+   
+  </div>
+
