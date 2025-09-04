@@ -62,7 +62,8 @@ const pagoSave = async (req, res) => {
         pagoVa.fecha = fechaActual;
         pagoVa.cobRuta = prestamo.cobRuta;
         pagoVa.timeStamp = new Date().toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-        prestamo.mTotal = prestamo.mTotal - pago;
+        var pNew = (prestamo.mTotal - pago).toFixed(2);
+        prestamo.mTotal = pNew;
         prestamo.fechaUltPago = fechaActual;
         await ventas.findByIdAndUpdate({ _id: codPres }, prestamo);
         await pagoVa.save();
