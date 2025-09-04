@@ -267,6 +267,20 @@ const cargarPrestamosRuta = async(req, res) =>{
     
    }
   };
+  const hojaParaImprimir = async(req, res) =>{
+    try {
+       const {nRuta} = req.params;
+       var fecha = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+       const prestamos = await ventas.find({ cobRuta: nRuta}).sort({nombre: 1});
+       const usuario = await users.findOne({numRuta: nRuta}); 
+       res.render('hojaImprimir', {prestamos, usuario, fecha});
+    
+   } catch (error) {
+    
+   }
+  };
+
+
 const cargarEstadoClient = async(req, res) => {
   
   try {
@@ -373,4 +387,4 @@ timezone: 'America/Buenos_Aires'
 
 
 
-module.exports = {cargarGeneral, cargarGeneralSuper, guardarCaja, cargarPrestamosRuta, editCliente, cargarEstadisticas, deleteCajaOpe, load, cargarEstadoClient};
+module.exports = {cargarGeneral, cargarGeneralSuper, guardarCaja, cargarPrestamosRuta, editCliente, cargarEstadisticas, hojaParaImprimir, deleteCajaOpe, load, cargarEstadoClient};
