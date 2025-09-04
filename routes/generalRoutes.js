@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { checkRole } = require('../controllers/usersControllers');
-const {cargarGeneral, cargarGeneralSuper, guardarCaja, cargarPrestamosRuta, editCliente, cargarEstadisticas, deleteCajaOpe, load, cargarEstadoClient} = require('../controllers/generalControllers');
+const {cargarGeneral, cargarGeneralSuper, guardarCaja, cargarPrestamosRuta, editCliente, cargarEstadisticas, hojaParaImprimir, deleteCajaOpe, load, cargarEstadoClient} = require('../controllers/generalControllers');
 
 router.get('/', checkRole(['admin']), cargarGeneral);
 router.get('/super', checkRole(['supervisor']), cargarGeneralSuper);
+router.get('/hojaImprimir/:nRuta', checkRole(['admin', 'supervisor', 'pisoDeVenta']), hojaParaImprimir);
 router.post('/cajaOperacion', checkRole(['admin']), guardarCaja);
 router.get('/deleteCajaOperacion/:_id', checkRole(['admin']), deleteCajaOpe);
 router.get('/cargarPres/:nRuta', checkRole(['admin', 'supervisor']), cargarPrestamosRuta);
