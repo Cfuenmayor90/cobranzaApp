@@ -8,6 +8,11 @@ const balance = require('../models/balanceModels');
 const setValores = require('../models/settingValoresModels');
 const cajaOp = require('../models/cajaModels');
 const { generarJWT, verifyJWT} = require('../middleware/jwt');
+const f = new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    minimumFractionDigits: 2
+});
 
 const cargarVentas = async(req, res) => {
     const fechaHoy = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
@@ -20,6 +25,25 @@ const cargarVentas = async(req, res) => {
      const ventasCont = await historyVentas.find({categoria: "contado"}).sort({timeStamp: -1}).limit(20);
      return res.render('ventas', {usuariosVent,usuariosCob, planPrest, planProd, ventasT, ventasCont, productos});
 }
+//cargar ventas totales en el mes
+const fecthVentasMes = async(req, res) =>{
+const {mesInp, anioInp} = req.body;
+    var anio = anioInp || new Date().getFullYear();
+    var mes = mesInp || new Date().getMonth();
+    var m = parseInt(mes) + 1;
+
+     
+     var cantDias = new Date(anio,m,0);
+     cantDias = cantDias.getDate();
+
+     const ventasFina = await historyVentas.find({categoria:"financiamiento", timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias,23,59,59,0)}}).sort({timeStamp: -1});
+    const ventasCont = await historyVentas.find({categoria: "contado",timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias,23,59,59,0)} }).sort({timeStamp: -1});
+    
+    res.render('historialVentas', {ventasFina, ventasCont, anio, mes: m});
+  }
+
+
+
 //cargar ventas especificas de usuarios como vendedore y cobradores
 const cargarVenCob = async(req, res) =>{
   const {nRuta} = req.params;
@@ -355,26 +379,40 @@ const guardarVentasContado = async(req, res)=>{
     const cdp = vent.codProd;
    var detalle = "";
   const fechaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-    
+  const valores = await setValores.findOne();
+
     const token =  req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
     const verifyToken = await verifyJWT(token);
     const rol = verifyToken.role;
     const nRuta = verifyToken.numRuta;
      var cantProd = 0;
+     var arrayProdBoleta = [];
+     var totalTo = 0;
       if (Array.isArray(cdp)) {
       for (let i = 0; i < cdp.length; i++) {
         const element = cdp[i];
         cantProd = req.body[element];
         var prod = await product.findOne({cod: element});
+        const precioT = (prod.precio * valores.dolar) * ((valores.porcentaje / 100) +1);
         prod.stock = prod.stock - cantProd;
+        var precio = f.format(precioT);
+        var total= f.format((precioT * cantProd));
         await product.findByIdAndUpdate({_id: prod._id}, prod);
+        totalTo = totalTo + (precioT * cantProd);
+        arrayProdBoleta.push({"cod":element,"nombre": prod.nombre,"garantia":prod.garantia ,"precio": precio, "cant": cantProd, "total": (total) });
         detalle = detalle + "Cant: " + cantProd + ", "+ prod.nombre + ", Cod: " + prod.cod + " || ";
         
       } } else { 
         var prod = await product.findOne({cod: cdp});
         cantProd = req.body[cdp];
+        const precioT = (prod.precio * valores.dolar) * ((valores.porcentaje / 100) +1);
         prod.stock = prod.stock - cantProd;
+        var precio = f.format(precioT);
+        var total= f.format((precioT * cantProd));
+        prod.stock = prod.stock - cantProd;
+        arrayProdBoleta.push({"cod":cdp,"nombre": prod.nombre,"garantia":prod.garantia ,"precio": precio, "cant": cantProd, "total": total});
          detalle = "Cant: " + cantProd + ", "+ prod.nombre + ", Cod: " + prod.cod + " || ";
+         totalTo = (precioT * cantProd);
         console.log("new prod");
         await product.findByIdAndUpdate({_id: prod._id}, prod); 
       } 
@@ -386,6 +424,7 @@ const guardarVentasContado = async(req, res)=>{
         codProd: vent.codProd,
         detalle: detalle,
         mTotal: m,
+        descuento: vent.descuento,
         categoria: "contado",
         plan: vent.plan,
         fechaInicio: fechaAc,
@@ -410,10 +449,15 @@ const guardarVentasContado = async(req, res)=>{
        default:
          break;
       }
-
-    res.redirect('/ventas');
+      var subTotal = f.format(totalTo);
+      var des = (vent.descuento / 100) * totalTo;
+      var totalT = f.format(totalTo - des);
+      des = f.format(des);
+     console.log("array productos boleta");
+     console.log(newHistoryVenta);
+    res.render('boleta', {newHistoryVenta,fechaAc, totalT, subTotal, arrayProdBoleta, des});
   } catch (error) {
-    var mensajeError = error + "no se encuentra un balance diario";
+    var mensajeError = error + "Error al guardar la venta";
     res.render('error', {mensajeError});
   }
 };
@@ -422,4 +466,4 @@ const guardarVentasContado = async(req, res)=>{
 
 
 
-module.exports = {preCotizar, preCotizarCont, cotizarPlan, cotizarContado, cargarVentas, guardarVentasContado, guardarVentas, cargarVenCob};
+module.exports = {preCotizar, fecthVentasMes, preCotizarCont, cotizarPlan, cotizarContado, cargarVentas, guardarVentasContado, guardarVentas, cargarVenCob};

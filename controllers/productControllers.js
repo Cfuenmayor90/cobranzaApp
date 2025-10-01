@@ -9,7 +9,7 @@ const f = new Intl.NumberFormat('es-AR', {
     currency: 'ARS',
     minimumFractionDigits: 2
 });
-const arrayCategoriasProd = [{valor:'Electrodomesticos'},{valor:'Infantil'}   ,{valor: 'Indumentaria'}, {valor:'Hogar'}, {valor:'Equipamiento Comercial'}, {valor:'Electronica'}, {valor:'Celulares'}, {valor:'Accesorios Para Celulares'}, {valor:'Accesorios Para Vehiculos'}, {valor:'Herramientas' }, {valor:'Cables y Conectores' }];
+const arrayCategoriasProd = [{valor:'Electrodomesticos'},{valor:'Infantil'}   ,{valor: 'Indumentaria'}, {valor: 'Calzado'}, {valor:'Hogar'}, {valor:'Equipamiento Comercial'}, {valor:'Electronica'}, {valor:'Celulares'}, {valor:'Accesorios Para Celulares'}, {valor:'Accesorios Para Vehiculos'}, {valor:'Herramientas' }, {valor:'Cables y Conectores' }];
 
 //pag de productos para ADMIN
 const cargarProducts = async(req, res) =>{
@@ -41,7 +41,16 @@ const cargarPagProductos = async(req, res) =>{
         
     }
 };
-
+//imprimir hoja de productos
+const imprimirProd = async(req, res) =>{
+      try {
+        const productos = await product.find().sort({nombre: 1});
+        const cant = productos.length;
+        res.render('listProdPrint', {productos , arrayCategoriasProd, cant});
+    } catch (error) {
+        
+    }
+};
 const filtrarProd = async(req, res) =>{
     try {
         const {categoria} = req.params;
@@ -161,4 +170,4 @@ const prodDelete = async(req, res) =>{
     }
 }
 
-module.exports = {cargarProducts, cargarPagProductos, upload, saveProducts, cotizarProd, filtrarProd, prodEditGet, prodEditSave, prodDelete };
+module.exports = {cargarProducts, cargarPagProductos, imprimirProd, upload, saveProducts, cotizarProd, filtrarProd, prodEditGet, prodEditSave, prodDelete };
