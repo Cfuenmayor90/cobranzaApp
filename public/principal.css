@@ -95,6 +95,43 @@ a {
   text-decoration: none;
   color: white;
 }
+/*codigo boleta de pago*/
+.contBoleta{
+  width: 100%;
+  text-align: left;
+  margin: auto;
+  padding: 1em;
+  background-color: white;
+}
+.encaBoleta{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 10px;
+
+}
+.encaTextBoleta{
+  width: 40%;
+  text-align: left;
+  height: auto;
+  padding: 1em;
+}
+
+.tableBoleta{
+  width: 100%;
+   border: 1px solid rgb(101, 101, 101);
+  margin: auto;
+  text-align: center; 
+}
+.trBoleta{ 
+  background-color: white;  
+
+}
+.thBoleta{
+  padding: 0.5em;
+  border-bottom: 1px solid rgb(100, 100, 100);
+  border-right: 1px solid rgb(100, 100, 100);
+}
 /*codigo CobranzaGeneral*/
 .tableCobGeneralPrin{
   width: 90%;
@@ -178,7 +215,7 @@ border-radius: 3px;
  font-size: 14px;
 }
 .contPres {
-  width: 90%;
+  width: 95%;
   height: auto;
   margin: 1em auto;
   background-color: white;
@@ -207,6 +244,7 @@ border-radius: 3px;
   text-align: center;
   border: 1px solid black;
 }
+
 .btnPagoCobra {
   font-size: 20px;
   padding: 0.2em 0.5em;
