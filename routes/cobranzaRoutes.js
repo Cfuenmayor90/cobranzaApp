@@ -4,6 +4,8 @@ const router = express.Router();
 const {
   cargarCobranza,
   pagoSave,
+  cargarTransf,
+  confirmarTransf,
   listaPagos,
   listaPagosDiarios,
   envioTicket,
@@ -22,6 +24,10 @@ const { timeOp } = require("../middleware/timeOpe");
 router.get("/", checkRole(["cobrador", 'pisoDeVenta']), cargarCobranza);
 
 router.post("/savePago", checkRole(["cobrador", "pisoDeVenta"]), pagoSave);
+
+router.get("/transf", checkRole(["admin"]), cargarTransf);
+
+router.get("/confirmarTransf/:id", checkRole(["admin"]), confirmarTransf);
 
 router.get("/pagosList/:id", checkRole(["cobrador", "admin", "pisoDeVenta", "supervisor"]), listaPagos);
 

@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 const {checkRole} = require('../controllers/usersControllers');
 const {timeOp} = require('../middleware/timeOpe');
-const {preCotizar, preCotizarCont, cotizarPlan, cargarVentas, guardarVentas, cargarVenCob, cotizarContado, guardarVentasContado} = require('../controllers/ventasControllers');
+const {preCotizar, fecthVentasMes, preCotizarCont, cotizarPlan, cargarVentas, guardarVentas, cargarVenCob, cotizarContado, guardarVentasContado} = require('../controllers/ventasControllers');
 
 
 router.get('/', checkRole(['admin', 'pisoDeVenta']), cargarVentas);
+router.get('/historial', checkRole(['admin', 'pisoDeVenta']), fecthVentasMes);
+router.post('/historialFecha', checkRole(['admin', 'pisoDeVenta']), fecthVentasMes);
 router.post('/preCotizar', checkRole(['admin', 'pisoDeVenta']), preCotizar );
 router.post('/preCotizarCont', checkRole(['admin', 'pisoDeVenta']), preCotizarCont );
 router.post('/cotizar', checkRole(['admin', 'pisoDeVenta']), cotizarPlan);
