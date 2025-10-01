@@ -40,11 +40,12 @@
 
       <label for="cateProd">Categoria</label>
       <br>
-      <select class="inpForm" name="categoria" id="categoria">
+         <select class="inpForm" name="categoria" id="categoria">
         {{#each arrayCategoriasProd}}
         <option value="{{valor}}"><a href="/vistas/volver">{{valor}}</a> </option>
         {{/each}}
       </select>
+    
       <label for="cateProd">Imagen Del Producto</label>
       <br>
       <input type="file" name="image" id="image" required accept=".png, .jpg, .jpeg">
@@ -73,6 +74,10 @@
         <tr>
           <th class="tableListCajaTitle">Capital En Productos</th>
           <th class="tableListCajaRes">{{capiProd}} USD</th>
+        </tr>
+        <tr>
+          <th class="tableListCajaTitle"><a href="/products/imprimirProd" style="color: red;">Imprimir Lista De Productos <i class="bi bi-printer"></i></a></th>
+          <th class="tableListCajaTitle"><a href="" style="color: red;">Imprimir Habladores <i class="bi bi-tags"></i></i></a></th>
         </tr>
 
       </table>

@@ -1,0 +1,27 @@
+
+   <div class="contMayorCli">
+   <table class="tableListImp">
+    <tr>
+      <th class="" colspan="4" >Inventario</th>
+    </tr>
+    <tr>
+      <th class="tableListImpTitle">Codigo</th>
+      <th class="tableListImpTitle">Nombre</th>
+      <th class="tableListImpTitle">Stock</th>
+      <th class="tableListImpTitle">Inventario</th>
+      <th class="tableListImpTitle">Observacion</th>
+
+    </tr>
+    {{#each productos}}
+     <tr>
+      <th class="tableListImp">{{cod}}</th>
+       <th class="tableListImp">{{nombre}}</th>
+        <th class="tableListImp">{{stock}}</th>
+      <th class="tableListImp"></th>
+      <th class="tableListImp"></th> 
+    </tr>
+    
+    {{/each}}   
+   </table>
+   
+  </div>

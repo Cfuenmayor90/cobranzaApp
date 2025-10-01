@@ -1,0 +1,42 @@
+ <nav class="navegacion">
+        <div>
+           <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a> 
+        </div>
+        <div>
+           <span>Transferencias Por Confirmar</span>
+        </div>
+        <div class="iconMenuHamburguesa">
+           <i class="bi bi-filter-square"></i>
+        </div>
+    </nav>
+    <div class="contPres" style="margin-bottom: 5em;">
+       <div class="divFilterPres" style="height: auto; padding: 1.5em;">
+        <h3>Transferencias Pendientes</h>
+      </div>
+      
+       
+    <table class="tableBoleta">
+
+    <tr class="trBoleta">
+      <th class="thBoleta">Ruta</th>
+      <th class="thBoleta">Nombre</th> 
+      <th class="thBoleta">DNI</th>
+      <th class="thBoleta">Monto</th>
+      <th class="thBoleta">Fecha</th>
+      <th class="thBoleta">Fecha De Transferencia</th>
+      <th class="thBoleta">Estado</th>
+      <th class="thBoleta"></th>
+    </tr>
+    {{#each transfere}}
+      <tr class="trBoleta">
+        <td class="thBoleta">{{cobRuta}}</td>
+        <td class="thBoleta">{{nombre}}</td>
+        <td class="thBoleta">{{dni}}</td>
+        <td class="thBoleta">{{monto}}</td>
+        <td class="thBoleta">{{fecha}}</td>
+        <td class="thBoleta">{{transfFecha}}</td>
+        <td class="thBoleta">{{status}}</td>
+        <td class="thBoleta"><a href="/cobranza/confirmarTransf/{{_id}}" onclick="return confirm('¿Desea Confirmar La Transferencia?')"><i style="color: green; font-size: 22px; margin: 0px;" class="bi bi-check-square-fill"></i></a></td>
+      </tr>
+    {{/each}}
+  </table>

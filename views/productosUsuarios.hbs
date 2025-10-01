@@ -1,5 +1,5 @@
 <nav class="navegacion">
-    <a onclick="history.back()" ><i class="bi bi-box-arrow-left"></i></a>
+    <a href="javascript:history.back()" ><i class="bi bi-box-arrow-left"></i></a>
     <div>
       <span>Catalogo De Productos</span>
     </div>
@@ -11,11 +11,10 @@
     <section class="sectionContClientes">
          <div class="divClienteBuscar">
       Categoria:
-             <select name="" id="">
+        <a href="/products/productosUsuarios" style="color: gray;">Todos - </a>
             {{#each arrayCategoriasProd}}
-                <option value="{{valor}}"><a href="/products/filtrarProd/{{valor}}">{{valor}}</a></option>
+               <a href="/products/filtrarProd/{{valor}}" style="color: gray;">{{valor}} - </a>
               {{/each}}
-             </select>
              Cant: {{cant}}
           </div>
          <div class="contLisProd">

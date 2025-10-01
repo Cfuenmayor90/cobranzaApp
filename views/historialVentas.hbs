@@ -1,0 +1,86 @@
+
+    <nav class="navegacion">
+        <div>
+           <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a> 
+        </div>
+        <div>
+           <span>Historial De Ventas</span>
+        </div>
+        <div class="iconMenuHamburguesa">
+           <i class="bi bi-filter-square"></i>
+        </div>
+    </nav>
+     <form action="/ventas/historialFecha" method="post" style="margin: 3px;">
+        <label for="">Seleccione Un Periodo</label>
+        <select name="anioInp" id="anioInp">
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>  
+            <option value="2027">2027</option>
+            <option value="2028">2028</option>
+        </select>
+        <select name="mesInp" id="mesInp">
+          <option value="0">Enero</option>
+          <option value="1">Febrero</option>
+          <option value="2">Marzo</option>
+          <option value="3">Abril</option>
+          <option value="4">Mayo</option>
+          <option value="5">Junio</option>
+          <option value="6">Julio</option>
+          <option value="7">Agosto</option>
+          <option value="8">Septiembre</option>
+          <option value="9">Octubre</option>
+          <option value="10">Noviembre</option>
+          <option value="11">Diciembre</option>
+        </select>
+  <button  type="submit">Buscar</button>
+     </form>
+    <table class="tableBoleta">
+        <tr>
+        <th class="thBoleta" colspan="7">Ventas Financiadas</th>
+        </tr>
+    <tr class="trBoleta">
+      <th class="thBoleta">Fecha</th>
+      <th class="thBoleta">Codigo</th> 
+      <th class="thBoleta">DNI</th>
+      <th class="thBoleta">Vendedor</th>
+      <th class="thBoleta">Cobrador</th>
+      <th class="thBoleta">Detalle</th>
+      <th class="thBoleta">Total</th>
+    </tr>
+    {{#each ventasFina}}
+      <tr class="trBoleta">
+        <td class="thBoleta">{{fechaInicio}}</td>
+        <td class="thBoleta">{{codProd}}</td>
+        <td class="thBoleta">{{dni}}</td>
+        <td class="thBoleta">{{venRuta}}</td>
+        <td class="thBoleta">{{cobRuta}}</td>
+        <td class="thBoleta">{{detalle}}</td>
+        <td class="thBoleta">{{mTotal}}</td>
+      </tr>
+    {{/each}}
+  </table>
+  <table class="tableBoleta">
+        <tr>
+        <th class="thBoleta" colspan="6">Ventas Financiadas</th>
+        </tr>
+    <tr class="trBoleta">
+      <th class="thBoleta">Fecha</th>
+      <th class="thBoleta">Codigo</th> 
+      <th class="thBoleta">DNI</th>
+      <th class="thBoleta">Vendedor</th>
+      <th class="thBoleta">Detalle</th>
+      <th class="thBoleta">Total</th>
+    </tr>
+    {{#each ventasCont}}
+      <tr class="trBoleta">
+        <td class="thBoleta">{{fechaInicio}}</td>
+        <td class="thBoleta">{{codProd}}</td>
+        <td class="thBoleta">{{dni}}</td>
+        <td class="thBoleta">{{venRuta}}</td>
+        <td class="thBoleta">{{detalle}}</td>
+        <td class="thBoleta">{{mTotal}}</td>
+      </tr>
+    {{/each}}
+  </table>

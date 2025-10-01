@@ -1,0 +1,62 @@
+<div class="contBoleta" style="background-color: white;">
+  <div class="encaBoleta">
+    <img
+      src="https://maxitodo.ar/img/logo%20MaxiTodo.png"
+      alt=""
+      style="width: 300px; height: auto"
+    />
+    <div class="encaTextBoleta" style="color: rgb(82, 82, 82);">
+      <h2>Presupuesto</h2>
+      <h3>Direccion: Pueyrredon 312</h3>
+      <h3>Santiago Del Estero</h3>
+      <h3>Telefono: 385 534-9020</h3>
+ 
+
+    </div>
+  </div>
+  <hr>
+  <div style="color: rgb(82, 82, 82);"> 
+      <h3>Nombre: {{newHistoryVenta.nombre}}</h3>
+      <h3>DNI: {{newHistoryVenta.dni}}</h3>
+      <h3>Fecha: {{fechaAc}}</h3>
+      <h3>Vendedor: {{newHistoryVenta.venRuta}}</h3>
+      <h3>Operacion: {{newHistoryVenta._id}}</h3> 
+  </div>
+  <br>
+  <table class="tableBoleta">
+    <tr class="trBoleta">
+      <th class="thBoleta">Codigo</th>
+      <th class="thBoleta">Producto</th> 
+      <th class="thBoleta">Garantia</th>
+      <th class="thBoleta">Precio</th>
+      <th class="thBoleta">Cantidad</th>
+      <th class="thBoleta">Total</th>
+    </tr>
+    {{#each arrayProdBoleta}}
+      <tr class="trBoleta">
+        <td class="thBoleta">{{cod}}</td>
+        <td class="thBoleta">{{nombre}}</td>
+        <td class="thBoleta">{{garantia}}</td>
+        <td class="thBoleta">{{precio}}</td>
+        <td class="thBoleta">{{cant}}</td>
+        <td class="thBoleta">{{total}}</td>
+      </tr>
+    {{/each}}
+     <tr class="trBoleta">
+      <td colspan="5" style="text-align: right;" class="thBoleta"><strong>SubTotal:</strong></td>
+      <td class="thBoleta"><strong>{{subTotal}}</strong></td>
+    </tr>
+     <tr class="trBoleta">
+      <td colspan="5" style="text-align: right;" class="thBoleta"><strong>Descuento %{{newHistoryVenta.descuento}}:</strong></td>
+      <td class="thBoleta"><strong>{{des}}</strong></td>
+    </tr>
+    <tr class="trBoleta">
+      <td colspan="5" style="text-align: right;" class="thBoleta"><strong>Monto Total:</strong></td>
+      <td class="thBoleta"><strong>{{totalT}}</strong></td>
+    </tr>
+  </table>
+  <br />
+  <h3>Boleta no validad como factura, productos sin garantia no tienen cambio.</h3>
+
+</div>
+<a href="/ventas/">Volver</a>
