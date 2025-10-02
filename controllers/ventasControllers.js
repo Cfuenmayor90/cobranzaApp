@@ -5,6 +5,7 @@ const ventas = require('../models/ventasModels');
 const historyVentas = require('../models/historyVentas');
 const product = require('../models/productModels');
 const balance = require('../models/balanceModels');
+const transf = require("../models/transfModels");
 const setValores = require('../models/settingValoresModels');
 const cajaOp = require('../models/cajaModels');
 const { generarJWT, verifyJWT} = require('../middleware/jwt');
@@ -449,6 +450,19 @@ const guardarVentasContado = async(req, res)=>{
        default:
          break;
       }
+     //creamos la transferencia si es que hay monto
+        if (req.body.transfMonto && req.body.transfFecha) {
+               const transfNew = new transf();
+                    transfNew.codPres = "VENTA CONTADO";
+                    transfNew.cobRuta = nRuta;
+                    transfNew.nombre = vent.nombre;
+                    transfNew.dni = vent;
+                    transfNew.transfFecha = req.body.transfFecha;
+                    transfNew.fecha = fechaAc;
+                    transfNew.monto = req.body.transfMonto;
+                    await transfNew.save();
+                }
+
       var subTotal = f.format(totalTo);
       var des = (vent.descuento / 100) * totalTo;
       var totalT = f.format(totalTo - des);
