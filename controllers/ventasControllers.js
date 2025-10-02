@@ -456,7 +456,7 @@ const guardarVentasContado = async(req, res)=>{
                     transfNew.codPres = "VENTA CONTADO";
                     transfNew.cobRuta = nRuta;
                     transfNew.nombre = vent.nombre;
-                    transfNew.dni = vent;
+                    transfNew.dni = vent.dni;
                     transfNew.transfFecha = req.body.transfFecha;
                     transfNew.fecha = fechaAc;
                     transfNew.monto = req.body.transfMonto;
