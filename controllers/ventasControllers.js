@@ -215,6 +215,7 @@ try {
   const mes = new Date(fecha).getMonth();
   const dia = new Date(fecha).getUTCDate();
   const fechaAc = new Date(anio, mes, (dia + 1)).toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+  const timeSt = new Date(anio, mes, dia).toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
   var fechaV  = new Date(anio, mes, dia);//.toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
   var fechaVencimiento = "";
   if (newVenta.plan === "diario") {
@@ -281,7 +282,7 @@ try {
   var prod= 0;
   if (Array.isArray(cdp)) {
     for (let i = 0; i < cdp.length; i++) {
-      const element = cdp[i];
+      const element = cdp[i]; 
       prod = await product.findOne({cod: element});
      var cantProd = req.body[element];
 
@@ -294,6 +295,11 @@ try {
       prod.stock = prod.stock - cantProd;
       await product.findByIdAndUpdate({_id: prod._id}, prod); 
     } 
+    //funcion para crear operacion de caja con decuento de saldo anterior
+    if (req.body.salAnt > 0) {
+      const newCaja = new cajaOp({monto: req.body.salAnt, fecha: fechaAc, userCod: nRuta, tipo: "rendicion", detalle: `Dto. por renov.: ${newVenta.nombre}`, timeStamp: timeSt});
+      await newCaja.save();
+    }
   
   res.redirect('/ventas');
   } catch (error) {
