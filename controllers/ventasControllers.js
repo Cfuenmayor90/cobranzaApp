@@ -297,7 +297,7 @@ try {
     } 
     //funcion para crear operacion de caja con decuento de saldo anterior
     if (req.body.salAnt > 0) {
-      const newCaja = new cajaOp({monto: req.body.salAnt, fecha: fechaAc, userCod: nRuta, tipo: "rendicion", detalle: `Dto. por renov.: ${newVenta.nombre}`, timeStamp: timeSt});
+      const newCaja = new cajaOp({monto: req.body.salAnt, fecha: fechaAc, userCod: newVenta.cobRuta, tipo: "rendicion", detalle: `Dto. por renov.: ${newVenta.nombre}`, timeStamp: timeSt});
       await newCaja.save();
     }
   
