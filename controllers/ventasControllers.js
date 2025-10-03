@@ -270,7 +270,7 @@ try {
           break;
          case "admin":
               console.log("dentro delif adelantos / case");
-            const newCaja = new cajaOp({monto: newVenta.adelanto, fecha: fechaAc, userCod: nRuta, tipo: "ingreso", detalle: newVenta.detalle, timeStamp: new Date()});
+            const newCaja = new cajaOp({monto: newVenta.adelanto, fecha: fechaAc, userCod: newVenta.cobRuta, tipo: "ingreso", detalle: newVenta.detalle, timeStamp: new Date()});
             await newCaja.save();
           break;
         default:
