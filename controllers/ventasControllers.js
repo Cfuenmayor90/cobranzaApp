@@ -416,7 +416,6 @@ const guardarVentasContado = async(req, res)=>{
         prod.stock = prod.stock - cantProd;
         var precio = f.format(precioT);
         var total= f.format((precioT * cantProd));
-        prod.stock = prod.stock - cantProd;
         arrayProdBoleta.push({"cod":cdp,"nombre": prod.nombre,"garantia":prod.garantia ,"precio": precio, "cant": cantProd, "total": total});
          detalle = "Cant: " + cantProd + ", "+ prod.nombre + ", Cod: " + prod.cod + " || ";
          totalTo = (precioT * cantProd);
