@@ -1,0 +1,85 @@
+<nav class="navegacion">
+    <div>
+        <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a>
+    </div>
+    <div>
+        <span>Cobranza</span>
+    </div>
+    <div class="iconMenuHamburguesa">
+        <i class="bi bi-filter-square"></i>
+    </div>
+</nav>
+
+<div class="contPres">
+    <form action="/cobranza/saveTransfCob" method="POST">
+    <table style="border: 1px solid black;">
+        <tr class="trBoleta">
+            <th class="thBoleta" colspan="3" style="background-color: rgb(255, 197, 197); font-size: 15px;">
+                Registrar Transferencia
+            </th>
+        </tr>
+        <tr class="">
+            <th style="text-align: initial;">
+                Cliente:
+                <select name="dni" id="dni"  style="font-size: 13px; width: 80%; border: 1px solid black;" >
+                    {{#each prestamos}}
+                    <option value="{{dni}}">{{nombre}} - {{dni}}</option>
+                    {{/each}}
+                </select>
+               
+            </th>
+        </tr>
+        <tr class="">
+            <th class="">
+              Transf:
+            <input style="width: 25%; fotn-size: 13px; border: 1px solid black" type="number" step=".01" id="transfMonto" name="transfMonto" placeholder="Monto" />
+            <input style="width: 58%; font-size: 13px; border: 1px solid black" class="inpPres" type="datetime-local" name="transfFecha"
+                id="transfFecha" />
+            </th>
+        </tr>
+        <tr>
+            <th>
+        <button type="submit" style="padding: 0.5em 1em; margin: 0.5em; background-color: rgb(173, 255, 141); border-radius: 5px;" >Guardar</button>
+
+            </th>
+
+        </tr>
+    </table>
+
+
+
+    </form>
+    <br />
+    <table class="tableBoleta" style="font-size: 12px;">
+        <tr class="trBoleta">
+            <th class="thBoleta" colspan="5" style="background-color: rgb(255, 197, 197); font-size: 15px"> Transferencias Por Confirmar
+            </th>
+        </tr>
+
+
+        <tr class="trBoleta">
+
+            <th class="thBoleta">Nombre</th>
+
+            <th class="thBoleta">Monto</th>
+            <th class="thBoleta">Fecha</th>
+            <th class="thBoleta">Fecha De Transf.</th>
+            <th class="thBoleta">Estado</th>
+
+        </tr>
+        {{#each transfere}}
+        <tr class="trBoleta">
+
+            <td class="thBoleta">{{nombre}}</td>
+
+            <td class="thBoleta">{{monto}}</td>
+            <td class="thBoleta">{{fecha}}</td>
+            <td class="thBoleta">{{transfFecha}}</td>
+            <td class="thBoleta" style="color: red;">{{status}}</td>
+        </tr>
+        {{/each}}
+    </table>
+</div>
+
+
+</footer>
