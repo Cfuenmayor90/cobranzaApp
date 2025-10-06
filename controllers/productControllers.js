@@ -130,7 +130,7 @@ const saveProducts = async(req, res) =>{
     try {
         const newProduct = new product(req.body);
         await newProduct.save()
-        res.send('todo ok');
+       res.redirect('/products/productos');
         
     } catch (error) {
         console.log(error);

@@ -120,6 +120,40 @@ const cargarTransf = async(req, res) =>{
     
   }
 };
+const cargarTranfCob = async(req, res) =>{
+  try {
+    const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
+    const verifyToken = await verifyJWT(token);
+    const prestamos = await ventas.find({ cobRuta: verifyToken.numRuta}).sort({nombre: 1});
+    const transfere = await transf.find({cobRuta: verifyToken.numRuta, status: "PENDIENTE"}).sort({transfFecha: 1});
+    res.render('transfCobrador', {transfere, prestamos});
+  } catch (error) {
+    
+  } };
+  const guardarTransfCob = async(req, res) =>{
+    try {
+      const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
+      const verifyToken = await verifyJWT(token);
+      const {dni, transfFecha, transfMonto} = req.body;
+      const cliente = await client.findOne({dni});
+      if (cliente) {
+        const newTransf = new transf();     
+        newTransf.cobRuta = verifyToken.numRuta;
+        newTransf.dni = dni;
+        newTransf.nombre = cliente.nombre;
+        newTransf.transfFecha = transfFecha;
+        newTransf.monto = transfMonto;
+        newTransf.fecha = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+        await newTransf.save();
+        res.redirect('/cobranza/transfCob');
+      } else {
+        const mensajeError = "¡No se encontro el cliente, verifique el DNI!";
+        res.render("error", { mensajeError });
+      }   
+  } catch (error) {
+    
+  } };
+
 const confirmarTransf = async(req, res) =>{
   try {
     const {id} = req.params;
@@ -450,4 +484,4 @@ const savePosicion = async(req, res)=>{
     
   }
 }
-module.exports = { cargarCobranza, pagoSave, cargarTransf, confirmarTransf, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket, refinanciarPres, saveRefinanciarPres, filterSem, note, saveNote, posicionNumber, savePosicion, filterPosicion};
+module.exports = { cargarCobranza, pagoSave, cargarTransf, cargarTranfCob, guardarTransfCob, confirmarTransf, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket, refinanciarPres, saveRefinanciarPres, filterSem, note, saveNote, posicionNumber, savePosicion, filterPosicion};
