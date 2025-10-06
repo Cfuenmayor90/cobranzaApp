@@ -5,6 +5,8 @@ const {
   cargarCobranza,
   pagoSave,
   cargarTransf,
+  cargarTranfCob,
+  guardarTransfCob,
   confirmarTransf,
   listaPagos,
   listaPagosDiarios,
@@ -26,6 +28,10 @@ router.get("/", checkRole(["cobrador", 'pisoDeVenta']), cargarCobranza);
 router.post("/savePago", checkRole(["cobrador", "pisoDeVenta"]), pagoSave);
 
 router.get("/transf", checkRole(["admin"]), cargarTransf);
+
+router.get("/transfCob", checkRole(["cobrador", 'pisoDeVenta']), cargarTranfCob);
+
+router.post("/saveTransfCob", checkRole(["cobrador", 'pisoDeVenta']), guardarTransfCob);
 
 router.get("/confirmarTransf/:id", checkRole(["admin"]), confirmarTransf);
 
