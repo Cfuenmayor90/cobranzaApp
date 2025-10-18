@@ -36,7 +36,7 @@
         <td class="thBoleta">{{fecha}}</td>
         <td class="thBoleta">{{transfFecha}}</td>
         <td class="thBoleta">{{status}}</td>
-        <td class="thBoleta"><a href="/cobranza/confirmarTransf/{{_id}}" onclick="return confirm('¿Desea Confirmar La Transferencia?')"><i style="color: green; font-size: 22px; margin: 0px;" class="bi bi-check-square-fill"></i></a></td>
+        <td class="thBoleta"><a href="/cobranza/confirmarTransf/{{_id}}" onclick="return confirm('¿Desea Confirmar La Transferencia?')"><i style="color: green; font-size: 22px; margin: 0px;" class="bi bi-check-square-fill"></i></a> <a href="/cobranza/deleteTransf/{{_id}}" onclick="return confirm('¿Desea Eliminar La Transferencia?')" ><i style="color: rgb(255, 0, 0); font-size: 22px; margin: 0px;" class="bi bi-x-square-fill"></i></a> </td>
       </tr>
     {{/each}}
   </table>
