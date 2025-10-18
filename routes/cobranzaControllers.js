@@ -3,6 +3,8 @@ const client = require("../models/clientModels");
 const setPrest = require("../models/settingsModels");
 const ventas = require("../models/ventasModels");
 const pagoN = require("../models/pagosModels");
+const transf = require("../models/transfModels");
+const caja = require('../models/cajaModels');
 const { generarJWT, verifyJWT } = require("../middleware/jwt");
 const balances = require('../models/balanceModels');
 const f = new Intl.NumberFormat('es-AR', {
@@ -86,6 +88,18 @@ const pagoSave = async (req, res) => {
         const balanEdit = await balances.findByIdAndUpdate({_id: balance._id}, balanceNew);
         res.redirect('/cobranza');
         
+        //creamos la transferencia si es que hay monto
+        if (req.body.transfMonto && req.body.transfFecha) {
+          const transfNew = new transf();
+          transfNew.codPres = codPres;
+          transfNew.cobRuta = prestamo.cobRuta;
+          transfNew.nombre = prestamo.nombre;
+          transfNew.dni = prestamo.dni;
+          transfNew.transfFecha = req.body.transfFecha;
+          transfNew.fecha = fechaActual;
+          transfNew.monto = req.body.transfMonto;
+          await transfNew.save();
+        }
       } else {
            const mensajeError = "¡No se encontro el Balance, espere a que su admin genere la planilla de cobranza!";
             res.render("error", { mensajeError });
@@ -98,6 +112,77 @@ const pagoSave = async (req, res) => {
     res.render("error");
   }
 };
+const cargarTransf = async(req, res) =>{
+  try {
+    const transfere = await transf.find({status: "PENDIENTE"}).sort({transfFecha: 1});
+    res.render('transferencias', {transfere});
+  } catch (error) {
+    
+  }
+};
+const cargarTranfCob = async(req, res) =>{
+  try {
+    const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
+    const verifyToken = await verifyJWT(token);
+    const prestamos = await ventas.find({ cobRuta: verifyToken.numRuta}).sort({nombre: 1});
+    const transfere = await transf.find({cobRuta: verifyToken.numRuta, status: "PENDIENTE"}).sort({transfFecha: 1});
+    res.render('transfCobrador', {transfere, prestamos});
+  } catch (error) {
+    
+  } };
+  const guardarTransfCob = async(req, res) =>{
+    try {
+      const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
+      const verifyToken = await verifyJWT(token);
+      const {dni, transfFecha, transfMonto} = req.body;
+      const cliente = await client.findOne({dni});
+      if (cliente) {
+        const newTransf = new transf();     
+        newTransf.cobRuta = verifyToken.numRuta;
+        newTransf.dni = dni;
+        newTransf.nombre = cliente.nombre;
+        newTransf.transfFecha = transfFecha;
+        newTransf.monto = transfMonto;
+        newTransf.fecha = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+        await newTransf.save();
+        res.redirect('/cobranza/transfCob');
+      } else {
+        const mensajeError = "¡No se encontro el cliente, verifique el DNI!";
+        res.render("error", { mensajeError });
+      }   
+  } catch (error) {
+    
+  } };
+
+const confirmarTransf = async(req, res) =>{
+  try {
+    const {id} = req.params;
+    const transfEdit = await transf.findByIdAndUpdate({_id: id}, {status: "CONFIRMADA"});
+          const newOperacion = new caja();
+      newOperacion.monto = transfEdit.monto;
+      newOperacion.tipo = "rendicion";
+      newOperacion.detalle = `Transf. de ${transfEdit.nombre} - Fecha: ${transfEdit.transfFecha}`;
+      newOperacion.fecha = transfEdit.fecha;
+      newOperacion.userCod = transfEdit.cobRuta; 
+      newOperacion.timeStamp = transfEdit.timeStamp;
+
+           await newOperacion.save();
+
+    res.redirect('/cobranza/transf');
+  } catch (error) {
+    
+  }
+};
+
+const deleteTransf = async(req, res) =>{
+  try {
+    const {id} = req.params;  
+    const transfDel = await transf.findByIdAndDelete({_id: id});
+    res.redirect('/cobranza/transf');
+  } catch (error) {
+    
+  }}; 
+
 const filterSem = async(req, res) =>{
   try {
     const {coRu} = req.params;
@@ -408,4 +493,4 @@ const savePosicion = async(req, res)=>{
     
   }
 }
-module.exports = { cargarCobranza, pagoSave, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket, refinanciarPres, saveRefinanciarPres, filterSem, note, saveNote, posicionNumber, savePosicion, filterPosicion};
+module.exports = { cargarCobranza, pagoSave, cargarTransf, cargarTranfCob, guardarTransfCob, confirmarTransf, deleteTransf, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket, refinanciarPres, saveRefinanciarPres, filterSem, note, saveNote, posicionNumber, savePosicion, filterPosicion};
