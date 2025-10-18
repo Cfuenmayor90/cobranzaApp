@@ -174,6 +174,15 @@ const confirmarTransf = async(req, res) =>{
   }
 };
 
+const deleteTransf = async(req, res) =>{
+  try {
+    const {id} = req.params;  
+    const transfDel = await transf.findByIdAndDelete({_id: id});
+    res.redirect('/cobranza/transf');
+  } catch (error) {
+    
+  }}; 
+
 const filterSem = async(req, res) =>{
   try {
     const {coRu} = req.params;
@@ -484,4 +493,4 @@ const savePosicion = async(req, res)=>{
     
   }
 }
-module.exports = { cargarCobranza, pagoSave, cargarTransf, cargarTranfCob, guardarTransfCob, confirmarTransf, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket, refinanciarPres, saveRefinanciarPres, filterSem, note, saveNote, posicionNumber, savePosicion, filterPosicion};
+module.exports = { cargarCobranza, pagoSave, cargarTransf, cargarTranfCob, guardarTransfCob, confirmarTransf, deleteTransf, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket, refinanciarPres, saveRefinanciarPres, filterSem, note, saveNote, posicionNumber, savePosicion, filterPosicion};
