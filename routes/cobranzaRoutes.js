@@ -8,6 +8,7 @@ const {
   cargarTranfCob,
   guardarTransfCob,
   confirmarTransf,
+  deleteTransf,
   listaPagos,
   listaPagosDiarios,
   envioTicket,
@@ -30,6 +31,8 @@ router.post("/savePago", checkRole(["cobrador", "pisoDeVenta"]), pagoSave);
 router.get("/transf", checkRole(["admin"]), cargarTransf);
 
 router.get("/transfCob", checkRole(["cobrador", 'pisoDeVenta']), cargarTranfCob);
+
+router.get("/deleteTransf/:id", checkRole(["admin"]), deleteTransf);
 
 router.post("/saveTransfCob", checkRole(["cobrador", 'pisoDeVenta']), guardarTransfCob);
 
