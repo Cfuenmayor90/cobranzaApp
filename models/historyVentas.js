@@ -31,6 +31,9 @@ const historyVentaSchema = new Schema({
         type: Number,
         require: true
     },
+    descuento: {
+      type: Number
+    },
     categoria:{
         type: String,
         require: true

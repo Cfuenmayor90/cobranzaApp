@@ -18,6 +18,14 @@ const pagoSchema = new Schema({
         type: Number,
         require: true
     },
+    transfMonto: {
+        type: Number,
+        require: false
+    },
+    transfFecha: {
+        type: String,
+        require: false
+    },
     timeStamp:{
         type: Date,
         default: Date.now

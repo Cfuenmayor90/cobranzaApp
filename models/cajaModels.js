@@ -7,15 +7,18 @@ const cajaSchema = new Schema({
         require: true
     },  
     timeStamp: {
-        type: Date,
+        type: Date
     },
-    fecha:{
+    fecha:{ 
         type: String,
         require: true
     },
      userCod:{
         type: Number,
         require: true
+    },
+    cod:{
+        type: String 
     },
     tipo:{
         type: String,

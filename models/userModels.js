@@ -36,6 +36,9 @@ const userSchema = new Schema({
     numRuta: {
         type: Number,
         require: true
+    },
+    ingreso: {
+        type: String
     }
 });
 
