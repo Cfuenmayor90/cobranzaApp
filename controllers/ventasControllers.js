@@ -387,11 +387,19 @@ const guardarVentasContado = async(req, res)=>{
    var detalle = "";
   const fechaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
   const valores = await setValores.findOne();
+  
+  const token =  req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
+  const verifyToken = await verifyJWT(token);
+  const rol = verifyToken.role;
+  const nRuta = verifyToken.numRuta;
 
-    const token =  req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
-    const verifyToken = await verifyJWT(token);
-    const rol = verifyToken.role;
-    const nRuta = verifyToken.numRuta;
+  //Buscamos un balance diario en la ruta del usuario que realiza la venta
+  const balanceHoy = await balance.findOne({cobRuta: nRuta, fecha: fechaAc});
+  if (!balanceHoy) {
+    var mensajeError = "No se puede realizar la venta porque no existe un BALANCE DIARIO, solicite a su ADMIN habilitar la planilla.";
+    return res.render('error', {mensajeError});
+  }   
+
      var cantProd = 0;
      var arrayProdBoleta = [];
      var totalTo = 0;
@@ -441,10 +449,10 @@ const guardarVentasContado = async(req, res)=>{
       switch (rol) {
    
             case "pisoDeVenta":
-           const balan = await balance.findOne({cobRuta: nRuta}).sort({timeStamp: -1});
+           const balan = await balance.findOne({cobRuta: nRuta, fecha: fechaAc});
            console.log("balance encontrado:" + balan);
            
-         const Tt = (((balan.vtaCtdo)*1) + ((vent.mT)*1)).toFixed(2);
+         const Tt = (((balan.vtaCtdo)*1) + ((vent.mT)*1)).toFixed(2); 
          balan.vtaCtdo = Tt;
         const newBalan = await balance.findByIdAndUpdate({_id: balan._id}, balan);
            break;

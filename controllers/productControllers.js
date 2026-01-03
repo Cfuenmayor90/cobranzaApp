@@ -7,7 +7,7 @@ const path = require('path');
 const f = new Intl.NumberFormat('es-AR', {
     style: 'currency',
     currency: 'ARS',
-    minimumFractionDigits: 2
+    minimumFractionDigits: 0,
 });
 const arrayCategoriasProd = [{valor:'Electrodomesticos'},{valor:'Infantil'}   ,{valor: 'Indumentaria'}, {valor: 'Calzado'}, {valor:'Hogar'}, {valor:'Equipamiento Comercial'}, {valor:'Electronica'}, {valor:'Celulares'}, {valor:'Accesorios Para Celulares'}, {valor:'Accesorios Para Vehiculos'}, {valor:'Herramientas' }, {valor:'Cables y Conectores' }];
 
@@ -68,10 +68,7 @@ const cotizarProd = async(req, res) => {
         const planesDiarios = await setting.find({categoria: "financiamiento",plan: "diario" }).sort({cuotas: 1});
         const planesSemanales = await setting.find({categoria: "financiamiento",plan: "Semanal" }).sort({cuotas: 1});
         const planesMensuales = await setting.find({categoria: "financiamiento",plan: "mensual" }).sort({cuotas: 1});
-        const valores = await settingValores.findOne();
-        var precio = (prod.precio * valores.dolar) * ((valores.porcentaje * 0.01) + 1);
-        var precioTartj = precio *((valores.tcredito * 0.01) + 1);
-        var vCuota = precioTartj / 3;
+        
         const arrayPlanes = [];
         planesDiarios.forEach(element => {
             var xcentaje = (element.porcentaje/100)+1;
@@ -168,6 +165,28 @@ const prodDelete = async(req, res) =>{
     } catch (error) {
         
     }
-}
+};
 
-module.exports = {cargarProducts, cargarPagProductos, imprimirProd, upload, saveProducts, cotizarProd, filtrarProd, prodEditGet, prodEditSave, prodDelete };
+const habladores = async(req, res) =>{
+    try {
+        const productos = await product.find({stock: {$gt: 0}}).sort({nombre: 1});
+        const arrayPrpoductos = [];
+        const valores = await settingValores.findOne();
+        productos.forEach(element => {
+            const prod = element;
+        var precio = (prod.precio * valores.dolar) * ((valores.porcentaje * 0.01) + 1);
+        var precioTartj = precio *((valores.tcredito * 0.01) + 1);
+        var vCuota = precioTartj / 3;
+        precio = f.format(precio);
+        precioTartj = f.format(precioTartj);
+        vCuota = f.format(vCuota);  
+                arrayPrpoductos.push({"producto":prod.nombre,"cod": prod.cod, "precio": precio, "precioTartj": precioTartj, "vCuota": vCuota});
+            
+        });
+        res.render('habladores', {arrayPrpoductos});
+    } catch (error) {   
+
+    }
+};
+
+module.exports = {cargarProducts, cargarPagProductos, imprimirProd, upload, saveProducts, cotizarProd, filtrarProd, prodEditGet, prodEditSave, prodDelete, habladores };
