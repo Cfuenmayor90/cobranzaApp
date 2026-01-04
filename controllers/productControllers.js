@@ -9,7 +9,7 @@ const f = new Intl.NumberFormat('es-AR', {
     currency: 'ARS',
     minimumFractionDigits: 0,
 });
-const arrayCategoriasProd = [{valor:'Electrodomesticos'},{valor:'Infantil'}   ,{valor: 'Indumentaria'}, {valor: 'Calzado'}, {valor:'Hogar'}, {valor:'Equipamiento Comercial'}, {valor:'Electronica'}, {valor:'Celulares'}, {valor:'Accesorios Para Celulares'}, {valor:'Accesorios Para Vehiculos'}, {valor:'Herramientas' }, {valor:'Cables y Conectores' }];
+const arrayCategoriasProd = [{valor:'Electrodomesticos'},{valor:'Infantil'},{valor: 'Indumentaria'}, {valor: 'Calzado'}, {valor:'Hogar'}, {valor:'Equipamiento Comercial'}, {valor:'Electronica'}, {valor:'Celulares'}, {valor:'Accesorios Para Celulares'}, {valor:'Accesorios Para Vehiculos'}, {valor:'Herramientas' }, {valor:'Cables y Conectores' }];
 
 //pag de productos para ADMIN
 const cargarProducts = async(req, res) =>{
@@ -65,17 +65,19 @@ const cotizarProd = async(req, res) => {
     try {
         const {id} = req.params;
         const prod = await product.findOne({_id: id});
+        const valores = await settingValores.findOne();
         const planesDiarios = await setting.find({categoria: "financiamiento",plan: "diario" }).sort({cuotas: 1});
         const planesSemanales = await setting.find({categoria: "financiamiento",plan: "Semanal" }).sort({cuotas: 1});
         const planesMensuales = await setting.find({categoria: "financiamiento",plan: "mensual" }).sort({cuotas: 1});
-        
-        const arrayPlanes = [];
+        var precio = (prod.precio * valores.dolar) * (valores.porcentaje/100 + 1); //precio con ganancia
+        var precioTartj = precio * (valores.tcredito/100 + 1); //precio con tarjeta de credito
+        var vCuota = precioTartj / 3;
+        var arrayPlanes = [];
         planesDiarios.forEach(element => {
             var xcentaje = (element.porcentaje/100)+1;
             var cuota = (precio*xcentaje)/element.cuotas;
-            var total = (element.cuotas * cuota).toFixed(2);
             cuota = f.format(cuota)
-            arrayPlanes.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota, "total": total });
+            arrayPlanes.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota });
         });
         planesSemanales.forEach(element => {
             var xcentaje= (element.porcentaje/100)+1;
@@ -95,7 +97,7 @@ const cotizarProd = async(req, res) => {
        precioTartj = f.format(precioTartj);
         res.render('cotizarProd', {prod, precio, precioTartj, vCuota, arrayPlanes})
     } catch (error) {
-        
+        res.render('error', {error});
     }
 }
 //midleware de MULTER   
