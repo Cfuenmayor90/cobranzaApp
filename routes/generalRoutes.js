@@ -13,5 +13,6 @@ router.get('/statusPresClient/:dni', checkRole(['admin', 'pisoDeVenta', 'supervi
 router.get('/editCliente/:dni', checkRole(['admin', 'supervisor']), editCliente);
 router.get('/estadisticaUser/:nRuta', checkRole(['admin', 'cobrador', 'vendedor', 'pisoDeVenta', 'supervisor']), cargarEstadisticas);
 router.post('/estadisticaUserFecha', checkRole(['admin', 'cobrador', 'vendedor', 'pisoDeVenta', 'supervisor']), cargarEstadisticas);
+router.post('/generalCobranzaFecha', checkRole(['admin']), cargarGeneral);
 
 module.exports = router;
