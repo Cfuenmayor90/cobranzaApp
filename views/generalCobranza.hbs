@@ -10,11 +10,35 @@
 <div class="contMayorCli">
   <div class="formCliente">
     <div class="divClienteBuscar">
-      <h3 class="tituloForm">Datos Generales</h3>
+      <h3 class="tituloForm">Datos Generales - {{periodo}}</h3>
     </div>
     <br />
-
-    <table class="tableCobGeneralPrin">
+          <form action="/general/generalCobranzaFecha" method="post" class="formBuscarPeriodo">
+        <label for="" class="titlePeri">Seleccione Periodo</label>
+        <select name="anioInp" id="anioInp">
+          {{#each arrayAnios}}
+          <option value="{{anio}}">{{anio}}</option>
+          {{/each}}
+        </select>
+        <label for="" class="titlePeri">Mes</label>
+        <select name="mesInp" id="mesInp">
+          <option value="0">Enero</option>
+          <option value="1">Febrero</option>
+          <option value="2">Marzo</option>
+          <option value="3">Abril</option>
+          <option value="4">Mayo</option>
+          <option value="5">Junio</option>
+          <option value="6">Julio</option>
+          <option value="7">Agosto</option>
+          <option value="8">Septiembre</option>
+          <option value="9">Octubre</option>
+          <option value="10">Noviembre</option>
+          <option value="11">Diciembre</option>
+        </select>
+         <button type="submit" class="buttonPeri">Buscar</button>
+      </form>
+  <br/>
+    <table class="tableCobGeneralPrin" style="font-size: 14px;">
       <tr>
         <th class="thTabletitleCobGenPrin">Inversion:</th>
         <th class="thTableCobGene">{{invT}}</th>
@@ -23,9 +47,15 @@
       </tr>
       <tr>
         <th class="thTabletitleCobGenPrin">Por Cobrar:</th>
-        <th class="thTableCobGene">{{porCobrar}}</th>
+        <th class="thTableCobGene"  >{{porCobrar}}</th>
         <th class="thTabletitleCobGenPrin">Efectivo:</th>
         <th class="thTableCobGene">{{efeCajaT}}</th>
+      </tr>
+        <tr>
+        <th class="thTabletitleCobGenPrin">CXP Interes:</th>
+        <th class="thTableCobGene"style="color: red;" >{{inteT}}</th>
+        <th class="thTabletitleCobGenPrin">CXP Total:</th>
+        <th class="thTableCobGene" style="color: red;">{{saldoT}}</th>
       </tr>
         <tr>
       
@@ -54,7 +84,7 @@
         <th class="thTableCobGene">{{gananCobTotal}}</th>
       </tr>
        <tr>
-        <th class="thTabletitleCobGenPrin">Prestamos:</th>
+        <th class="thTabletitleCobGenPrin">Cant. prest.:</th>
         <th class="thTableCobGene">{{cantPres}}</th>
         <th class="thTabletitleCobGenPrin">Gastos:</th>
         <th class="thTableCobGene">{{gastocajaMes}}</th>
@@ -63,7 +93,7 @@
     </table>
     <br />
     <div class="divClienteBuscar">
-      <h3 class="tituloForm">Datos De Rutas De Cobro</h3>
+      <h3 class="tituloForm">Datos De Rutas De Cobro - {{periodo}} </h3>
     </div>
     <br />
 

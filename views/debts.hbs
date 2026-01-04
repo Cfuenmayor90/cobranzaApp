@@ -1,0 +1,194 @@
+<nav class="navegacion">
+  <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a>
+  <div>
+    <span>Cuentas Por Pagar</span>
+  </div>
+  <div class="iconMenuHamburguesa">
+    <i class="bi bi-menu-button-wide-fill"></i>
+  </div>
+</nav>
+<div class="contMayorCli">
+  <div class="formCliente">
+    <div class="divClienteBuscar">
+      <h3 class="tituloForm">Totales</h3>
+    </div>
+    <br />
+
+    <table class="tableCobGeneralPrin">
+      <tr>
+        <th class="thTabletitleCobGenPrin">Monto:</th>
+        <th class="thTableCobGene">{{montoT}}</th>
+        <th class="thTabletitleCobGenPrin">Interes:</th>
+        <th class="thTableCobGene">{{inteT}}</th>
+      </tr>
+      <tr>
+        <th class="thTabletitleCobGenPrin">Deuda T:</th>
+        <th class="thTableCobGene">{{saldoT}}</th>
+        <th class="thTabletitleCobGenPrin">Efectivo:</th>
+        <th class="thTableCobGene">{{efeCajaT}}</th>
+      </tr>
+       
+
+    </table>
+    <br />
+    <div class="divClienteBuscar">
+      <h3 class="tituloForm">Cuentas Por Pagar</h3>
+    </div>
+    <br />
+
+    {{#each listaCxp}}
+      <table class="tableCobGeneral">
+        <tr>
+          <th class="thTabletitleCobGen" colspan="3">{{descripcion}}</th>
+          <th class="thTabletitleCobGen" colspan="3">{{tipo}}</th>
+        </tr>
+           <tr>
+          <th class="thTabletitleCobGen">Monto:</th>
+          <th class="thTableCobGene">{{montoInicial}}</th>
+          <th class="thTabletitleCobGen">Interes:</th>
+          <th class="thTableCobGene">{{interes}}</th>
+        </tr>
+        <tr>
+          <th class="thTabletitleCobGen">Saldo:</th>
+          <th class="thTableCobGene">{{saldo}}</th>
+          <th class="thTabletitleCobGen">Vencimiento:</th>
+          <th class="thTableCobGene">{{fechaVencimiento}}</th>
+        </tr>
+     </table>
+  
+      <br />
+    {{/each}}
+     
+    
+  </div>
+  <section class="sectionContClientes">
+    <div class="divClienteBuscar">
+      <h3 class="tituloForm">Ingresar Nueva Cuenta Por Pagar</h3>
+    </div>
+    <div class="tarjCli">
+      <form action="/cxp/crearCxp" method="post">
+        <table class="tablaGeneCaja">
+          <tr>
+            <th class="tablaGeneCajaTh">Tipo</th>
+            <th class=""><select class="tablaGeneCajaInp" name="tipo" id="tipo">
+                <option value="TDC">Tarjeta De Credito</option>
+                <option value="PRESTAMO">Prestamo</option>
+               
+              </select></th>
+       
+          </tr>
+          <tr>
+            <th class="tablaGeneCajaTh">Descripcion</th>
+            <th class="" colspan="3"><input
+                class="tablaGeneCajaInp"
+                type="text"
+                id="descripcion"
+                name="descripcion"
+                placeholder="Titular / Banco / Tarjeta / 4 ultimos numeros" /></th>
+          </tr>
+          
+          <tr>
+            <th style="text-align: center;" colspan="4"><button class="tablaGeneCajaBtn" type="submit">Cargar</button></th>
+          </tr>
+
+        </table>
+      </form>
+    </div>
+      <div class="divClienteBuscar">
+      <h3 class="tituloForm">Operaciones De Cuentas Por Pagar</h3>
+    </div>
+    <div class="tarjCli">
+      <form action="/cxp/saveOpeCxp" method="post">
+        <table class="tablaGeneCaja">
+            <tr>
+             <th class="tablaGeneCajaTh">Cuenta Por Pagar</th>
+            <th class="" colspan="3"><select
+                class="tablaGeneCajaInp"
+                name="idCxp"
+                id="idCxp"
+              >
+    
+                {{#each listaCxp}}
+                  <option value="{{_id}}">{{descripcion}}</option>
+                {{/each}}
+              </select></th>
+            </tr>
+          <tr>
+            <th class="tablaGeneCajaTh">Tipo De Operacion</th>
+            <th class="" colspan="3">
+                <select class="tablaGeneCajaInp" name="tipo" id="tipo">
+                <option value="abono">Pago De TDC ó Prestamo</option>
+                <option value="compra">Compra De Mercaderia</option>
+                <option value="prestamo">Adelanto De Efectivo ó Prestamo</option>
+                
+            
+              </select></th>
+           
+          </tr>
+          <tr>
+            <th class="tablaGeneCajaTh">Descripcion</th>
+            <th class="" colspan="3"><input
+                class="tablaGeneCajaInp"
+                type="text"
+                id="descripcion"
+                name="descripcion"
+              /></th>
+          </tr>
+          <tr>
+            <th class="tablaGeneCajaTh">Monto</th>
+            <th class=""  ><input
+                class="tablaGeneCajaInp"
+                type="number"
+                id="monto"
+                name="monto" 
+                required
+              /></th>
+              <th class="tablaGeneCajaTh">Interes</th>
+              <th ><input  class="tablaGeneCajaInp" type="number" name="interes" id="interes"></th>
+          </tr>
+          <th class="tablaGeneCajaTh">Fecha</th>
+        <th ><input  class="tablaGeneCajaInp" type="date" name="fecha" id="fecha"></th>
+        <th  class="tablaGeneCajaTh">Vencimiento</th>
+        <th> <input type="date" class="tablaGeneCajaInp" name="vencimiento" id="vencimiento"></th>
+          <tr>
+
+          </tr>
+          <tr>
+            <th style="text-align: center;" colspan="4"><button class="tablaGeneCajaBtn" type="submit">Cargar</button></th>
+          </tr>
+
+        </table>
+      </form>
+    </div>
+
+
+     <div class="divClienteBuscar">
+      <h3 class="tituloForm">Operaciones Realizadas</h3>
+    </div>
+    <div class="tarjCli">
+  <table class="tableListCaja">
+    <tr>
+      <th class="tableListCajaTitle">Fecha</th>
+      <th class="tableListCajaTitle">Usuario</th>
+      <th class="tableListCajaTitle">Operacion</th>
+      <th class="tableListCajaTitle">Detalle</th>
+      <th class="tableListCajaTitle">Monto</th>
+      <th class="tableListCajaTitle"><i style="color: rgb(0, 0, 0);" class="bi bi-trash"></i></th>
+    </tr>
+    {{#each opeCxp}}
+     <tr>
+      <th class="tableListCajaRes">{{fecha}}</th>
+      <th class="tableListCajaRes">{{userCod}}</th>
+      <th class="tableListCajaRes">{{tipo}}</th>
+      <th class="tableListCajaRes">{{detalle}}</th>
+      <th class="tableListCajaRes">{{monto}}</th>
+      <th class="tableListCajaRes"><a onclick="return confirm('¿Desea Eliminar La OPERACION?')" href="/general/deleteCajaOperacion/{{_id}}"><i style="color: red;" class="bi bi-file-earmark-x"></i></a></th>
+    </tr>
+    
+
+    {{/each}}
+  </table>
+    </div>
+  </section>
+
+</div>

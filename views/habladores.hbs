@@ -1,0 +1,22 @@
+
+
+    <section>
+
+         <div class="contLisProd" style="width: 100%; display: flex; flex-wrap: wrap; justify-content: center; padding: 0;">
+          {{#each arrayPrpoductos}}
+          <div class="tarjetaProd" style="padding: 0.5em; border: 1px solid gray; margin: 0.2em; width: 32%; height: auto; text-align: left;">
+         
+            <h3>{{producto}}</h3>
+            <h4 style="color: gray; font-size: 0.8em">Cod: {{cod}}</h4>
+            <h3>Precio: {{precioTartj}}</h3>
+            <h4 style="border: 1px solid black; font-size: 0.9em; padding: 0.2em"> 3 Cuotas de {{vCuota}} SIN INTERES</h4>
+            <h2>Contado: {{precio}}</h2>
+         
+       
+         </div>
+
+          {{/each}}
+      
+         </div>
+    </section>
+
