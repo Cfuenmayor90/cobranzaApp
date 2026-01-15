@@ -136,6 +136,7 @@
             <th class="tableListCajaRes">{{tipo}}</th>
             <th class="tableListCajaRes">{{detalle}}</th>
             <th class="tableListCajaRes">${{monto}}</th>
+            <th class="tableListCajaRes"><a onclick="return confirm('¿Desea Eliminar La OPERACION?')" href="/general/deleteCajaOperacion/{{_id}}"><i style="color: red;" class="bi bi-file-earmark-x"></i></a></th>
           </tr>
         {{/each}}
       </table>
