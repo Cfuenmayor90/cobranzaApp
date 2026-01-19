@@ -142,6 +142,27 @@
         {{/each}}
       </table>
     </div>
+      <div class="divClienteBuscar">
+      <h3 class="tituloForm">Operaciones De Caja</h3>
+    </div>
+    <div class="tarjUser">
+      <table class="tableListCaja">
+        <tr class="">
+          <th class="tableListCajaTitle">Fecha</th>
+          <th class="tableListCajaTitle">Tipo</th>
+          <th class="tableListCajaTitle">Detalle</th>
+          <th class="tableListCajaTitle">Monto</th>
+        </tr>
+        {{#each opeCaja}}
+          <tr>
+            <th class="tableListCajaRes">{{fecha}}</th>
+            <th class="tableListCajaRes">{{tipo}}</th>
+            <th class="tableListCajaRes">{{detalle}}</th>
+            <th class="tableListCajaRes">${{monto}}</th>
+          </tr>
+        {{/each}}
+      </table>
+    </div>
 
     
 
