@@ -364,7 +364,9 @@ const cargarEstadoClient = async(req, res) => {
     gastoT = f.format(gastoT);
     efectivo = f.format(efectivo);
     ventCtdoTo = f.format(ventCtdoTo);
-
+    if (user == "admin") {
+      res.render('generalEstadisUsuario', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo});
+    }
     res.render('estadisticas', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo});
   };
 const editCliente = async(req, res) =>{
