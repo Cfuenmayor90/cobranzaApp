@@ -325,7 +325,7 @@ const cargarEstadoClient = async(req, res) => {
     console.log(`numRuta ${numRutaInp} mes ${mesInp} año ${anioInp}`);
     var anio = anioInp || new Date().getFullYear();
     console.log(anio);
-    
+    console.log(mesInp);
      var mes = mesInp || new Date().getMonth();
      console.log(mes);
       var m = parseInt(mes) + 1;
