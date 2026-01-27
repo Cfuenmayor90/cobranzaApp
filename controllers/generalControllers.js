@@ -365,7 +365,7 @@ const cargarEstadoClient = async(req, res) => {
     efectivo = f.format(efectivo);
     ventCtdoTo = f.format(ventCtdoTo);
     if (user == "admin") {
-      res.render('estadisticas', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo});
+      res.render('generalEstadisUsuario', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo});
     }
     res.render('estadisticas', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo});
   };
