@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const { checkRole } = require("../controllers/usersControllers");
 
 const { cargarCxp, saveCxp, saveOpeCxp} = require('../controllers/cuentasPorPagarControllers');
 
-router.get('/', cargarCxp);
+router.get('/', checkRole('admin'), cargarCxp);
 
-router.post('/crearCxp', saveCxp);
+router.post('/crearCxp',checkRole('admin'), saveCxp);
 
-router.post('/saveOpeCxp', saveOpeCxp);
+router.post('/saveOpeCxp',checkRole('admin'), saveOpeCxp);
 
 module.exports = router;     
