@@ -17,6 +17,7 @@ const settingsRoutes = require('./routes/settingsRoutes');
 const calculadoraRoutes = require('./routes/calculadoraRoutes');
 const generalRoutes = require('./routes/generalRoutes');
 const alertasRoutes = require('./routes/alertasRoutes');
+const cxpRoutes = require('./routes/cxpRoutes');
 const { log } = require('console');
 
 const app = express();
@@ -41,6 +42,7 @@ app.use(express.urlencoded({extended: false}));
  app.use('/calculadora', calculadoraRoutes);
  app.use('/general', generalRoutes);
  app.use('/alertas', alertasRoutes);
+ app.use('/cxp', cxpRoutes);
 
  app.get('/', (req, res) => {
    res.render('index');
