@@ -73,6 +73,7 @@ const cotizarProd = async(req, res) => {
         var precioTartj = precio * (valores.tcredito/100 + 1); //precio con tarjeta de credito
         var vCuota = precioTartj / 3;
         var arrayPlanes = [];
+        var arrayPlanesParticulares = [];
         planesDiarios.forEach(element => {
             var xcentaje = (element.porcentaje/100)+1;
             var cuota = (precio*xcentaje)/element.cuotas;
@@ -82,6 +83,16 @@ const cotizarProd = async(req, res) => {
         planesSemanales.forEach(element => {
             var xcentaje= (element.porcentaje/100)+1;
             var cuota =(precio*xcentaje)/element.cuotas;
+
+            var precioParticular = (precioTartj / 2); //precio con tarjeta de credito dividido en 2 cuotas con un 10% de recargo
+            var entrega = precioParticular;
+            var cuotasParticulares = precioParticular * xcentaje / element.cuotas;
+            var totalParticular = entrega + (cuotasParticulares * element.cuotas);
+            totalParticular = f.format(totalParticular);
+            cuotasParticulares = f.format(cuotasParticulares); 
+            entrega = f.format(entrega);
+            arrayPlanesParticulares.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "entrega": entrega, "cuotasParticulares": cuotasParticulares, "totalParticular": totalParticular});
+            
             cuota = f.format(cuota);
             arrayPlanes.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota});
     });
@@ -90,12 +101,21 @@ const cotizarProd = async(req, res) => {
             var cuota =(precio*xcentaje)/element.cuotas;
             cuota = f.format(cuota);
             arrayPlanes.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota});
+
+             var precioParticular = (precioTartj / 2); //precio con tarjeta de credito dividido en 2 cuotas con un 10% de recargo
+            var entrega = precioParticular;
+            var cuotasParticulares = precioParticular * xcentaje / element.cuotas;
+            var totalParticular = entrega + (cuotasParticulares * element.cuotas);
+            totalParticular = f.format(totalParticular);
+            cuotasParticulares = f.format(cuotasParticulares); 
+            entrega = f.format(entrega);
+            arrayPlanesParticulares.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "entrega": entrega, "cuotasParticulares": cuotasParticulares, "totalParticular": totalParticular});
     });
     
        precio = f.format(precio);
        vCuota = f.format(vCuota);
        precioTartj = f.format(precioTartj);
-        res.render('cotizarProd', {prod, precio, precioTartj, vCuota, arrayPlanes})
+        res.render('cotizarProd', {prod, precio, precioTartj, vCuota, arrayPlanes, arrayPlanesParticulares});
     } catch (error) {
         res.render('error', {error});
     }
