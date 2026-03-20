@@ -35,7 +35,7 @@
 
   <div class="formCliente">
      <div class="divClienteBuscar">
-      <h3 class="tituloForm">Planes De Pago</h3>
+      <h3 class="tituloForm">Planes De Pago Para Comerciantes</h3>
     </div>
     <div class="tarjUser">
       <table class="tableListCaja">
@@ -49,6 +49,29 @@
             <th class="tableListCajaRes">{{plan}}</th>
             <th class="tableListCajaRes">{{cuotas}}</th>
             <th class="tableListCajaRes">{{cuota}}</th>
+          </tr>
+     {{/each}}
+      </table>
+    </div>
+         <div class="divClienteBuscar">
+      <h3 class="tituloForm">Planes De Pago Para Particulares</h3>
+    </div>
+    <div class="tarjUser">
+      <table class="tableListCaja">
+        <tr class="">
+          <th class="tableListCajaTitle">Plan</th>
+          <th class="tableListCajaTitle">Cuotas</th>
+            <th class="tableListCajaTitle">Valor De Cuota</th>
+          <th class="tableListCajaTitle">Entrega</th>
+           <th class="tableListCajaTitle">Total</th>
+        </tr>
+      {{#each arrayPlanesParticulares}}
+          <tr>
+            <th class="tableListCajaRes">{{plan}}</th>
+            <th class="tableListCajaRes">{{cuotas}}</th>
+            <th class="tableListCajaRes">{{cuotasParticulares}}</th>
+            <th class="tableListCajaRes">{{entrega}}</th>
+            <th class="tableListCajaRes">{{totalParticular}}</th>
           </tr>
      {{/each}}
       </table>
