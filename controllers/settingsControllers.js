@@ -5,7 +5,7 @@ const setvalores = require('../models/settingValoresModels');
 const cargarSettins = async(req,res) =>{
     try {
         const planActualPres = await setPrest.find({categoria: 'prestamo'});
-        const planActualProd = await setPrest.find({categoria:'financiamiento'});
+        const planActualProd = await setPrest.find({categoria: ['financiamiento', 'particular']}).sort({categoria: 1, plan: 1, cuotas: 1});
         const valores = await setvalores.find();
         res.render('configuracion', {planActualPres, planActualProd, valores});
     } catch (error) {

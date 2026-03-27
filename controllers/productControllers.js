@@ -69,6 +69,7 @@ const cotizarProd = async(req, res) => {
         const planesDiarios = await setting.find({categoria: "financiamiento",plan: "diario" }).sort({cuotas: 1});
         const planesSemanales = await setting.find({categoria: "financiamiento",plan: "Semanal" }).sort({cuotas: 1});
         const planesMensuales = await setting.find({categoria: "financiamiento",plan: "mensual" }).sort({cuotas: 1});
+        const planesParticulares = await setting.find({categoria: "particular" }).sort({plan: 1, cuotas: 1});
         var precio = (prod.precio * valores.dolar) * (valores.porcentaje/100 + 1); //precio con ganancia
         var precioTartj = precio * (valores.tcredito/100 + 1); //precio con tarjeta de credito
         var vCuota = precioTartj / 3;
@@ -83,16 +84,6 @@ const cotizarProd = async(req, res) => {
         planesSemanales.forEach(element => {
             var xcentaje= (element.porcentaje/100)+1;
             var cuota =(precio*xcentaje)/element.cuotas;
-
-            var precioParticular = (precioTartj / 2); //precio con tarjeta de credito dividido en 2 cuotas con un 10% de recargo
-            var entrega = precioParticular;
-            var cuotasParticulares = precioParticular * xcentaje / element.cuotas;
-            var totalParticular = entrega + (cuotasParticulares * element.cuotas);
-            totalParticular = f.format(totalParticular);
-            cuotasParticulares = f.format(cuotasParticulares); 
-            entrega = f.format(entrega);
-            arrayPlanesParticulares.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "entrega": entrega, "cuotasParticulares": cuotasParticulares, "totalParticular": totalParticular});
-            
             cuota = f.format(cuota);
             arrayPlanes.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota});
     });
@@ -102,14 +93,13 @@ const cotizarProd = async(req, res) => {
             cuota = f.format(cuota);
             arrayPlanes.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota});
 
-             var precioParticular = (precioTartj / 2); //precio con tarjeta de credito dividido en 2 cuotas con un 10% de recargo
-            var entrega = precioParticular;
-            var cuotasParticulares = precioParticular * xcentaje / element.cuotas;
-            var totalParticular = entrega + (cuotasParticulares * element.cuotas);
-            totalParticular = f.format(totalParticular);
-            cuotasParticulares = f.format(cuotasParticulares); 
-            entrega = f.format(entrega);
-            arrayPlanesParticulares.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "entrega": entrega, "cuotasParticulares": cuotasParticulares, "totalParticular": totalParticular});
+             });
+
+    planesParticulares.forEach(element => {
+            var xcentaje= (element.porcentaje/100)+1;
+            var cuota =(precio*xcentaje)/element.cuotas;
+            cuota = f.format(cuota);
+            arrayPlanesParticulares.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota, "total": f.format(precio*xcentaje)}); 
     });
     
        precio = f.format(precio);
@@ -120,6 +110,36 @@ const cotizarProd = async(req, res) => {
         res.render('error', {error});
     }
 }
+
+const listaPrecioVenta = async(req, res) =>{
+    try {
+        const productos = await product.find({stock: {$gt: 0}}).sort({nombre: 1});
+        const valores = await settingValores.findOne();
+        const planesSemanales = await setting.find({categoria: "financiamiento",plan: "Semanal", cuotas: {$gt: 0, $lt: 13}}).sort({cuotas: 1});
+        const arrayProductos = []; 
+        productos.forEach(element => {
+            const prod = element;
+        var precio = (prod.precio * valores.dolar) * ((valores.porcentaje * 0.01) + 1);
+        var precioTartj = precio *((valores.tcredito * 0.01) + 1);
+        var vCuotaTarj = precioTartj / 3;
+        var precio2sema = (precio * ((planesSemanales[0].porcentaje * 0.01) + 1));
+        var precio3sema = precio * ((planesSemanales[1].porcentaje * 0.01) + 1);
+        var precio6sema = precio * ((planesSemanales[2].porcentaje * 0.01) + 1);
+        var precio9sema = precio * ((planesSemanales[3].porcentaje * 0.01) + 1);
+        var cuota2sema = precio2sema / planesSemanales[0].cuotas;
+        var cuota3sema = precio3sema / planesSemanales[1].cuotas;
+        var cuota6sema = precio6sema / planesSemanales[2].cuotas;
+        var cuota9sema = precio9sema / planesSemanales[3].cuotas;   
+        arrayProductos.push({"nombre":prod.nombre,"cod": prod.cod, "precio": f.format(precio), "precioList": f.format(precioTartj), "vCuotaTarj": f.format(vCuotaTarj), "cuota2sema": f.format(cuota2sema), "cuota3sema": f.format(cuota3sema), "cuota6sema": f.format(cuota6sema), "cuota9sema": f.format(cuota9sema)});
+        }
+
+        );
+        res.render('listaPrecioVenta', {arrayProductos});
+    } catch (error) {
+        
+    }       
+};
+       
 //midleware de MULTER   
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../public/uploads'),
@@ -211,4 +231,4 @@ const habladores = async(req, res) =>{
     }
 };
 
-module.exports = {cargarProducts, cargarPagProductos, imprimirProd, upload, saveProducts, cotizarProd, filtrarProd, prodEditGet, prodEditSave, prodDelete, habladores };
+module.exports = {cargarProducts, cargarPagProductos, imprimirProd, upload, saveProducts, cotizarProd, filtrarProd, prodEditGet, prodEditSave, prodDelete, habladores, listaPrecioVenta };
