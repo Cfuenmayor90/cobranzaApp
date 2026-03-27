@@ -7,5 +7,5 @@ router.get('/', checkRole(['admin', 'vendedor', 'cobrador', 'pisoDeVenta', 'supe
 router.post('/calcular', checkRole(['admin', 'cobrador', 'pisoDeVenta', 'supervisor', 'vendedor']), calcular);
 
 router.post('/presupuestoProdCant', checkRole(['admin', 'cobrador', 'pisoDeVenta', 'supervisor', 'vendedor']), presupuestoProdCant);
-router.post('/presupuestoProdFinal', checkRole(['admin', 'cobrador', 'pisoDeVenta', 'supervisor', 'vendedor']), presupuestoProdFinal);
+router.post('/presupuestoProdFinal', presupuestoProdFinal);
 module.exports = router;
