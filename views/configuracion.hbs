@@ -20,7 +20,8 @@
         <tr>
           <th><label class="title" for="paln">Categoria</label></th>
           <th><select name="categoria" id="categoria" class="inpFormSett">
-            <option value="financiamiento">Financiamiento De Productos</option>
+            <option value="financiamiento">Financiamiento Comercial</option>
+             <option value="particular">Financiamiento Particular</option>
             <option value="prestamo">Prestamo De Dinero</option>
           </select></th>
         </tr>
@@ -75,6 +76,7 @@
          <table class="tableListCaja">
     <tr>
       <th class="tableListCajaTitle">Plan</th>
+       <th class="tableListCajaTitle">Categoria</th>
       <th class="tableListCajaTitle">Cuotas</th>
       <th class="tableListCajaTitle">Porcentaje</th>
       <th class="tableListCajaTitle"><i style="color: rgb(0, 0, 0);" class="bi bi-trash"></i></th>
@@ -82,6 +84,7 @@
         {{#each planActualProd}}
           <tr>
       <th class="tableListCajaRes">{{plan}}</th>
+      <th class="tableListCajaRes">{{categoria}}</th>
       <th class="tableListCajaRes">{{cuotas}}</th>
       <th class="tableListCajaRes">{{porcentaje}}</th>
       <th class="tableListCajaRes"><a href="/settings/deletePlan/{{_id}}" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El Plan?: {{{nombre}}}?')" ><i style="color: red;" class="bi bi-file-earmark-x"></i></a></th>

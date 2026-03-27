@@ -1,7 +1,7 @@
 <nav class="navegacion">
   <a href="javascript:history.back()"><i class="bi bi-box-arrow-left"></i></a>
   <div>
-    <span>Detalles Del Producto</span>
+    <span>Presupuesto Final</span>
   </div>
   <div class="iconMenuHamburguesa">
     <i class="bi bi-menu-button-wide-fill"></i>
@@ -10,23 +10,41 @@
 <div class="contMayorCli">
   <div class="formCliente">
     <div class="divClienteBuscar">
-      <h3 class="tituloForm">{{prod.nombre}}</h3>
+      <h3 class="tituloForm">Detalles</h3>
     </div>
-        <img class="imgCotizarProd" src="/uploads/{{prod.cod}}.jpg" alt="">
+    <br>
+          <table class="tableListCaja">
+        <tr class="">
+          <th class="tableListCajaTitle">Cod</th>
+          <th class="tableListCajaTitle">Producto</th>
+          <th class="tableListCajaTitle">Precio</th>
+          <th class="tableListCajaTitle">Cantidad</th>
+            <th class="tableListCajaTitle">Subtotal</th>
+        </tr>
+      {{#each ArrayInfProd}}
+          <tr>
+            <th class="tableListCajaRes">{{cod}}</th>
+            <th class="tableListCajaRes">{{nombre}}</th>
+            <th class="tableListCajaRes">{{precio}}</th>
+            <th class="tableListCajaRes">{{cant}}</th>
+            <th class="tableListCajaRes">{{Total}}</th>
+          </tr>
+     {{/each}}
+      </table>
+ 
     <div class="infoCotizarProd">
-       <h2>{{prod.nombre}}</h2>
-       <h4>Codigo: {{prod.cod}}</h4>
-       <h4>Disponibles: {{prod.stock}}</h4>
+         <h2 style="font-size: 30px;">Total: <label for="" style="color: rgb(0, 145, 31);">{{precioTartj}}</label></h2>
        <h2 style="font-size: 30px;">Oferta De Contado: <label for="" style="color: rgb(0, 145, 31);">{{precio}}</label></h2>
-       <h2 style="font-size: 25px;">Precio De Lista: <label for="" style="color: blue;">{{precioTartj}}</label></h2>
-       <h3 style="font-size: 25px;">3 cuotas sin interes de  <span style="color: rgb(14, 139, 0);fon">{{vCuota}}</span></h3>
+    <h3 style="font-size: 25px;">Descuento:  <span style="color: rgb(139, 0, 0);fon">{{descuento}}%</span></h3>
+    <h3 style="font-size: 25px;">Descuento Aplicado:  <span style="color: rgb(139, 0, 0);fon">{{descuentoAplicado}}</span></h3>
+   <h3 style="font-size: 25px;">3 cuotas sin interes de  <span style="color: rgb(14, 139, 0);fon">{{vCuota}}</span></h3>
+   
        <div style="display:flex; justify-content: flex-start;">
       <img src="/tnx.svg" alt="">
       <img src="/tvisa.svg" alt="">
       <img src="/tmaster.svg" alt="">
       <img src="/tamex.svg" alt="">
        </div>
-       <h5>{{prod.descripcion}}</h5>
       <!-- <a href="https://api.whatsapp.com/send?text=[text]" class="btnCompartirCotizarPro"> <i class="bi bi-whatsapp"></i></i></a>    -->
           
        </div>    

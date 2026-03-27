@@ -89,5 +89,31 @@
 
     </table>
     <br />
-  </div>
+<div class="divClienteBuscar">
+        <h3 class="tituloForm">Cotizar Planes De Productos</h3>
+      </div>
+    <form action="/calculadora/presupuestoProdCant" method="post" class="formCliente2">
+        
+            <label for="detalle">Codigo De Producto</label>
+            <select  name="codProd" id="codProd" class="inpForm"  multiple>
+              {{#each productos}}
+              <option value="{{cod}}">{{cod}} // {{nombre}}</option>
+              {{/each}}
+            </select>
+              <br>
+                <label for="descuento">Descuento</label>
+                <input type="number" name="descuento" id="descuento" placeholder="Expresado en %" class="inpForm" required>
+                <br>
+                <div class="cantBtnForm">
+                  <button class="btnFormReset" type="reset">Limpiar</button>
+                  <button class="btnFormAceptar" type="submit">Cotizar</button>
+            <br>
+                  </div>
+    </form>
+    
 </div>
+
+</div>
+
+  </div>
+ 
