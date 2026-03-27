@@ -1,0 +1,35 @@
+
+   <div class="contMayorCli">
+   <table class="tableListImp">
+    <tr>
+      <th class="" colspan="4" > Lista de Productos para la venta</th>
+    </tr>
+    <tr>
+      <th class="tableListImpTitle">Nombre</th>
+      <th class="tableListImpTitle">Codigo</th>
+      <th class="tableListImpTitle">Contado</th>
+      <th class="tableListImpTitle">Precio</th>
+      <th class="tableListImpTitle">Tj 3 Sin %</th>
+      <th class="tableListImpTitle">C-2sema</th>
+      <th class="tableListImpTitle">C-3sema</th>
+      <th class="tableListImpTitle">C-6sema</th>
+      <th class="tableListImpTitle">P-9sema</th>
+    </tr>
+    {{#each arrayProductos}}
+     <tr>
+      <th class="tableListImp">{{nombre}}</th>
+       <th class="tableListImp">{{cod}}</th>
+        <th class="tableListImp">{{precio}}</th>
+      <th class="tableListImp">{{precioList}}</th>
+      <th class="tableListImp">{{vCuotaTarj}}</th>
+      <th class="tableListImp">{{cuota2sema}}</th>
+         <th class="tableListImp">{{cuota3sema}}</th>
+            <th class="tableListImp">{{cuota6sema}}</th>
+               <th class="tableListImp">{{cuota9sema}}</th>
+    </tr>
+    
+    {{/each}}   
+   </table>
+   
+  </div>
+
