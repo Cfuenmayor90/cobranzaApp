@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const {checkRole} = require('../controllers/usersControllers');
-const {cargarProducts, imprimirProd, cargarPagProductos, upload, saveProducts, cotizarProd, filtrarProd, prodEditGet, prodEditSave, prodDelete, habladores} = require('../controllers/productControllers');
+const {cargarProducts, imprimirProd, listaPrecioVenta, cargarPagProductos, upload, saveProducts, cotizarProd, filtrarProd, prodEditGet, prodEditSave, prodDelete, habladores} = require('../controllers/productControllers');
 
 router.get('/productosUsuarios', cargarPagProductos);
 
 router.get('/productos', checkRole(['admin']), cargarProducts);
 
 router.get('/imprimirProd', checkRole(['admin']), imprimirProd);
+
+router.get('/listaPrecioVenta', checkRole(['admin']), listaPrecioVenta);
 
 router.get('/filtrarProd/:categoria', filtrarProd);
  
