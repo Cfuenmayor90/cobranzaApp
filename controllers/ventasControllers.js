@@ -119,8 +119,7 @@ const cotizarPlan = async(req, res) => {
     const fechaVent = new Date(anio, mes, (dia + 1)).toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     const cliente = await client.findOne({dni:cot.dni});
     const balanCEDiario = await balance.findOne({cobRuta: cot.cobRuta, fecha: fechaVent});
-    console.log("fecha de venta " + cot.fecha);
-    console.log("balance encontrado " + balanCEDiario);
+    var detalle = "";
     if (!cliente) {
       mensajeError = '¡El Cliente NO existe en la DATA BASE!';
       res.render('error', {mensajeError});
@@ -160,6 +159,7 @@ const cotizarPlan = async(req, res) => {
             console.log(precio);
             arrayCod.push({"cod":element,"nombre": prod.nombre, "precio": prod.precio, "cant": cantProd, "Total": (prod.precio * cantProd)});
             console.log("array productos " + arrayCod);
+             detalle = detalle + "Cant: " + cantProd + ", "+ prod.nombre + ", Cod: " + prod.cod + " || ";
           };  
         }
         else{
@@ -167,6 +167,7 @@ const cotizarPlan = async(req, res) => {
           var cantProd = req.body[codProducts];
           precio= prod.precio * cantProd;
           arrayCod.push({"cod":codProducts, "nombre": prod.nombre, "precio": prod.precio, "cant": cantProd, "Total": (prod.precio * cantProd) });
+          detalle =  "Cant: " + cantProd + ", "+ prod.nombre + ", Cod: " + prod.cod ;
         }
 
         
@@ -176,7 +177,7 @@ const cotizarPlan = async(req, res) => {
         const planCot = await setPrest.findById({_id:cot.planId});
         const mTotal = ((precioT * ((planCot.porcentaje / 100)+1))-(des * (precioT * ((planCot.porcentaje / 100)+1)))).toFixed(2);
         const cuota = (mTotal / planCot.cuotas).toFixed(2);
-        res.render('confirmarVenta', {cot, planCot, cuota, mTotal, cliente, arrayCod});
+        res.render('confirmarVenta', {cot, planCot, cuota, mTotal, detalle, cliente, arrayCod});
         
       }
      }
@@ -218,6 +219,7 @@ try {
   const timeSt = new Date(anio, mes, dia).toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
   var fechaV  = new Date(anio, mes, dia);//.toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
   var fechaVencimiento = "";
+  var detalle = "";
   if (newVenta.plan === "diario") {
     var DiaDom = parseInt(newVenta.cuotas/6);
     fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas + DiaDom)));
