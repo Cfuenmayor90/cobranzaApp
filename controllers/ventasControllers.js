@@ -63,20 +63,19 @@ const preCotizar = async(req, res) =>{
     const fechaVent = new Date(anio, mes, (dia + 1)).toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     const cliente = await client.findOne({dni:cot.dni});
     const balanCEDiario = await balance.findOne({cobRuta: cot.cobRuta, fecha: fechaVent});
-    console.log("fecha de venta " + cot.fecha);
-    console.log("balance encontrado " + balanCEDiario);
     if (!cliente) {
       mensajeError = '¡El Cliente NO existe en la DATA BASE!';
       res.render('error', {mensajeError});
     }
-     if (balanCEDiario) {
-       const arrayCod = [];
-         if (cot.codProd == "prestamo"){
-          const planCot = await setPrest.findById({_id:cot.planId});
+    if (balanCEDiario) {
+      const arrayCod = [];
+      if (cot.codProd == "prestamo"){
+        const planCot = await setPrest.findById({_id:cot.planId});
+        var detalle = cot.detalle;
         const mTotal = (cot.monto * ((planCot.porcentaje / 100)+1)).toFixed(2);
         const cuota = (mTotal / planCot.cuotas).toFixed(2);
         arrayCod.push({"cod": cot.codProd, "cant": 1});
-        res.render('confirmarVenta', {cot, planCot, cuota, mTotal, cliente, arrayCod});
+        res.render('confirmarVenta', {cot, planCot, cuota, detalle, mTotal, cliente, arrayCod});
          }
          else{
         const codProducts = cot.codProd;
