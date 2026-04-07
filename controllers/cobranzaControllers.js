@@ -115,6 +115,7 @@ const pagoSave = async (req, res) => {
 const cargarTransf = async(req, res) =>{
   try {
     const transfere = await transf.find({status: "PENDIENTE"}).sort({transfFecha: 1});
+    const transfCaja = await caja.find({tipo: "rendicion"}).sort({timeStamp: -1}).limit(10);
     res.render('transferencias', {transfere});
   } catch (error) {
     
@@ -159,14 +160,19 @@ const confirmarTransf = async(req, res) =>{
   try {
     const {id} = req.params;
     const transfEdit = await transf.findByIdAndUpdate({_id: id}, {status: "CONFIRMADA"});
+    const fecha = transfEdit.fecha;
+    var fcha = new Date(fecha);
+      const anio = new Date(fcha).getFullYear();
+      const mes = new Date(fcha).getMonth();
+      const dia = new Date(fcha).getUTCDate();
           const newOperacion = new caja();
       newOperacion.monto = transfEdit.monto;
       newOperacion.tipo = "rendicion";
       newOperacion.detalle = `Transf. de ${transfEdit.nombre} - Fecha: ${transfEdit.transfFecha}`;
       newOperacion.fecha = transfEdit.fecha;
       newOperacion.userCod = transfEdit.cobRuta; 
-      newOperacion.timeStamp = transfEdit.timeStamp;
-
+      newOperacion.timeStamp = new Date(anio, mes, dia).toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+    console.log("fecha timestamp" + newOperacion.timeStamp);
            await newOperacion.save();
 
     res.redirect('/cobranza/transf');
