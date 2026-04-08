@@ -246,6 +246,7 @@ const guardarCaja = async(req, res) => {
     try {
       const newOperacion = new caja(req.body);
       const fecha = newOperacion.fecha;
+      console.log("fecha operacion" + fecha);
       const anio = new Date(fecha).getFullYear();
       const mes = new Date(fecha).getMonth();
       const dia = new Date(fecha).getUTCDate();
