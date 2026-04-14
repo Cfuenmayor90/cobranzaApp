@@ -162,6 +162,7 @@ const confirmarTransf = async(req, res) =>{
     const transfEdit = await transf.findByIdAndUpdate({_id: id}, {status: "CONFIRMADA"});
     const fecha = transfEdit.fecha;
     var fcha = new Date(fecha);
+    console.log("fecha " + fcha);
       const anio = new Date(fcha).getFullYear();
       const mes = new Date(fcha).getMonth();
       const dia = new Date(fcha).getUTCDate();
