@@ -12,7 +12,6 @@ const f = new Intl.NumberFormat('es-AR', {
   currency: 'ARS',
   minimumFractionDigits: 1
 });
-const moment = require('moment');
 
 
 
