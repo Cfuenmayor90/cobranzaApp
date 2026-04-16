@@ -37,7 +37,7 @@ const transfSchema = new Schema({
     },
     timeStamp:{
         type: Date,
-        default: Date.now
+        require: true
     }
 
 });
