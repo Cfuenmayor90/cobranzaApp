@@ -12,11 +12,12 @@ const f = new Intl.NumberFormat('es-AR', {
   currency: 'ARS',
   minimumFractionDigits: 1
 });
+const moment = require('moment');
 
 
 
 const cargarCobranza = async (req, res) => {
-  console.log("cobranza");
+  
   try {
     const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
     const verifyToken = await verifyJWT(token);
@@ -53,7 +54,6 @@ const pagoSave = async (req, res) => {
     var fechaActual = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     
     var time = new Date();
-    console.log(fechaActual);
     const prestamo = await ventas.findById({ _id: codPres });
     if (prestamo.mTotal >= pago && fechaActual !== prestamo.fechaUltPago) {
       
@@ -98,6 +98,7 @@ const pagoSave = async (req, res) => {
           transfNew.transfFecha = req.body.transfFecha;
           transfNew.fecha = fechaActual;
           transfNew.monto = req.body.transfMonto;
+          transfNew.timeStamp = new Date().toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
           await transfNew.save();
         }
       } else {
@@ -133,10 +134,13 @@ const cargarTranfCob = async(req, res) =>{
   } };
   const guardarTransfCob = async(req, res) =>{
     try {
+      console.log("GUARDAR TRANSFERENCIA");
+      
       const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
       const verifyToken = await verifyJWT(token);
       const {dni, transfFecha, transfMonto} = req.body;
       const cliente = await client.findOne({dni});
+  
       if (cliente) {
         const newTransf = new transf();     
         newTransf.cobRuta = verifyToken.numRuta;
@@ -145,7 +149,8 @@ const cargarTranfCob = async(req, res) =>{
         newTransf.transfFecha = transfFecha;
         newTransf.monto = transfMonto;
         newTransf.fecha = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-        newTransf.timeStamp = timeStamp = new Date().toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+        newTransf.timeStamp = new Date().toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+        console.log("time " + newTransf.timeStamp);
         await newTransf.save();
         res.redirect('/cobranza/transfCob');
       } else {
@@ -161,18 +166,13 @@ const confirmarTransf = async(req, res) =>{
     const {id} = req.params;
     const transfEdit = await transf.findByIdAndUpdate({_id: id}, {status: "CONFIRMADA"});
     const fecha = transfEdit.fecha;
-    var fcha = new Date(fecha);
-    console.log("fecha " + fcha);
-      const anio = new Date(fcha).getFullYear();
-      const mes = new Date(fcha).getMonth();
-      const dia = new Date(fcha).getUTCDate();
-          const newOperacion = new caja();
+      const newOperacion = new caja();
       newOperacion.monto = transfEdit.monto;
       newOperacion.tipo = "rendicion";
       newOperacion.detalle = `Transf. de ${transfEdit.nombre} - Fecha: ${transfEdit.transfFecha}`;
       newOperacion.fecha = transfEdit.fecha;
       newOperacion.userCod = transfEdit.cobRuta; 
-      newOperacion.timeStamp = new Date(anio, mes, dia).toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+      newOperacion.timeStamp = transfEdit.timeStamp;
     console.log("fecha timestamp" + newOperacion.timeStamp);
            await newOperacion.save();
 
