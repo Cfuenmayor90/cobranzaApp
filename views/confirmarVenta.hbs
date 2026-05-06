@@ -40,10 +40,21 @@
             <br>
       <label class="title" for="monto">Monto</label>
         <input type="number" class="inpForm" value="{{cot.monto}}" id="monto" name="monto" required readonly/>
+         <div style="background-color: rgb(255, 255, 0);">
+             <label class="title" for="monto">Datos De Adelanto</label>
+             <br>
+            <label class="title" for="monto">Monto: </label>
+        <input type="number" style="width: 50%;" class="inpForm" value="{{cot.adelanto}}" id="adelanto" name="adelanto" readonly/>
       <br />
-            <label class="title" for="monto">Adelanto</label>
-        <input type="number" class="inpForm" value="{{cot.adelanto}}" id="adelanto" name="adelanto" readonly/>
-      <br />
+       <label for="">Datos Para Transferencia </label>
+       <br>
+       <label for="">Titular: </label>
+        <input style="width: 80%;" type="text" class="inpForm" id="transfTitular" name="transfTitular"> <label style="width: 25%;" for="">
+          <br>
+     <label for="">Monto: </label>
+         <input style="width: 25%;" type="number" step=".01" class="inpForm" id="transfMonto" name="transfMonto"> <input style="width: 58%;" class="inpForm" type="datetime-local" name="transfFecha" id="transfFecha"> 
+
+      </div>
       <label class="title" for="codProd">Codigo De Producto</label>
       <select type="text" class="inpForm"  id="codProd" name="codProd" multiple >
         {{#each arrayCod}}
