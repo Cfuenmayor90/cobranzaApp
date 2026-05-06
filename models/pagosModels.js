@@ -26,9 +26,10 @@ const pagoSchema = new Schema({
         type: String,
         require: false
     },
-    timeStamp:{
+  timeStamp:{
         type: Date,
-        default: Date.now
+        require: true,
+        default: Date.now() - 10800000
     }
 
 });

@@ -35,9 +35,10 @@ const transfSchema = new Schema({
         require: true,
         default: 'PENDIENTE'
     },
-    timeStamp:{
+   timeStamp:{
         type: Date,
-        require: true
+        require: true,
+        default: Date.now() - 10800000
     }
 
 });
