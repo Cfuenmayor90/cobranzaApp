@@ -217,7 +217,7 @@ try {
   const fechaAc = new Date(anio, mes, (dia + 1)).toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
   const timeSt = new Date(anio, mes, dia).toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
   var fechaV  = new Date(anio, mes, dia);
-  var fechaVencimiento = "";
+  var fechaVencimiento = new Date();
   var detalle = "";
 switch (newVenta.plan) {
   case "diario":
