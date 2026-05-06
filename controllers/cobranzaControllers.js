@@ -7,6 +7,7 @@ const transf = require("../models/transfModels");
 const caja = require('../models/cajaModels');
 const { generarJWT, verifyJWT } = require("../middleware/jwt");
 const balances = require('../models/balanceModels');
+const { now } = require("mongoose");
 const f = new Intl.NumberFormat('es-AR', {
   style: 'currency',
   currency: 'ARS',
@@ -51,7 +52,7 @@ const pagoSave = async (req, res) => {
   const { codPres, pago } = req.body;
   try {
     var fechaActual = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-    
+
     var time = new Date();
     const prestamo = await ventas.findById({ _id: codPres });
     if (prestamo.mTotal >= pago && fechaActual !== prestamo.fechaUltPago) {
@@ -62,13 +63,13 @@ const pagoSave = async (req, res) => {
         const pagoVa = new pagoN(req.body);
         pagoVa.fecha = fechaActual;
         pagoVa.cobRuta = prestamo.cobRuta;
-        pagoVa.timeStamp = new Date().toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+       
         var pNew = (prestamo.mTotal - pago).toFixed(2);
         prestamo.mTotal = pNew;
         prestamo.fechaUltPago = fechaActual;
         await ventas.findByIdAndUpdate({ _id: codPres }, prestamo);
         await pagoVa.save();
-        //codigo para editar balance diario
+  
         var venTas = await ventas.find({cobRuta: nRuta, fechaInicio: fechaActual});
         var pagosT = 0;
         var venTotal = 0;
@@ -97,9 +98,9 @@ const pagoSave = async (req, res) => {
           transfNew.transfFecha = req.body.transfFecha;
           transfNew.fecha = fechaActual;
           transfNew.monto = req.body.transfMonto;
-          transfNew.timeStamp = new Date().toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
           await transfNew.save();
-        }
+      }
+
       } else {
            const mensajeError = "¡No se encontro el Balance, espere a que su admin genere la planilla de cobranza!";
             res.render("error", { mensajeError });
@@ -148,7 +149,7 @@ const cargarTranfCob = async(req, res) =>{
         newTransf.transfFecha = transfFecha;
         newTransf.monto = transfMonto;
         newTransf.fecha = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-        newTransf.timeStamp = new Date().toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+        newTransf.timeStamp = otraFecha;
         console.log("time " + newTransf.timeStamp);
         await newTransf.save();
         res.redirect('/cobranza/transfCob');

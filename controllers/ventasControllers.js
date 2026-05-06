@@ -216,15 +216,27 @@ try {
   const dia = new Date(fecha).getUTCDate();
   const fechaAc = new Date(anio, mes, (dia + 1)).toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
   const timeSt = new Date(anio, mes, dia).toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-  var fechaV  = new Date(anio, mes, dia);//.toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+  var fechaV  = new Date(anio, mes, dia);
   var fechaVencimiento = "";
   var detalle = "";
-  if (newVenta.plan === "diario") {
-    var DiaDom = parseInt(newVenta.cuotas/6);
+switch (newVenta.plan) {
+  case "diario":
+ var DiaDom = parseInt(newVenta.cuotas/6);
     fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas + DiaDom)));
-  } else {
-    fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas * 7)));
-  }
+    break;
+  case "semanal":
+     fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas * 7)));
+    break;
+  case "quincenal":
+     fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas * 15)));
+    break;
+  case "mensual":
+     fechaVencimiento = new Date(fechaV.setMonth(fechaV.getMonth() + newVenta.cuotas));
+    break;
+  default:
+    break;
+}
+
   newVenta.timeStamp =  new Date(anio, mes, dia).toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
   newVenta.fechaInicio = fechaAc;
   newVenta.fechaFinal = fechaVencimiento.toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
@@ -268,6 +280,19 @@ try {
         const Tt = (((balan.vtaCtdo)*1) + ((newVenta.adelanto)*1)).toFixed(2);
         balan.vtaCtdo = Tt;
        const newBalan = await balance.findByIdAndUpdate({_id: balan._id}, balan);
+      //Creamos la transferencia si es que hay monto
+      if (req.body.transfMonto && req.body.transfFecha) {
+        const transfNew = new transf();
+              transfNew.codPres = "VENTA FINANCIADA";
+              transfNew.cobRuta = nRuta;
+              transfNew.nombre = newVenta.transfTitular || newVenta.nombre;
+              transfNew.dni = newVenta.dni;
+              transfNew.transfFecha = req.body.transfFecha;
+              transfNew.fecha = fechaAc;
+              transfNew.monto = req.body.transfMonto;
+              transfNew.timeStamp = new Date(anio, mes, dia).toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'}); 
+              await transfNew.save();
+          }
           break;
          case "admin":
               console.log("dentro delif adelantos / case");
