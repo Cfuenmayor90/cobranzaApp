@@ -149,7 +149,7 @@ const cargarTranfCob = async(req, res) =>{
         newTransf.transfFecha = transfFecha;
         newTransf.monto = transfMonto;
         newTransf.fecha = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-        newTransf.timeStamp = otraFecha;
+     
         console.log("time " + newTransf.timeStamp);
         await newTransf.save();
         res.redirect('/cobranza/transfCob');
