@@ -224,7 +224,7 @@ switch (newVenta.plan) {
  var DiaDom = parseInt(newVenta.cuotas/6);
     fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas + DiaDom)));
     break;
-  case "semanal":
+  case "Semanal":
      fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas * 7)));
     break;
   case "quincenal":
