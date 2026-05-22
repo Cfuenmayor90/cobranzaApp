@@ -68,6 +68,9 @@
           <th class="tableListCajaRes"></th>
         </tr>
            </table>    
+
+         
+           
        </div>  
         <div class="divClienteBuscar">
       <h3 class="tituloForm">Balance Por Dia</h3>
@@ -90,6 +93,25 @@
             <th class="tableListCajaRes">${{vtaCtdo}}</th>
              <th class="tableListCajaRes">${{ventas}}</th>
               <th class="tableListCajaRes">${{ganancia}}</th>
+          </tr>
+        {{/each}}
+      </table>
+      <br>
+            <table class="tableListCaja">
+        <tr class="">
+          <th class="tableListCajaTitle">Fecha</th>
+          <th class="tableListCajaTitle">Esperado</th>
+          <th class="tableListCajaTitle">Cobrado</th>
+            <th class="tableListCajaTitle">Rendición</th>
+              <th class="tableListCajaTitle">Diferencia</th>
+        </tr>
+        {{#each arrayEstado}}
+          <tr>
+            <th class="tableListCajaRes">{{fecha}}</th>
+            <th class="tableListCajaRes">${{esperado}}</th>
+            <th class="tableListCajaRes">${{cobrado}}</th>
+             <th class="tableListCajaRes">${{rendicion}}</th>
+              <th class="tableListCajaRes" style="color: {{color}};" >${{diferencia}}</th>
           </tr>
         {{/each}}
       </table>
@@ -118,6 +140,7 @@
     </tr> 
     {{/each}}
   </table>
+  
   </div>
   
         <div class="divClienteBuscar">

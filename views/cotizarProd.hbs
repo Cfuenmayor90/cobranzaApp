@@ -9,36 +9,57 @@
 </nav>
 <div class="contMayorCli">
   <div class="formCliente">
-    <div class="divClienteBuscar">
-      <h3 class="tituloForm">{{prod.nombre}}</h3>
-    </div>
+   
         <img class="imgCotizarProd" src="/uploads/{{prod.cod}}.jpg" alt="">
-    <div class="infoCotizarProd">
-       <h2>{{prod.nombre}}</h2>
+        <div class="divTitleProd">
+        <h2>{{prod.nombre}}</h2>
+        </div>
+    <div class="infoCotizarProd" >
        <h4>Codigo: {{prod.cod}}</h4>
        <h4>Disponibles: {{prod.stock}}</h4>
-       <h2 style="font-size: 30px;">Oferta De Contado: <label for="" style="color: rgb(0, 145, 31);">{{precio}}</label></h2>
-       <h2 style="font-size: 25px;">Precio De Lista: <label for="" style="color: blue;">{{precioTartj}}</label></h2>
-       <h3 style="font-size: 25px;">3 cuotas sin interes de  <span style="color: rgb(14, 139, 0);fon">{{vCuota}}</span></h3>
-       <div style="display:flex; justify-content: flex-start;">
-      <img src="/tnx.svg" alt="">
-      <img src="/tvisa.svg" alt="">
-      <img src="/tmaster.svg" alt="">
-      <img src="/tamex.svg" alt="">
-       </div>
-       <h5>{{prod.descripcion}}</h5>
-      <!-- <a href="https://api.whatsapp.com/send?text=[text]" class="btnCompartirCotizarPro"> <i class="bi bi-whatsapp"></i></i></a>    -->
+       <h2 style="font-size: 25px;">Precio: <label for="" style="color: blue;">{{precioTartj}}</label></h2>
+       <h2 style="font-size: 25px;">Efectivo: <label for="" style="color: rgb(0, 145, 31);">{{precio}}</label></h2>
+     <h5>{{prod.descripcion}}</h5>
+     <br>
+    
+        <a href="https://wa.me/5493855349020/?text=Hola%20deseo%20comprar%20el%20producto%20{{prod.nombre}}%20Code:%20{{prod.cod}}" ><h4 class="btnComprar">Comprar</h4></a>
+    
+     
+       </div>  
+              <table class="tableCreditCard">
+           <tr class="trTitleCreditCard">
+            <th colspan="5" class="thTitleCreditCard">Promociones Con Tarjeta De Credito</th>
+           </tr>
+           <tr class="trCreditCard">
           
-       </div>    
+            <th colspan="2">Tarjeta</th>
+            <th>Cuotas</th>
+            <th>Cuota</th>
+            <th>Total</th>
+           </tr>
+            {{#each arrayTarjetas}}
+              <tr class="trCreditCard">
+                  <th><img src="/{{tarjeta}}.svg" alt=""></th>
+                  <th>{{nombre}}</th>
+                  <th>{{cuotas}}</th>
+                  <th>{{cuota}}</th>
+                  <th>{{total}}</th>
+              </tr>
+            {{/each}}
+           <tr>
+
+           </tr>
+       </table>  
+       
     
     </div>
 
   <div class="formCliente">
-     <div class="divClienteBuscar">
+     <div class="divTitleProd">
       <h3 class="tituloForm">Planes De Pago Para Comerciantes</h3>
     </div>
-    <div class="tarjUser">
-      <table class="tableListCaja">
+    <div class="tarjUser"> 
+      <table class="tableCreditCard">
         <tr class="">
           <th class="tableListCajaTitle">Plan</th>
           <th class="tableListCajaTitle">Cuotas</th>
@@ -54,11 +75,11 @@
       </table>
       <h3 style="color: red; text-align: center;">Planes de pago con entrega de la 1° cuota</h3>
     </div>
-         <div class="divClienteBuscar">
+         <div class="divTitleProd">
       <h3 class="tituloForm">Planes De Pago Para Particulares</h3>
     </div>
     <div class="tarjUser">
-      <table class="tableListCaja">
+      <table class="tableCreditCard">
         <tr class="">
           <th class="tableListCajaTitle">Plan</th>
           <th class="tableListCajaTitle">Cuotas</th>

@@ -10,7 +10,7 @@
 </nav>
 
 <div class="contMayorCli">
-  <div class="formSetti">
+  <div class="formSetti" style="margin-top: 20px;">
      <div class="divClienteBuscar">
       <h3 class="tituloForm">Planes De Pago</h3>
     </div>
@@ -95,7 +95,10 @@
 
 
       <br>
-      <div class="divClienteBuscar">
+   
+  </div>
+   <div class="formSetti" style="margin-top: 20px;">
+          <div class="divClienteBuscar">
       <h3 class="tituloForm">Configuracion % De Ganancia</h3>
     </div>
     {{#each valores}}
@@ -124,9 +127,79 @@
         </tr>
       </table>
       <br />
+      
+
     </form>
   {{/each}}
+    <div class="divClienteBuscar">
+        <h3 class="tituloForm">Configuracion De Planes De Tarjeta De Credito</h3>
+      </div>
+         <form action="/settings/createCreditCard" method="post">
+  <table class="tableSettings">
+    
+        <tr>
+          <th><label for="" class="title">Tarjeta:</label></th>
+          <th>
 
-  </div>
+         <select name="tarjeta" id="tarjeta" class="inpFormSett">
+            <option value="Visa"><i></i>Visa</option>
+            <option value="Mastercard">Mastercard</option>
+            <option value="AmericanExpress">American Express</option>
+            <option value="Discover">Discover</option>
+            <option value="Naranja"> Naranja</option>
+            <option value="Sucredito">Sucredito</option>
+            <option value="Unica">Unica</option>
+            <option value="Sol">Sol</option>
+            <option value="Cabal">Cabal</option>
+
+         </select>
+          </th>
+        </tr>
+        <tr>
+          <th><label for="" class="title">Nombre:</label></th>
+          <th><input type="text" id="nombre" name="nombre" class="inpFormSett" required /></th>
+        </tr>
+        <tr>
+          <th><label for="" class="title">Cuotas:</label></th>
+          <th><input type="number" id="cuotas" name="cuotas" class="inpFormSett" required /></th>
+        </tr>
+         <tr>
+          <th> <label for="" class="title">tasa:</label></th>
+          <th><input type="number" id="tasa" name="tasa" class="inpFormSett" required /> </th>
+        </tr>
+           <tr>
+          <th><label for="" class="title">Numero:</label></th>
+          <th><input type="number" id="num" name="num" class="inpFormSett" /> </th>
+        </tr>
+        <tr>
+          <th colspan="2" class=""> <button type="submit" class="btnFormSettings">Guardar</button></th>
+        </tr>
+      </table>   
+   </form> 
+      <div class="divClienteBuscar">
+        <h3 class="tituloForm">Planes De Tarjeta De Credito</h3>
+      </div>
+      <table class="tableListCaja">
+      <tr>
+        <th class="tableListCajaTitle">Tarjeta</th>
+        <th class="tableListCajaTitle">Nombre</th>
+        <th class="tableListCajaTitle">Cuotas</th>
+        <th class="tableListCajaTitle">Tasa</th>
+        <th class="tableListCajaTitle">Numero</th>
+        <th class="tableListCajaTitle"><i style="color: rgb(0, 0, 0);" class="bi bi-trash"></i></th>
+      </tr>
+          {{#each creditCards}}
+            <tr>
+        <th class="tableListCajaRes">{{tarjeta}}</th>
+        <th class="tableListCajaRes">{{nombre}}</th>
+        <th class="tableListCajaRes">{{cuotas}}</th>
+        <th class="tableListCajaRes">{{tasa}}</th>
+        <th class="tableListCajaRes">{{num}}</th>
+        <th class="tableListCajaRes"><a href="/settings/deleteCreditCard/{{_id}}" onclick="return confirm('¿Esta Seguro Que Desea Eliminar El Plan?: {{{nombre}}}?')" ><i style="color: red;" class="bi bi-file-earmark-x"></i></a></th>
+        </tr>
+  
+          {{/each}}
+        </table>
+   </div>
   </div>
     

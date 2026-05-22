@@ -55,7 +55,7 @@
         placeholder="Ingrese una Contraseña"
         id="password"
         name="password"
-        required
+    
       />
       <br />
       <label class="title" for="password">Direccion</label>
@@ -79,7 +79,6 @@
         value="{{usuario.telefono}}"
         id="telefono"
         name="telefono"
-        required
       />
       <br />
       <label for="rol" class="title">Rol del usuario</label>
@@ -90,6 +89,19 @@
         <option value="admin">Administrador</option>
         <option value="pisoDeVenta">Piso De Venta</option>
       </select>
+       <br>
+      <label for="ingreso">Fecha de Ingreso El: {{usuario.ingreso}}</label>
+      <input type="date" class="inpForm" id="ingreso" name="ingreso"/>
+ <br>
+        <label for="nota">Nota Sobre el Usuario</label>
+        <textarea type="text" class="inpForm" style="height: 80px;" placeholder="Ingrese una Nota Sobre el Usuario" id="nota" name="nota">{{usuario.nota}}</textarea>
+      <br>
+      <label for="sueldo">Sueldo</label>
+      <input type="number" class="inpForm" placeholder="Ingrese el Sueldo" id="sueldo" name="sueldo" value="{{usuario.sueldo}}"/>
+      <br>
+      <label for="actSueldoDate">Fecha de Actualización del Sueldo Hecha el: {{usuario.actSueldoDate}}</label>
+      <input type="date" class="inpForm" id="actSueldoDate" name="actSueldoDate"/>
+      <br>
       <br>
       <label class="title" for="password">Codigo De Ruta: {{usuario.numRuta}}</label>
 
