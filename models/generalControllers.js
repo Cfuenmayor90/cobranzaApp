@@ -6,6 +6,7 @@ const balances = require('../models/balanceModels');
 const caja = require('../models/cajaModels');
 const client = require("../models/clientModels");
 const cron = require('node-cron');
+const cxp = require('../models/cxpModels');
 const {verifyJWT} = require('../middleware/jwt');
 const {guardarBalanceDiario, esperadoDiario} = require('./cobranzaControllers');
 const f = new Intl.NumberFormat('es-AR', {
@@ -21,20 +22,29 @@ const load = (res, next) => {
 const cargarGeneral = async(req, res) => {
   try {
     const usuario = await users.find({role: ["cobrador", "pisoDeVenta"]});
-    var anio = new Date().getFullYear();
-    var mes = new Date().getMonth();
+   var arrayAnios = [{anio:2024}, { anio:2025}, { anio: 2026}, { anio: 2027}, { anio:2028}, { anio:2029}, { anio:2030}]; 
+    const {mesInp, anioInp} = req.body;
+    var anio = anioInp || new Date().getFullYear();
+    var mes = mesInp || new Date().getMonth();
     var cantDias = new Date(anio, (mes+1), 0).getDate();
         cantDias = cantDias + 1;
+    var periodo = `(Periodo: ${new Date(anio, mes).toLocaleString('es-AR', { month: 'long', timeZone: 'America/Argentina/Buenos_Aires' })}/${anio})`;
     const prest = await ventas.find();
     //ventas totales general desde su inicio
     const venTotalT = await balances.find({categoria:"balance_diario"});
     //ventas totales mensuales
     const ventasTo = await balances.find({categoria: "balance_diario",timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}});
     const cajaList = await caja.find({timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}}).sort({timeStamp: -1});
-    const cajaListGastos = await caja.find({timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}, tipo: ["gasto", "sueldos"]});
-    const efeCajaTotal = await caja.find({tipo: ["rendicion", "inversion", "sueldos"]});
-    var cajaGastos = await caja.find({tipo: ["sueldos", "gasto"]})
+    const cajaListGastos = await caja.find({timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}, tipo: ["gasto", "sueldos", "interes"]});
+    const efeCajaTotal = await caja.find({tipo: ["rendicion", "inversion", "sueldos", "prestamo"]});
+    var cajaGastos = await caja.find({tipo: ["sueldos", "gasto", "interes"]})
     const inversion = await caja.find({tipo: ["inversion", "ingreso"]});
+    const listaCxp = await cxp.find();
+            
+    
+    var montoT = 0; //monto sin interes de las cuentas por pagar CXP
+    var inteT = 0; //interes acumulado de las cuentas por pagar CXP
+    var saldoT = 0; //deuda total de las cuentas por pagar CXP  
     var porCobrar = 0;
     var venTotalTo = 0;
     var vtaCtdoTo = 0; //ventan total de contado en caso que sea piso de venta
@@ -70,6 +80,12 @@ const cargarGeneral = async(req, res) => {
     cajaGastos.forEach(element => {
       gasCaja = element.monto + gasCaja;
     });
+    listaCxp.forEach(element => {
+                montoT += element.montoInicial;
+                inteT += element.interes;
+                saldoT += element.saldo;
+            });
+            
     const vent = await ventas.find({timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
        prest.forEach(element => {
            porCobrar = element.mTotal + porCobrar;
@@ -122,8 +138,9 @@ const cargarGeneral = async(req, res) => {
                 vtaCtd = f.format(vtaCtd);
                 porCobrarT = f.format(porCobrarT);
                 mAdelantos = f.format(mAdelantos);
+                
                 const cPres = prestT.length;
-                ArrayUserGene.push({espeT, cobT, venT,vtaCtd, ganaT, gastoT, nombre: element.nombre, nRuta: element.numRuta, efectividad, porCobrarT, cPres, mCaja, mAdelantos, efeCaja});
+                ArrayUserGene.push({espeT, cobT, venT,vtaCtd, ganaT, gastoT, nombre: element.nombre, nRuta: element.numRuta, efectividad, porCobrarT, cPres, mCaja, mAdelantos,  efeCaja});
         } //finaliza el for de usuarios
 
         efeCajaT = efeCajaT - venTotalTo - gasCaja;
@@ -142,7 +159,10 @@ const cargarGeneral = async(req, res) => {
           capital= f.format(capital);
           gananCobTotal = f.format(gananCobTotal);
           gastocajaMes = f.format(gastocajaMes);
-          return res.render('generalCobranza', {porCobrar, ArrayUserGene, usuario, cajaList, cantPres, venTotal, ganaTotal, cobraTotal, espeTotal, vtaCtdoTo, porcentajeT, efeCajaT, capital, invT,  gastocajaMes, gananCobTotal});
+           montoT = f.format(montoT);
+               inteT = f.format(inteT);
+                saldoT = f.format(saldoT);
+          return res.render('generalCobranza', {porCobrar, ArrayUserGene, arrayAnios,periodo, usuario, cajaList, cantPres, venTotal, montoT, inteT, saldoT, ganaTotal, cobraTotal, espeTotal, vtaCtdoTo, porcentajeT, efeCajaT, capital, invT,  gastocajaMes, gananCobTotal});
     
    } catch (error) {
     
@@ -226,6 +246,7 @@ const guardarCaja = async(req, res) => {
     try {
       const newOperacion = new caja(req.body);
       const fecha = newOperacion.fecha;
+      console.log("fecha operacion" + fecha);
       const anio = new Date(fecha).getFullYear();
       const mes = new Date(fecha).getMonth();
       const dia = new Date(fecha).getUTCDate();
@@ -305,7 +326,7 @@ const cargarEstadoClient = async(req, res) => {
     console.log(`numRuta ${numRutaInp} mes ${mesInp} año ${anioInp}`);
     var anio = anioInp || new Date().getFullYear();
     console.log(anio);
-    
+    console.log(mesInp);
      var mes = mesInp || new Date().getMonth();
      console.log(mes);
       var m = parseInt(mes) + 1;
@@ -319,18 +340,29 @@ const cargarEstadoClient = async(req, res) => {
      console.log("fechaForm " + anio);
     const balance = await balances.find({cobRuta: numR, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias,23,59,59,0)}});
     const hisVent = await hVentas.find({venRuta: numR, timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias,23,59,59,0)}});
-    const opeCaja = await caja.find({userCod: numR,tipo: ["sueldos", "rendicion"], timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias,23,59,59,0)}}).sort({timeStamp: -1});
+    const opeCaja = await caja.find({userCod: numR, tipo: ["sueldos", "rendicion"], timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias,23,59,59,0)}}).sort({timeStamp: -1});
     var cajaGastos = await caja.find({userCod: numR, tipo: "sueldos",  timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias,23,59,59,0)}});
     var cobradoT = 0;
     var esperadoT = 0;
     var gastoT = 0;
     var ventCtdoTo = 0;
     var opeT = 0;
-    balance.forEach(element => {
+    const arrayEstado = [];
+    for (let i = 0; i < balance.length; i++) {
+      const element = balance[i];
       cobradoT = element.cobrado + cobradoT;
       esperadoT = element.esperado + esperadoT;
-      ventCtdoTo = element.vtaCtdo + ventCtdoTo
-    });
+      ventCtdoTo = element.vtaCtdo + ventCtdoTo;
+      var rendicion = await caja.find({userCod: numR, tipo: ["rendicion", "adelanto"], fecha: element.fecha});
+if (rendicion.length > 0){
+  var rendicionT = 0;
+  rendicion.forEach(element => {
+    rendicionT = element.monto + rendicionT;
+  });
+    }
+    var diferencia = rendicionT - (element.cobrado + element.vtaCtdo);
+   arrayEstado.push({fecha: element.fecha, cobrado: element.cobrado, esperado: element.esperado, vtaCtdo: element.vtaCtdo, rendicion: rendicionT, diferencia: diferencia, color: diferencia < 0 ? "red" : "green"});
+  };
     cajaGastos.forEach(element => {
       gastoT = element.monto + gastoT;
     });
@@ -344,10 +376,11 @@ const cargarEstadoClient = async(req, res) => {
     gastoT = f.format(gastoT);
     efectivo = f.format(efectivo);
     ventCtdoTo = f.format(ventCtdoTo);
-    if (user == "admin") {
-      res.render('generalEstadisUsuario', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo});
+    if (user === 'admin'){
+      res.render('generalEstadisUsuario', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo, arrayEstado});
+    } else{
+      res.render('estadisticas', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo});
     }
-    res.render('estadisticas', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo});
   };
 const editCliente = async(req, res) =>{
     const {dni} = req.params;

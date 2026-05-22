@@ -1,15 +1,16 @@
 const product = require('../models/productModels');
 const setting = require('../models/settingsModels'); //setting para ver los planes
 const settingValores = require('../models/settingValoresModels'); //sectin para valores de ganancia
+const creditCard = require('../models/creditCardModels');
 const multer = require('multer');
 const path = require('path');
 
 const f = new Intl.NumberFormat('es-AR', {
     style: 'currency',
     currency: 'ARS',
-    minimumFractionDigits: 2
+    minimumFractionDigits: 0,
 });
-const arrayCategoriasProd = [{valor:'Electrodomesticos'},{valor:'Infantil'}   ,{valor: 'Indumentaria'}, {valor: 'Calzado'}, {valor:'Hogar'}, {valor:'Equipamiento Comercial'}, {valor:'Electronica'}, {valor:'Celulares'}, {valor:'Accesorios Para Celulares'}, {valor:'Accesorios Para Vehiculos'}, {valor:'Herramientas' }, {valor:'Cables y Conectores' }];
+const arrayCategoriasProd = [{valor:'Electrodomesticos'},{valor:'Infantil'},{valor: 'Indumentaria'}, {valor: 'Calzado'}, {valor:'Hogar'}, {valor:'Equipamiento Comercial'}, {valor:'Electronica'}, {valor:'Celulares'}, {valor:'Accesorios Para Celulares'}, {valor:'Accesorios Para Vehiculos'}, {valor:'Herramientas' }, {valor:'Cables y Conectores' }];
 
 //pag de productos para ADMIN
 const cargarProducts = async(req, res) =>{
@@ -65,20 +66,23 @@ const cotizarProd = async(req, res) => {
     try {
         const {id} = req.params;
         const prod = await product.findOne({_id: id});
+        const valores = await settingValores.findOne();
         const planesDiarios = await setting.find({categoria: "financiamiento",plan: "diario" }).sort({cuotas: 1});
         const planesSemanales = await setting.find({categoria: "financiamiento",plan: "Semanal" }).sort({cuotas: 1});
         const planesMensuales = await setting.find({categoria: "financiamiento",plan: "mensual" }).sort({cuotas: 1});
-        const valores = await settingValores.findOne();
-        var precio = (prod.precio * valores.dolar) * ((valores.porcentaje * 0.01) + 1);
-        var precioTartj = precio *((valores.tcredito * 0.01) + 1);
+        const planesParticulares = await setting.find({categoria: "particular" }).sort({plan: 1, cuotas: 1});
+        const tarjetas = await creditCard.find().sort({tarjeta: 1, cuotas: 1});
+        var precio = (prod.precio * valores.dolar) * (valores.porcentaje/100 + 1); //precio con ganancia
+        var precioTartj = precio / (1 - valores.tcredito/100); //precio con tarjeta de credito
         var vCuota = precioTartj / 3;
-        const arrayPlanes = [];
+        var arrayPlanes = [];
+        var arrayPlanesParticulares = [];
+        var arrayTarjetas = [];
         planesDiarios.forEach(element => {
             var xcentaje = (element.porcentaje/100)+1;
             var cuota = (precio*xcentaje)/element.cuotas;
-            var total = (element.cuotas * cuota).toFixed(2);
             cuota = f.format(cuota)
-            arrayPlanes.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota, "total": total });
+            arrayPlanes.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota });
         });
         planesSemanales.forEach(element => {
             var xcentaje= (element.porcentaje/100)+1;
@@ -91,16 +95,60 @@ const cotizarProd = async(req, res) => {
             var cuota =(precio*xcentaje)/element.cuotas;
             cuota = f.format(cuota);
             arrayPlanes.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota});
+
+             });
+
+    planesParticulares.forEach(element => {
+            var xcentaje= (element.porcentaje/100)+1;
+            var cuota =(precio*xcentaje)/element.cuotas;
+            cuota = f.format(cuota);
+            arrayPlanesParticulares.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota, "total": f.format(precio*xcentaje)}); 
+    });
+    tarjetas.forEach(element => {
+        var xcentaje= (element.tasa/100);
+        var total = precio / (1 - xcentaje);
+        var cuota = total / element.cuotas;
+        arrayTarjetas.push({"tarjeta": element.tarjeta, "nombre": element.nombre, "cuotas": element.cuotas, "tasa": element.tasa, "cuota": f.format(cuota), "total": f.format(total)});
     });
     
        precio = f.format(precio);
        vCuota = f.format(vCuota);
        precioTartj = f.format(precioTartj);
-        res.render('cotizarProd', {prod, precio, precioTartj, vCuota, arrayPlanes})
+        res.render('cotizarProd', {prod, precio, precioTartj, vCuota, arrayPlanes, arrayPlanesParticulares, arrayTarjetas});
     } catch (error) {
-        
+        res.render('error', {error});
     }
 }
+
+const listaPrecioVenta = async(req, res) =>{
+    try {
+        const productos = await product.find({stock: {$gt: 0}}).sort({nombre: 1});
+        const valores = await settingValores.findOne();
+        const planesSemanales = await setting.find({categoria: "financiamiento",plan: "Semanal", cuotas: {$gt: 0, $lt: 13}}).sort({cuotas: 1});
+        const arrayProductos = []; 
+        productos.forEach(element => {
+            const prod = element;
+        var precio = (prod.precio * valores.dolar) * ((valores.porcentaje * 0.01) + 1);
+        var precioTartj = precio / (1 - valores.tcredito * 0.01);
+        var vCuotaTarj = precioTartj / 3;
+        var precio2sema = (precio * ((planesSemanales[0].porcentaje * 0.01) + 1));
+        var precio3sema = precio * ((planesSemanales[1].porcentaje * 0.01) + 1);
+        var precio6sema = precio * ((planesSemanales[2].porcentaje * 0.01) + 1);
+        var precio9sema = precio * ((planesSemanales[3].porcentaje * 0.01) + 1);
+        var cuota2sema = precio2sema / planesSemanales[0].cuotas;
+        var cuota3sema = precio3sema / planesSemanales[1].cuotas;
+        var cuota6sema = precio6sema / planesSemanales[2].cuotas;
+        var cuota9sema = precio9sema / planesSemanales[3].cuotas;   
+        arrayProductos.push({"nombre":prod.nombre,"cod": prod.cod, "precio": f.format(precio), "precioList": f.format(precioTartj), "vCuotaTarj": f.format(vCuotaTarj), "cuota2sema": f.format(cuota2sema), "cuota3sema": f.format(cuota3sema), "cuota6sema": f.format(cuota6sema), "cuota9sema": f.format(cuota9sema)});
+        }
+
+        );
+        res.render('listaPrecioVenta', {arrayProductos});
+    } catch (error) {
+        
+    }       
+};
+       
 //midleware de MULTER   
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../public/uploads'),
@@ -130,7 +178,7 @@ const saveProducts = async(req, res) =>{
     try {
         const newProduct = new product(req.body);
         await newProduct.save()
-        res.send('todo ok');
+       res.redirect('/products/productos');
         
     } catch (error) {
         console.log(error);
@@ -168,6 +216,28 @@ const prodDelete = async(req, res) =>{
     } catch (error) {
         
     }
-}
+};
 
-module.exports = {cargarProducts, cargarPagProductos, imprimirProd, upload, saveProducts, cotizarProd, filtrarProd, prodEditGet, prodEditSave, prodDelete };
+const habladores = async(req, res) =>{
+    try {
+        const productos = await product.find({stock: {$gt: 0}}).sort({nombre: 1});
+        const arrayPrpoductos = [];
+        const valores = await settingValores.findOne();
+        productos.forEach(element => {
+            const prod = element;
+        var precio = (prod.precio * valores.dolar) * ((valores.porcentaje * 0.01) + 1);
+        var precioTartj = precio *((valores.tcredito * 0.01) + 1);
+        var vCuota = precioTartj / 3;
+        precio = f.format(precio);
+        precioTartj = f.format(precioTartj);
+        vCuota = f.format(vCuota);  
+                arrayPrpoductos.push({"producto":prod.nombre,"cod": prod.cod, "precio": precio, "precioTartj": precioTartj, "vCuota": vCuota});
+            
+        });
+        res.render('habladores', {arrayPrpoductos});
+    } catch (error) {   
+
+    }
+};
+
+module.exports = {cargarProducts, cargarPagProductos, imprimirProd, upload, saveProducts, cotizarProd, filtrarProd, prodEditGet, prodEditSave, prodDelete, habladores, listaPrecioVenta };

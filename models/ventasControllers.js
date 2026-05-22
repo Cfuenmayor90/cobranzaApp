@@ -5,6 +5,7 @@ const ventas = require('../models/ventasModels');
 const historyVentas = require('../models/historyVentas');
 const product = require('../models/productModels');
 const balance = require('../models/balanceModels');
+const transf = require("../models/transfModels");
 const setValores = require('../models/settingValoresModels');
 const cajaOp = require('../models/cajaModels');
 const { generarJWT, verifyJWT} = require('../middleware/jwt');
@@ -20,7 +21,7 @@ const cargarVentas = async(req, res) => {
      const usuariosCob = await users.find({role: ['cobrador', 'pisoDeVenta']});
      const productos = await product.find().sort({nombre: 1});
      const planPrest = await setPrest.find({categoria: 'prestamo'}).sort({porcentaje: 1});
-     const planProd = await setPrest.find({categoria: 'financiamiento'}).sort({porcentaje: 1});
+     const planProd = await setPrest.find({categoria: ['financiamiento', 'particular']}).sort({categoria: 1, plan: 1, cuotas: 1});
      const ventasT = await ventas.find().sort({timeStamp: -1}).limit(20);
      const ventasCont = await historyVentas.find({categoria: "contado"}).sort({timeStamp: -1}).limit(20);
      return res.render('ventas', {usuariosVent,usuariosCob, planPrest, planProd, ventasT, ventasCont, productos});
@@ -62,20 +63,19 @@ const preCotizar = async(req, res) =>{
     const fechaVent = new Date(anio, mes, (dia + 1)).toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     const cliente = await client.findOne({dni:cot.dni});
     const balanCEDiario = await balance.findOne({cobRuta: cot.cobRuta, fecha: fechaVent});
-    console.log("fecha de venta " + cot.fecha);
-    console.log("balance encontrado " + balanCEDiario);
     if (!cliente) {
       mensajeError = '¡El Cliente NO existe en la DATA BASE!';
       res.render('error', {mensajeError});
     }
-     if (balanCEDiario) {
-       const arrayCod = [];
-         if (cot.codProd == "prestamo"){
-          const planCot = await setPrest.findById({_id:cot.planId});
+    if (balanCEDiario) {
+      const arrayCod = [];
+      if (cot.codProd == "prestamo"){
+        const planCot = await setPrest.findById({_id:cot.planId});
+        var detalle = cot.detalle;
         const mTotal = (cot.monto * ((planCot.porcentaje / 100)+1)).toFixed(2);
         const cuota = (mTotal / planCot.cuotas).toFixed(2);
         arrayCod.push({"cod": cot.codProd, "cant": 1});
-        res.render('confirmarVenta', {cot, planCot, cuota, mTotal, cliente, arrayCod});
+        res.render('confirmarVenta', {cot, planCot, cuota, detalle, mTotal, cliente, arrayCod});
          }
          else{
         const codProducts = cot.codProd;
@@ -118,8 +118,7 @@ const cotizarPlan = async(req, res) => {
     const fechaVent = new Date(anio, mes, (dia + 1)).toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
     const cliente = await client.findOne({dni:cot.dni});
     const balanCEDiario = await balance.findOne({cobRuta: cot.cobRuta, fecha: fechaVent});
-    console.log("fecha de venta " + cot.fecha);
-    console.log("balance encontrado " + balanCEDiario);
+    var detalle = "";
     if (!cliente) {
       mensajeError = '¡El Cliente NO existe en la DATA BASE!';
       res.render('error', {mensajeError});
@@ -159,6 +158,7 @@ const cotizarPlan = async(req, res) => {
             console.log(precio);
             arrayCod.push({"cod":element,"nombre": prod.nombre, "precio": prod.precio, "cant": cantProd, "Total": (prod.precio * cantProd)});
             console.log("array productos " + arrayCod);
+             detalle = detalle + "Cant: " + cantProd + ", "+ prod.nombre + ", Cod: " + prod.cod + " || ";
           };  
         }
         else{
@@ -166,6 +166,7 @@ const cotizarPlan = async(req, res) => {
           var cantProd = req.body[codProducts];
           precio= prod.precio * cantProd;
           arrayCod.push({"cod":codProducts, "nombre": prod.nombre, "precio": prod.precio, "cant": cantProd, "Total": (prod.precio * cantProd) });
+          detalle =  "Cant: " + cantProd + ", "+ prod.nombre + ", Cod: " + prod.cod ;
         }
 
         
@@ -175,7 +176,7 @@ const cotizarPlan = async(req, res) => {
         const planCot = await setPrest.findById({_id:cot.planId});
         const mTotal = ((precioT * ((planCot.porcentaje / 100)+1))-(des * (precioT * ((planCot.porcentaje / 100)+1)))).toFixed(2);
         const cuota = (mTotal / planCot.cuotas).toFixed(2);
-        res.render('confirmarVenta', {cot, planCot, cuota, mTotal, cliente, arrayCod});
+        res.render('confirmarVenta', {cot, planCot, cuota, mTotal, detalle, cliente, arrayCod});
         
       }
      }
@@ -214,14 +215,28 @@ try {
   const mes = new Date(fecha).getMonth();
   const dia = new Date(fecha).getUTCDate();
   const fechaAc = new Date(anio, mes, (dia + 1)).toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-  var fechaV  = new Date(anio, mes, dia);//.toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-  var fechaVencimiento = "";
-  if (newVenta.plan === "diario") {
-    var DiaDom = parseInt(newVenta.cuotas/6);
+  const timeSt = new Date(anio, mes, dia).toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+  var fechaV  = new Date(anio, mes, dia);
+  var fechaVencimiento = new Date();
+  var detalle = "";
+switch (newVenta.plan) {
+  case "diario":
+ var DiaDom = parseInt(newVenta.cuotas/6);
     fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas + DiaDom)));
-  } else {
-    fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas * 7)));
-  }
+    break;
+  case "Semanal":
+     fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas * 7)));
+    break;
+  case "quincenal":
+     fechaVencimiento = new Date(fechaV.setDate(fechaV.getDate() + (newVenta.cuotas * 15)));
+    break;
+  case "mensual":
+     fechaVencimiento = new Date(fechaV.setMonth(fechaV.getMonth() + newVenta.cuotas));
+    break;
+  default:
+    break;
+}
+
   newVenta.timeStamp =  new Date(anio, mes, dia).toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
   newVenta.fechaInicio = fechaAc;
   newVenta.fechaFinal = fechaVencimiento.toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
@@ -265,10 +280,23 @@ try {
         const Tt = (((balan.vtaCtdo)*1) + ((newVenta.adelanto)*1)).toFixed(2);
         balan.vtaCtdo = Tt;
        const newBalan = await balance.findByIdAndUpdate({_id: balan._id}, balan);
+      //Creamos la transferencia si es que hay monto
+      if (req.body.transfMonto && req.body.transfFecha) {
+        const transfNew = new transf();
+              transfNew.codPres = "VENTA FINANCIADA";
+              transfNew.cobRuta = nRuta;
+              transfNew.nombre = newVenta.transfTitular || newVenta.nombre;
+              transfNew.dni = newVenta.dni;
+              transfNew.transfFecha = req.body.transfFecha;
+              transfNew.fecha = fechaAc;
+              transfNew.monto = req.body.transfMonto;
+              transfNew.timeStamp = new Date(anio, mes, dia).toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'}); 
+              await transfNew.save();
+          }
           break;
          case "admin":
               console.log("dentro delif adelantos / case");
-            const newCaja = new cajaOp({monto: newVenta.adelanto, fecha: fechaAc, userCod: nRuta, tipo: "ingreso", detalle: newVenta.detalle, timeStamp: new Date()});
+            const newCaja = new cajaOp({monto: newVenta.adelanto, fecha: fechaAc, userCod: newVenta.cobRuta, tipo: "ingreso", detalle: newVenta.detalle, timeStamp: new Date()});
             await newCaja.save();
           break;
         default:
@@ -280,7 +308,7 @@ try {
   var prod= 0;
   if (Array.isArray(cdp)) {
     for (let i = 0; i < cdp.length; i++) {
-      const element = cdp[i];
+      const element = cdp[i]; 
       prod = await product.findOne({cod: element});
      var cantProd = req.body[element];
 
@@ -293,6 +321,11 @@ try {
       prod.stock = prod.stock - cantProd;
       await product.findByIdAndUpdate({_id: prod._id}, prod); 
     } 
+    //funcion para crear operacion de caja con decuento de saldo anterior
+    if (req.body.salAnt > 0) {
+      const newCaja = new cajaOp({monto: req.body.salAnt, fecha: fechaAc, userCod: newVenta.cobRuta, tipo: "rendicion", detalle: `Dto. por renov.: ${newVenta.nombre}`, timeStamp: timeSt});
+      await newCaja.save();
+    }
   
   res.redirect('/ventas');
   } catch (error) {
@@ -380,11 +413,19 @@ const guardarVentasContado = async(req, res)=>{
    var detalle = "";
   const fechaAc = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
   const valores = await setValores.findOne();
+  
+  const token =  req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
+  const verifyToken = await verifyJWT(token);
+  const rol = verifyToken.role;
+  const nRuta = verifyToken.numRuta;
 
-    const token =  req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
-    const verifyToken = await verifyJWT(token);
-    const rol = verifyToken.role;
-    const nRuta = verifyToken.numRuta;
+  //Buscamos un balance diario en la ruta del usuario que realiza la venta
+  const balanceHoy = await balance.findOne({cobRuta: nRuta, fecha: fechaAc});
+  if (!balanceHoy) {
+    var mensajeError = "No se puede realizar la venta porque no existe un BALANCE DIARIO, solicite a su ADMIN habilitar la planilla.";
+    return res.render('error', {mensajeError});
+  }   
+
      var cantProd = 0;
      var arrayProdBoleta = [];
      var totalTo = 0;
@@ -409,7 +450,6 @@ const guardarVentasContado = async(req, res)=>{
         prod.stock = prod.stock - cantProd;
         var precio = f.format(precioT);
         var total= f.format((precioT * cantProd));
-        prod.stock = prod.stock - cantProd;
         arrayProdBoleta.push({"cod":cdp,"nombre": prod.nombre,"garantia":prod.garantia ,"precio": precio, "cant": cantProd, "total": total});
          detalle = "Cant: " + cantProd + ", "+ prod.nombre + ", Cod: " + prod.cod + " || ";
          totalTo = (precioT * cantProd);
@@ -435,10 +475,10 @@ const guardarVentasContado = async(req, res)=>{
       switch (rol) {
    
             case "pisoDeVenta":
-           const balan = await balance.findOne({cobRuta: nRuta}).sort({timeStamp: -1});
+           const balan = await balance.findOne({cobRuta: nRuta, fecha: fechaAc});
            console.log("balance encontrado:" + balan);
            
-         const Tt = (((balan.vtaCtdo)*1) + ((vent.mT)*1)).toFixed(2);
+         const Tt = (((balan.vtaCtdo)*1) + ((vent.mT)*1)).toFixed(2); 
          balan.vtaCtdo = Tt;
         const newBalan = await balance.findByIdAndUpdate({_id: balan._id}, balan);
            break;
@@ -449,6 +489,19 @@ const guardarVentasContado = async(req, res)=>{
        default:
          break;
       }
+     //creamos la transferencia si es que hay monto
+        if (req.body.transfMonto && req.body.transfFecha) {
+               const transfNew = new transf();
+                    transfNew.codPres = "VENTA CONTADO";
+                    transfNew.cobRuta = nRuta;
+                    transfNew.nombre = vent.nombre;
+                    transfNew.dni = vent.dni;
+                    transfNew.transfFecha = req.body.transfFecha;
+                    transfNew.fecha = fechaAc;
+                    transfNew.monto = req.body.transfMonto;
+                    await transfNew.save();
+                }
+
       var subTotal = f.format(totalTo);
       var des = (vent.descuento / 100) * totalTo;
       var totalT = f.format(totalTo - des);

@@ -7,6 +7,7 @@ const transf = require("../models/transfModels");
 const caja = require('../models/cajaModels');
 const { generarJWT, verifyJWT } = require("../middleware/jwt");
 const balances = require('../models/balanceModels');
+const { now } = require("mongoose");
 const f = new Intl.NumberFormat('es-AR', {
   style: 'currency',
   currency: 'ARS',
@@ -16,7 +17,7 @@ const f = new Intl.NumberFormat('es-AR', {
 
 
 const cargarCobranza = async (req, res) => {
-  console.log("cobranza");
+  
   try {
     const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
     const verifyToken = await verifyJWT(token);
@@ -51,9 +52,8 @@ const pagoSave = async (req, res) => {
   const { codPres, pago } = req.body;
   try {
     var fechaActual = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-    
+
     var time = new Date();
-    console.log(fechaActual);
     const prestamo = await ventas.findById({ _id: codPres });
     if (prestamo.mTotal >= pago && fechaActual !== prestamo.fechaUltPago) {
       
@@ -63,13 +63,13 @@ const pagoSave = async (req, res) => {
         const pagoVa = new pagoN(req.body);
         pagoVa.fecha = fechaActual;
         pagoVa.cobRuta = prestamo.cobRuta;
-        pagoVa.timeStamp = new Date().toDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+       
         var pNew = (prestamo.mTotal - pago).toFixed(2);
         prestamo.mTotal = pNew;
         prestamo.fechaUltPago = fechaActual;
         await ventas.findByIdAndUpdate({ _id: codPres }, prestamo);
         await pagoVa.save();
-        //codigo para editar balance diario
+  
         var venTas = await ventas.find({cobRuta: nRuta, fechaInicio: fechaActual});
         var pagosT = 0;
         var venTotal = 0;
@@ -99,7 +99,8 @@ const pagoSave = async (req, res) => {
           transfNew.fecha = fechaActual;
           transfNew.monto = req.body.transfMonto;
           await transfNew.save();
-        }
+      }
+
       } else {
            const mensajeError = "¡No se encontro el Balance, espere a que su admin genere la planilla de cobranza!";
             res.render("error", { mensajeError });
@@ -115,23 +116,64 @@ const pagoSave = async (req, res) => {
 const cargarTransf = async(req, res) =>{
   try {
     const transfere = await transf.find({status: "PENDIENTE"}).sort({transfFecha: 1});
+    const transfCaja = await caja.find({tipo: "rendicion"}).sort({timeStamp: -1}).limit(10);
     res.render('transferencias', {transfere});
   } catch (error) {
     
   }
 };
+const cargarTranfCob = async(req, res) =>{
+  try {
+    const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
+    const verifyToken = await verifyJWT(token);
+    const prestamos = await ventas.find({ cobRuta: verifyToken.numRuta}).sort({nombre: 1});
+    const transfere = await transf.find({cobRuta: verifyToken.numRuta, status: "PENDIENTE"}).sort({transfFecha: 1});
+    res.render('transfCobrador', {transfere, prestamos});
+  } catch (error) {
+    
+  } };
+  const guardarTransfCob = async(req, res) =>{
+    try {
+      console.log("GUARDAR TRANSFERENCIA");
+      
+      const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
+      const verifyToken = await verifyJWT(token);
+      const {dni, transfFecha, transfMonto} = req.body;
+      const cliente = await client.findOne({dni});
+  
+      if (cliente) {
+        const newTransf = new transf();     
+        newTransf.cobRuta = verifyToken.numRuta;
+        newTransf.dni = dni;
+        newTransf.nombre = cliente.nombre;
+        newTransf.transfFecha = transfFecha;
+        newTransf.monto = transfMonto;
+        newTransf.fecha = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
+     
+        console.log("time " + newTransf.timeStamp);
+        await newTransf.save();
+        res.redirect('/cobranza/transfCob');
+      } else {
+        const mensajeError = "¡No se encontro el cliente, verifique el DNI!";
+        res.render("error", { mensajeError });
+      }   
+  } catch (error) {
+    
+  } };
+
 const confirmarTransf = async(req, res) =>{
   try {
     const {id} = req.params;
     const transfEdit = await transf.findByIdAndUpdate({_id: id}, {status: "CONFIRMADA"});
-          const newOperacion = new caja();
+    const fecha = transfEdit.fecha;
+      const newOperacion = new caja();
       newOperacion.monto = transfEdit.monto;
       newOperacion.tipo = "rendicion";
       newOperacion.detalle = `Transf. de ${transfEdit.nombre} - Fecha: ${transfEdit.transfFecha}`;
       newOperacion.fecha = transfEdit.fecha;
       newOperacion.userCod = transfEdit.cobRuta; 
       newOperacion.timeStamp = transfEdit.timeStamp;
-
+    console.log("fecha timestamp" + newOperacion.timeStamp);
            await newOperacion.save();
 
     res.redirect('/cobranza/transf');
@@ -139,6 +181,15 @@ const confirmarTransf = async(req, res) =>{
     
   }
 };
+
+const deleteTransf = async(req, res) =>{
+  try {
+    const {id} = req.params;  
+    const transfDel = await transf.findByIdAndDelete({_id: id});
+    res.redirect('/cobranza/transf');
+  } catch (error) {
+    
+  }}; 
 
 const filterSem = async(req, res) =>{
   try {
@@ -450,4 +501,4 @@ const savePosicion = async(req, res)=>{
     
   }
 }
-module.exports = { cargarCobranza, pagoSave, cargarTransf, confirmarTransf, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket, refinanciarPres, saveRefinanciarPres, filterSem, note, saveNote, posicionNumber, savePosicion, filterPosicion};
+module.exports = { cargarCobranza, pagoSave, cargarTransf, cargarTranfCob, guardarTransfCob, confirmarTransf, deleteTransf, listaPagos, listaPagosDiarios, guardarBalanceDiario, esperadoDiario, envioTicket, refinanciarPres, saveRefinanciarPres, filterSem, note, saveNote, posicionNumber, savePosicion, filterPosicion};
