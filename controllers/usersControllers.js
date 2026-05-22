@@ -22,12 +22,14 @@ const crearUsuario = async (req, res) => {
       return res.render('error', {mensajeError});
     }
     //creamos el usuario en la base de datos
-    const userNumRuta = users.findOne().sort({numRuta: -1});
-  var nRuta = "";
-if (role == "vendedor") {
+    var nRuta = "";
+    if (role == "vendedor") {
+  const userNumRuta = users.findOne({role: "vendedor"}).sort({numRuta: 1});
    nRuta = userNumRuta.numRuta || 200;
+   nRuta = nRuta + 1;
   console.log("vendedor" + userNumRuta);
 } else {
+   const userNumRuta = users.findOne({role: "cobrador"}).sort({numRuta: 1});
    nRuta = userNumRuta.numRuta || 100;
   console.log("cobrador");
   console.log("cobrador" + userNumRuta);
@@ -36,6 +38,9 @@ if (role == "vendedor") {
      const nuRuta = nRuta + 1;
     usuarioNuevo = new users(req.body);
     usuarioNuevo.numRuta = nuRuta;
+    usuarioNuevo.ingreso = new Date(req.body.ingreso);
+    usuarioNuevo.sueldo = req.body.sueldo;
+    usuarioNuevo.actSueldoDate = new Date(req.body.actSueldoDate);
     const salt = bcrypt.genSaltSync(10);
     usuarioNuevo.password = bcrypt.hashSync(password, salt);
     await usuarioNuevo.save();
@@ -234,7 +239,7 @@ const volverPrin = async (req, res) => {
 
 const cargarUsuarios = async(req, res) => {
  try {
-   const usuarios = await users.find();
+   const usuarios = await users.find().sort({numRuta: 1}).lean();
    res.render('usuarios', {usuarios});
  } catch (error) {
   return res.render('error');
@@ -244,17 +249,27 @@ const cargarUsuarios = async(req, res) => {
   try {
     const id = req.params.id;
     const usuario = await users.findById(id).lean();
+    usuario.ingreso = new Date(usuario.ingreso).toISOString().split('T')[0];
+    usuario.actSueldoDate = new Date(usuario.actSueldoDate).toISOString().split('T')[0];
     res.render('usuarioEdit', {usuario});
   } catch (error) {
     return res.render('error');
   }};
   const editUserPost = async(req, res) =>{
     try {
-      const {id}= req.params;
+      const {id} = req.params;
+      const usuarioNuevo = req.body;
+      const usuario = await users.findById(id);
+      
+       usuarioNuevo.ingreso = usuario.ingreso || new Date(req.body.ingreso);
+        usuarioNuevo.actSueldoDate = usuario.actSueldoDate || new Date(req.body.actSueldoDate);
+        if (req.body.password) {
+          const salt = bcrypt.genSaltSync(10);
+          usuarioNuevo.password = bcrypt.hashSync(req.body.password, salt);
+        } else {
+          usuarioNuevo.password = usuario.password;
+        }
 
-      usuarioNuevo = req.body;
-      salt = bcrypt.genSaltSync(10);
-      usuarioNuevo.password = bcrypt.hashSync(req.body.password, salt);
      await users.findByIdAndUpdate({_id:id}, usuarioNuevo);
      res.redirect('/vistas/usuarios');
     } catch (error) {

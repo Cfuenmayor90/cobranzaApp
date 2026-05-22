@@ -1,13 +1,16 @@
 const { json } = require('express');
 const setPrest = require('../models/settingsModels');
 const setvalores = require('../models/settingValoresModels');
+const creditCard = require('../models/creditCardModels');
+const nodemon = require('nodemon');
 
 const cargarSettins = async(req,res) =>{
     try {
         const planActualPres = await setPrest.find({categoria: 'prestamo'});
         const planActualProd = await setPrest.find({categoria: ['financiamiento', 'particular']}).sort({categoria: 1, plan: 1, cuotas: 1});
         const valores = await setvalores.find();
-        res.render('configuracion', {planActualPres, planActualProd, valores});
+        const creditCards = await creditCard.find().sort({nombre: 1,  cuotas: 1});
+        res.render('configuracion', {planActualPres, planActualProd, valores, creditCards});
     } catch (error) {
         
     }
@@ -52,6 +55,25 @@ const deletePlan = async(req,res)=>{
     } catch (error) {
         
     }
-}
+};
+const createCreditCard = async(req,res) => {
+    try {
+        const newCard = new creditCard(req.body);
+        await newCard.save();
+        res.redirect('/settings');
+    } catch (error) {
+        res.status(500).send('Error creating credit card');
+    }
+};
 
-module.exports = {guardarPlan, cargarSettins, deletePlan, updateValores, guardarValores};
+const deleteCreditCard = async(req,res) => {
+    try {
+        const {id} = req.params;
+        await creditCard.findByIdAndDelete(id);
+        res.redirect('/settings');
+    } catch (error) {
+        res.status(500).send('Error deleting credit card');
+    }
+};
+
+module.exports = {guardarPlan, cargarSettins, deletePlan, updateValores, guardarValores, createCreditCard, deleteCreditCard};

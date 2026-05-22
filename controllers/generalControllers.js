@@ -347,11 +347,22 @@ const cargarEstadoClient = async(req, res) => {
     var gastoT = 0;
     var ventCtdoTo = 0;
     var opeT = 0;
-    balance.forEach(element => {
+    const arrayEstado = [];
+    for (let i = 0; i < balance.length; i++) {
+      const element = balance[i];
       cobradoT = element.cobrado + cobradoT;
       esperadoT = element.esperado + esperadoT;
-      ventCtdoTo = element.vtaCtdo + ventCtdoTo
-    }); 
+      ventCtdoTo = element.vtaCtdo + ventCtdoTo;
+      var rendicion = await caja.find({userCod: numR, tipo: ["rendicion", "adelanto"], fecha: element.fecha});
+if (rendicion.length > 0){
+  var rendicionT = 0;
+  rendicion.forEach(element => {
+    rendicionT = element.monto + rendicionT;
+  });
+    }
+    var diferencia = rendicionT - (element.cobrado + element.vtaCtdo);
+   arrayEstado.push({fecha: element.fecha, cobrado: element.cobrado, esperado: element.esperado, vtaCtdo: element.vtaCtdo, rendicion: rendicionT, diferencia: diferencia, color: diferencia < 0 ? "red" : "green"});
+  };
     cajaGastos.forEach(element => {
       gastoT = element.monto + gastoT;
     });
@@ -366,7 +377,7 @@ const cargarEstadoClient = async(req, res) => {
     efectivo = f.format(efectivo);
     ventCtdoTo = f.format(ventCtdoTo);
     if (user === 'admin'){
-      res.render('generalEstadisUsuario', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo});
+      res.render('generalEstadisUsuario', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo, arrayEstado});
     } else{
       res.render('estadisticas', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo});
     }

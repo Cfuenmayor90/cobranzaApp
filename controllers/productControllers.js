@@ -1,6 +1,7 @@
 const product = require('../models/productModels');
 const setting = require('../models/settingsModels'); //setting para ver los planes
 const settingValores = require('../models/settingValoresModels'); //sectin para valores de ganancia
+const creditCard = require('../models/creditCardModels');
 const multer = require('multer');
 const path = require('path');
 
@@ -70,11 +71,13 @@ const cotizarProd = async(req, res) => {
         const planesSemanales = await setting.find({categoria: "financiamiento",plan: "Semanal" }).sort({cuotas: 1});
         const planesMensuales = await setting.find({categoria: "financiamiento",plan: "mensual" }).sort({cuotas: 1});
         const planesParticulares = await setting.find({categoria: "particular" }).sort({plan: 1, cuotas: 1});
+        const tarjetas = await creditCard.find().sort({tarjeta: 1, cuotas: 1});
         var precio = (prod.precio * valores.dolar) * (valores.porcentaje/100 + 1); //precio con ganancia
-        var precioTartj = precio * (valores.tcredito/100 + 1); //precio con tarjeta de credito
+        var precioTartj = precio / (1 - valores.tcredito/100); //precio con tarjeta de credito
         var vCuota = precioTartj / 3;
         var arrayPlanes = [];
         var arrayPlanesParticulares = [];
+        var arrayTarjetas = [];
         planesDiarios.forEach(element => {
             var xcentaje = (element.porcentaje/100)+1;
             var cuota = (precio*xcentaje)/element.cuotas;
@@ -101,11 +104,17 @@ const cotizarProd = async(req, res) => {
             cuota = f.format(cuota);
             arrayPlanesParticulares.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota, "total": f.format(precio*xcentaje)}); 
     });
+    tarjetas.forEach(element => {
+        var xcentaje= (element.tasa/100);
+        var total = precio / (1 - xcentaje);
+        var cuota = total / element.cuotas;
+        arrayTarjetas.push({"tarjeta": element.tarjeta, "nombre": element.nombre, "cuotas": element.cuotas, "tasa": element.tasa, "cuota": f.format(cuota), "total": f.format(total)});
+    });
     
        precio = f.format(precio);
        vCuota = f.format(vCuota);
        precioTartj = f.format(precioTartj);
-        res.render('cotizarProd', {prod, precio, precioTartj, vCuota, arrayPlanes, arrayPlanesParticulares});
+        res.render('cotizarProd', {prod, precio, precioTartj, vCuota, arrayPlanes, arrayPlanesParticulares, arrayTarjetas});
     } catch (error) {
         res.render('error', {error});
     }
@@ -120,7 +129,7 @@ const listaPrecioVenta = async(req, res) =>{
         productos.forEach(element => {
             const prod = element;
         var precio = (prod.precio * valores.dolar) * ((valores.porcentaje * 0.01) + 1);
-        var precioTartj = precio *((valores.tcredito * 0.01) + 1);
+        var precioTartj = precio / (1 - valores.tcredito * 0.01);
         var vCuotaTarj = precioTartj / 3;
         var precio2sema = (precio * ((planesSemanales[0].porcentaje * 0.01) + 1));
         var precio3sema = precio * ((planesSemanales[1].porcentaje * 0.01) + 1);
