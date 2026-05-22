@@ -307,9 +307,7 @@ text-align: left;
   height: auto;
   margin: 1em;
 }
-.infoCotizarProd{
-  padding: 2em;
-}
+
 .formCliente2 {
   padding: 2em;
 }
@@ -442,6 +440,46 @@ text-align: left;
 }
 
 /*Codigo productos.html*/
+    
+.btnComprar{
+  background-color: #0e7a00;
+  width: 100px;
+  padding: 5px 5px;
+  margin: 3px auto;
+  color: white;
+  border-radius: 3px;
+  text-align: center;
+}
+.infoCotizarProd{
+  padding: 0.5em 2em;
+}
+.divTitleProd{
+  width: 100%;
+  height: auto;
+  background-color: #002a44;
+  text-align: center;
+  padding: 0.5em;
+  color: white;
+}
+.tableCreditCard{
+  width: 100%;
+  background-color: #002a44;
+  margin: auto;
+  text-align: center;
+ }
+
+.trTitleCreditCard{
+  background-color: #002a44;
+  color: white;
+}
+.thTitleCreditCard{
+  padding: 0.5em;
+  font-size: 20px;
+}
+
+.trCreditCard{
+  background-color: white;
+}
 .contProduc {
   background-color: green;
   width: 80%;
@@ -1073,10 +1111,18 @@ padding-top: 1px;
     padding: 0.2em;
   }
   /*cod productos*/
+  .infoCotizarProd{
+  margin: 0%;
+  padding: 0.5em;
+  width: 100%;
+}
   .tarjetaProd{
     width: 110px;
     height: auto;
     margin: 4px auto;
+  }
+  .tableCreditCard{
+  font-size: small;
   }
   .contLisProd{
     width: 100%;
@@ -1106,9 +1152,7 @@ padding-top: 1px;
     .btnCotizarProd:hover{
       background-color: #007b10;
     }
-    .infoCotizarProd{
-      padding: 1.5em;
-    }
+   
     /*Alertas*/
     .thAlert{
       padding: 0;
