@@ -29,7 +29,7 @@ const cargarGeneral = async(req, res) => {
     var cantDias = new Date(anio, (mes+1), 0).getDate();
    console.log("cantidad de dias: " + cantDias);
    
-    var periodo = `(Periodo: ${new Date(anio, mes).toLocaleString('es-AR', { month: 'long', timeZone: 'America/Argentina/Buenos_Aires' })}/${anio})`;
+    var periodo = `(Periodo: ${new Date(anio, (mes + 1), 0).toLocaleDateString('es-AR', { month: 'long', timeZone: 'America/Argentina/Buenos_Aires' })}/${anio})`;
     const prest = await ventas.find();
     //ventas totales general desde su inicio
     const venTotalT = await balances.find({categoria:"balance_diario"});
