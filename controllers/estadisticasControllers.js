@@ -21,11 +21,10 @@ const cargarEstadisticas = async (req, res) => {
      var mes = mesInp || new Date().getMonth();
      var cantDias = (new Date(anio, (mes+1), 0).getDate());
      var numR = numRutaInp || numRuta;
-     console.log("fechaForm ......." + cantDias);
-    const balance = await balances.find({cobRuta: numR, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias,23,59,59,0)}});
-    const hisVent = await hVentas.find({venRuta: numR, timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias,23,59,59,0)}});
-    const opeCaja = await caja.find({userCod: numR, timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias,23,59,59,0)}}).sort({timeStamp: -1});
-    const cajaGastos = await caja.find({userCod: numR, tipo: "sueldos", timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias,23,59,59,0)}});
+    const balance = await balances.find({cobRuta: numR, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias,23,59,59,0)}});
+    const hisVent = await hVentas.find({venRuta: numR, timeStamp:{$gte: new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias,23,59,59,0)}});
+    const opeCaja = await caja.find({userCod: numR, timeStamp:{$gte: new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias,23,59,59,0)}}).sort({timeStamp: -1});
+    const cajaGastos = await caja.find({userCod: numR, tipo: "sueldos", timeStamp:{$gte: new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias,23,59,59,0)}});
     var cobradoT = 0;
     var esperadoT = 0;
     var gastoT = 0;
