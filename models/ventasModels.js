@@ -101,8 +101,19 @@ const ventaSchema = new Schema({
     },
     posicion:{
         type: Number
+    },
+    cuotasAtrasadas:{
+        type: Number
+    },
+    montoAtraso:{
+        type: Number
+    },
+    colorAlert:{
+        type: String
+    },
+    statusAtraso:{
+        type: String
     }
-
 });
 
 module.exports = mongoose.model('ventas', ventaSchema);
