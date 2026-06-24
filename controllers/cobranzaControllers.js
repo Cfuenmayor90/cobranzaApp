@@ -63,11 +63,93 @@ const pagoSave = async (req, res) => {
         const pagoVa = new pagoN(req.body);
         pagoVa.fecha = fechaActual;
         pagoVa.cobRuta = prestamo.cobRuta;
-       
         var pNew = (prestamo.mTotal - pago).toFixed(2);
         prestamo.mTotal = pNew;
         prestamo.fechaUltPago = fechaActual;
-        await ventas.findByIdAndUpdate({ _id: codPres }, prestamo);
+        //calculamos las cuotas y monto de atraso
+        var cuotasAtrasadas = 0;
+        var montoAtraso = 0;
+        var cuotasRestantes = 0;
+        var statusAtraso = "";
+        var colorAlert = "";
+          var fechaPago = new Date().getTime();
+          var fechaVencimiento = new Date(prestamo.DateFinal).getTime();
+   
+        if (fechaPago < fechaVencimiento) {
+          console.log("atraso status if");
+          switch (prestamo.plan) {
+            //determinamos el plan de cobro y calculamos las cuotas atrasadas dependiendo de la cantidad de dias de atraso
+            case "diario":
+              const diffTime = Math.abs(fechaPago - fechaVencimiento);
+              const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+              cuotasRestantes = Math.ceil(diffDays / 1);
+              montoAtraso = prestamo.mTotal - (prestamo.cuota * cuotasRestantes);
+              cuotasAtrasadas = Math.ceil(montoAtraso / prestamo.cuota);
+                 //creamos el estado de atraso y el color de alerta dependiendo de la cantidad de dias de atraso
+                if (cuotasAtrasadas >= 2 && cuotasAtrasadas <= 4) {
+                colorAlert = "yellow";
+              } else if (cuotasAtrasadas >= 5) {
+                colorAlert = "orange";
+              }
+              break;
+            case "Semanal":
+              const diffTimeS = Math.abs(fechaPago - fechaVencimiento);
+              const diffDaysS = Math.ceil(diffTimeS / (1000 * 60 * 60 * 24));
+              cuotasRestantes = Math.ceil(diffDaysS / 7);
+              montoAtraso = prestamo.mTotal - (prestamo.cuota * cuotasRestantes);
+              cuotasAtrasadas = Math.ceil(montoAtraso / prestamo.cuota);
+              //creamos el estado de atraso y el color de alerta dependiendo de la cantidad de dias de atraso
+              if (cuotasAtrasadas == 1) {
+                colorAlert = "yellow";
+              } else if (cuotasAtrasadas >= 2) {
+                colorAlert = "red";
+              }
+              break;
+            case "quincenal":
+              const diffTimeQ = Math.abs(fechaPago - fechaVencimiento);
+              const diffDaysQ = Math.ceil(diffTimeQ / (1000 * 60 * 60 * 24));
+              cuotasRestantes = Math.ceil(diffDaysQ / 15);
+              montoAtraso = prestamo.mTotal - (prestamo.cuota * cuotasRestantes);
+              cuotasAtrasadas = Math.ceil(montoAtraso / prestamo.cuota);
+              //creamos el estado de atraso y el color de alerta dependiendo de la cantidad de dias de atraso
+              if (cuotasAtrasadas == 1) {
+                colorAlert = "red";
+              }  
+            break;
+            case "mensual":
+              const diffTimeM = Math.abs(fechaPago - fechaVencimiento);
+              const diffDaysM = Math.ceil(diffTimeM / (1000 * 60 * 60 * 24));
+              cuotasRestantes = Math.ceil(diffDaysM / 30);
+              montoAtraso = prestamo.mTotal - (prestamo.cuota * cuotasRestantes);
+              cuotasAtrasadas = Math.ceil(montoAtraso / prestamo.cuota);
+              //creamos el estado de atraso y el color de alerta dependiendo de la cantidad de dias de atraso
+              if (cuotasAtrasadas == 1) {
+                colorAlert = "red";
+              }
+           
+              break;
+            default:
+              break;
+          }
+             statusAtraso = "Cuotas Atrasadas: " + cuotasAtrasadas + "Monto de Atraso: " + montoAtraso.toFixed(2);
+        } 
+        else if (fechaPago === fechaVencimiento) {
+           statusAtraso = "Vencimiento Hoy";
+           colorAlert = "red";
+        } 
+        else{
+          const diffTime = Math.abs(fechaPago - fechaVencimiento);
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          console.log("dias de adelanto " + diffDays);
+          statusAtraso = "VENCIDO - " + diffDays + " días de vencimiento";
+          colorAlert = "red";
+          montoAtraso = prestamo.mTotal;
+        }
+          prestamo.cuotasAtrasadas = cuotasAtrasadas;
+          prestamo.montoAtraso = (montoAtraso).toFixed(2);
+          prestamo.statusAtraso = statusAtraso;
+          prestamo.colorAlert = colorAlert;
+       await ventas.findByIdAndUpdate({ _id: codPres }, prestamo);
         await pagoVa.save();
   
         var venTas = await ventas.find({cobRuta: nRuta, fechaInicio: fechaActual});
@@ -83,7 +165,7 @@ const pagoSave = async (req, res) => {
         pagos.forEach(element => {
           pagosT = element.pago + pagosT;
         });
-        ganan = (monTotal-venTotal).toFixed(2);
+       ganan = (monTotal-venTotal).toFixed(2);
         const balanceNew = ({cobRuta: nRuta, fecha: fechaActual, nombre: balance.nombre, cobrado: pagosT.toFixed(2), esperado: balance.esperado, categoria: "balance_diario", ventas: venTotal, ganancia: ganan });
         const balanEdit = await balances.findByIdAndUpdate({_id: balance._id}, balanceNew);
         res.redirect('/cobranza');
@@ -276,12 +358,14 @@ const listaPagos = async (req, res) => {
 };
 //funcion para guardar el esperado diario
 const esperadoDiario = async(req, res) =>{
+ 
   try {
-      var diA = new Date().getDay();
+     var diA = new Date().getDay();
       if(diA !==0) {
        const fechaAc =  new Date().toLocaleDateString("es-AR", {timeZone: 'America/Buenos_Aires'});
-       const ruCobro = await users.find({role:["cobrador" , "pisoDeVenta"]});
-    
+        console.log("esperado diario");
+    const ruCobro = await users.find({role: ["cobrador", "pisoDeVenta"]});
+     console.log("esperado diario 2");
       var semana = ["domingo", "lunes", "martes", "miercoles", "jueves", "viernes", "Sabado"];
       var dia = semana[diA];
      console.log("dia de semana " + dia);
@@ -290,6 +374,7 @@ const esperadoDiario = async(req, res) =>{
       const element = ruCobro[i];
       var nRuta = element.numRuta;
       const buscarEsperado = await balances.findOne({fecha: fechaAc, categoria: "balance_diario", cobRuta: nRuta});
+       console.log("esperado diario");
       if (!buscarEsperado) {
         console.log("esperado diario for");
         var esperado = await ventas.find({ cobRuta: nRuta, diaDeCobro: diaD, mTotal:{$gt:0}});
@@ -301,14 +386,108 @@ const esperadoDiario = async(req, res) =>{
         const balanceNew = new balances({cobRuta: nRuta,  nombre: element.nombre, fecha: fechaAc, cobrado: 0, esperado: espeT.toFixed(2), ventas: 0, vtaCtdo: 0, ganancia: 0, categoria: "balance_diario" });
         await balanceNew.save();
       }
-    }; 
+    }}; 
+    //actualizamos en cada venta(prestamo) el campo de ESTADO que se refiere a si el credito esta al dia o vencido
+    const prestamos = await ventas.find({mTotal:{$gt:0}});
+    for (let i = 0; i < prestamos.length; i++) {
+      const element = prestamos[i];
+      const prestamo = element;
+         //calculamos las cuotas y monto de atraso
+        let cuotasAtrasadas = 0;
+        let montoAtraso = 0;
+        let cuotasRestantes = 0;
+        let statusAtraso = "";
+        let colorAlert = "";
+          let fechaPago = new Date().getTime();
+          let fechaVencimiento = new Date(prestamo.DateFinal).getTime();
+   
+        if (fechaPago < fechaVencimiento) {
+          console.log("atraso status if");
+          switch (prestamo.plan) {
+            //determinamos el plan de cobro y calculamos las cuotas atrasadas dependiendo de la cantidad de dias de atraso
+            case "diario":
+              let diffTime = Math.abs(fechaPago - fechaVencimiento);
+              let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+              let sabados = Math.floor(diffDays / 7);
+              diffDays = diffDays - sabados;
+              cuotasRestantes = Math.ceil(diffDays / 1);
+              montoAtraso = prestamo.mTotal - (prestamo.cuota * cuotasRestantes);
+              cuotasAtrasadas = Math.ceil(montoAtraso / prestamo.cuota);
+                 //creamos el estado de atraso y el color de alerta dependiendo de la cantidad de dias de atraso
+                if (cuotasAtrasadas >= 2 && cuotasAtrasadas <= 4) {
+                colorAlert = "yellow";
+              } else if (cuotasAtrasadas >= 5) {
+                colorAlert = "orange";
+              }
+              break;
+            case "Semanal":
+              let diffTimeS = Math.abs(fechaPago - fechaVencimiento);
+              let diffDaysS = Math.ceil(diffTimeS / (1000 * 60 * 60 * 24));
+              cuotasRestantes = Math.ceil(diffDaysS / 7);
+              montoAtraso = prestamo.mTotal - (prestamo.cuota * cuotasRestantes);
+              cuotasAtrasadas = Math.ceil(montoAtraso / prestamo.cuota);
+              //creamos el estado de atraso y el color de alerta dependiendo de la cantidad de dias de atraso
+              if (cuotasAtrasadas == 1) {
+                colorAlert = "yellow";
+              } else if (cuotasAtrasadas >= 2) {
+                colorAlert = "red";
+              }
+              break;
+            case "quincenal":
+              let diffTimeQ = Math.abs(fechaPago - fechaVencimiento);
+              let diffDaysQ = Math.ceil(diffTimeQ / (1000 * 60 * 60 * 24));
+              cuotasRestantes = Math.ceil(diffDaysQ / 15);
+              montoAtraso = prestamo.mTotal - (prestamo.cuota * cuotasRestantes);
+              cuotasAtrasadas = Math.ceil(montoAtraso / prestamo.cuota);
+              //creamos el estado de atraso y el color de alerta dependiendo de la cantidad de dias de atraso
+              if (cuotasAtrasadas == 1) {
+                colorAlert = "red";
+              }  
+            break;
+            case "mensual":
+              let diffTimeM = Math.abs(fechaPago - fechaVencimiento);
+              let diffDaysM = Math.ceil(diffTimeM / (1000 * 60 * 60 * 24));
+              cuotasRestantes = Math.ceil(diffDaysM / 30);
+              montoAtraso = prestamo.mTotal - (prestamo.cuota * cuotasRestantes);
+              cuotasAtrasadas = Math.ceil(montoAtraso / prestamo.cuota);
+              //creamos el estado de atraso y el color de alerta dependiendo de la cantidad de dias de atraso
+              if (cuotasAtrasadas == 1) {
+                colorAlert = "red";
+              }
+           
+              break;
+            default:
+              break;
+          }
+             statusAtraso = "Cuotas Atrasadas: " + cuotasAtrasadas + ", Monto de Atraso: $" + montoAtraso.toFixed(2);
+        } 
+        else if (fechaPago === fechaVencimiento) {
+           statusAtraso = "Vencimiento Hoy";
+           colorAlert = "red";
+        } 
+        else{
+          let diffTime = Math.abs(fechaPago - fechaVencimiento);
+          let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          console.log("dias de adelanto " + diffDays);
+          cuotasAtrasadas = Math.ceil(diffDays / 1);
+          statusAtraso = "VENCIDO - " + diffDays + " días de vencimiento";
+          colorAlert = "red";
+          montoAtraso = prestamo.mTotal;
+        }
+          prestamo.cuotasAtrasadas = cuotasAtrasadas;
+          prestamo.montoAtraso = (montoAtraso).toFixed(2);
+          prestamo.statusAtraso = statusAtraso;
+          prestamo.colorAlert = colorAlert;
+       await ventas.findByIdAndUpdate({ _id: prestamo._id }, prestamo);
+      }   
+// se cierra el codigo del atraso y se actualiza el estado de cada prestamo
     console.log("Balance esperado Ok"); 
    res.redirect('/vistas/volver');
-  }
+  
   
      } 
      catch (error) {
-      const mensajeError = "No se pudo generar las planillas de cobranza"
+      const mensajeError = "No se pudo generar las planillas de cobranza " + error;
       res.render('error', {mensajeError})
      }
 };

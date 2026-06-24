@@ -249,8 +249,8 @@ const cargarUsuarios = async(req, res) => {
   try {
     const id = req.params.id;
     const usuario = await users.findById(id).lean();
-    usuario.ingreso = new Date(usuario.ingreso).toISOString().split('T')[0];
-    usuario.actSueldoDate = new Date(usuario.actSueldoDate).toISOString().split('T')[0];
+    usuario.ingreso = new Date(usuario.ingreso).toISOString().split('T')[0] || new Date().toISOString().split('T')[0];
+    usuario.actSueldoDate = new Date(usuario.actSueldoDate).toISOString().split('T')[0] || new Date().toISOString().split('T')[0];
     res.render('usuarioEdit', {usuario});
   } catch (error) {
     return res.render('error');
