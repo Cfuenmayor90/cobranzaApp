@@ -419,6 +419,9 @@ const esperadoDiario = async(req, res) =>{
               } else if (cuotasAtrasadas >= 5) {
                 colorAlert = "orange";
               }
+              else{
+                colorAlert = "green";
+              }
               break;
             case "Semanal":
               let diffTimeS = Math.abs(fechaPago - fechaVencimiento);
@@ -432,6 +435,9 @@ const esperadoDiario = async(req, res) =>{
               } else if (cuotasAtrasadas >= 2) {
                 colorAlert = "red";
               }
+              else{
+                colorAlert = "green";
+              }
               break;
             case "quincenal":
               let diffTimeQ = Math.abs(fechaPago - fechaVencimiento);
@@ -443,6 +449,9 @@ const esperadoDiario = async(req, res) =>{
               if (cuotasAtrasadas == 1) {
                 colorAlert = "red";
               }  
+              else{
+                colorAlert = "green";
+              }
             break;
             case "mensual":
               let diffTimeM = Math.abs(fechaPago - fechaVencimiento);
@@ -453,6 +462,9 @@ const esperadoDiario = async(req, res) =>{
               //creamos el estado de atraso y el color de alerta dependiendo de la cantidad de dias de atraso
               if (cuotasAtrasadas == 1) {
                 colorAlert = "red";
+              }
+              else{
+                colorAlert = "green";
               }
            
               break;
