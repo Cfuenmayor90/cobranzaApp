@@ -38,7 +38,7 @@ const transfSchema = new Schema({
    timeStamp:{
         type: Date,
         require: true,
-        default: Date.now() - 10800000
+         default: () => new Date(Date.now() - 3 * 60 * 60 * 1000)
     }
 
 });

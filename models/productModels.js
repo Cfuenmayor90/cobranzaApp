@@ -32,9 +32,12 @@ const productSchema = new Schema({
     },
     garantia:{
         type: String
+    },
+    timeStamp:{
+        type: Date,
+        require: true,
+        default: () => new Date(Date.now() - 3 * 60 * 60 * 1000)
     }
-},
-{timestamps: true}
-)
+});
 
 module.exports = mongoose.model('product', productSchema);

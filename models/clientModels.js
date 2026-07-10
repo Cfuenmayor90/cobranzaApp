@@ -44,7 +44,8 @@ const clientSchema = new Schema({
     },
     timeStamp:{
         type: Date,
-        default: Date.now
+        require: true,
+        default: () => new Date(Date.now() - 3 * 60 * 60 * 1000)
     },
     nota:{
         type: String
