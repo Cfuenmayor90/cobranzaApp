@@ -107,11 +107,11 @@ const cargarGeneral = async(req, res) => {
             var mCaja = 0;
             var mAdelantos = 0;
             var efeCaja = 0;
-            var cajaRendicion = await caja.find({userCod: element.numRuta,  timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias, 23, 59, 59.999)}, tipo: "rendicion"});
-            var cajaAdelanto = await caja.find({userCod: element.numRuta,  timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias, 23, 59, 59.999)}, tipo: "sueldos"});
+            var cajaRendicion = await caja.find({userCod: element.numRuta,  timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias, 23, 59, 59.999)}, tipo: "rendicion"});
+            var cajaAdelanto = await caja.find({userCod: element.numRuta,  timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias, 23, 59, 59.999)}, tipo: "sueldos"});
           
             var prestT = await ventas.find({cobRuta: element.numRuta});
-            var balan = await balances.find({cobRuta: element.numRuta, timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias, 23, 59, 59.999)}, categoria: 'balance_diario'});
+            var balan = await balances.find({cobRuta: element.numRuta, timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias, 23, 59, 59.999)}, categoria: 'balance_diario'});
             cajaRendicion.forEach(element => {
               mCaja = element.monto + mCaja;
             });
@@ -200,11 +200,11 @@ const cargarGeneralSuper = async(req, res) => {
             var mCaja = 0;
             var mAdelantos = 0;
             var efeCaja = 0;
-            var cajaRendicion = await caja.find({userCod: element.numRuta,  timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}, tipo: "rendicion"});
-            var cajaAdelanto = await caja.find({userCod: element.numRuta,  timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}, tipo: "sueldos"});
+            var cajaRendicion = await caja.find({userCod: element.numRuta,  timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias, 23, 59, 59.999)}, tipo: "rendicion"});
+            var cajaAdelanto = await caja.find({userCod: element.numRuta,  timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias, 23, 59, 59.999)}, tipo: "sueldos"});
           
             var prestT = await ventas.find({cobRuta: element.numRuta});
-            var balan = await balances.find({cobRuta: element.numRuta, timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias)}, categoria: 'balance_diario'});
+            var balan = await balances.find({cobRuta: element.numRuta, timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias, 23, 59, 59.999)}, categoria: 'balance_diario'});
             cajaRendicion.forEach(element => {
               mCaja = element.monto + mCaja;
             });
