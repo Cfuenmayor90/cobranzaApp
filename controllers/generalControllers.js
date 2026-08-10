@@ -380,7 +380,7 @@ if (rendicion.length > 0){
     if (user === 'admin'){
       res.render('generalEstadisUsuario', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo, arrayEstado});
     } else{ 
-      res.render('estadisticas', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo});
+      res.render('estadisticas', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo, arrayEstado});
     }
   };
 const editCliente = async(req, res) =>{
