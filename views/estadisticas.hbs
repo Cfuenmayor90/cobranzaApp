@@ -67,19 +67,21 @@
       <h3 class="tituloForm">Balance Por Dia</h3>
     </div>
     <div class="tarjUser">
-      <table class="tableListCaja">
+     <table class="tableListCaja">
         <tr class="">
           <th class="tableListCajaTitle">Fecha</th>
           <th class="tableListCajaTitle">Esperado</th>
           <th class="tableListCajaTitle">Cobrado</th>
-          <th class="tableListCajaTitle">Vta De Contado</th>
+            <th class="tableListCajaTitle">Rendición</th>
+              <th class="tableListCajaTitle">Diferencia</th>
         </tr>
-        {{#each balance}}
+        {{#each arrayEstado}}
           <tr>
             <th class="tableListCajaRes">{{fecha}}</th>
-            <th class="tableListCajaRes">${{esperado}}</th>
-            <th class="tableListCajaRes">${{cobrado}}</th>
-            <th class="tableListCajaRes">${{vtaCtdo}}</th>
+            <th class="tableListCajaRes">{{esperado}}</th>
+            <th class="tableListCajaRes">{{cobrado}}</th>
+             <th class="tableListCajaRes">{{rendicion}}</th>
+              <th class="tableListCajaRes" style="color: {{color}};" >{{diferencia}}</th>
           </tr>
         {{/each}}
       </table>
