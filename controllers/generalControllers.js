@@ -26,12 +26,14 @@ const cargarGeneral = async(req, res) => {
     const {mesInp, anioInp} = req.body;
     var anio = anioInp || new Date().getFullYear();
     var mes = mesInp || new Date().getMonth();
+    mes = parseInt(mes);
     var cantDias = new Date(anio, (mes+1), 0).getDate();
     cantDias = parseInt(cantDias);
-    mes = parseInt(mes);
+    anio = parseInt(anio);
+    console.log("mes: " + mes);
    console.log("cantidad de dias: " + cantDias);
    
-    var periodo = `(Periodo: ${new Date(anio, (mes + 1), 0).toLocaleDateString('es-AR', { month: 'long', timeZone: 'America/Argentina/Buenos_Aires' })}/${anio})`;
+    var periodo = `(Periodo: ${new Date(anio, mes, 0).toLocaleDateString('es-AR', { month: 'long', timeZone: 'America/Argentina/Buenos_Aires' })}/${anio})`;
     const prest = await ventas.find();
     //ventas totales general desde su inicio
     const venTotalT = await balances.find({categoria:"balance_diario"});
@@ -67,6 +69,8 @@ const cargarGeneral = async(req, res) => {
       gastocajaMes = element.monto + gastocajaMes;
     });
     //sumamos todas las ventas y ganacias totales de las rutas en el MES  en curso
+    //console.log("ventas totales en el mes: " + ventasTo);
+
     ventasTo.forEach(element => {
       venTotal = element.ventas + venTotal;
       ganaTotal = element.ganancia + ganaTotal;
@@ -89,7 +93,7 @@ const cargarGeneral = async(req, res) => {
                 saldoT += element.saldo;
             });
             
-    const vent = await ventas.find({timeStamp:{$gte:new Date(anio,mes,0), $lte: new Date(anio,mes,cantDias)}});
+    const vent = await ventas.find({timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias, 23, 59, 59.999)}});
        prest.forEach(element => {
            porCobrar = element.mTotal + porCobrar;
         });
@@ -294,7 +298,7 @@ const cargarPrestamosRuta = async(req, res) =>{
     try {
        const {nRuta} = req.params;
        var fecha = new Date().toLocaleDateString("es-AR", {timeZone: 'America/Argentina/Buenos_Aires'});
-       const prestamos = await ventas.find({ cobRuta: nRuta}).sort({nombre: 1});
+       const prestamos = await ventas.find({ cobRuta: nRuta}).sort({posicion: 1});
        const usuario = await users.findOne({numRuta: nRuta}); 
        res.render('hojaImprimir', {prestamos, usuario, fecha});
     
@@ -326,13 +330,13 @@ const cargarEstadoClient = async(req, res) => {
     console.log(`numRuta ${numRutaInp} mes ${mesInp} año ${anioInp}`);
     var anio = anioInp || new Date().getFullYear();
     var mes = mesInp || new Date().getMonth();
-    mes = parseInt(mes);
     console.log("mes: " + mes);
+    mes = parseInt(mes);
     var cantDias = new Date(anio, (mes + 1), 0).getDate();
-    canDias = parseInt(cantDias);
+    console.log("mes: " + mes);
+    cantDias = parseInt(cantDias);
      console.log("cantidad de dias: " + cantDias);
-    //
-    // cantDias = parseInt(cantDias);
+ 
      
      var numR = numRutaInp || nRuta;
      console.log("fechaForm " + anio);

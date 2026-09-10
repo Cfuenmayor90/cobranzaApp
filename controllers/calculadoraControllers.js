@@ -140,10 +140,12 @@ const calcular = async(req,res) =>{
         const {monto, desc} = req.body;
         const planes = await setPrest.find({categoria: 'prestamo'});
         const planesProdu = await setPrest.find({categoria: 'financiamiento'});
+        const planesParticulares = await setPrest.find({categoria: 'particular'}).sort({plan: 1, cuotas: 1});
         const valores = await setvalores.findOne();
         const montoProd = monto * ((valores.porcentaje/100)+1);
         const array = [];
         const arrayProd = [];
+        const arrayParticulares = [];
        for (let i = 0; i < planes.length; i++) {
             var element = planes[i];
             var xcentaje = (element.porcentaje/100)+1;
@@ -162,8 +164,14 @@ const calcular = async(req,res) =>{
            cuota = f.format(cuota);
             arrayProd.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota});
         }
-    
-        return res.render('calculadora', {array, arrayProd, monto, desc});
+        for (let i = 0; i < planesParticulares.length; i++) {
+            var element = planesParticulares[i];
+            var xcentaje= (element.porcentaje/100)+1;
+            var cuota = (montoProd*xcentaje)/element.cuotas;
+            cuota = f.format(cuota);
+            arrayParticulares.push({"plan": element.plan, "cuotas": element.cuotas, "porcentaje": element.porcentaje, "cuota": cuota});
+        }
+        return res.render('calculadora', {array, arrayProd, arrayParticulares, monto, desc});
  
     } catch (error) {
         res.render('error')
