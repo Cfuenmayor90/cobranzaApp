@@ -108,10 +108,10 @@
         {{#each arrayEstado}}
           <tr>
             <th class="tableListCajaRes">{{fecha}}</th>
-            <th class="tableListCajaRes">${{esperado}}</th>
-            <th class="tableListCajaRes">${{cobrado}}</th>
-             <th class="tableListCajaRes">${{rendicion}}</th>
-              <th class="tableListCajaRes" style="color: {{color}};" >${{diferencia}}</th>
+            <th class="tableListCajaRes">{{esperado}}</th>
+            <th class="tableListCajaRes">{{cobrado}}</th>
+             <th class="tableListCajaRes">{{rendicion}}</th>
+              <th class="tableListCajaRes" style="color: {{color}};" >{{diferencia}}</th>
           </tr>
         {{/each}}
       </table>
@@ -119,7 +119,7 @@
 </div>
     <section class="sectionContClientes">
          <div class="divClienteBuscar">
-             <h3 class="tituloForm">Ventas Realizadas</h3>
+             <h3 class="tituloForm">Ventas Contado Realizadas</h3>
           </div>
     <div class="tarjUser">
     <table class="tableListCaja">
@@ -128,17 +128,55 @@
       <th class="tableListCajaTitle">Categoria</th>
       <th class="tableListCajaTitle">Nombre</th>
       <th class="tableListCajaTitle">Detalle</th>
+      <th class="tableListCajaTitle">Descuento</th>
       <th class="tableListCajaTitle">Monto</th>
     </tr>
-    {{#each hisVent}}
+    {{#each hisVentContado}}
      <tr>
       <th class="tableListCajaRes">{{fechaInicio}}</th>
       <th class="tableListCajaRes">{{categoria}}</th>
       <th class="tableListCajaRes">{{nombre}}</th>
       <th class="tableListCajaRes">{{detalle}}</th>
+      <th class="tableListCajaRes">{{descuento}}</th>
       <th class="tableListCajaRes">{{mTotal}}</th>
     </tr> 
     {{/each}}
+    <tr>
+      <th colspan="5" class="tableListCajaRes">Total:</th>
+      <th class="tableListCajaRes">{{vetConTotal}}</th>
+    </tr>
+  </table>
+  
+  </div>
+
+   <div class="divClienteBuscar">
+             <h3 class="tituloForm">Ventas Contado Realizadas</h3>
+          </div>
+    <div class="tarjUser">
+    <table class="tableListCaja">
+    <tr>
+      <th class="tableListCajaTitle">Fecha</th>
+      <th class="tableListCajaTitle">Categoria</th>
+      <th class="tableListCajaTitle">Nombre</th>
+      <th class="tableListCajaTitle">Detalle</th>
+      <th class="tableListCajaTitle">Descuento</th>
+      <th class="tableListCajaTitle">Monto</th>
+    </tr>
+    {{#each hisVentCredito}}
+     <tr>
+      <th class="tableListCajaRes">{{fechaInicio}}</th>
+      <th class="tableListCajaRes">{{categoria}}</th>
+      <th class="tableListCajaRes">{{nombre}}</th>
+      <th class="tableListCajaRes">{{detalle}}</th>
+     <th class="tableListCajaRes">{{descuento}}</th>
+      <th class="tableListCajaRes">{{mTotal}}</th>
+    </tr> 
+    {{/each}}
+    <tr>
+      <th colspan="5" class="tableListCajaRes">Total:</th>
+      
+      <th class="tableListCajaRes">{{ventCredTotal}}</th>
+    </tr>
   </table>
   
   </div>

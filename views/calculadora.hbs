@@ -89,13 +89,32 @@
 
     </table>
     <br />
+    <p>Tabla De Pagos Particulares, {{desc}}</p>
+
+    <table class="tableListCaja">
+      <tr>
+        <th class="tableListCajaTitle">Plan</th>
+        <th class="tableListCajaTitle">Cuotas</th>
+        <th class="tableListCajaTitle">Valor De Cuota</th>
+      </tr>
+      {{#each arrayParticulares}}
+        <tr>
+          <th class="tableListCajaRes">{{plan}}</th>
+          <th class="tableListCajaRes">{{cuotas}}</th>
+          <th class="tableListCajaRes">{{cuota}}</th>
+        </tr>
+
+      {{/each}}
+
+    </table>
+    <br />
 <div class="divClienteBuscar">
         <h3 class="tituloForm">Cotizar Planes De Productos</h3>
       </div>
     <form action="/calculadora/presupuestoProdCant" method="post" class="formCliente2">
         
             <label for="detalle">Codigo De Producto</label>
-            <select  name="codProd" id="codProd" class="inpForm"  multiple>
+            <select  name="codProd" id="codProd" class="inpForm" style="height: 400px;" multiple>
               {{#each productos}}
               <option value="{{cod}}">{{cod}} // {{nombre}}</option>
               {{/each}}
