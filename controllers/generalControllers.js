@@ -341,7 +341,8 @@ const cargarEstadoClient = async(req, res) => {
      var numR = numRutaInp || nRuta;
      console.log("fechaForm " + anio);
     const balance = await balances.find({cobRuta: numR, categoria: 'balance_diario', timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias, 23, 59, 59.999)}});
-    const hisVent = await hVentas.find({venRuta: numR, timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias, 23, 59, 59.999)}});
+    const hisVentContado = await hVentas.find({venRuta: numR, timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias, 23, 59, 59.999)}, categoria: "contado"});
+    const hisVentCredito = await hVentas.find({venRuta: numR, timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias, 23, 59, 59.999)}, categoria: ["particular", "financiamiento"]}); 
     const opeCaja = await caja.find({userCod: numR, tipo: ["sueldos", "rendicion"], timeStamp:{$gte: new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias, 23, 59, 59.999)}}).sort({timeStamp: -1});
     var cajaGastos = await caja.find({userCod: numR, tipo: "sueldos",  timeStamp:{$gte:new Date(anio,mes,1), $lte: new Date(anio,mes,cantDias, 23, 59, 59.999)}});
     var cobradoT = 0;
@@ -349,6 +350,8 @@ const cargarEstadoClient = async(req, res) => {
     var gastoT = 0;
     var ventCtdoTo = 0;
     var opeT = 0;
+    var vetConTotal = 0;
+    var ventCredTotal = 0;
     const arrayEstado = [];
     for (let i = 0; i < balance.length; i++) {
       const element = balance[i];
@@ -368,8 +371,14 @@ if (rendicion.length > 0){
     var diferencia = rendicionT - (element.cobrado + element.vtaCtdo);
    arrayEstado.push({fecha: element.fecha, cobrado: f.format(element.cobrado), esperado: f.format(element.esperado), vtaCtdo: f.format(element.vtaCtdo), rendicion: f.format(rendicionT), diferencia: f.format(diferencia), color: diferencia < 0 ? "red" : "green"});
   };
+    hisVentContado.forEach(element => {
+      vetConTotal = element.mTotal + vetConTotal;
+    });
+    hisVentCredito.forEach(element => {
+      ventCredTotal = element.mTotal + ventCredTotal;
+    });
     cajaGastos.forEach(element => {
-      gastoT = element.monto + gastoT;
+      gastoT = element.mTotal + gastoT;
     });
     opeCaja.forEach(element => {
       opeT = element.monto + opeT;
@@ -381,10 +390,12 @@ if (rendicion.length > 0){
     gastoT = f.format(gastoT);
     efectivo = f.format(efectivo);
     ventCtdoTo = f.format(ventCtdoTo);
+    ventCredTotal = f.format(ventCredTotal);
+    vetConTotal = f.format(vetConTotal);
     if (user === 'admin'){
-      res.render('generalEstadisUsuario', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo, arrayEstado});
+      res.render('generalEstadisUsuario', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, opeCaja, numR, gastoT, arrayAnios, efectivo, arrayEstado, ventCredTotal, vetConTotal, hisVentContado, hisVentCredito});
     } else{ 
-      res.render('estadisticas', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, hisVent, opeCaja, numR, gastoT, arrayAnios, efectivo, arrayEstado});
+      res.render('estadisticas', {balance, cobradoT, esperadoT, ventCtdoTo, porcentaje, opeCaja, numR, gastoT, arrayAnios, efectivo, arrayEstado, ventCredTotal, vetConTotal, hisVentContado, hisVentCredito});
     }
   };
 const editCliente = async(req, res) =>{
