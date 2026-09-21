@@ -1,40 +1,140 @@
-<nav class="navegacion">
-    <a href="javascript:history.back()" ><i class="bi bi-box-arrow-left"></i></a>
-    <div>
-      <span>Catalogo De Productos</span>
-    </div>
-    <div class="iconMenuHamburguesa">
-      <i class="bi bi-menu-button-wide-fill"></i>
-    </div>
-  </nav>
-   <div class="contMayorCli">
-    <section class="sectionContClientes">
-         <div class="divClienteBuscar">
-      Categoria:
-        <a href="/products/productosUsuarios" style="color: gray;">Todos - </a>
-            {{#each arrayCategoriasProd}}
-               <a href="/products/filtrarProd/{{valor}}" style="color: gray;">{{valor}} - </a>
-              {{/each}}
-             Cant: {{cant}}
-          </div>
-         <div class="contLisProd">
-          {{#each productos}}
-          <div class="tarjetaProd">
-            <img src="/uploads/{{cod}}.jpg" alt="" class="imgProd">
-            <div class="divLetrasTarjProd">
-            <h3>{{nombre}}</h3>
-            <h4>Cod: {{cod}}</h4>
-            <h5>Stock: {{stock}}</h5>
-            </div>
-            <a href="/products/cotizarProd/{{_id}}">
-            <h4 class="btnCotizarProd">
-              Cotizar
-            </h4>
-            </a>
-         </div>
+<nav class="catalogo-nav">
 
-          {{/each}}
-      
-         </div>
+    <a href="javascript:history.back()" class="catalogo-back">
+        <i class="bi bi-box-arrow-left"></i>
+    </a>
+
+    <div class="catalogo-brand">
+        <span>Catálogo de Productos</span>
+    </div>
+
+    <div class="catalogo-menu">
+        <i class="bi bi-menu-button-wide-fill"></i>
+    </div>
+
+</nav>
+
+
+<div class="catalogo-page">
+
+    <section class="catalogo-container">
+
+        <!-- ENCABEZADO DEL CATÁLOGO -->
+        <header class="catalogo-heading">
+
+            <div class="catalogo-heading-text">
+
+                <span class="catalogo-overline">
+                    PRODUCTOS DISPONIBLES
+                </span>
+
+                <h1>Catálogo de productos</h1>
+
+                <p>
+                    Explorá nuestros productos y solicitá una cotización.
+                </p>
+
+            </div>
+
+            <div class="catalogo-total">
+                <strong>{{cant}}</strong>
+                <span>productos</span>
+            </div>
+
+        </header>
+
+
+        <!-- CATEGORÍAS -->
+        <div class="catalogo-categorias">
+
+            <div class="categorias-label">
+                <i class="bi bi-grid-3x3-gap-fill"></i>
+                <span>Categorías</span>
+            </div>
+
+            <div class="categorias-lista">
+
+                <a
+                    href="/products/productosUsuarios"
+                    class="categoria-link categoria-activa"
+                >
+                    Todos
+                </a>
+
+                {{#each arrayCategoriasProd}}
+
+                    <a
+                        href="/products/filtrarProd/{{valor}}"
+                        class="categoria-link"
+                    >
+                        {{valor}}
+                    </a>
+
+                {{/each}}
+
+            </div>
+
+        </div>
+
+
+        <!-- GRILLA DE PRODUCTOS -->
+        <div class="productos-grid">
+
+            {{#each productos}}
+
+                <article class="producto-card">
+
+                    <!-- IMAGEN -->
+                    <div class="producto-imagen">
+
+                        <img
+                            src="/uploads/{{cod}}.jpg"
+                            alt="{{nombre}}"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+
+                    <!-- INFORMACIÓN -->
+                    <div class="producto-info">
+
+                        <h2 class="producto-nombre">
+                            {{nombre}}
+                        </h2>
+
+                        <div class="producto-meta">
+
+                            <span class="producto-codigo">
+                                <small>CÓDIGO</small>
+                                {{cod}}
+                            </span>
+
+                            <span class="producto-stock">
+                                <small>STOCK</small>
+                                {{stock}}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACCIÓN -->
+                    <a
+                        href="/products/cotizarProd/{{_id}}"
+                        class="producto-cotizar"
+                    >
+                        <span>Cotizar producto</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                </article>
+
+            {{/each}}
+
+        </div>
+
     </section>
-  </div>
+
+</div>

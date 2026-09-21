@@ -1,104 +1,486 @@
-<nav class="navegacion">
-  <a href="javascript:history.back()"><i class="bi bi-box-arrow-left"></i></a>
-  <div>
-    <span>Detalles Del Producto</span>
-  </div>
-  <div class="iconMenuHamburguesa">
-    <i class="bi bi-menu-button-wide-fill"></i>
-  </div>
+<!-- =========================================================
+     BARRA SUPERIOR
+     ========================================================= -->
+
+<nav class="cotizacion-nav">
+
+    <a
+        href="javascript:history.back()"
+        class="cotizacion-back"
+    >
+        <i class="bi bi-box-arrow-left"></i>
+    </a>
+
+    <div class="cotizacion-brand">
+        <span>Detalles del Producto</span>
+    </div>
+
+    <div class="cotizacion-menu">
+        <i class="bi bi-menu-button-wide-fill"></i>
+    </div>
+
 </nav>
-<div class="contMayorCli">
-  <div class="formCliente">
-   
-        <img class="imgCotizarProd" src="/uploads/{{prod.cod}}.jpg" alt="">
-        <div class="divTitleProd">
-        <h2>{{prod.nombre}}</h2>
-        </div>
-    <div class="infoCotizarProd" >
-       <h4>Codigo: {{prod.cod}}</h4>
-       <h4>Disponibles: {{prod.stock}}</h4>
-       <h2 style="font-size: 25px;">Precio: <label for="" style="color: blue;">{{precioTartj}}</label></h2>
-       <h2 style="font-size: 25px;">Efectivo: <label for="" style="color: rgb(0, 145, 31);">{{precio}}</label></h2>
-     <h5>{{prod.descripcion}}</h5>
-     <br>
-    
-        <a href="https://wa.me/5493855349020/?text=Hola%20deseo%20comprar%20el%20producto%20{{prod.nombre}}%20Code:%20{{prod.cod}}" ><h4 class="btnComprar">Comprar</h4></a>
-    
-     
-       </div>  
-              <table class="tableCreditCard">
-           <tr class="trTitleCreditCard">
-            <th colspan="5" class="thTitleCreditCard">Promociones Con Tarjeta De Credito</th>
-           </tr>
-           <tr class="trCreditCard">
-          
-            <th colspan="2">Tarjeta</th>
-            <th>Cuotas</th>
-            <th>Cuota</th>
-            <th>Total</th>
-           </tr>
-            {{#each arrayTarjetas}}
-              <tr class="trCreditCard">
-                  <th><img src="/{{tarjeta}}.svg" alt=""></th>
-                  <th>{{nombre}}</th>
-                  <th>{{cuotas}}</th>
-                  <th>{{cuota}}</th>
-                  <th>{{total}}</th>
-              </tr>
-            {{/each}}
-           <tr>
 
-           </tr>
-       </table>  
-       
-    
+
+<!-- =========================================================
+     CONTENIDO PRINCIPAL
+     ========================================================= -->
+
+<main class="cotizacion-page">
+
+    <div class="cotizacion-container">
+
+
+        <!-- =================================================
+             PRODUCTO
+             ================================================= -->
+
+        <section class="producto-detalle-card">
+
+            <!-- IMAGEN -->
+
+            <div class="producto-detalle-imagen">
+
+                <div class="producto-imagen-badge">
+                    PRODUCTO
+                </div>
+
+                <img
+                    src="/uploads/{{prod.cod}}.jpg"
+                    alt="{{prod.nombre}}"
+                >
+
+            </div>
+
+
+            <!-- INFORMACIÓN -->
+
+            <div class="producto-detalle-info">
+
+                <span class="producto-detalle-overline">
+                    DETALLE DEL PRODUCTO
+                </span>
+
+                <h1 class="producto-detalle-nombre">
+                    {{prod.nombre}}
+                </h1>
+
+
+                <!-- DATOS -->
+
+                <div class="producto-datos">
+
+                    <div class="producto-dato">
+
+                        <span class="producto-dato-label">
+                            Código
+                        </span>
+
+                        <strong>
+                            {{prod.cod}}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="producto-dato">
+
+                        <span class="producto-dato-label">
+                            Disponibles
+                        </span>
+
+                        <strong class="producto-stock-disponible">
+                            {{prod.stock}}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRECIOS -->
+
+                <div class="producto-precios">
+
+                    <div class="precio-card precio-tarjeta">
+
+                        <span>
+                            Precio con tarjeta
+                        </span>
+
+                        <strong>
+                            {{precioTartj}}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="precio-card precio-efectivo">
+
+                        <span>
+                            Precio efectivo
+                        </span>
+
+                        <strong>
+                            {{precio}}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DESCRIPCIÓN -->
+
+                {{#if prod.descripcion}}
+
+                <div class="producto-descripcion">
+
+                    <span class="producto-dato-label">
+                        Descripción
+                    </span>
+
+                    <p>
+                        {{prod.descripcion}}
+                    </p>
+
+                </div>
+
+                {{/if}}
+
+
+                <!-- BOTÓN COMPRAR -->
+
+                <a
+                    href="https://wa.me/5493855349020/?text=Hola%20deseo%20comprar%20el%20producto%20{{prod.nombre}}%20Code:%20{{prod.cod}}"
+                    class="cotizacion-comprar"
+                >
+
+                    <i class="bi bi-whatsapp"></i>
+
+                    <span>
+                        Consultar / Comprar
+                    </span>
+
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PROMOCIONES CON TARJETA
+             ================================================= -->
+
+        <section class="cotizacion-section">
+
+            <div class="cotizacion-section-header">
+
+                <div class="cotizacion-section-icon">
+                    <i class="bi bi-credit-card"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        FINANCIACIÓN
+                    </span>
+
+                    <h2>
+                        Promociones con tarjeta de crédito
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="cotizacion-table-wrapper">
+
+                <table class="cotizacion-table">
+
+                    <thead>
+
+                        <tr>
+                            <th colspan="2">
+                                Tarjeta
+                            </th>
+
+                            <th>
+                                Cuotas
+                            </th>
+
+                            <th>
+                                Valor cuota
+                            </th>
+
+                            <th>
+                                Total
+                            </th>
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {{#each arrayTarjetas}}
+
+                        <tr>
+
+                            <td class="tarjeta-logo">
+
+                                <img
+                                    src="/{{tarjeta}}.svg"
+                                    alt="{{nombre}}"
+                                >
+
+                            </td>
+
+                            <td class="tarjeta-nombre">
+                                {{nombre}}
+                            </td>
+
+                            <td>
+                                {{cuotas}}
+                            </td>
+
+                            <td class="valor-cuota">
+                                {{cuota}}
+                            </td>
+
+                            <td class="valor-total">
+                                {{total}}
+                            </td>
+
+                        </tr>
+
+                        {{/each}}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PLANES PARA COMERCIANTES
+             ================================================= -->
+
+        <section class="cotizacion-section">
+
+            <div class="cotizacion-section-header">
+
+                <div class="cotizacion-section-icon">
+                    <i class="bi bi-shop"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        FINANCIACIÓN DIRECTA
+                    </span>
+
+                    <h2>
+                        Planes de pago para comerciantes
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="cotizacion-table-wrapper">
+
+                <table class="cotizacion-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Plan
+                            </th>
+
+                            <th>
+                                Cuotas
+                            </th>
+
+                            <th>
+                                Valor de cuota
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {{#each arrayPlanes}}
+
+                        <tr>
+
+                            <td class="plan-nombre">
+                                {{plan}}
+                            </td>
+
+                            <td>
+                                {{cuotas}}
+                            </td>
+
+                            <td class="valor-cuota">
+                                {{cuota}}
+                            </td>
+
+                        </tr>
+
+                        {{/each}}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="entrega-aviso">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                <span>
+                    Planes de pago con entrega de la 1° cuota
+                </span>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PLANES PARA PARTICULARES
+             ================================================= -->
+
+        <section class="cotizacion-section">
+
+            <div class="cotizacion-section-header">
+
+                <div class="cotizacion-section-icon">
+                    <i class="bi bi-person"></i>
+                </div>
+
+                <div>
+
+                    <span>
+                        FINANCIACIÓN DIRECTA
+                    </span>
+
+                    <h2>
+                        Planes de pago para particulares
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="cotizacion-table-wrapper">
+
+                <table class="cotizacion-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Plan
+                            </th>
+
+                            <th>
+                                Cuotas
+                            </th>
+
+                            <th>
+                                Valor de cuota
+                            </th>
+
+                         
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {{#each arrayPlanesParticulares}}
+
+                        <tr>
+
+                            <td class="plan-nombre">
+                                {{plan}}
+                            </td>
+
+                            <td>
+                                {{cuotas}}
+                            </td>
+
+                            <td class="valor-cuota">
+                                {{cuota}}
+                            </td>
+
+                         
+
+                        </tr>
+
+                        {{/each}}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div class="entrega-aviso">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                <span>
+                    Planes de pago con entrega de la 1° cuota
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PIE
+             ================================================= -->
+
+        <footer class="cotizacion-footer">
+
+            <span>
+                Consulte disponibilidad y condiciones.
+            </span>
+
+            <span>
+                Cotización sujeta a condiciones comerciales.
+            </span>
+
+        </footer>
+
+
     </div>
 
-  <div class="formCliente">
-     <div class="divTitleProd">
-      <h3 class="tituloForm">Planes De Pago Para Comerciantes</h3>
-    </div>
-    <div class="tarjUser"> 
-      <table class="tableCreditCard">
-        <tr class="">
-          <th class="tableListCajaTitle">Plan</th>
-          <th class="tableListCajaTitle">Cuotas</th>
-          <th class="tableListCajaTitle">Valor De Cuota</th>
-        </tr>
-      {{#each arrayPlanes}}
-          <tr>
-            <th class="tableListCajaRes">{{plan}}</th>
-            <th class="tableListCajaRes">{{cuotas}}</th>
-            <th class="tableListCajaRes">{{cuota}}</th>
-          </tr>
-     {{/each}}
-      </table>
-      <h3 style="color: red; text-align: center;">Planes de pago con entrega de la 1° cuota</h3>
-    </div>
-         <div class="divTitleProd">
-      <h3 class="tituloForm">Planes De Pago Para Particulares</h3>
-    </div>
-    <div class="tarjUser">
-      <table class="tableCreditCard">
-        <tr class="">
-          <th class="tableListCajaTitle">Plan</th>
-          <th class="tableListCajaTitle">Cuotas</th>
-            <th class="tableListCajaTitle">Valor De Cuota</th>
-         
-           <th class="tableListCajaTitle">Total</th>
-        </tr>
-      {{#each arrayPlanesParticulares}}
-          <tr>
-            <th class="tableListCajaRes">{{plan}}</th>
-            <th class="tableListCajaRes">{{cuotas}}</th>
-            <th class="tableListCajaRes">{{cuota}}</th>
-     
-            <th class="tableListCajaRes">{{total}}</th>
-          </tr>
-     {{/each}}
-      </table>
-      <h3 style="color: red; text-align: center;">Planes de pago con entrega de la 1° cuota</h3>
-    </div>
-  </div>
-  
-  </div>
+</main>
