@@ -1128,7 +1128,7 @@ padding-top: 1px;
 
 
 /* ==========================================================
-   TRANSFERENCIA
+   TRANSFERENCIA TIKET
    ========================================================== */
 
 .ec-transfer {
@@ -1219,6 +1219,1913 @@ padding-top: 1px;
     color: #94a3b8;
     font-size: 10px;
 }
+
+/* ==========================================================
+ CODIGO PARA CATALOGO CON IA
+   ========================================================== */
+   /* ============================================================
+   CATÁLOGO DE PRODUCTOS
+   Todas las clases utilizan el prefijo "catalogo-" o
+   "producto-" para evitar conflictos con otros estilos.
+   ============================================================ */
+
+
+/* ============================================================
+   VARIABLES
+   ============================================================ */
+
+:root {
+    --cat-primary: #0f172a;
+    --cat-secondary: #1e3a5f;
+    --cat-accent: #0ea5e9;
+    --cat-accent-dark: #0284c7;
+
+    --cat-background: #f4f7fa;
+    --cat-card: #ffffff;
+
+    --cat-text: #172033;
+    --cat-text-soft: #64748b;
+    --cat-border: #e2e8f0;
+
+    --cat-success: #16a34a;
+}
+
+
+/* ============================================================
+   BARRA SUPERIOR
+   ============================================================ */
+
+.catalogo-nav {
+    width: 100%;
+    height: 58px;
+
+    display: grid;
+    grid-template-columns: 70px 1fr 70px;
+    align-items: center;
+
+    background: linear-gradient(
+        135deg,
+        #0f172a,
+        #1e3a5f
+    );
+
+    border-bottom: 3px solid var(--cat-accent);
+
+    box-sizing: border-box;
+}
+
+
+/* BOTÓN VOLVER */
+
+.catalogo-back,
+.catalogo-menu {
+    width: 100%;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+    text-decoration: none;
+
+    transition:
+        background .2s ease,
+        color .2s ease;
+}
+
+.catalogo-back {
+    font-size: 21px;
+}
+
+.catalogo-back:hover,
+.catalogo-menu:hover {
+    background: rgba(255,255,255,.10);
+    color: #7dd3fc;
+}
+
+
+/* TÍTULO */
+
+.catalogo-brand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #ffffff;
+
+    font-size: 21px;
+    font-weight: 700;
+    letter-spacing: .2px;
+}
+
+.catalogo-menu {
+    font-size: 19px;
+}
+
+
+/* ============================================================
+   CONTENEDOR PRINCIPAL
+   ============================================================ */
+
+.catalogo-page {
+    width: 100%;
+    min-height: calc(100vh - 58px);
+
+    padding: 30px 25px 50px;
+
+    box-sizing: border-box;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(14,165,233,.06),
+            transparent 30%
+        ),
+        var(--cat-background);
+}
+
+
+.catalogo-container {
+    width: 100%;
+    max-width: 1450px;
+    margin: 0 auto;
+}
+
+
+/* ============================================================
+   ENCABEZADO
+   ============================================================ */
+
+.catalogo-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 30px;
+
+    margin-bottom: 25px;
+}
+
+
+.catalogo-overline {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--cat-accent-dark);
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1.3px;
+}
+
+
+.catalogo-heading h1 {
+    margin: 0;
+
+    color: var(--cat-primary);
+
+    font-size: 29px;
+    font-weight: 800;
+
+    letter-spacing: -.5px;
+}
+
+
+.catalogo-heading p {
+    margin: 7px 0 0;
+
+    color: var(--cat-text-soft);
+
+    font-size: 14px;
+}
+
+
+/* CONTADOR */
+
+.catalogo-total {
+    min-width: 115px;
+
+    padding: 13px 18px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background: #ffffff;
+
+    border: 1px solid var(--cat-border);
+    border-radius: 12px;
+
+    box-shadow: 0 4px 15px rgba(15,23,42,.05);
+}
+
+
+.catalogo-total strong {
+    color: var(--cat-secondary);
+
+    font-size: 22px;
+    font-weight: 800;
+}
+
+
+.catalogo-total span {
+    margin-top: 2px;
+
+    color: var(--cat-text-soft);
+
+    font-size: 11px;
+    text-transform: uppercase;
+
+    letter-spacing: .7px;
+}
+
+
+/* ============================================================
+   CATEGORÍAS
+   ============================================================ */
+.catalogo-categorias {
+    width: 100%;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    margin-bottom: 25px;
+    padding: 12px 14px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--cat-border);
+    border-radius: 12px;
+
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.04);
+
+    overflow: hidden;
+}
+
+
+/* ------------------------------------------------------------
+   TÍTULO CATEGORÍAS
+   ------------------------------------------------------------ */
+
+.categorias-label {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    flex: 0 0 auto;
+
+    color: var(--cat-secondary);
+
+    font-size: 12px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+    letter-spacing: .5px;
+
+    white-space: nowrap;
+}
+
+.categorias-label i {
+    color: var(--cat-accent);
+    font-size: 15px;
+}
+
+
+/* ------------------------------------------------------------
+   CONTENEDOR DE CATEGORÍAS
+   ------------------------------------------------------------ */
+
+.categorias-lista {
+    min-width: 0;
+    flex: 1 1 auto;
+
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 2px 2px 6px;
+
+    scrollbar-width: thin;
+
+    -webkit-overflow-scrolling: touch;
+
+    overscroll-behavior-x: contain;
+}
+
+
+/* Scrollbar Chrome / Edge */
+
+.categorias-lista::-webkit-scrollbar {
+    height: 4px;
+}
+
+.categorias-lista::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.categorias-lista::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+
+/* ------------------------------------------------------------
+   BOTONES DE CATEGORÍA
+   ------------------------------------------------------------ */
+
+.categoria-link {
+    flex: 0 0 auto;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 32px;
+
+    padding: 6px 12px;
+
+    box-sizing: border-box;
+
+    border-radius: 20px;
+
+    color: #64748b;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    transition:
+        background .2s ease,
+        color .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
+}
+
+
+.categoria-link:hover {
+    color: #0369a1;
+
+    background: #e0f2fe;
+
+    border-color: #bae6fd;
+
+    transform: translateY(-1px);
+}
+
+
+.categoria-activa {
+    color: #ffffff !important;
+
+    background: var(--cat-accent) !important;
+
+    border-color: var(--cat-accent) !important;
+}
+
+
+/* ============================================================
+   GRILLA
+   ============================================================ */
+
+.productos-grid {
+    display: grid;
+
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+
+/* ============================================================
+   TARJETA DEL PRODUCTO
+   ============================================================ */
+
+.producto-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+
+    background: var(--cat-card);
+
+    border: 1px solid var(--cat-border);
+
+    border-radius: 12px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 3px 10px rgba(15,23,42,.05);
+
+    transition:
+        transform .22s ease,
+        box-shadow .22s ease,
+        border-color .22s ease;
+}
+
+
+.producto-card:hover {
+    transform: translateY(-5px);
+
+    border-color: #bae6fd;
+
+    box-shadow:
+        0 12px 25px rgba(15,23,42,.12);
+}
+
+
+/* ============================================================
+   IMAGEN
+   ============================================================ */
+
+.producto-imagen {
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 1 / .82;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 13px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+
+    overflow: hidden;
+}
+
+
+.producto-imagen::after {
+    content: "";
+
+    position: absolute;
+
+    left: 10%;
+    right: 10%;
+    bottom: 5px;
+
+    height: 1px;
+
+    background: #eef2f7;
+}
+
+
+.producto-imagen img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+
+    transition:
+        transform .3s ease;
+}
+
+
+.producto-card:hover .producto-imagen img {
+    transform: scale(1.05);
+}
+
+
+/* ============================================================
+   INFORMACIÓN
+   ============================================================ */
+
+.producto-info {
+    padding: 13px 14px 10px;
+
+    flex: 1;
+}
+
+
+.producto-nombre {
+    margin: 0;
+
+    min-height: 38px;
+
+    color: var(--cat-text);
+
+    font-size: 13px;
+    font-weight: 700;
+
+    line-height: 1.35;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
+}
+
+
+.producto-meta {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: flex-end;
+
+    gap: 8px;
+
+    margin-top: 12px;
+
+    padding-top: 10px;
+
+    border-top: 1px solid #f1f5f9;
+}
+
+
+.producto-meta small {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #94a3b8;
+
+    font-size: 8px;
+    font-weight: 800;
+
+    letter-spacing: .6px;
+}
+
+
+.producto-codigo {
+    min-width: 0;
+
+    color: #475569;
+
+    font-size: 10px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.producto-stock {
+    flex-shrink: 0;
+
+    color: var(--cat-success);
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-align: right;
+}
+
+
+/* ============================================================
+   BOTÓN COTIZAR
+   ============================================================ */
+
+.producto-cotizar {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 8px;
+
+    margin: 0 12px 12px;
+
+    padding: 10px 12px;
+
+    color: #ffffff;
+
+    background: linear-gradient(
+        135deg,
+        #0ea5e9,
+        #0284c7
+    );
+
+    border-radius: 7px;
+
+    text-decoration: none;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    box-shadow:
+        0 4px 10px rgba(14,165,233,.18);
+
+    transition:
+        background .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+
+.producto-cotizar i {
+    font-size: 13px;
+
+    transition:
+        transform .2s ease;
+}
+
+
+.producto-cotizar:hover {
+    color: #ffffff;
+
+    background: linear-gradient(
+        135deg,
+        #0284c7,
+        #0369a1
+    );
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 6px 14px rgba(14,165,233,.28);
+}
+
+
+.producto-cotizar:hover i {
+    transform: translateX(3px);
+}
+
+/* ============================================================
+   COTIZACIÓN DE PRODUCTOS
+   ============================================================ */
+
+:root {
+    --cot-primary: #0f172a;
+    --cot-secondary: #1e3a5f;
+
+    --cot-accent: #0ea5e9;
+    --cot-accent-dark: #0284c7;
+
+    --cot-background: #f4f7fa;
+    --cot-card: #ffffff;
+
+    --cot-text: #172033;
+    --cot-text-soft: #64748b;
+
+    --cot-border: #e2e8f0;
+
+    --cot-green: #16a34a;
+    --cot-green-dark: #15803d;
+}
+
+
+/* ============================================================
+   BARRA SUPERIOR
+   ============================================================ */
+
+.cotizacion-nav {
+
+    width: 100%;
+    height: 58px;
+
+    display: grid;
+
+    grid-template-columns: 70px 1fr 70px;
+
+    align-items: center;
+
+    background: linear-gradient(
+        135deg,
+        #0f172a,
+        #1e3a5f
+    );
+
+    border-bottom: 3px solid var(--cot-accent);
+
+    box-sizing: border-box;
+}
+
+
+.cotizacion-back,
+.cotizacion-menu {
+
+    width: 100%;
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    font-size: 20px;
+
+    transition:
+        background .2s ease,
+        color .2s ease;
+}
+
+
+.cotizacion-back:hover,
+.cotizacion-menu:hover {
+
+    background: rgba(255,255,255,.10);
+
+    color: #7dd3fc;
+}
+
+
+.cotizacion-brand {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   PÁGINA
+   ============================================================ */
+
+.cotizacion-page {
+
+    width: 100%;
+    min-height: calc(100vh - 58px);
+
+    padding: 30px 20px 50px;
+
+    box-sizing: border-box;
+
+    background:
+
+        radial-gradient(
+            circle at top left,
+            rgba(14,165,233,.06),
+            transparent 30%
+        ),
+
+        var(--cot-background);
+}
+
+
+.cotizacion-container {
+
+    width: 100%;
+
+    max-width: 1100px;
+
+    margin: 0 auto;
+}
+
+
+/* ============================================================
+   PRODUCTO PRINCIPAL
+   ============================================================ */
+
+.producto-detalle-card {
+
+    display: grid;
+
+    grid-template-columns: minmax(350px, 44%) 1fr;
+
+    background: var(--cot-card);
+
+    border: 1px solid var(--cot-border);
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 8px 25px rgba(15,23,42,.07);
+
+    margin-bottom: 25px;
+}
+
+
+/* ============================================================
+   IMAGEN DEL PRODUCTO
+   ============================================================ */
+
+.producto-detalle-imagen {
+
+    position: relative;
+
+    min-height: 420px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 35px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+}
+
+
+.producto-detalle-imagen::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 12%;
+    right: 12%;
+    bottom: 35px;
+
+    height: 1px;
+
+    background: #edf2f7;
+}
+
+
+.producto-detalle-imagen img {
+
+    width: 100%;
+    height: 100%;
+
+    max-width: 450px;
+
+    max-height: 400px;
+
+    object-fit: contain;
+
+    display: block;
+
+    transition:
+        transform .3s ease;
+}
+
+
+.producto-detalle-imagen:hover img {
+
+    transform: scale(1.03);
+}
+
+
+/* ETIQUETA */
+
+.producto-imagen-badge {
+
+    position: absolute;
+
+    top: 20px;
+    left: 20px;
+
+    z-index: 2;
+
+    padding: 6px 10px;
+
+    border-radius: 20px;
+
+    color: #0369a1;
+
+    background: #e0f2fe;
+
+    border: 1px solid #bae6fd;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    letter-spacing: .8px;
+}
+
+
+/* ============================================================
+   INFORMACIÓN DEL PRODUCTO
+   ============================================================ */
+
+.producto-detalle-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    padding: 35px;
+
+    box-sizing: border-box;
+
+    border-left: 1px solid var(--cot-border);
+}
+
+
+.producto-detalle-overline {
+
+    color: var(--cot-accent-dark);
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 1.3px;
+}
+
+
+.producto-detalle-nombre {
+
+    margin: 8px 0 22px;
+
+    color: var(--cot-primary);
+
+    font-size: 27px;
+
+    line-height: 1.2;
+
+    font-weight: 800;
+
+    letter-spacing: -.5px;
+}
+
+
+/* ============================================================
+   DATOS
+   ============================================================ */
+
+.producto-datos {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+}
+
+
+.producto-dato {
+
+    padding: 13px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 9px;
+}
+
+
+.producto-dato-label {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #94a3b8;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: .7px;
+
+    text-transform: uppercase;
+}
+
+
+.producto-dato strong {
+
+    color: var(--cot-text);
+
+    font-size: 13px;
+}
+
+
+.producto-stock-disponible {
+
+    color: var(--cot-green-dark) !important;
+}
+
+
+/* ============================================================
+   PRECIOS
+   ============================================================ */
+
+.producto-precios {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+}
+
+
+.precio-card {
+
+    padding: 16px;
+
+    border-radius: 10px;
+
+    border: 1px solid;
+}
+
+
+.precio-card span {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: .4px;
+}
+
+
+.precio-card strong {
+
+    display: block;
+
+    font-size: 20px;
+
+    font-weight: 800;
+}
+
+
+.precio-tarjeta {
+
+    background: #eff6ff;
+
+    border-color: #bfdbfe;
+
+    color: #1d4ed8;
+}
+
+
+.precio-efectivo {
+
+    background: #f0fdf4;
+
+    border-color: #bbf7d0;
+
+    color: var(--cot-green-dark);
+}
+
+
+/* ============================================================
+   DESCRIPCIÓN
+   ============================================================ */
+
+.producto-descripcion {
+
+    margin-top: auto;
+
+    padding: 15px;
+
+    background: #f8fafc;
+
+    border-left: 3px solid var(--cot-accent);
+
+    border-radius: 5px;
+}
+
+
+.producto-descripcion p {
+
+    margin: 0;
+
+    color: #475569;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+/* ============================================================
+   BOTÓN COMPRAR
+   ============================================================ */
+
+.cotizacion-comprar {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-top: 20px;
+
+    padding: 14px 18px;
+
+    color: #ffffff;
+
+    background: linear-gradient(
+        135deg,
+        #16a34a,
+        #15803d
+    );
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 800;
+
+    box-shadow:
+        0 5px 14px rgba(22,163,74,.20);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+}
+
+
+.cotizacion-comprar:hover {
+
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    background: linear-gradient(
+        135deg,
+        #15803d,
+        #166534
+    );
+
+    box-shadow:
+        0 8px 18px rgba(22,163,74,.28);
+}
+
+
+.cotizacion-comprar i:first-child {
+
+    font-size: 18px;
+}
+
+
+.cotizacion-comprar i:last-child {
+
+    font-size: 14px;
+
+    transition:
+        transform .2s ease;
+}
+
+
+.cotizacion-comprar:hover i:last-child {
+
+    transform: translateX(4px);
+}
+
+
+/* ============================================================
+   SECCIONES DE FINANCIACIÓN
+   ============================================================ */
+
+.cotizacion-section {
+
+    margin-bottom: 22px;
+
+    padding: 25px 28px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--cot-border);
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 4px 16px rgba(15,23,42,.04);
+}
+
+
+/* ENCABEZADO */
+
+.cotizacion-section-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    margin-bottom: 20px;
+}
+
+
+.cotizacion-section-icon {
+
+    width: 42px;
+    height: 42px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+
+    background: linear-gradient(
+        135deg,
+        #0ea5e9,
+        #0284c7
+    );
+
+    border-radius: 10px;
+
+    font-size: 18px;
+
+    box-shadow:
+        0 4px 10px rgba(14,165,233,.18);
+}
+
+
+.cotizacion-section-header span {
+
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: var(--cot-accent-dark);
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+
+.cotizacion-section-header h2 {
+
+    margin: 0;
+
+    color: var(--cot-primary);
+
+    font-size: 18px;
+
+    font-weight: 800;
+}
+
+
+/* ============================================================
+   TABLAS
+   ============================================================ */
+
+.cotizacion-table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    border: 1px solid var(--cot-border);
+
+    border-radius: 10px;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+
+.cotizacion-table {
+
+    width: 100%;
+
+    min-width: 600px;
+
+    border-collapse: collapse;
+}
+
+
+/* CABECERA */
+
+.cotizacion-table thead th {
+
+    padding: 13px 15px;
+
+    background: #f8fafc;
+
+    color: #64748b;
+
+    border-bottom: 1px solid var(--cot-border);
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    text-align: left;
+
+    text-transform: uppercase;
+
+    letter-spacing: .5px;
+
+    white-space: nowrap;
+}
+
+
+/* FILAS */
+
+.cotizacion-table tbody td {
+
+    padding: 12px 15px;
+
+    color: #334155;
+
+    border-bottom: 1px solid #edf2f7;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+}
+
+
+.cotizacion-table tbody tr:last-child td {
+
+    border-bottom: none;
+}
+
+
+.cotizacion-table tbody tr {
+
+    transition:
+        background .15s ease;
+}
+
+
+.cotizacion-table tbody tr:hover td {
+
+    background: #f8fafc;
+}
+
+
+/* ============================================================
+   TARJETAS DE CRÉDITO
+   ============================================================ */
+
+.tarjeta-logo {
+
+    width: 55px;
+}
+
+
+.tarjeta-logo img {
+
+    width: 48px;
+    height: 28px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+.tarjeta-nombre {
+
+    font-weight: 700;
+
+    color: var(--cot-text) !important;
+}
+
+
+.valor-cuota {
+
+    color: #0369a1 !important;
+
+    font-weight: 800;
+}
+
+
+.valor-total {
+
+    color: var(--cot-primary) !important;
+
+    font-weight: 800;
+}
+
+
+/* ============================================================
+   PLANES
+   ============================================================ */
+
+.plan-nombre {
+
+    color: var(--cot-text) !important;
+
+    font-weight: 700;
+}
+
+
+/* ============================================================
+   AVISO DE ENTREGA
+   ============================================================ */
+
+.entrega-aviso {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-top: 15px;
+
+    padding: 11px 15px;
+
+    color: #166534;
+
+    background: #f0fdf4;
+
+    border: 1px solid #bbf7d0;
+
+    border-radius: 8px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    text-align: center;
+}
+
+
+.entrega-aviso i {
+
+    color: #16a34a;
+
+    font-size: 15px;
+}
+
+
+/* ============================================================
+   PIE
+   ============================================================ */
+
+.cotizacion-footer {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 5px 5px 20px;
+
+    color: #94a3b8;
+
+    font-size: 10px;
+}
+
+
+
+/* ============================================================
+   cierre de cotizar productos
+   ============================================================ */
+
+
+
+@media (max-width: 1250px) {
+
+    .productos-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+}
+
+
+/* ============================================================
+   TABLETS
+   ============================================================ */
+
+@media (max-width: 1000px) {
+
+    .productos-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .catalogo-heading h1 {
+        font-size: 25px;
+    }
+    
+
+}
+
+
+/* ============================================================
+   TABLETS PEQUEÑAS
+   ============================================================ */
+
+@media (max-width: 800px) {
+
+
+
+    .catalogo-categorias {
+        align-items: stretch;
+
+        flex-direction: column;
+
+        gap: 9px;
+
+        padding: 12px;
+    }
+
+    .categorias-label {
+        width: 100%;
+
+        padding-bottom: 2px;
+    }
+
+    .categorias-lista {
+        width: 100%;
+
+        flex: none;
+
+        padding-bottom: 7px;
+    }
+
+
+
+    .catalogo-page {
+        padding: 20px 15px 35px;
+    }
+
+    .catalogo-heading {
+        align-items: flex-start;
+    }
+
+    .catalogo-heading h1 {
+        font-size: 22px;
+    }
+
+    .catalogo-heading p {
+        font-size: 12px;
+    }
+
+    .catalogo-total {
+        min-width: 85px;
+        padding: 10px 12px;
+    }
+
+    .productos-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 13px;
+    }
+
+
+}
+/* ============================================================
+  cotizar productos
+   ============================================================ */
+.producto-detalle-card {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .producto-detalle-imagen {
+
+        min-height: 330px;
+
+        border-bottom: 1px solid var(--cot-border);
+    }
+
+
+    .producto-detalle-info {
+
+        border-left: none;
+
+        padding: 28px;
+    }
+
+
+/* ============================================================
+   CELULARES
+   ============================================================ */
+/* ============================================================
+   cotizAr productos
+   ============================================================ */
+@media (max-width: 600px) {
+
+    .cotizacion-nav {
+
+        grid-template-columns: 55px 1fr 55px;
+    }
+
+
+    .cotizacion-brand {
+
+        font-size: 16px;
+    }
+
+
+    .cotizacion-page {
+
+        padding: 15px 10px 30px;
+    }
+
+
+    .producto-detalle-card {
+
+        border-radius: 11px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .producto-detalle-imagen {
+
+        min-height: 260px;
+
+        padding: 25px;
+    }
+
+
+    .producto-detalle-imagen img {
+
+        max-height: 250px;
+    }
+
+
+    .producto-imagen-badge {
+
+        top: 12px;
+        left: 12px;
+    }
+
+
+    .producto-detalle-info {
+
+        padding: 20px 15px;
+    }
+
+
+    .producto-detalle-nombre {
+
+        font-size: 21px;
+
+        margin-bottom: 17px;
+    }
+
+
+    .producto-datos {
+
+        gap: 8px;
+
+        margin-bottom: 12px;
+    }
+
+
+    .producto-dato {
+
+        padding: 10px;
+    }
+
+
+    .producto-precios {
+
+        gap: 8px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .precio-card {
+
+        padding: 12px;
+    }
+
+
+    .precio-card strong {
+
+        font-size: 17px;
+    }
+
+
+    .precio-card span {
+
+        font-size: 8px;
+    }
+
+
+    .cotizacion-section {
+
+        padding: 18px 12px;
+
+        margin-bottom: 15px;
+
+        border-radius: 10px;
+    }
+
+
+    .cotizacion-section-header {
+
+        margin-bottom: 15px;
+    }
+
+
+    .cotizacion-section-icon {
+
+        width: 36px;
+        height: 36px;
+
+        font-size: 15px;
+    }
+
+
+    .cotizacion-section-header h2 {
+
+        font-size: 15px;
+    }
+
+
+    .cotizacion-section-header span {
+
+        font-size: 8px;
+    }
+
+
+    .cotizacion-table {
+
+        min-width: 540px;
+    }
+
+
+    .cotizacion-table thead th {
+
+        padding: 11px 10px;
+
+        font-size: 9px;
+    }
+
+
+    .cotizacion-table tbody td {
+
+        padding: 10px;
+
+        font-size: 11px;
+    }
+
+
+    .entrega-aviso {
+
+        font-size: 10px;
+
+        line-height: 1.4;
+    }
+
+
+    .cotizacion-footer {
+
+        flex-direction: column;
+
+        text-align: center;
+
+        gap: 5px;
+    }
+
+}
+
+
+
+
+@media (max-width: 520px) {
+     .catalogo-categorias {
+        margin-bottom: 17px;
+
+        padding: 10px;
+
+        border-radius: 10px;
+    }
+
+    .categorias-label {
+        font-size: 10px;
+    }
+
+    .categorias-label i {
+        font-size: 13px;
+    }
+
+    .categorias-lista {
+        gap: 6px;
+
+        /* Permite desplazamiento horizontal con el dedo */
+        overflow-x: auto;
+
+        /* Oculta scrollbar en algunos navegadores */
+        scrollbar-width: none;
+    }
+
+    .categorias-lista::-webkit-scrollbar {
+        display: none;
+    }
+
+    .categoria-link {
+        min-height: 30px;
+
+        padding: 6px 11px;
+
+        font-size: 10px;
+    }
+
+    .catalogo-nav {
+        grid-template-columns: 55px 1fr 55px;
+    }
+
+    .catalogo-brand {
+        font-size: 17px;
+    }
+
+    .catalogo-page {
+        padding: 15px 10px 30px;
+    }
+
+    .catalogo-heading {
+        gap: 12px;
+    }
+
+    .catalogo-heading h1 {
+        font-size: 19px;
+    }
+
+    .catalogo-heading p {
+        display: none;
+    }
+
+    .catalogo-overline {
+        font-size: 9px;
+    }
+
+    .catalogo-total {
+        min-width: 70px;
+        padding: 8px 9px;
+    }
+
+    .catalogo-total strong {
+        font-size: 18px;
+    }
+
+    .catalogo-total span {
+        font-size: 9px;
+    }
+
+    .productos-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .producto-info {
+        padding: 10px;
+    }
+
+    .producto-nombre {
+        font-size: 11px;
+        min-height: 31px;
+    }
+
+    .producto-meta {
+        margin-top: 8px;
+        padding-top: 8px;
+    }
+
+    .producto-cotizar {
+        margin: 0 8px 8px;
+        padding: 9px 10px;
+        font-size: 10px;
+    }
+
+  }
+
+
+
+/* ============================================================
+   CELULARES MUY PEQUEÑOS
+   ============================================================ */
+
+
 
 @media (max-width: 440px) {
   .navegacion {
@@ -1595,7 +3502,65 @@ padding-top: 1px;
         padding-right: 15px;
     }
 }
+@media (max-width: 360px) {
+     
+   .catalogo-categorias {
+        padding: 8px;
+    }
 
+    .categorias-lista {
+        gap: 5px;
+    }
+
+    .categoria-link {
+        min-height: 28px;
+
+        padding: 5px 9px;
+
+        font-size: 9px;
+    }
+
+
+    .productos-grid {
+        gap: 8px;
+    }
+
+    .producto-imagen {
+        padding: 8px;
+    }
+
+    .producto-cotizar span {
+        font-size: 9px;
+    }
+
+    /*========================================================
+    cotizar productos
+   ========================================================= */
+    .producto-detalle-nombre {
+
+        font-size: 19px;
+    }
+
+
+    .producto-precios {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .precio-card strong {
+
+        font-size: 18px;
+    }
+
+
+    .cotizacion-comprar {
+
+        font-size: 11px;
+
+        padding: 12px;
+    }
+}
 
 /* ==========================================================
    IMPRESIÓN A4
@@ -1635,4 +3600,9 @@ padding-top: 1px;
     .ec-transfer {
         page-break-inside: avoid;
     }
+    /* ==========================================================
+  codigo del catalogo nuevo con IA
+   ========================================================== */
+  
+
 }
