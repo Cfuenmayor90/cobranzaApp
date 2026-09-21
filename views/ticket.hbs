@@ -1,89 +1,218 @@
+<div class="ec-wrapper">
+
+    <div class="ec-card">
+
+        <!-- ENCABEZADO -->
+        <div class="ec-header">
+            <div class="ec-header-content">
+                <div class="ec-header-icon">▣</div>
+
+                <div>
+                    <h2 class="ec-title">Estado de Cuenta</h2>
+                    <p class="ec-subtitle">Detalle de préstamo y movimientos</p>
+                </div>
+            </div>
+        </div>
 
 
+        <!-- INFORMACIÓN DEL PRÉSTAMO -->
+        <div class="ec-section">
 
-   <div class="contMayorCli">
-    <div class="formCliente">
-         <div class="divClienteBuscar">
-      <h3 class="tituloForm">Estado De Cuenta</h3>
+            <div class="ec-section-title">
+                <span class="ec-section-line"></span>
+                Información del préstamo
+            </div>
+
+            <div class="ec-info-grid">
+
+                <div class="ec-info-item">
+                    <span class="ec-label">Cliente</span>
+                    <strong class="ec-value">
+                        {{pres.nombre}}
+                    </strong>
+                </div>
+
+                <div class="ec-info-item">
+                    <span class="ec-label">Ruta</span>
+                    <strong class="ec-value">
+                        {{pres.cobRuta}}
+                    </strong>
+                </div>
+
+                <div class="ec-info-item ec-info-wide">
+                    <span class="ec-label">Detalle</span>
+                    <strong class="ec-value">
+                        {{pres.detalle}}
+                    </strong>
+                </div>
+
+                <div class="ec-info-item">
+                    <span class="ec-label">Plan</span>
+                    <strong class="ec-value">
+                        {{pres.plan}}
+                    </strong>
+                </div>
+
+                <div class="ec-info-item">
+                    <span class="ec-label">Cuotas</span>
+                    <strong class="ec-value">
+                        {{pres.cuotas}}
+                    </strong>
+                </div>
+
+                <div class="ec-info-item">
+                    <span class="ec-label">Valor de cuota</span>
+                    <strong class="ec-value">
+                        {{cuota}}
+                    </strong>
+                </div>
+
+                <div class="ec-info-item">
+                    <span class="ec-label">Fecha de inicio</span>
+                    <strong class="ec-value">
+                        {{pres.fechaInicio}}
+                    </strong>
+                </div>
+
+                <div class="ec-info-item">
+                    <span class="ec-label">Vencimiento</span>
+                    <strong class="ec-value">
+                        {{pres.fechaFinal}}
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RESUMEN FINANCIERO -->
+        <div class="ec-finance-grid">
+
+            <div class="ec-money-card">
+                <span class="ec-money-label">Monto</span>
+                <strong class="ec-money-value">
+                    {{total}}
+                </strong>
+            </div>
+
+            <div class="ec-money-card ec-money-green">
+                <span class="ec-money-label">Adelanto</span>
+                <strong class="ec-money-value">
+                    {{adelanto}}
+                </strong>
+            </div>
+
+            <div class="ec-money-card ec-money-blue">
+                <span class="ec-money-label">Saldo pendiente</span>
+                <strong class="ec-money-value">
+                    {{mTotal}}
+                </strong>
+            </div>
+
+        </div>
+
+
+        <!-- HISTORIAL DE PAGOS -->
+        <div class="ec-section ec-payments-section">
+
+            <div class="ec-section-title">
+                <span class="ec-section-line"></span>
+                Historial de pagos
+            </div>
+
+            <div class="ec-table-container">
+
+                <table class="ec-payments-table">
+
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Pago</th>
+                            <th>Código</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {{#each array}}
+
+                        <tr>
+
+                            <td>
+                                {{fechaString}}
+                            </td>
+
+                            <td class="ec-payment-amount">
+                                {{pago}}
+                            </td>
+
+                            <td class="ec-payment-code">
+                                {{id}}
+                            </td>
+
+                        </tr>
+
+                        {{/each}}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- TRANSFERENCIA -->
+        <div class="ec-transfer">
+
+            <div class="ec-transfer-header">
+                <div class="ec-transfer-icon">
+                    $
+                </div>
+
+                <div>
+                    <h3>Datos para pagos por transferencia</h3>
+                    <p>Utilice estos datos para realizar su pago</p>
+                </div>
+            </div>
+
+
+            <div class="ec-transfer-data">
+
+                <div class="ec-transfer-row">
+                    <span>Titular</span>
+                    <strong>
+                        CARLOS EDUARDO FUENMAYOR VILLARREAL
+                    </strong>
+                </div>
+
+                <div class="ec-transfer-row">
+                    <span>Alias</span>
+                    <strong class="ec-copy-data">
+                        maxitodo.sde
+                    </strong>
+                </div>
+
+                <div class="ec-transfer-row">
+                    <span>CBU</span>
+                    <strong class="ec-copy-data">
+                        0720364888000002553636
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PIE -->
+        <div class="ec-footer">
+            <span>Estado de cuenta</span>
+            <span>Documento informativo</span>
+        </div>
+
     </div>
 
-
-   <table class="tableListCaja">
-    <tr>
-        <th class="tableListCajaTitle">Nombre:</th>
-        <th class="tableListCajaRes" colspan="2">{{pres.nombre}}</th>
-    </tr>
-    <tr>
-        <th class="tableListCajaTitle">Ruta:</th>
-        <th class="tableListCajaRes" colspan="2">{{pres.cobRuta}}</th>
-    </tr>
-    <tr>
-        <th class="tableListCajaTitle">Detalle:</th>
-        <th class="tableListCajaRes" colspan="2">{{pres.detalle}}</th>
-    </tr>
-    <tr>
-        <th class="tableListCajaTitle">Plan:</th>
-        <th class="tableListCajaRes" colspan="2">{{pres.plan}} / cuotas: {{pres.cuotas}} / cuota: {{pres.cuota}}</th>
-    </tr>
-    <tr>
-        <th class="tableListCajaTitle">Inicio:</th>
-        <th class="tableListCajaRes" colspan="2">{{pres.fechaInicio}}</th>
-    </tr>
-    <tr>
-        <th class="tableListCajaTitle">Vencimiento:</th>
-          <th class="tableListCajaRes" colspan="2">{{pres.fechaFinal}}</th>
-    </tr>
-    <tr>
-        <th class="tableListCajaTitle">Monto:</th>
-        <th class="tableListCajaRes" colspan="2">{{pres.total}}</th>
-    </tr>
-    <tr>
-        <th class="tableListCajaTitle">Adelanto:</th>
-        <th class="tableListCajaRes" colspan="2">{{pres.adelanto}}</th>
-    </tr>
-      <tr>
-        <th class="tableListCajaTitle">Saldo:</th>
-          <th class="tableListCajaRes" colspan="2">{{pres.mTotal}}</th>
-    </tr>
-    <tr>
-        <th class="tableListCajaTitle" colspan="3">Lista de pagos</th>
-    </tr>
-    <tr>
-        <th class="tableListCajaTitle">Fecha</th>
-        <th class="tableListCajaTitle">Pago</th>
-        <th class="tableListCajaTitle">Codigo</th>
-    </tr>
-    {{#each pagos}}
-    <tr>
-        <th class="tableListCajaRes">{{fecha}}</th>
-        <th class="tableListCajaRes">{{pago}}</th>
-        <th class="tableListCajaRes">{{_id}}</th>
-    </tr>
-    {{/each}}
-   </table>
- <br>
-    <table class="tableListCaja">
-    <tr>
-        <th colspan="3"> Datos Para Pagos Por Transferencia</th>
-    </tr>
-    <tr>
-        <th class="tableListCajaTitle">Titular:</th>
-        <th class="tableListCajaRes" colspan="2">Carlos Eduardo Fuenmayor Villarreal</th>
-    </tr>
-     <tr>
-        <th class="tableListCajaTitle">Alias:</th>
-        <th class="tableListCajaRes" colspan="2">cfuenmayor.mp</th>
-    </tr>
-         <tr>
-        <th class="tableListCajaTitle">Alias:</th>
-        <th class="tableListCajaRes" colspan="2">0000003100011302752397</th>
-    </tr>
-
-   </table>
-    </div>
-  </div>
-
-
-
-
-
+</div>
