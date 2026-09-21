@@ -542,8 +542,14 @@ const envioTicket = async(req, res) =>{
  const {id} = req.params;
  try {
    const  pres = await ventas.findOne({_id: id});
-   const pagos = await pagoN.find({codPres: id});
+   const pagos = await pagoN.find({codPres: id}).sort({timeStamp: -1});
    const array = [];
+   const cuota = f.format(pres.cuota);
+   const monto = f.format(pres.monto);
+   const mTotal = f.format(pres.mTotal);
+   const total = f.format(pres.total);
+   const adelanto = f.format(pres.adelanto);
+
    pagos.forEach((element) => {
      const fechaString = element.fecha;
      const id = element._id;
@@ -551,7 +557,7 @@ const envioTicket = async(req, res) =>{
      array.push({ fechaString, id, pago });
    });
 
-   res.render('ticket', {pres, pagos})
+   res.render('ticket', {pres, array, cuota, monto, mTotal, total, adelanto});
  } catch (error) {
   
  }
