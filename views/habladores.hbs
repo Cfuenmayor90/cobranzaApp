@@ -1,22 +1,72 @@
+<section class="habladores-page">
 
+    <div class="habladores-grid">
 
-    <section>
+        {{#each arrayPrpoductos}}
 
-         <div class="contLisProd" style="width: 100%; display: flex; flex-wrap: wrap; justify-content: center; padding: 0;">
-          {{#each arrayPrpoductos}}
-          <div class="tarjetaProd" style="padding: 0.5em; border: 1px solid gray; margin: 0.2em; width: 32%; height: auto; text-align: left;">
-         
-            <h3>{{producto}}</h3>
-            <h4 style="color: gray; font-size: 0.8em">Cod: {{cod}}</h4>
-            <h3>Precio: {{precioTartj}}</h3>
-            <h4 style="border: 1px solid black; font-size: 0.9em; padding: 0.2em"> 3 Cuotas de {{vCuota}} SIN INTERES</h4>
-            <h2>Contado: {{precio}}</h2>
-         
-       
-         </div>
+        <article class="hablador">
 
-          {{/each}}
-      
-         </div>
-    </section>
+            <div class="hablador-header" style="background-color:azure;">
+                <img
+                    src="/logo.png"
+                    alt="MaxiTodo"
+                    class="hablador-logo"
+                >
+            </div>
 
+            <div class="hablador-content">
+
+                <h2 class="hablador-producto">
+                    {{producto}}
+                </h2>
+
+                <div class="hablador-codigo">
+                    CÓD. {{cod}}
+                </div>
+
+                <div class="hablador-precio">
+                    <span>PRECIO</span>
+                    <strong>{{precioTartj}}</strong>
+                </div>
+
+                <div class="hablador-financiacion">
+
+                    <div class="hablador-plan tarjeta">
+                        <strong>3 CUOTAS SIN INTERÉS</strong>
+                        <span>Con tarjeta de crédito</span>
+                        <b>{{vCuota}}</b>
+                    </div>
+
+                    <div class="hablador-plan diario">
+                        <strong>CUOTAS DIARIAS</strong>
+                        <span>Para comerciantes</span>
+                        <b>Desde {{vCuota}}</b>
+                    </div>
+
+                    <div class="hablador-plan semanal">
+                        <strong>CUOTAS SEMANALES</strong>
+                        <span>Para comerciantes</span>
+                        <b>Desde {{vCuota}}</b>
+                    </div>
+
+                </div>
+
+                <div class="hablador-contado">
+                    <span>PRECIO CONTADO</span>
+                    <strong>{{precio}}</strong>
+                </div>
+
+            </div>
+
+            <div class="hablador-footer">
+                <span>Consultá por financiación</span>
+                <span>MAXITODO</span>
+            </div>
+
+        </article>
+
+        {{/each}}
+
+    </div>
+
+</section>

@@ -1,241 +1,721 @@
-<nav class="navegacion">
-  <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a>
-  <div>
-    <span>Rutas De Cobranza</span>
-  </div>
-  <div class="iconMenuHamburguesa">
-    <i class="bi bi-menu-button-wide-fill"></i>
-  </div>
+<!-- =========================================================
+     RUTAS DE COBRANZA - PANEL GENERAL
+     ========================================================= -->
+
+<nav class="gen-navbar">
+
+    <div class="gen-navbar-left">
+        <a href="/vistas/volver"
+           class="gen-navbar-back"
+           title="Volver">
+            <i class="bi bi-box-arrow-left"></i>
+        </a>
+    </div>
+
+    <div class="gen-navbar-brand">
+        <span>COBRANZA APP</span>
+        <small>Panel General</small>
+    </div>
+
+    <div class="gen-navbar-right">
+        <i class="bi bi-bar-chart-line"></i>
+        <span>{{periodo}}</span>
+    </div>
+
 </nav>
-<div class="contMayorCli">
-  <div class="formCliente">
-    <div class="divClienteBuscar">
-      <h3 class="tituloForm">Datos Generales - {{periodo}}</h3>
-    </div>
-    <br />
-          <form action="/general/generalCobranzaFecha" method="post" class="formBuscarPeriodo">
-        <label for="" class="titlePeri">Seleccione Periodo</label>
-        <select name="anioInp" id="anioInp">
-          {{#each arrayAnios}}
-          <option value="{{anio}}">{{anio}}</option>
-          {{/each}}
-        </select>
-        <label for="" class="titlePeri">Mes</label>
-        <select name="mesInp" id="mesInp">
-          <option value="0">Enero</option>
-          <option value="1">Febrero</option>
-          <option value="2">Marzo</option>
-          <option value="3">Abril</option>
-          <option value="4">Mayo</option>
-          <option value="5">Junio</option>
-          <option value="6">Julio</option>
-          <option value="7">Agosto</option>
-          <option value="8">Septiembre</option>
-          <option value="9">Octubre</option>
-          <option value="10">Noviembre</option>
-          <option value="11">Diciembre</option>
-        </select>
-         <button type="submit" class="buttonPeri">Buscar</button>
-      </form>
-  <br/>
-    <table class="tableCobGeneralPrin" style="font-size: 14px;">
-      <tr>
-        <th class="thTabletitleCobGenPrin">Inversion:</th>
-        <th class="thTableCobGene">{{invT}}</th>
-        <th class="thTabletitleCobGenPrin">Capital:</th>
-        <th class="thTableCobGene">{{capital}}</th>
-      </tr>
-      <tr>
-        <th class="thTabletitleCobGenPrin">Por Cobrar:</th>
-        <th class="thTableCobGene"  >{{porCobrar}}</th>
-        <th class="thTabletitleCobGenPrin">Efectivo:</th>
-        <th class="thTableCobGene">{{efeCajaT}}</th>
-      </tr>
-        <tr>
-        <th class="thTabletitleCobGenPrin">CXP Interes:</th>
-        <th class="thTableCobGene"style="color: red;" >{{inteT}}</th>
-        <th class="thTabletitleCobGenPrin">CXP Total:</th>
-        <th class="thTableCobGene" style="color: red;">{{saldoT}}</th>
-      </tr>
-        <tr>
-      
-        <th class="thTabletitleCobGenPrin">Cobrado:</th>
-        <th class="thTableCobGene">{{cobraTotal}}</th>
-        <th class="thTabletitleCobGenPrin">Esperado:</th>
-        <th class="thTableCobGene">{{espeTotal}}</th>
-      </tr>
-      <tr>
-        <th class="thTabletitleCobGenPrin">Vta Pres:</th>
-        <th class="thTableCobGene">{{venTotal}}</th>
-          <th class="thTabletitleCobGenPrin">Vta Ctdo:</th>
-        <th class="thTableCobGene">{{vtaCtdoTo}}</th>
-      </tr>
-            <tr>
-        <th class="thTabletitleCobGenPrin">Sueldos:</th>
-        <th class="thTableCobGene"></th>
-          <th class="thTabletitleCobGenPrin">Crecimiento:</th>
-        <th class="thTableCobGene">{{ganaTotal}}</th>
-      </tr>
-    
-      <tr>
-        <th class="thTabletitleCobGenPrin">Efectividad:</th>
-        <th class="thTableCobGene">{{porcentajeT}}%</th>
-        <th class="thTabletitleCobGenPrin">Ganancias:</th>
-        <th class="thTableCobGene">{{gananCobTotal}}</th>
-      </tr>
-       <tr>
-        <th class="thTabletitleCobGenPrin">Cant. prest.:</th>
-        <th class="thTableCobGene">{{cantPres}}</th>
-        <th class="thTabletitleCobGenPrin">Gastos:</th>
-        <th class="thTableCobGene">{{gastocajaMes}}</th>
-      </tr>
 
-    </table>
-    <br />
-    <div class="divClienteBuscar">
-      <h3 class="tituloForm">Datos De Rutas De Cobro - {{periodo}} </h3>
-    </div>
-    <br />
 
-    {{#each ArrayUserGene}}
-      <table class="tableCobGeneral">
-        <tr>
-          <th class="thTabletitleCobGen" colspan="3">{{nombre}}</th>
-          <th class="thTabletitleCobGen" colspan="3">CodRuta: {{nRuta}}</th>
-        </tr>
-        <tr>
-          <th class="thTabletitleCobGen">Por Cobrar:</th>
-          <th class="thTableCobGene">{{porCobrarT}}</th>
-          <th class="thTabletitleCobGen">Efectivo:</th>
-          <th class="thTableCobGene">{{efeCaja}}</th>
-        </tr>
-        <tr>
-          <th class="thTabletitleCobGen">Vta Prest:</th>
-          <th class="thTableCobGene">{{venT}}</th>
-          <th class="thTabletitleCobGen">Cobrado:</th>
-          <th class="thTableCobGene">{{cobT}}</th>
-        </tr>
-        <tr>
-          <th class="thTabletitleCobGen">Vta Ctdo:</th>
-          <th class="thTableCobGene">{{vtaCtd}}</th>
-          <th class="thTabletitleCobGen">Esperado:</th>
-          <th class="thTableCobGene">{{espeT}}</th>
-        </tr>
-        <tr>
-          <th class="thTabletitleCobGen">Ganancias:</th>
-          <th class="thTableCobGene">{{ganaT}}</th>
-          <th class="thTabletitleCobGen">Gastos:</th>
-          <th class="thTableCobGene">{{mAdelantos}}</th>
-        </tr>
-        <tr>
-          <th class="thTabletitleCobGen">Efectividad:</th>
-          <th class="thTableCobGene">{{efectividad}}%</th>
-          <th class="thTabletitleCobGen">Otro:</th>
-          <th class="thTableCobGene"></th>
-        </tr>
-              
- <tr>
-        <th colspan="3" class="thTabletitleCobGen">Cantidad De Prestamos:</th>
-        <th class="thTableCobGene">{{cPres}}</th>
-      </tr>
-           </table>
-      <div style="margin: 0 auto; width: 90%;">
-          <a href="https://wa.me/549{{telefono}}" class="btnBusCliente btnWA"><i class="bi bi-whatsapp"></i></a>
-            <a href="tel:+549{{telefono}}" class="btnBusCliente btnTelefono" ><i class="bi bi-telephone-outbound"></i></a>
-            <a href="" class="btnBusCliente btnVender"><i class="bi bi-shop"></i></a>
-            <a href="/general/cargarPres/{{nRuta}}" class="btnBusCliente btnMapa"><i class="bi bi-cash-coin"></i></a>
-            <a href="/general/estadisticaUser/{{nRuta}}" class="btnBusCliente btnStadistica"><i class="bi bi-graph-up-arrow"></i></a>
-             <a href="/general/hojaImprimir/{{nRuta}}" class="btnBusCliente" style="background-color: rgb(112, 0, 82);"><i class="bi bi-printer"></i></a>
-      
-      </div>
-      <br />
-    {{/each}}
-     
-    
-  </div>
-  <section class="sectionContClientes">
-    <div class="divClienteBuscar">
-      <h3 class="tituloForm">Operacion De Caja</h3>
-    </div>
-    <div class="tarjCli">
-      <form action="/general/cajaOperacion" method="post">
-        <table class="tablaGeneCaja">
-          <tr>
-            <th class="tablaGeneCajaTh">Tipo</th>
-            <th class=""><select class="tablaGeneCajaInp" name="tipo" id="tipo">
-                <option value="gasto">Gastos</option>
-                <option value="ingreso">Ingreso</option>
-                <option value="rendicion">Rendicion</option>
-                <option value="inversion">Inversion</option>
-                <option value="sueldos">Adelantos de sueldo</option>
-              </select></th>
-            <th class="tablaGeneCajaTh">Usuario</th>
-            <th class=""><select
-                class="tablaGeneCajaInp"
-                name="userCod"
-                id="userCod"
-              >
-                <option value="10">General</option>
-                {{#each usuario}}
-                  <option value="{{numRuta}}">{{numRuta}} - {{nombre}}</option>
-                {{/each}}
-              </select></th>
-          </tr>
-          <tr>
-            <th class="tablaGeneCajaTh">Descripcion</th>
-            <th class="" colspan="3"><input
-                class="tablaGeneCajaInp"
-                type="text"
-                id="detalle"
-                name="detalle"
-              /></th>
-          </tr>
-          <tr>
-            <th class="tablaGeneCajaTh">Monto</th>
-            <th class=""  ><input
-                class="tablaGeneCajaInp"
-                type="number"
-                id="monto"
-                name="monto" 
-                required
-              /></th>
-              <th class="tablaGeneCajaTh">Fecha</th>
-              <th ><input  class="tablaGeneCajaInp" type="date" name="fecha" id="fecha"></th>
-          </tr>
-          <tr>
-            <th style="text-align: center;" colspan="4"><button class="tablaGeneCajaBtn" type="submit">Cargar</button></th>
-          </tr>
+<main class="gen-page">
 
-        </table>
-      </form>
-    </div>
-     <div class="divClienteBuscar">
-      <h3 class="tituloForm">Operaciones Realizadas</h3>
-    </div>
-    <div class="tarjCli">
-  <table class="tableListCaja">
-    <tr>
-      <th class="tableListCajaTitle">Fecha</th>
-      <th class="tableListCajaTitle">Usuario</th>
-      <th class="tableListCajaTitle">Operacion</th>
-      <th class="tableListCajaTitle">Detalle</th>
-      <th class="tableListCajaTitle">Monto</th>
-      <th class="tableListCajaTitle"><i style="color: rgb(0, 0, 0);" class="bi bi-trash"></i></th>
-    </tr>
-    {{#each cajaList}}
-     <tr>
-      <th class="tableListCajaRes">{{fecha}}</th>
-      <th class="tableListCajaRes">{{userCod}}</th>
-      <th class="tableListCajaRes">{{tipo}}</th>
-      <th class="tableListCajaRes">{{detalle}}</th>
-      <th class="tableListCajaRes">{{monto}}</th>
-      <th class="tableListCajaRes"><a onclick="return confirm('¿Desea Eliminar La OPERACION?')" href="/general/deleteCajaOperacion/{{_id}}"><i style="color: red;" class="bi bi-file-earmark-x"></i></a></th>
-    </tr>
-    
 
-    {{/each}}
-  </table>
-    </div>
-  </section>
+    <!-- =====================================================
+         ENCABEZADO
+         ===================================================== -->
 
-</div>
+    <section class="gen-header">
+
+        <div>
+            <span class="gen-eyebrow">
+                PANEL EJECUTIVO
+            </span>
+
+            <h1>
+                Rutas de cobranza
+            </h1>
+
+            <p>
+                Resumen general de cobranzas, ventas y operaciones
+                correspondiente a <strong>{{periodo}}</strong>.
+            </p>
+        </div>
+
+        <div class="gen-header-icon">
+            <i class="bi bi-speedometer2"></i>
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FILTRO DE PERIODO
+         ===================================================== -->
+
+    <section class="gen-card gen-period-card">
+
+        <div class="gen-section-heading">
+
+            <div class="gen-heading-icon">
+                <i class="bi bi-calendar3"></i>
+            </div>
+
+            <div>
+                <h2>Consultar período</h2>
+                <span>Selecciona el año y mes que deseas analizar</span>
+            </div>
+
+        </div>
+
+
+        <form action="/general/generalCobranzaFecha"
+              method="post"
+              class="gen-period-form">
+
+            <div class="gen-field">
+
+                <label for="anioInp">
+                    Año
+                </label>
+
+                <select name="anioInp" id="anioInp">
+
+                    {{#each arrayAnios}}
+
+                        <option value="{{anio}}">
+                            {{anio}}
+                        </option>
+
+                    {{/each}}
+
+                </select>
+
+            </div>
+
+
+            <div class="gen-field">
+
+                <label for="mesInp">
+                    Mes
+                </label>
+
+                <select name="mesInp" id="mesInp">
+
+                    <option value="0">Enero</option>
+                    <option value="1">Febrero</option>
+                    <option value="2">Marzo</option>
+                    <option value="3">Abril</option>
+                    <option value="4">Mayo</option>
+                    <option value="5">Junio</option>
+                    <option value="6">Julio</option>
+                    <option value="7">Agosto</option>
+                    <option value="8">Septiembre</option>
+                    <option value="9">Octubre</option>
+                    <option value="10">Noviembre</option>
+                    <option value="11">Diciembre</option>
+
+                </select>
+
+            </div>
+
+
+            <button type="submit"
+                    class="gen-primary-btn">
+
+                <i class="bi bi-search"></i>
+
+                Buscar período
+
+            </button>
+
+        </form>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         INDICADORES GENERALES
+         ===================================================== -->
+
+    <section class="gen-card">
+
+        <div class="gen-section-heading">
+
+            <div class="gen-heading-icon">
+                <i class="bi bi-grid-1x2"></i>
+            </div>
+
+            <div>
+                <h2>Resumen general</h2>
+                <span>Indicadores financieros del período</span>
+            </div>
+
+        </div>
+
+
+        <div class="gen-metrics">
+
+
+            <div class="gen-metric">
+                <span>Inversión</span>
+                <strong>{{invT}}</strong>
+                <i class="bi bi-safe2"></i>
+            </div>
+
+
+            <div class="gen-metric">
+                <span>Capital</span>
+                <strong>{{capital}}</strong>
+                <i class="bi bi-bank"></i>
+            </div>
+
+
+            <div class="gen-metric">
+                <span>Por cobrar</span>
+                <strong>{{porCobrar}}</strong>
+                <i class="bi bi-hourglass-split"></i>
+            </div>
+
+
+            <div class="gen-metric gen-metric-positive">
+                <span>Efectivo</span>
+                <strong>{{efeCajaT}}</strong>
+                <i class="bi bi-cash-stack"></i>
+            </div>
+
+
+            <div class="gen-metric gen-metric-danger">
+                <span>CXP Interés</span>
+                <strong>{{inteT}}</strong>
+                <i class="bi bi-percent"></i>
+            </div>
+
+
+            <div class="gen-metric gen-metric-danger">
+                <span>CXP Total</span>
+                <strong>{{saldoT}}</strong>
+                <i class="bi bi-credit-card"></i>
+            </div>
+
+
+            <div class="gen-metric gen-metric-positive">
+                <span>Cobrado</span>
+                <strong>{{cobraTotal}}</strong>
+                <i class="bi bi-check2-circle"></i>
+            </div>
+
+
+            <div class="gen-metric">
+                <span>Esperado</span>
+                <strong>{{espeTotal}}</strong>
+                <i class="bi bi-bullseye"></i>
+            </div>
+
+
+            <div class="gen-metric">
+                <span>Ventas financiadas</span>
+                <strong>{{venTotal}}</strong>
+                <i class="bi bi-cart-plus"></i>
+            </div>
+
+
+            <div class="gen-metric">
+                <span>Ventas contado</span>
+                <strong>{{vtaCtdoTo}}</strong>
+                <i class="bi bi-bag-check"></i>
+            </div>
+
+
+            <div class="gen-metric gen-metric-positive">
+                <span>Crecimiento</span>
+                <strong>{{ganaTotal}}</strong>
+                <i class="bi bi-graph-up-arrow"></i>
+            </div>
+
+
+            <div class="gen-metric">
+                <span>Efectividad</span>
+                <strong>{{porcentajeT}}%</strong>
+                <i class="bi bi-speedometer"></i>
+            </div>
+
+
+            <div class="gen-metric gen-metric-positive">
+                <span>Ganancias</span>
+                <strong>{{gananCobTotal}}</strong>
+                <i class="bi bi-trophy"></i>
+            </div>
+
+
+            <div class="gen-metric">
+                <span>Préstamos</span>
+                <strong>{{cantPres}}</strong>
+                <i class="bi bi-file-earmark-text"></i>
+            </div>
+
+
+            <div class="gen-metric gen-metric-danger">
+                <span>Gastos</span>
+                <strong>{{gastocajaMes}}</strong>
+                <i class="bi bi-arrow-down-circle"></i>
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         RUTAS DE COBRANZA
+         ===================================================== -->
+
+    <section class="gen-card">
+
+        <div class="gen-section-heading">
+
+            <div class="gen-heading-icon">
+                <i class="bi bi-people"></i>
+            </div>
+
+            <div>
+                <h2>Rutas de cobranza</h2>
+                <span>
+                    Rendimiento individual de cada ruta
+                </span>
+            </div>
+
+        </div>
+
+
+        <div class="gen-routes">
+
+            {{#each ArrayUserGene}}
+
+            <article class="gen-route-card">
+
+
+                <!-- CABECERA RUTA -->
+
+                <div class="gen-route-header">
+
+                    <div class="gen-route-user">
+
+                        <div class="gen-route-avatar">
+                            <i class="bi bi-person"></i>
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                {{nombre}}
+                            </h3>
+
+                            <span>
+                                Ruta {{nRuta}}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="gen-route-status">
+                        <i class="bi bi-activity"></i>
+                        Activa
+                    </div>
+
+                </div>
+
+
+
+                <!-- INDICADORES -->
+
+                <div class="gen-route-grid">
+
+
+                    <div>
+                        <span>Por cobrar</span>
+                        <strong>{{porCobrarT}}</strong>
+                    </div>
+
+
+                    <div>
+                        <span>Efectivo</span>
+                        <strong>{{efeCaja}}</strong>
+                    </div>
+
+
+                    <div>
+                        <span>Ventas préstamo</span>
+                        <strong>{{venT}}</strong>
+                    </div>
+
+
+                    <div>
+                        <span>Cobrado</span>
+                        <strong>{{cobT}}</strong>
+                    </div>
+
+
+                    <div>
+                        <span>Ventas contado</span>
+                        <strong>{{vtaCtd}}</strong>
+                    </div>
+
+
+                    <div>
+                        <span>Esperado</span>
+                        <strong>{{espeT}}</strong>
+                    </div>
+
+
+                    <div>
+                        <span>Ganancias</span>
+                        <strong>{{ganaT}}</strong>
+                    </div>
+
+
+                    <div>
+                        <span>Gastos</span>
+                        <strong>{{mAdelantos}}</strong>
+                    </div>
+
+
+                    <div class="gen-route-highlight">
+                        <span>Efectividad</span>
+                        <strong>{{efectividad}}%</strong>
+                    </div>
+
+
+                    <div>
+                        <span>Préstamos</span>
+                        <strong>{{cPres}}</strong>
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ACCIONES -->
+
+                <div class="gen-route-actions">
+
+
+                    <a href="https://wa.me/549{{telefono}}"
+                       class="gen-action gen-action-whatsapp"
+                       title="WhatsApp">
+
+                        <i class="bi bi-whatsapp"></i>
+
+                        <span>WhatsApp</span>
+
+                    </a>
+
+
+                    <a href="tel:+549{{telefono}}"
+                       class="gen-action gen-action-phone"
+                       title="Llamar">
+
+                        <i class="bi bi-telephone"></i>
+
+                        <span>Llamar</span>
+
+                    </a>
+
+
+                    <a href="/general/cargarPres/{{nRuta}}"
+                       class="gen-action gen-action-money"
+                       title="Préstamos">
+
+                        <i class="bi bi-cash-coin"></i>
+
+                        <span>Préstamos</span>
+
+                    </a>
+
+
+                    <a href="/general/estadisticaUser/{{nRuta}}"
+                       class="gen-action gen-action-chart"
+                       title="Estadísticas">
+
+                        <i class="bi bi-graph-up-arrow"></i>
+
+                        <span>Estadísticas</span>
+
+                    </a>
+
+
+                    <a href="/general/hojaImprimir/{{nRuta}}"
+                       class="gen-action gen-action-print"
+                       title="Imprimir">
+
+                        <i class="bi bi-printer"></i>
+
+                        <span>Imprimir</span>
+
+                    </a>
+
+
+                </div>
+
+            </article>
+
+            {{/each}}
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         OPERACIONES DE CAJA
+         ===================================================== -->
+
+    <section class="gen-card">
+
+        <div class="gen-section-heading">
+
+            <div class="gen-heading-icon">
+                <i class="bi bi-wallet2"></i>
+            </div>
+
+            <div>
+                <h2>Operación de caja</h2>
+                <span>Registrar movimientos generales</span>
+            </div>
+
+        </div>
+
+
+        <form action="/general/cajaOperacion"
+              method="post"
+              class="gen-caja-form">
+
+
+            <div class="gen-field">
+
+                <label for="tipo">
+                    Tipo de operación
+                </label>
+
+                <select name="tipo" id="tipo">
+
+                    <option value="gasto">
+                        Gastos
+                    </option>
+
+                    <option value="ingreso">
+                        Ingreso
+                    </option>
+
+                    <option value="rendicion">
+                        Rendición
+                    </option>
+
+                    <option value="inversion">
+                        Inversión
+                    </option>
+
+                    <option value="sueldos">
+                        Adelantos de sueldo
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="gen-field">
+
+                <label for="userCod">
+                    Usuario
+                </label>
+
+                <select name="userCod" id="userCod">
+
+                    <option value="10">
+                        General
+                    </option>
+
+                    {{#each usuario}}
+
+                    <option value="{{numRuta}}">
+                        {{numRuta}} - {{nombre}}
+                    </option>
+
+                    {{/each}}
+
+                </select>
+
+            </div>
+
+
+            <div class="gen-field gen-field-wide">
+
+                <label for="detalle">
+                    Descripción
+                </label>
+
+                <input type="text"
+                       id="detalle"
+                       name="detalle"
+                       placeholder="Descripción de la operación">
+
+            </div>
+
+
+            <div class="gen-field">
+
+                <label for="monto">
+                    Monto
+                </label>
+
+                <input type="number"
+                       id="monto"
+                       name="monto"
+                       step="0.01"
+                       placeholder="$ 0.00"
+                       required>
+
+            </div>
+
+
+            <div class="gen-field">
+
+                <label for="fecha">
+                    Fecha
+                </label>
+
+                <input type="date"
+                       name="fecha"
+                       id="fecha">
+
+            </div>
+
+
+            <div class="gen-caja-submit">
+
+                <button type="submit"
+                        class="gen-primary-btn">
+
+                    <i class="bi bi-plus-circle"></i>
+
+                    Registrar operación
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         OPERACIONES REALIZADAS
+         ===================================================== -->
+
+    <section class="gen-card">
+
+        <div class="gen-section-heading">
+
+            <div class="gen-heading-icon">
+                <i class="bi bi-clock-history"></i>
+            </div>
+
+            <div>
+                <h2>Operaciones realizadas</h2>
+                <span>Movimientos registrados en caja</span>
+            </div>
+
+        </div>
+
+
+        <div class="gen-table-wrapper">
+
+            <table class="gen-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Usuario</th>
+                        <th>Operación</th>
+                        <th>Detalle</th>
+                        <th>Monto</th>
+                        <th>Acción</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {{#each cajaList}}
+
+                    <tr>
+
+                        <td data-label="Fecha">
+                            {{fecha}}
+                        </td>
+
+                        <td data-label="Usuario">
+                            {{userCod}}
+                        </td>
+
+                        <td data-label="Operación">
+                            <span class="gen-operation">
+                                {{tipo}}
+                            </span>
+                        </td>
+
+                        <td data-label="Detalle">
+                            {{detalle}}
+                        </td>
+
+                        <td data-label="Monto"
+                            class="gen-money">
+                            {{monto}}
+                        </td>
+
+                        <td data-label="Acción">
+
+                            <a onclick="return confirm('¿Desea Eliminar La OPERACION?')"
+                               href="/general/deleteCajaOperacion/{{_id}}"
+                               class="gen-delete"
+                               title="Eliminar operación">
+
+                                <i class="bi bi-trash3"></i>
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {{/each}}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>

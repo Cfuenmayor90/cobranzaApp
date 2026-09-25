@@ -1,108 +1,465 @@
 
 
-    <nav class="navegacion">
-        <div>
-            
-           <a href="/vistas/exit" onclick="return confirm('¿Desea cerrar sesion?')" ><i class="bi bi-x-square"></i></i></a> 
-        </div>
-        <div>
-           <span>Cobranza App</span>
-        </div>
-        <div class="iconMenuHamburguesa">
-        <span>{{nombre}}</span>
-        </div>
-    </nav>
-    <div class="contMayorPrin">
-  
-        <div class="ContBotones">
-        <a class="botonesMenuPrincipal" href="/cobranza">
-            <i class="bi bi-cash-coin"></i>
-            <h2 class="tituloBtn">Cobranza</h2>
-        </a>
-           <a class="botonesMenuPrincipal" href="/cobranza/transfCob" >
-            <i class="bi bi-bank"></i>
-            <h2 class="tituloBtn">Transf.</h2>
-        </a>
-        <a class="botonesMenuPrincipal" href="/products/productosUsuarios">
-            <i class="bi bi-shop"></i>
-            <h2 class="tituloBtn">Productos</h2>
-        </a>
-        <a class="botonesMenuPrincipal" href="/ventas">
-            <i class="bi bi-receipt-cutoff"></i>
-            <h2 class="tituloBtn">Ventas</h2>
-        </a>
-          <a class="botonesMenuPrincipal" href="/vistas/Clientes">
-            <i class="bi bi-people"></i>
-            <h2 class="tituloBtn">Clientes</h2>
-        </a>
-        <a class="botonesMenuPrincipal" href="/vistas/novedades">
-            <i class="bi bi-envelope-exclamation"></i>
-            <h2 class="tituloBtn">Novedades</h2>
-        </a>
-        <a class="botonesMenuPrincipal" href="/calculadora/">
-            <i class="bi bi-calculator"></i>
-            <h2 class="tituloBtn">Calculadora</h2>
-        </a>
-             <a class="botonesMenuPrincipal" href="/alertas" >
-            <i class="bi bi-exclamation-octagon"></i>
-            <h2 class="tituloBtn">Alertas</h2>
-        </a>
-        <a class="botonesMenuPrincipal" href="/general/estadisticaUser/{{nRuta}}">
-            <i class="bi bi-graph-up-arrow"></i>
-            <h2 class="tituloBtn">Estadisticas</h2>
-        </a>
-        <a class="botonesMenuPrincipal" href="/vistas/caja/{{nRuta}}">
-            <i class="bi bi-cash"></i>
-            <h2 class="tituloBtn">Caja</h2>
-        </a>
-     </div>
+    <nav class="cobrador-navbar">
 
-     <section class="sectionContPrin">
-       <div class="divBarraPrincipal">
-        <h3 class="tituloForm">Prestamos Vencidos</h3>
-      </div>
-      <div class="tarjCli">
-         <table class="tableListCaja">
-    <tr>
-      <th class="tableListCajaTitle">Fecha</th>
-      <th class="tableListCajaTitle">Nombre</th>
-      <th class="tableListCajaTitle">Detalle</th>
-      <th class="tableListCajaTitle">Monto</th>
-    </tr>
-    {{#each pVencidos}}
-     <tr>
-      <th class="tableListCajaRes">{{fechaFinal}}</th>
-      <th class="tableListCajaRes">{{nombre}}</th>
-      <th class="tableListCajaRes">{{detalle}}</th>
-      <th class="tableListCajaRes">{{mTotal}}</th>
-    </tr>
-    
-    {{/each}}
-  </table>
-      </div>  
-       <div class="divBarraPrincipal">
-        <h3 class="tituloForm">Ventas Realizadas</h3>
-      </div>
-      <div class="tarjCli">
-        <table class="tableListCaja">
-    <tr>
-      <th class="tableListCajaTitle">Fecha</th>
-      <th class="tableListCajaTitle">Nombre</th>
-      <th class="tableListCajaTitle">Detalle</th>
-      <th class="tableListCajaTitle">Monto</th>
-    </tr>
-    {{#each hisVentas}}
-     <tr>
-      <th class="tableListCajaRes">{{fechaInicio}}</th>
-      <th class="tableListCajaRes">{{nombre}}</th>
-      <th class="tableListCajaRes">{{detalle}}</th>
-      <th class="tableListCajaRes">{{mTotal}}</th>
-    </tr>
-    
-    {{/each}}
-  </table>
-      </div>  
+    <div class="cobrador-navbar-left">
+        <a href="/vistas/exit"
+           onclick="return confirm('¿Desea cerrar sesion?')"
+           class="cobrador-logout"
+           title="Cerrar sesión">
+            <i class="bi bi-box-arrow-left"></i>
+        </a>
+    </div>
+
+    <div class="cobrador-navbar-brand">
+        <span>MaxiTodo · Punto de Venta</span>
+    </div>
+
+    <div class="cobrador-navbar-user">
+        <i class="bi bi-person-circle"></i>
+        <span>{{nombre}}</span>
+    </div>
+
+</nav>
+
+
+<main class="cobrador-layout">
+
+    <!-- =========================================
+         MENÚ DEL LOCAL
+         ========================================= -->
+
+    <aside class="cobrador-menu">
+
+        <div class="cobrador-menu-header">
+
+            <div class="cobrador-menu-avatar">
+                <i class="bi bi-shop"></i>
+            </div>
+
+            <div>
+                <span class="cobrador-menu-label">
+                    Punto de venta
+                </span>
+
+                <strong>{{nombre}}</strong>
+            </div>
+
+        </div>
+
+
+        <div class="cobrador-menu-grid">
+
+            <!-- VENTAS -->
+            <a class="cobrador-menu-item cobrador-menu-primary"
+               href="/ventas">
+
+                <i class="bi bi-receipt-cutoff"></i>
+
+                <span>Ventas</span>
+
+            </a>
+
+
+            <!-- PRODUCTOS -->
+            <a class="cobrador-menu-item"
+               href="/products/productosUsuarios">
+
+                <i class="bi bi-shop"></i>
+
+                <span>Productos</span>
+
+            </a>
+
+
+            <!-- CLIENTES -->
+            <a class="cobrador-menu-item"
+               href="/vistas/Clientes">
+
+                <i class="bi bi-people"></i>
+
+                <span>Clientes</span>
+
+            </a>
+
+
+            <!-- COBRANZA -->
+            <a class="cobrador-menu-item"
+               href="/cobranza">
+
+                <i class="bi bi-cash-coin"></i>
+
+                <span>Cobranza</span>
+
+            </a>
+
+
+            <!-- CAJA -->
+            <a class="cobrador-menu-item"
+               href="/vistas/caja/{{nRuta}}">
+
+                <i class="bi bi-wallet2"></i>
+
+                <span>Caja</span>
+
+            </a>
+
+
+            <!-- TRANSFERENCIAS -->
+            <a class="cobrador-menu-item"
+               href="/cobranza/transfCob">
+
+                <i class="bi bi-bank"></i>
+
+                <span>Transferencias</span>
+
+            </a>
+
+
+            <!-- CALCULADORA -->
+            <a class="cobrador-menu-item"
+               href="/calculadora/">
+
+                <i class="bi bi-calculator"></i>
+
+                <span>Calculadora</span>
+
+            </a>
+
+
+            <!-- NOVEDADES -->
+            <a class="cobrador-menu-item"
+               href="/vistas/novedades">
+
+                <i class="bi bi-envelope-exclamation"></i>
+
+                <span>Novedades</span>
+
+            </a>
+
+
+            <!-- ALERTAS -->
+            <a class="cobrador-menu-item"
+               href="/alertas">
+
+                <i class="bi bi-exclamation-octagon"></i>
+
+                <span>Alertas</span>
+
+            </a>
+
+
+            <!-- ESTADÍSTICAS -->
+            <a class="cobrador-menu-item"
+               href="/general/estadisticaUser/{{nRuta}}">
+
+                <i class="bi bi-bar-chart-line"></i>
+
+                <span>Estadísticas</span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================================
+         CONTENIDO PRINCIPAL
+         ========================================= -->
+
+    <section class="cobrador-content">
+
+
+        <!-- BIENVENIDA -->
+
+        <div class="cobrador-welcome">
+
+            <div>
+
+                <span class="cobrador-eyebrow">
+                    PUNTO DE VENTA
+                </span>
+
+                <h1>
+                    Hola, {{nombre}}
+                </h1>
+
+                <p>
+                    Gestiona ventas, clientes, productos y caja
+                    desde este panel.
+                </p>
+
+            </div>
+
+
+            <div class="cobrador-welcome-icon">
+
+                <i class="bi bi-shop-window"></i>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================================
+             ACCESOS RÁPIDOS
+             ========================================= -->
+
+        <div class="local-quick-grid">
+
+
+            <a href="/ventas" class="local-quick-card">
+
+                <div class="local-quick-icon ventas">
+                    <i class="bi bi-cart-check"></i>
+                </div>
+
+                <div>
+                    <strong>Nueva venta</strong>
+                    <span>Registrar una operación</span>
+                </div>
+
+                <i class="bi bi-chevron-right local-arrow"></i>
+
+            </a>
+
+
+            <a href="/products/productosUsuarios"
+               class="local-quick-card">
+
+                <div class="local-quick-icon productos">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+
+                <div>
+                    <strong>Catálogo</strong>
+                    <span>Consultar productos</span>
+                </div>
+
+                <i class="bi bi-chevron-right local-arrow"></i>
+
+            </a>
+
+
+            <a href="/vistas/Clientes"
+               class="local-quick-card">
+
+                <div class="local-quick-icon clientes">
+                    <i class="bi bi-person-plus"></i>
+                </div>
+
+                <div>
+                    <strong>Clientes</strong>
+                    <span>Consultar clientes</span>
+                </div>
+
+                <i class="bi bi-chevron-right local-arrow"></i>
+
+            </a>
+
+
+            <a href="/vistas/caja/{{nRuta}}"
+               class="local-quick-card">
+
+                <div class="local-quick-icon caja">
+                    <i class="bi bi-cash-stack"></i>
+                </div>
+
+                <div>
+                    <strong>Caja</strong>
+                    <span>Consultar movimientos</span>
+                </div>
+
+                <i class="bi bi-chevron-right local-arrow"></i>
+
+            </a>
+
+
+        </div>
+
+
+
+        <!-- =========================================
+             PRÉSTAMOS VENCIDOS
+             ========================================= -->
+
+        <section class="cobrador-panel">
+
+            <div class="cobrador-panel-header cobrador-danger-header">
+
+                <div class="cobrador-panel-title">
+
+                    <div class="cobrador-panel-icon">
+                        <i class="bi bi-exclamation-triangle"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Préstamos vencidos
+                        </h2>
+
+                        <span>
+                            Clientes con pagos pendientes
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="cobrador-table-wrapper">
+
+                <table class="cobrador-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Fecha</th>
+
+                            <th>Nombre</th>
+
+                            <th>Detalle</th>
+
+                            <th>Monto</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {{#each pVencidos}}
+
+                        <tr>
+
+                            <td data-label="Fecha">
+                                {{fechaFinal}}
+                            </td>
+
+                            <td data-label="Nombre"
+                                class="cobrador-client-name">
+                                {{nombre}}
+                            </td>
+
+                            <td data-label="Detalle">
+                                {{detalle}}
+                            </td>
+
+                            <td data-label="Monto"
+                                class="cobrador-money cobrador-money-danger">
+                                {{mTotal}}
+                            </td>
+
+                        </tr>
+
+                        {{/each}}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             VENTAS REALIZADAS
+             ========================================= -->
+
+        <section class="cobrador-panel">
+
+            <div class="cobrador-panel-header cobrador-success-header">
+
+                <div class="cobrador-panel-title">
+
+                    <div class="cobrador-panel-icon">
+                        <i class="bi bi-cart-check"></i>
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Ventas realizadas
+                        </h2>
+
+                        <span>
+                            Últimas operaciones registradas
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="cobrador-table-wrapper">
+
+                <table class="cobrador-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Fecha</th>
+
+                            <th>Nombre</th>
+
+                            <th>Detalle</th>
+
+                            <th>Monto</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {{#each hisVentas}}
+
+                        <tr>
+
+                            <td data-label="Fecha">
+                                {{fechaInicio}}
+                            </td>
+
+                            <td data-label="Nombre"
+                                class="cobrador-client-name">
+                                {{nombre}}
+                            </td>
+
+                            <td data-label="Detalle">
+                                {{detalle}}
+                            </td>
+
+                            <td data-label="Monto"
+                                class="cobrador-money cobrador-money-success">
+                                {{mTotal}}
+                            </td>
+
+                        </tr>
+
+                        {{/each}}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
 
     </section>
-</div>
-    
+
+</main>

@@ -1,86 +1,279 @@
 
-    <nav class="navegacion">
-        <div>
-           <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a> 
+   <nav class="historial-navbar">
+
+    <a href="/vistas/volver" class="historial-nav-back" title="Volver">
+        <i class="bi bi-box-arrow-left"></i>
+    </a>
+
+    <div class="historial-nav-title">
+        <i class="bi bi-clock-history"></i>
+        <span>Historial de Ventas</span>
+    </div>
+
+    <div class="historial-nav-icon">
+        <i class="bi bi-filter-square"></i>
+    </div>
+
+</nav>
+
+
+<main class="historial-container">
+
+
+    <!-- FILTRO DE FECHA -->
+
+    <section class="historial-filter">
+
+        <div class="historial-filter-title">
+            <div class="historial-filter-icon">
+                <i class="bi bi-calendar3"></i>
+            </div>
+
+            <div>
+                <h2>Consultar ventas</h2>
+                <span>Seleccione el período que desea consultar</span>
+            </div>
         </div>
-        <div>
-           <span>Historial De Ventas</span>
+
+
+        <form action="/ventas/historialFecha"
+              method="post"
+              class="historial-filter-form">
+
+            <div class="historial-field">
+
+                <label for="anioInp">
+                    Año
+                </label>
+
+                <select name="anioInp"
+                        id="anioInp"
+                        class="historial-select">
+
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="historial-field">
+
+                <label for="mesInp">
+                    Mes
+                </label>
+
+                <select name="mesInp"
+                        id="mesInp"
+                        class="historial-select">
+
+                    <option value="0">Enero</option>
+                    <option value="1">Febrero</option>
+                    <option value="2">Marzo</option>
+                    <option value="3">Abril</option>
+                    <option value="4">Mayo</option>
+                    <option value="5">Junio</option>
+                    <option value="6">Julio</option>
+                    <option value="7">Agosto</option>
+                    <option value="8">Septiembre</option>
+                    <option value="9">Octubre</option>
+                    <option value="10">Noviembre</option>
+                    <option value="11">Diciembre</option>
+
+                </select>
+
+            </div>
+
+
+            <button type="submit"
+                    class="historial-search-btn">
+
+                <i class="bi bi-search"></i>
+                Buscar
+
+            </button>
+
+        </form>
+
+    </section>
+
+
+
+    <!-- VENTAS FINANCIADAS -->
+
+    <section class="historial-section">
+
+        <div class="historial-section-header historial-financiadas">
+
+            <div class="historial-section-icon">
+                <i class="bi bi-credit-card"></i>
+            </div>
+
+            <div>
+                <h2>Ventas financiadas</h2>
+                <span>Registro de operaciones financiadas</span>
+            </div>
+
         </div>
-        <div class="iconMenuHamburguesa">
-           <i class="bi bi-filter-square"></i>
+
+
+        <div class="historial-table-wrapper">
+
+            <table class="historial-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Código</th>
+                        <th>DNI</th>
+                        <th>Vendedor</th>
+                        <th>Cobrador</th>
+                        <th>Detalle</th>
+                        <th>Total</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {{#each ventasFina}}
+
+                    <tr>
+
+                        <td data-label="Fecha">
+                            {{fechaInicio}}
+                        </td>
+
+                        <td data-label="Código">
+                            <span class="historial-code">
+                                {{codProd}}
+                            </span>
+                        </td>
+
+                        <td data-label="DNI">
+                            {{dni}}
+                        </td>
+
+                        <td data-label="Vendedor">
+                            {{venRuta}}
+                        </td>
+
+                        <td data-label="Cobrador">
+                            {{cobRuta}}
+                        </td>
+
+                        <td data-label="Detalle"
+                            class="historial-detail">
+                            {{detalle}}
+                        </td>
+
+                        <td data-label="Total"
+                            class="historial-total">
+                            ${{mTotal}}
+                        </td>
+
+                    </tr>
+
+                    {{/each}}
+
+                </tbody>
+
+            </table>
+
         </div>
-    </nav>
-     <form action="/ventas/historialFecha" method="post" style="margin: 3px;">
-        <label for="">Seleccione Un Periodo</label>
-        <select name="anioInp" id="anioInp">
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>  
-            <option value="2027">2027</option>
-            <option value="2028">2028</option>
-        </select>
-        <select name="mesInp" id="mesInp">
-          <option value="0">Enero</option>
-          <option value="1">Febrero</option>
-          <option value="2">Marzo</option>
-          <option value="3">Abril</option>
-          <option value="4">Mayo</option>
-          <option value="5">Junio</option>
-          <option value="6">Julio</option>
-          <option value="7">Agosto</option>
-          <option value="8">Septiembre</option>
-          <option value="9">Octubre</option>
-          <option value="10">Noviembre</option>
-          <option value="11">Diciembre</option>
-        </select>
-  <button  type="submit">Buscar</button>
-     </form>
-    <table class="tableBoleta">
-        <tr>
-        <th class="thBoleta" colspan="7">Ventas Financiadas</th>
-        </tr>
-    <tr class="trBoleta">
-      <th class="thBoleta">Fecha</th>
-      <th class="thBoleta">Codigo</th> 
-      <th class="thBoleta">DNI</th>
-      <th class="thBoleta">Vendedor</th>
-      <th class="thBoleta">Cobrador</th>
-      <th class="thBoleta">Detalle</th>
-      <th class="thBoleta">Total</th>
-    </tr>
-    {{#each ventasFina}}
-      <tr class="trBoleta">
-        <td class="thBoleta">{{fechaInicio}}</td>
-        <td class="thBoleta">{{codProd}}</td>
-        <td class="thBoleta">{{dni}}</td>
-        <td class="thBoleta">{{venRuta}}</td>
-        <td class="thBoleta">{{cobRuta}}</td>
-        <td class="thBoleta">{{detalle}}</td>
-        <td class="thBoleta">{{mTotal}}</td>
-      </tr>
-    {{/each}}
-  </table>
-  <table class="tableBoleta">
-        <tr>
-        <th class="thBoleta" colspan="6">Ventas Financiadas</th>
-        </tr>
-    <tr class="trBoleta">
-      <th class="thBoleta">Fecha</th>
-      <th class="thBoleta">Codigo</th> 
-      <th class="thBoleta">DNI</th>
-      <th class="thBoleta">Vendedor</th>
-      <th class="thBoleta">Detalle</th>
-      <th class="thBoleta">Total</th>
-    </tr>
-    {{#each ventasCont}}
-      <tr class="trBoleta">
-        <td class="thBoleta">{{fechaInicio}}</td>
-        <td class="thBoleta">{{codProd}}</td>
-        <td class="thBoleta">{{dni}}</td>
-        <td class="thBoleta">{{venRuta}}</td>
-        <td class="thBoleta">{{detalle}}</td>
-        <td class="thBoleta">{{mTotal}}</td>
-      </tr>
-    {{/each}}
-  </table>
+
+    </section>
+
+
+
+    <!-- VENTAS DE CONTADO -->
+
+    <section class="historial-section">
+
+        <div class="historial-section-header historial-contado">
+
+            <div class="historial-section-icon">
+                <i class="bi bi-cash-stack"></i>
+            </div>
+
+            <div>
+                <h2>Ventas de contado</h2>
+                <span>Registro de operaciones de contado</span>
+            </div>
+
+        </div>
+
+
+        <div class="historial-table-wrapper">
+
+            <table class="historial-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Código</th>
+                        <th>DNI</th>
+                        <th>Vendedor</th>
+                        <th>Detalle</th>
+                        <th>Total</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {{#each ventasCont}}
+
+                    <tr>
+
+                        <td data-label="Fecha">
+                            {{fechaInicio}}
+                        </td>
+
+                        <td data-label="Código">
+                            <span class="historial-code">
+                                {{codProd}}
+                            </span>
+                        </td>
+
+                        <td data-label="DNI">
+                            {{dni}}
+                        </td>
+
+                        <td data-label="Vendedor">
+                            {{venRuta}}
+                        </td>
+
+                        <td data-label="Detalle"
+                            class="historial-detail">
+                            {{detalle}}
+                        </td>
+
+                        <td data-label="Total"
+                            class="historial-total historial-total-contado">
+                            ${{mTotal}}
+                        </td>
+
+                    </tr>
+
+                    {{/each}}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+</main>

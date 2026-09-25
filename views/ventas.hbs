@@ -1,204 +1,758 @@
 
 
-    <nav class="navegacion">
+   <nav class="ventas-navbar">
+    <div class="ventas-navbar-left">
+        <a href="/vistas/volver" class="ventas-back-btn" title="Volver">
+            <i class="bi bi-box-arrow-left"></i>
+        </a>
+    </div>
+
+    <div class="ventas-navbar-title">
+        <i class="bi bi-receipt-cutoff"></i>
+        <span>Ventas</span>
+    </div>
+
+    <div class="ventas-navbar-right">
+        <i class="bi bi-shop"></i>
+        <span>Punto de venta</span>
+    </div>
+</nav>
+
+
+<main class="ventas-page">
+
+    <!-- ENCABEZADO -->
+    <section class="ventas-hero">
+
         <div>
-           <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a> 
+            <span class="ventas-eyebrow">GESTIÓN COMERCIAL</span>
+
+            <h1>Nueva venta</h1>
+
+            <p>
+                Registra ventas financiadas o de contado
+                de manera rápida y ordenada.
+            </p>
         </div>
-        <div>
-           <span>Ventas</span>
+
+        <div class="ventas-hero-icon">
+            <i class="bi bi-cart-check"></i>
         </div>
-        <div class="iconMenuHamburguesa">
-            <i class="bi bi-menu-button-wide-fill"></i>
-        </div>
-    </nav>
 
-
-   <div class="contMayorCli">
-<div class="formCliente">
-    <div class="divClienteBuscar">
-        <h3 class="tituloForm">Registro De Ventas Financiadas</h3>
-      </div>
-    <form action="/ventas/preCotizar" method="post" class="formCliente2">
-           
-            <label for="ruta">Vendedor</label>
-            <select class="inpForm" name="venRuta" id="venRuta" required>
-                <option value="001">Renovacion</option>
-                {{#each usuariosVent}}
-                <option value="{{numRuta}}">{{numRuta}}/{{nombre}}</option>
-                {{/each}}
-            </select>
-            <br>
-            <label for="ruta">Ruta De Cobro</label>
-            <select class="inpForm" name="cobRuta" id="cobRuta" required>
-                {{#each usuariosCob}}
-                <option value="{{numRuta}}">{{numRuta}}/{{nombre}}</option>
-                {{/each}}
-            </select>
-            <br>
-            <label for="dni">DNI</label><br>
-            <input class="inpForm" type="number" id="dni" name="dni" required>
-            <br>
-            <label for="monto">Monto</label>
-            <input class="inpForm" type="number" id="monto" name="monto" required>
-            <br>
-             <label for="monto">Adelanto</label>
-            <input class="inpForm" type="number" id="adelanto" name="adelanto" >
-            <br>
-       
-               <label style="background-color: rgb(255, 200, 98);" for="monto">Descuento De Saldo Anterior</label>
-            <input style="border-color: rgb(255, 200, 98);" class="inpForm" type="number" id="SalAnt" name="salAnt" >
-            <br>
-          
-            <label for="detalle">Descripcion</label>
-            <input class="inpForm" type="text" id="detalle" placeholder="Inf. Solo para productos" name="detalle">
-            <br>
-            <label for="detalle">Codigo De Producto</label>
-            <select  name="codProd" id="codProd" class="inpForm"  multiple>
-              <option value="prestamo">Prestamo De Dinero</option>
-              {{#each productos}}
-              <option value="{{cod}}">{{cod}} // {{nombre}}</option>
-              {{/each}}
-            </select>
-            <br>
-            <label for="plan">Plan De Cobro</label>
-            <select class="inpForm" name="planId" id="planId">
-                {{#each planPrest}}
-                <option value="{{_id}}">{{categoria}} / {{plan}} / Cuotas: {{cuotas}} / {{porcentaje}}% </option>
-                {{/each}}
-                {{#each planProd}}
-                <option value="{{_id}}">{{categoria}} / {{plan}} / Cuotas: {{cuotas}} / {{porcentaje}}% </option>
-                {{/each}}
-            </select>
-            <br>
-            <label for="detalle">Porcentaje De Descuento</label>
-            <input class="inpForm" type="number" id="descuento" placeholder="%" name="descuento">
-            <br>
-            <label for="diasDeCobro">Dia De Cobro</label>
-            <select class="inpForm" name="diaDeCobro" id="diaDeCobro">
-                <option value="lunes">Lunes</option>
-                <option value="martes">Martes</option>
-                <option value="miercoles">Miercoles</option>
-                <option value="jueves">Jueves</option>
-                <option value="viernes">Viernes</option>
-                <option value="Sabado">Sabado</option>
-                <option value="todos">Todos</option>
-                 <option value="mensual">Mensual</option>
-            </select>
-            <label for="diasDeCobro">Fecha Inicio</label>
-            <input type="date" name="fecha" id="fecha" class="inpForm" required>
-               <div class="cantBtnForm">
-                <button class="btnFormReset" type="reset">Limpiar</button>
-                <button class="btnFormAceptar" type="submit">Cotizar</button>
-            </div>
-    </form>
-    <div class="divClienteBuscar">
-        <h3 class="tituloForm">Registro De Ventas De Contado</h3>
-      </div>
-    <form action="/ventas/preCotizarCont" method="post" class="formCliente2">
-           
-            <label for="ruta">Vendedor</label>
-            <select class="inpForm" name="venRuta" id="venRuta">
-                <option value="">Otro</option>
-                {{#each usuariosVent}}
-                <option value="{{numRuta}}">{{numRuta}}/{{nombre}}</option>
-                {{/each}}
-            </select>
-            <br>
-            <label for="dni">DNI</label><br>
-            <input class="inpForm" type="number" id="dni" name="dni">
-            <br>
-        
-            <label for="detalle">Codigo De Producto</label>
-            <select  name="codProd" id="codProd" class="inpForm"  multiple>
-              {{#each productos}}
-              <option value="{{cod}}">{{cod}} // {{nombre}}</option>
-              {{/each}}
-            </select>
-            <br>
-      
-               <div class="cantBtnForm">
-                <button class="btnFormReset" type="reset">Limpiar</button>
-                <button class="btnFormAceptar" type="submit">Cotizar</button>
-            </div>
-    </form>
-    
-</div>
-    <section class="sectionContClientes">
-      <div class="divClienteBuscar">
-        <h3 class="tituloForm">Ventas Financiadas Agregados Recientemente</h3>
-      </div>
-      <div class="tarjUser">
-        <br>
-        <table class="tableUsuarios">
-          <tr class="tableUsuariosTr">
-          <th class="tableUsuariosThTitulo">Apellido y Nombre</th>
-          <th class="tableUsuariosThTitulo">Monto</th>
-          <th class="tableUsuariosThTitulo">Fecha</th>
-           <th class="tableUsuariosThTitulo">% Dto</th>
-          <th class="tableUsuariosThTitulo">Ruta C.</th>
-
-          </tr>
-        {{#each ventasT }}
-          <tr>
-             <th class="tableUsuariosThRespuesta" style="background-color: rgb(211, 235, 227);">{{nombre}}</th>
-             <th class="tableUsuariosThRespuesta">{{monto}}</th>
-             <th class="tableUsuariosThRespuesta">{{fechaInicio}}</th>
-             <th class="tableUsuariosThRespuesta">{{descuento}}</th>
-             <th class="tableUsuariosThRespuesta">{{cobRuta}}</th>
-          </tr>
-
-           <th class="tableUsuariosThRespuesta">Detalle</th>
-           <th class="tableUsuariosThRespuesta" colspan="4">{{detalle}}</th>
-          <tr>
-
-          </tr>
-        {{/each}}
-        </table>
-        <br>
-      </div>  
-
-  
-      <div class="divClienteBuscar">
-        <h3 class="tituloForm">Ventas De Contado Agregados Recientemente</h3>
-      </div>
-      <div class="tarjUser">
-        <br>
-        <table class="tableUsuarios">
-          <tr class="tableUsuariosTr">
-          <th class="tableUsuariosThTitulo">Nombre</th>
-          <th class="tableUsuariosThTitulo">Monto</th>
-           <th class="tableUsuariosThTitulo">% Dto</th>
-          <th class="tableUsuariosThTitulo">Fecha</th>
-          <th class="tableUsuariosThTitulo">Medio De Pgo</th>
-          <th class="tableUsuariosThTitulo">Usuario</th>
-
-          </tr>
-        {{#each ventasCont}}
-          <tr>
-             <th class="tableUsuariosThRespuesta" style="background-color: rgb(211, 235, 227);">{{nombre}}</th>
-             <th class="tableUsuariosThRespuesta">{{mTotal}}</th>
-             <th class="tableUsuariosThRespuesta">{{descuento}}</th>
-             <th class="tableUsuariosThRespuesta">{{fechaInicio}}</th>
-             <th class="tableUsuariosThRespuesta">{{plan}}</th>
-             <th class="tableUsuariosThRespuesta">{{user}}</th>
-          </tr>
-          <tr>
-         <th class="tableUsuariosThRespuesta">Detalle</th>
-           <th class="tableUsuariosThRespuesta" colspan="5">{{detalle}}</th>
-          </tr>
-          <tr>
-           <th class="tableUsuariosThRespuesta">Codigo</th>
-           <th class="tableUsuariosThRespuesta" colspan="5">{{codProd}}</th>
-          </tr>
-        {{/each}}
-        </table>
-        <br>
-      </div>  
-        <a href="/ventas/historial">Ver Todas</a>
     </section>
-  </div>
 
 
+    <!-- FORMULARIOS -->
+    <section class="ventas-form-grid">
 
 
+        <!-- =========================
+             VENTA FINANCIADA
+        ========================== -->
 
+        <div class="venta-card venta-card-financiada">
+
+            <div class="venta-card-header">
+
+                <div class="venta-card-icon">
+                    <i class="bi bi-calendar2-check"></i>
+                </div>
+
+                <div>
+                    <span>VENTA FINANCIADA</span>
+                    <h2>Registrar financiación</h2>
+                </div>
+
+            </div>
+
+
+            <form action="/ventas/preCotizar"
+                  method="post"
+                  class="venta-form">
+
+
+                <div class="venta-section-title">
+                    <i class="bi bi-person-badge"></i>
+                    Asignación
+                </div>
+
+
+                <div class="venta-field">
+
+                    <label for="venRutaFin">
+                        Vendedor
+                    </label>
+
+                    <select
+                        class="venta-input"
+                        name="venRuta"
+                        id="venRutaFin"
+                        required>
+
+                        <option value="001">
+                            Renovacion
+                        </option>
+
+                        {{#each usuariosVent}}
+
+                        <option value="{{numRuta}}">
+                            {{numRuta}} / {{nombre}}
+                        </option>
+
+                        {{/each}}
+
+                    </select>
+
+                </div>
+
+
+                <div class="venta-field">
+
+                    <label for="cobRuta">
+                        Ruta de cobro
+                    </label>
+
+                    <select
+                        class="venta-input"
+                        name="cobRuta"
+                        id="cobRuta"
+                        required>
+
+                        {{#each usuariosCob}}
+
+                        <option value="{{numRuta}}">
+                            {{numRuta}} / {{nombre}}
+                        </option>
+
+                        {{/each}}
+
+                    </select>
+
+                </div>
+
+
+                <div class="venta-section-title">
+                    <i class="bi bi-cash-stack"></i>
+                    Datos de la operación
+                </div>
+
+
+                <div class="venta-field">
+
+                    <label for="dniFin">
+                        DNI
+                    </label>
+
+                    <input
+                        class="venta-input"
+                        type="number"
+                        id="dniFin"
+                        name="dni"
+                        placeholder="Ingrese DNI"
+                        required>
+
+                </div>
+
+
+                <div class="venta-fields-two">
+
+                    <div class="venta-field">
+
+                        <label for="monto">
+                            Monto
+                        </label>
+
+                        <input
+                            class="venta-input"
+                            type="number"
+                            id="monto"
+                            name="monto"
+                            placeholder="$ 0"
+                            required>
+
+                    </div>
+
+
+                    <div class="venta-field">
+
+                        <label for="adelanto">
+                            Adelanto
+                        </label>
+
+                        <input
+                            class="venta-input"
+                            type="number"
+                            id="adelanto"
+                            name="adelanto"
+                            placeholder="$ 0">
+
+                    </div>
+
+                </div>
+
+
+                <div class="venta-field venta-field-warning">
+
+                    <label for="SalAnt">
+                        Descuento de saldo anterior
+                    </label>
+
+                    <input
+                        class="venta-input"
+                        type="number"
+                        id="SalAnt"
+                        name="salAnt"
+                        placeholder="$ 0">
+
+                </div>
+
+
+                <div class="venta-field">
+
+                    <label for="detalleFin">
+                        Descripción
+                    </label>
+
+                    <input
+                        class="venta-input"
+                        type="text"
+                        id="detalleFin"
+                        name="detalle"
+                        placeholder="Información del producto">
+
+                </div>
+
+
+                <div class="venta-field">
+
+                    <label for="codProdFin">
+                        Producto
+                    </label>
+
+                    <select
+                        name="codProd"
+                        id="codProdFin"
+                        class="venta-input"
+                        multiple>
+
+                        <option value="prestamo">
+                            Préstamo de dinero
+                        </option>
+
+                        {{#each productos}}
+
+                        <option value="{{cod}}">
+                            {{cod}} // {{nombre}}
+                        </option>
+
+                        {{/each}}
+
+                    </select>
+
+                    <small>
+                        Mantén presionada la tecla Ctrl para seleccionar
+                        varios productos.
+                    </small>
+
+                </div>
+
+
+                <div class="venta-section-title">
+                    <i class="bi bi-calendar-range"></i>
+                    Condiciones de financiación
+                </div>
+
+
+                <div class="venta-field">
+
+                    <label for="planId">
+                        Plan de cobro
+                    </label>
+
+                    <select
+                        class="venta-input"
+                        name="planId"
+                        id="planId">
+
+                        {{#each planPrest}}
+
+                        <option value="{{_id}}">
+                            {{categoria}} /
+                            {{plan}} /
+                            Cuotas: {{cuotas}} /
+                            {{porcentaje}}%
+                        </option>
+
+                        {{/each}}
+
+                        {{#each planProd}}
+
+                        <option value="{{_id}}">
+                            {{categoria}} /
+                            {{plan}} /
+                            Cuotas: {{cuotas}} /
+                            {{porcentaje}}%
+                        </option>
+
+                        {{/each}}
+
+                    </select>
+
+                </div>
+
+
+                <div class="venta-fields-two">
+
+                    <div class="venta-field">
+
+                        <label for="descuento">
+                            Descuento %
+                        </label>
+
+                        <input
+                            class="venta-input"
+                            type="number"
+                            id="descuento"
+                            name="descuento"
+                            placeholder="0">
+
+                    </div>
+
+
+                    <div class="venta-field">
+
+                        <label for="diaDeCobro">
+                            Día de cobro
+                        </label>
+
+                        <select
+                            class="venta-input"
+                            name="diaDeCobro"
+                            id="diaDeCobro">
+
+                            <option value="lunes">Lunes</option>
+                            <option value="martes">Martes</option>
+                            <option value="miercoles">Miércoles</option>
+                            <option value="jueves">Jueves</option>
+                            <option value="viernes">Viernes</option>
+                            <option value="Sabado">Sábado</option>
+                            <option value="todos">Todos</option>
+                            <option value="mensual">Mensual</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="venta-field">
+
+                    <label for="fecha">
+                        Fecha de inicio
+                    </label>
+
+                    <input
+                        type="date"
+                        name="fecha"
+                        id="fecha"
+                        class="venta-input"
+                        required>
+
+                </div>
+
+
+                <div class="venta-actions">
+
+                    <button
+                        class="venta-btn venta-btn-reset"
+                        type="reset">
+
+                        <i class="bi bi-eraser"></i>
+                        Limpiar
+
+                    </button>
+
+                    <button
+                        class="venta-btn venta-btn-primary"
+                        type="submit">
+
+                        <i class="bi bi-calculator"></i>
+                        Cotizar
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+
+        <!-- =========================
+             VENTA CONTADO
+        ========================== -->
+
+        <div class="venta-card venta-card-contado">
+
+            <div class="venta-card-header">
+
+                <div class="venta-card-icon">
+                    <i class="bi bi-cash-coin"></i>
+                </div>
+
+                <div>
+                    <span>VENTA DE CONTADO</span>
+                    <h2>Registrar venta</h2>
+                </div>
+
+            </div>
+
+
+            <form
+                action="/ventas/preCotizarCont"
+                method="post"
+                class="venta-form">
+
+
+                <div class="venta-section-title">
+                    <i class="bi bi-person-badge"></i>
+                    Datos de la venta
+                </div>
+
+
+                <div class="venta-field">
+
+                    <label for="venRutaCont">
+                        Vendedor
+                    </label>
+
+                    <select
+                        class="venta-input"
+                        name="venRuta"
+                        id="venRutaCont">
+
+                        <option value="">
+                            Otro
+                        </option>
+
+                        {{#each usuariosVent}}
+
+                        <option value="{{numRuta}}">
+                            {{numRuta}} / {{nombre}}
+                        </option>
+
+                        {{/each}}
+
+                    </select>
+
+                </div>
+
+
+                <div class="venta-field">
+
+                    <label for="dniCont">
+                        DNI
+                    </label>
+
+                    <input
+                        class="venta-input"
+                        type="number"
+                        id="dniCont"
+                        name="dni"
+                        placeholder="Ingrese DNI">
+
+                </div>
+
+
+                <div class="venta-field">
+
+                    <label for="codProdCont">
+                        Productos
+                    </label>
+
+                    <select
+                        name="codProd"
+                        id="codProdCont"
+                        class="venta-input"
+                        multiple>
+
+                        {{#each productos}}
+
+                        <option value="{{cod}}">
+                            {{cod}} // {{nombre}}
+                        </option>
+
+                        {{/each}}
+
+                    </select>
+
+                    <small>
+                        Selecciona uno o varios productos.
+                    </small>
+
+                </div>
+
+
+                <div class="venta-contado-info">
+
+                    <i class="bi bi-lightning-charge-fill"></i>
+
+                    <div>
+                        <strong>Venta rápida</strong>
+                        <span>
+                            Selecciona los productos y continúa
+                            con la cotización.
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="venta-actions">
+
+                    <button
+                        class="venta-btn venta-btn-reset"
+                        type="reset">
+
+                        <i class="bi bi-eraser"></i>
+                        Limpiar
+
+                    </button>
+
+                    <button
+                        class="venta-btn venta-btn-secondary"
+                        type="submit">
+
+                        <i class="bi bi-calculator"></i>
+                        Cotizar
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         VENTAS RECIENTES
+    ========================== -->
+
+    <section class="ventas-historial">
+
+        <div class="ventas-section-header">
+
+            <div>
+
+                <span>ACTIVIDAD RECIENTE</span>
+
+                <h2>Ventas financiadas</h2>
+
+                <p>
+                    Últimas operaciones registradas.
+                </p>
+
+            </div>
+
+            <i class="bi bi-clock-history"></i>
+
+        </div>
+
+
+        <div class="ventas-table-wrapper">
+
+            <table class="ventas-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Monto</th>
+                        <th>Fecha</th>
+                        <th>Dto.</th>
+                        <th>Ruta</th>
+                        <th>Detalle</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {{#each ventasT}}
+
+                    <tr>
+
+                        <td
+                            data-label="Cliente"
+                            class="venta-cliente">
+
+                            {{nombre}}
+
+                        </td>
+
+                        <td data-label="Monto">
+                            {{monto}}
+                        </td>
+
+                        <td data-label="Fecha">
+                            {{fechaInicio}}
+                        </td>
+
+                        <td data-label="Dto.">
+                            {{descuento}}
+                        </td>
+
+                        <td data-label="Ruta">
+                            {{cobRuta}}
+                        </td>
+
+                        <td data-label="Detalle">
+                            {{detalle}}
+                        </td>
+
+                    </tr>
+
+                    {{/each}}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         VENTAS CONTADO
+    ========================== -->
+
+    <section class="ventas-historial ventas-historial-contado">
+
+        <div class="ventas-section-header">
+
+            <div>
+
+                <span>ACTIVIDAD RECIENTE</span>
+
+                <h2>Ventas de contado</h2>
+
+                <p>
+                    Últimas ventas realizadas.
+                </p>
+
+            </div>
+
+            <i class="bi bi-cash-stack"></i>
+
+        </div>
+
+
+        <div class="ventas-table-wrapper">
+
+            <table class="ventas-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Monto</th>
+                        <th>Dto.</th>
+                        <th>Fecha</th>
+                        <th>Medio de pago</th>
+                        <th>Usuario</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {{#each ventasCont}}
+
+                    <tr>
+
+                        <td
+                            data-label="Cliente"
+                            class="venta-cliente">
+
+                            {{nombre}}
+
+                        </td>
+
+                        <td data-label="Monto">
+                            {{mTotal}}
+                        </td>
+
+                        <td data-label="Dto.">
+                            {{descuento}}
+                        </td>
+
+                        <td data-label="Fecha">
+                            {{fechaInicio}}
+                        </td>
+
+                        <td data-label="Medio de pago">
+                            {{plan}}
+                        </td>
+
+                        <td data-label="Usuario">
+                            {{user}}
+                        </td>
+
+                    </tr>
+
+                    <tr class="venta-detail-row">
+
+                        <td data-label="Detalle">
+                            <strong>Detalle</strong>
+                        </td>
+
+                        <td colspan="5">
+                            {{detalle}}
+                        </td>
+
+                    </tr>
+
+                    <tr class="venta-detail-row">
+
+                        <td data-label="Código">
+                            <strong>Código</strong>
+                        </td>
+
+                        <td colspan="5">
+                            {{codProd}}
+                        </td>
+
+                    </tr>
+
+                    {{/each}}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <div class="ventas-history-link">
+
+            <a href="/ventas/historial">
+
+                <i class="bi bi-clock-history"></i>
+                Ver historial completo
+
+                <i class="bi bi-arrow-right"></i>
+
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
