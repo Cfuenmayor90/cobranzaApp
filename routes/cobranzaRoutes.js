@@ -32,7 +32,7 @@ router.get("/transf", checkRole(["admin"]), cargarTransf);
 
 router.get("/transfCob", checkRole(["cobrador", 'pisoDeVenta']), cargarTranfCob);
 
-router.get("/deleteTransf/:id", checkRole(["admin"]), deleteTransf);
+router.get("/deleteTransf/:id", checkRole(["admin", "cobrador", "pisoDeVenta"]), deleteTransf);
 
 router.post("/saveTransfCob", checkRole(["cobrador", 'pisoDeVenta']), guardarTransfCob);
 
