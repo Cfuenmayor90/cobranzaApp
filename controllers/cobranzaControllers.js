@@ -268,7 +268,16 @@ const deleteTransf = async(req, res) =>{
   try {
     const {id} = req.params;  
     const transfDel = await transf.findByIdAndDelete({_id: id});
-    res.redirect('/cobranza/transf');
+     const token = req.cookies.token; // Obtener el token JWT de las cookies de la solicitud
+    const verifyToken = await verifyJWT(token);
+    if (verifyToken.role === "admin") {
+        res.redirect('/cobranza/transf');
+    }
+    else{
+      res.redirect('/cobranza/transfCob');
+    }
+   
+   
   } catch (error) {
     
   }}; 
