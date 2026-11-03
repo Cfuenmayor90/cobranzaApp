@@ -646,7 +646,7 @@ const saveNote = async(req, res)=>{
     console.log("rol " + rol);
      var prestamos ="";
 switch (rol) {
-  case 'cobrador':
+  case ["cobrador", "pisoDeVenta"]:
     const newNota = await ventas.findOneAndUpdate({_id: id}, {notaCobrador: not});
      res.redirect('/cobranza');
     break;
