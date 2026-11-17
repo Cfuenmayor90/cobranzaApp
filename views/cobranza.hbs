@@ -1,106 +1,757 @@
 
-    <nav class="navegacion">
-        <div>
-           <a href="/vistas/volver"><i class="bi bi-box-arrow-left"></i></a> 
-        </div>
-        <div>
-           <span>Cobranza</span>
-        </div>
-        <div class="iconMenuHamburguesa">
-           <i class="bi bi-filter-square"></i>
-        </div>
-    </nav>
+  <!-- =====================================================
+     NAVBAR
+     ===================================================== -->
 
-    <div class="contPres">
-       <div class="divFilterPres" style="height: auto; padding: 1.5em;">
-        <h3>Ordenar Por:</h>
-        <a href="/cobranza/pagoListDiario/{{coRu}}" class="btnOptionCob">Pagos Totales</a>
-        <a href="/cobranza/filterSem/{{coRu}}" class="btnOptionCob">Semanales Por Cobrar Hoy</a>
-        <a href="/cobranza/filterPosicion/{{coRu}}" class="btnOptionCob">Posicion</a>
-      </div>
-      
-        {{#each prestamos}}
-        <form action="/cobranza/savePago" method="post"> 
+<nav class="cobranza-navbar">
 
-        <table class="tablePres">
-            <tr>
-                <th colspan="3" class="thTitleTablePres"> {{nombre}}</th>
-            </tr>
-            <tr>
-              <th colspan="3" class="thTitleTablePres" style="background-color: {{colorAlert}};">Estatus: {{statusAtraso}}</th>
-            </tr>
+    <div class="cobranza-navbar-left">
 
-             <tr>
-                <th colspan="3" class="thTable">Direccion: {{direccion}}</th>
-            </tr>
-               <tr>
-                <th colspan="3" class="thTable">Descripción: {{detalle}}</th>
-            </tr>
-             
-              <tr>
-                <th class="thTable">Monto: ${{monto}}</th>
-                 <th class="thTable">Cuotas: {{cuotas}}</th>
-                  <th class="thTable">Cuota: ${{cuota}}</th>
-            </tr>
-            <tr>
-                 <th class="thTable" colspan="2">Utimo Pago: {{fechaUltPago}}</th>
-                  <th class="thTable">Saldo: ${{mTotal}}</th>
-            </tr>
-             <tr>
-                <th class="thTable">Fecha: {{fechaInicio}}</th>
-                 <th class="thTable">Vto: {{fechaFinal}}</th>
-                  <th class="thTable">Dia cobro: {{diaDeCobro}}</th>
-            </tr>
-               <tr>
-                <th colspan="3" style="color: rgb(255, 145, 0);" class="thTable">Nota: {{notaCobrador}}</th>
-            </tr>
-              <tr>
-                <th colspan="2" class="thTable">Cod: <input type="text" style="width: 80%; border: none;" readonly id="codPres" name="codPres" value="{{_id}}"></th>
-                <th style="color: rgb(0, 184, 15);" class="thTable">Adelanto:  <span style="color:rgb(0, 158, 29)">{{adelanto}}</span></th>
-            </tr>
-            <tr>
-             <th colspan="3">Pago:  <input type="number" step=".01" class="inpPres" id="pago" name="pago" required></th> 
-                   
-           </tr>
-         
-             <tr>
-             <th colspan="3" style="background-color: greenyellow;">Transf: <input style="width: 25%;" type="number" step=".01" class="inpPres" id="transfMonto" name="transfMonto"> <input style="width: 58%; font-size: 18px;" class="inpPres" type="datetime-local" name="transfFecha" id="transfFecha"> </th> 
-                   
-           </tr>
-           
-            <tr class="trTablePres">
-              
-                 <th colspan="3" class="trTablePres">
-                    <button type="submit" class="btnPagoCobra" style="background-color: blue; border: none; color:white"><i class="bi bi-check-lg"></i></button>
-                    <a href="https://wa.me/549{{celular}}?text=¡Pulsa el link para ver tu estado de cuenta! https://proyectofinal-production-a7fb.up.railway.app/cobranza/ticket/{{_id}}" class="btnPagoCobra" style="background-color: rgb(3, 123, 123);"><i class="bi bi-ticket-perforated"></i></a>
-                    <a href="https://wa.me/549{{celular}}" class="btnPagoCobra" style="background-color: green;"><i class="bi bi-whatsapp"></i></a>
-                    <a href="/cobranza/pagosList/{{_id}}" class="btnPagoCobra" style="background-color: orangered;"><i class="bi bi-card-list"></i></i></a>
-                      <a href="/cobranza/note/{{_id}}" class="btnPagoCobra" style="background-color: rgb(148, 0, 116);"><i class="bi bi-journal-bookmark"></i></a>
-                      <a href="{{geolocalizacion}}" class="btnPagoCobra" style="background-color: rgb(217, 200, 9);"><i class="bi bi-pin-map"></i></a>
-                     <a href="/cobranza/posicionNumber/{{_id}}" class="btnPagoCobra" style="background-color: rgb(9, 172, 217);"><i class="bi bi-arrow-down-up"></i> {{posicion}}</a>
-                </th>
-            </tr>
-        </table>
-        </form>
-        {{/each}}
-        <br>
-        <div class="divFilterPres" style="height: auto; padding: 1.5em;">
-        <h3>Ordenar Por:</h>
-        <a href="/cobranza/pagoListDiario/{{coRu}}" class="btnOptionCob">Pagos Totales</a>
-        <a href="/cobranza/filterSem/{{coRu}}" class="btnOptionCob">Semanales Por Cobrar Hoy</a>
-        <a href="/cobranza/filterPosicion/{{coRu}}" class="btnOptionCob">Posicion</a>
-      </div>
-     
+        <a href="/vistas/volver"
+           class="cobranza-back"
+           title="Volver">
+
+            <i class="bi bi-arrow-left"></i>
+
+        </a>
+
     </div>
 
-    <footer class="footerCobranza">
-            <div class="divFooter">
-                <spam>Cobrado= {{monCobrado}}</spam>
-                <spam>Esperado= {{espeValor}}</spam>
+
+    <div class="cobranza-navbar-title">
+
+        <i class="bi bi-cash-stack"></i>
+
+        <span>Cobranza</span>
+
+    </div>
+
+
+    <div class="cobranza-navbar-filter">
+
+        <i class="bi bi-funnel"></i>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     CONTENEDOR PRINCIPAL
+     ===================================================== -->
+
+<main class="cobranza-page">
+
+
+    <!-- =================================================
+         RESUMEN DE COBRANZA
+         ================================================= -->
+
+    <section class="cobranza-summary">
+
+
+        <div class="cobranza-summary-card summary-cobrado">
+
+            <div class="summary-icon">
+                <i class="bi bi-cash-coin"></i>
             </div>
-    
-            <div class="divFooter">
-              <spam>Cant De Prestamos: {{nPres}}</spam>
-              <spam>Efectividad= {{efect}}%</spam>
+
+            <div>
+
+                <span class="summary-label">
+                    Cobrado
+                </span>
+
+                <strong>
+                    {{monCobrado}}
+                </strong>
+
             </div>
-    </footer>
+
+        </div>
+
+
+
+        <div class="cobranza-summary-card summary-esperado">
+
+            <div class="summary-icon">
+                <i class="bi bi-bullseye"></i>
+            </div>
+
+            <div>
+
+                <span class="summary-label">
+                    Esperado
+                </span>
+
+                <strong>
+                    {{espeValor}}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="cobranza-summary-card summary-efectividad">
+
+            <div class="summary-icon">
+                <i class="bi bi-graph-up-arrow"></i>
+            </div>
+
+            <div>
+
+                <span class="summary-label">
+                    Efectividad
+                </span>
+
+                <strong>
+                    {{efect}}%
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="cobranza-summary-card summary-prestamos">
+
+            <div class="summary-icon">
+                <i class="bi bi-file-earmark-text"></i>
+            </div>
+
+            <div>
+
+                <span class="summary-label">
+                    Préstamos
+                </span>
+
+                <strong>
+                    {{nPres}}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         FILTROS
+         ================================================= -->
+
+    <section class="cobranza-filters">
+
+
+        <div class="cobranza-filter-title">
+
+            <div class="filter-title-icon">
+                <i class="bi bi-funnel"></i>
+            </div>
+
+            <div>
+
+                <strong>
+                    Ordenar cobranza
+                </strong>
+
+                <span>
+                    Selecciona la forma en que quieres visualizar los préstamos
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="cobranza-filter-buttons">
+
+            <a href="/cobranza/pagoListDiario/{{coRu}}"
+               class="cobranza-filter-btn">
+
+                <i class="bi bi-cash-stack"></i>
+
+                <span>
+                    Pagos totales
+                </span>
+
+            </a>
+
+
+            <a href="/cobranza/filterSem/{{coRu}}"
+               class="cobranza-filter-btn">
+
+                <i class="bi bi-calendar-check"></i>
+
+                <span>
+                    Semanales por cobrar hoy
+                </span>
+
+            </a>
+
+
+            <a href="/cobranza/filterPosicion/{{coRu}}"
+               class="cobranza-filter-btn">
+
+                <i class="bi bi-arrow-down-up"></i>
+
+                <span>
+                    Posición
+                </span>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         LISTADO DE PRÉSTAMOS
+         ================================================= -->
+
+    <section class="cobranza-list">
+
+
+        {{#each prestamos}}
+
+
+        <form action="/cobranza/savePago"
+              method="post"
+              class="prestamo-card">
+
+
+            <!-- =============================================
+                 CABECERA
+                 ============================================= -->
+
+            <div class="prestamo-header">
+
+
+                <div class="prestamo-client">
+
+                    <div class="prestamo-client-icon">
+
+                        <i class="bi bi-person"></i>
+
+                    </div>
+
+
+                    <div>
+
+                        <span class="prestamo-label">
+                            CLIENTE
+                        </span>
+
+                        <h2>
+                            {{nombre}}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+               <tr>
+    <th colspan="3" class="cobranza-resumen-atraso">
+
+        <div class="atraso-item">
+            <i class="bi bi-calendar-x"></i>
+            <div>
+                <span>CUOTAS ATRASADAS</span>
+                <strong>{{cuotasAtrasadas}}</strong>
+            </div>
+        </div>
+
+        <div class="atraso-item">
+            <i class="bi bi-currency-dollar"></i>
+            <div>
+                <span>MONTO ATRASADO</span>
+                <strong>${{montoAtrasado}}</strong>
+            </div>
+        </div>
+
+    </th>
+</tr>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 INFORMACIÓN DEL CLIENTE
+                 ============================================= -->
+
+            <div class="prestamo-info-grid">
+
+
+                <div class="prestamo-info-item">
+
+                    <span>
+                        Dirección
+                    </span>
+
+                    <strong>
+                        {{direccion}}
+                    </strong>
+
+                </div>
+
+
+                <div class="prestamo-info-item">
+
+                    <span>
+                        Descripción
+                    </span>
+
+                    <strong>
+                        {{detalle}}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 DATOS DEL PRÉSTAMO
+                 ============================================= -->
+
+            <div class="prestamo-data-grid">
+
+
+                <div class="prestamo-data">
+
+                    <span>
+                        Monto
+                    </span>
+
+                    <strong>
+                        ${{monto}}
+                    </strong>
+
+                </div>
+
+
+                <div class="prestamo-data">
+
+                    <span>
+                        Cuotas
+                    </span>
+
+                    <strong>
+                        {{cuotas}}
+                    </strong>
+
+                </div>
+
+
+                <div class="prestamo-data">
+
+                    <span>
+                        Valor cuota
+                    </span>
+
+                    <strong>
+                        ${{cuota}}
+                    </strong>
+
+                </div>
+
+
+                <div class="prestamo-data prestamo-saldo">
+
+                    <span>
+                        Saldo pendiente
+                    </span>
+
+                    <strong>
+                        ${{mTotal}}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 FECHAS
+                 ============================================= -->
+
+            <div class="prestamo-dates">
+
+
+                <div>
+
+                    <span>
+                        <i class="bi bi-calendar-event"></i>
+                        Inicio
+                    </span>
+
+                    <strong>
+                        {{fechaInicio}}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        <i class="bi bi-calendar-x"></i>
+                        Vencimiento
+                    </span>
+
+                    <strong>
+                        {{fechaFinal}}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        <i class="bi bi-calendar-check"></i>
+                        Día de cobro
+                    </span>
+
+                    <strong>
+                        {{diaDeCobro}}
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        <i class="bi bi-clock-history"></i>
+                        Último pago
+                    </span>
+
+                    <strong>
+                        {{fechaUltPago}}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 NOTA
+                 ============================================= -->
+
+            <div class="prestamo-note">
+
+                <i class="bi bi-sticky"></i>
+
+                <div>
+
+                    <span>
+                        Nota del cobrador
+                    </span>
+
+                    <strong>
+                        {{notaCobrador}}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 DATOS INTERNOS
+                 ============================================= -->
+
+            <div class="prestamo-extra">
+
+                <div>
+
+                    <span>
+                        Código
+                    </span>
+
+                    <input type="text"
+                           name="codPres"
+                           value="{{_id}}"
+                           readonly>
+
+                </div>
+
+
+                <div class="prestamo-adelanto">
+
+                    <span>
+                        Adelanto
+                    </span>
+
+                    <strong>
+                        {{adelanto}}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 REGISTRO DE PAGO
+                 ============================================= -->
+
+            <div class="prestamo-payment">
+
+
+                <div class="payment-title">
+
+                    <i class="bi bi-cash"></i>
+
+                    <strong>
+                        Registrar pago
+                    </strong>
+
+                </div>
+
+
+                <div class="payment-input">
+
+                    <span>
+                        $
+                    </span>
+
+                    <input type="number"
+                           step=".01"
+                           class="inpPres"
+                           name="pago"
+                           placeholder="Ingrese el monto"
+                           required>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 TRANSFERENCIA
+                 ============================================= -->
+
+            <div class="prestamo-transfer">
+
+
+                <div class="transfer-title">
+
+                    <i class="bi bi-bank"></i>
+
+                    <div>
+
+                        <strong>
+                            Pago por transferencia
+                        </strong>
+
+                        <span>
+                            Completar solamente si corresponde
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="transfer-fields">
+
+                    <div class="transfer-money">
+
+                        <span>
+                            $
+                        </span>
+
+                        <input type="number"
+                               step=".01"
+                               class="inpPres"
+                               name="transfMonto"
+                               placeholder="Monto">
+
+                    </div>
+
+
+                    <input type="datetime-local"
+                           class="inpPres"
+                           name="transfFecha">
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =============================================
+                 ACCIONES
+                 ============================================= -->
+
+            <div class="prestamo-actions">
+
+
+                <button type="submit"
+                        class="prestamo-action action-payment"
+                        title="Registrar pago">
+
+                    <i class="bi bi-check-lg"></i>
+
+                    <span>
+                        Cobrar
+                    </span>
+
+                </button>
+
+
+
+                <a href="https://wa.me/549{{celular}}?text=¡Pulsa%20el%20link%20para%20ver%20tu%20estado%20de%20cuenta!%20https://proyectofinal-production-a7fb.up.railway.app/cobranza/ticket/{{_id}}"
+                   class="prestamo-action action-ticket"
+                   title="Enviar estado de cuenta">
+
+                    <i class="bi bi-ticket-perforated"></i>
+
+                    <span>
+                        Estado
+                    </span>
+
+                </a>
+
+
+         <a href="https://wa.me/549{{celular}}?text= Buen día {{nombre}}, Te recuerdo que al día de hoy tenés *{{cuotasAtrasadas}}* cuotas vencidas por un total de *${{montoAtraso}}*. Desde la oficina ya me están pidiendo novedades de tu cuenta porque venimos varios días sin movimiento, evita recargos por incumplimiento, vencimiento del plan: *{{fechaFinal}}*, Saldo Total: *${{mTotal}}*"
+                   class="prestamo-action action-whatsapp"
+                   title="Contactar por WhatsApp">
+
+                    <i class="bi bi-whatsapp"></i>
+
+                    <span>
+                        WhatsApp
+                    </span>
+
+                </a>
+
+
+
+                <a href="/cobranza/pagosList/{{_id}}"
+                   class="prestamo-action action-history"
+                   title="Ver pagos">
+
+                    <i class="bi bi-card-list"></i>
+
+                    <span>
+                        Pagos
+                    </span>
+
+                </a>
+
+
+
+                <a href="/cobranza/note/{{_id}}"
+                   class="prestamo-action action-note"
+                   title="Agregar nota">
+
+                    <i class="bi bi-journal-bookmark"></i>
+
+                    <span>
+                        Nota
+                    </span>
+
+                </a>
+
+
+
+                <a href="{{geolocalizacion}}"
+                   class="prestamo-action action-location"
+                   title="Ver ubicación">
+
+                    <i class="bi bi-pin-map"></i>
+
+                    <span>
+                        Ubicación
+                    </span>
+
+                </a>
+
+
+
+                <a href="/cobranza/posicionNumber/{{_id}}"
+                   class="prestamo-action action-position"
+                   title="Cambiar posición">
+
+                    <i class="bi bi-arrow-down-up"></i>
+
+                    <span>
+                        {{posicion}}
+                    </span>
+
+                </a>
+
+            </div>
+
+
+        </form>
+
+
+        {{/each}}
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         FILTROS INFERIORES
+         ================================================= -->
+
+    <section class="cobranza-filters cobranza-filters-bottom">
+
+        <div class="cobranza-filter-buttons">
+
+            <a href="/cobranza/pagoListDiario/{{coRu}}"
+               class="cobranza-filter-btn">
+
+                <i class="bi bi-cash-stack"></i>
+
+                Pagos totales
+
+            </a>
+
+
+            <a href="/cobranza/filterSem/{{coRu}}"
+               class="cobranza-filter-btn">
+
+                <i class="bi bi-calendar-check"></i>
+
+                Por cobrar hoy
+
+            </a>
+
+
+            <a href="/cobranza/filterPosicion/{{coRu}}"
+               class="cobranza-filter-btn">
+
+                <i class="bi bi-arrow-down-up"></i>
+
+                Posición
+
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
