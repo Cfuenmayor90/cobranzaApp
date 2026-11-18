@@ -20,7 +20,8 @@ const {
   saveNote, 
   posicionNumber,
   savePosicion,
-  filterPosicion
+  filterPosicion,
+  envioDeWhatsapp
 } = require("../controllers/cobranzaControllers");
 const { timeOp } = require("../middleware/timeOpe");
 
@@ -65,4 +66,6 @@ router.post("/saveNote/:id", checkRole(["admin", "cobrador", "pisoDeVenta", "sup
 router.get("/posicionNumber/:id", checkRole(["admin", "cobrador", "pisoDeVenta"]), posicionNumber);
 
 router.post("/savePosicion", checkRole(["admin", "cobrador", "pisoDeVenta"]), savePosicion);
+
+router.get('/envioDeWhatsapp/:id', checkRole(["admin", "cobrador", "pisoDeVenta", "supervisor"]), envioDeWhatsapp);
 module.exports = router;
