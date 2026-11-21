@@ -101,9 +101,9 @@ const pagoSave = async (req, res) => {
             case "Semanal":
               let diffTimeS = Math.abs(fechaPago - fechaVencimiento);
               let diffDaysS = Math.ceil(diffTimeS / (1000 * 60 * 60 * 24));
-              cuotasRestantes = Math.floor(diffDaysS / 7);
+              cuotasRestantes = Math.ceil(diffDaysS / 7);
               montoAtraso = prestamo.mTotal - (prestamo.cuota * cuotasRestantes);
-              cuotasAtrasadas = Math.floor(montoAtraso / prestamo.cuota);
+              cuotasAtrasadas = Math.ceil(montoAtraso / prestamo.cuota);
               //creamos el estado de atraso y el color de alerta dependiendo de la cantidad de dias de atraso
               if (cuotasAtrasadas == 1) {
                 colorAlert = "orange";
@@ -117,9 +117,9 @@ const pagoSave = async (req, res) => {
             case "quincenal":
               let diffTimeQ = Math.abs(fechaPago - fechaVencimiento);
               let diffDaysQ = Math.ceil(diffTimeQ / (1000 * 60 * 60 * 24));
-              cuotasRestantes = Math.floor(diffDaysQ / 15);
+              cuotasRestantes = Math.ceil(diffDaysQ / 15);
               montoAtraso = prestamo.mTotal - (prestamo.cuota * cuotasRestantes);
-              cuotasAtrasadas = Math.floor(montoAtraso / prestamo.cuota);
+              cuotasAtrasadas = Math.ceil(montoAtraso / prestamo.cuota);
               //creamos el estado de atraso y el color de alerta dependiendo de la cantidad de dias de atraso
               if (cuotasAtrasadas >= 1) {
                 colorAlert = "red";
@@ -131,9 +131,9 @@ const pagoSave = async (req, res) => {
             case "mensual":
               let diffTimeM = Math.abs(fechaPago - fechaVencimiento);
               let diffDaysM = Math.ceil(diffTimeM / (1000 * 60 * 60 * 24));
-              cuotasRestantes = Math.floor(diffDaysM / 30);
+              cuotasRestantes = Math.ceil(diffDaysM / 30);
               montoAtraso = prestamo.mTotal - (prestamo.cuota * cuotasRestantes);
-              cuotasAtrasadas = Math.floor(montoAtraso / prestamo.cuota);
+              cuotasAtrasadas = Math.ceil(montoAtraso / prestamo.cuota);
               //creamos el estado de atraso y el color de alerta dependiendo de la cantidad de dias de atraso
               if (cuotasAtrasadas >= 1) {
                 colorAlert = "red";
@@ -450,9 +450,9 @@ const esperadoDiario = async(req, res) =>{
             case "Semanal":
               let diffTimeS = Math.abs(fechaPago - fechaVencimiento);
               let diffDaysS = Math.ceil(diffTimeS / (1000 * 60 * 60 * 24));
-              cuotasRestantes = Math.floor(diffDaysS / 7);
+              cuotasRestantes = Math.ceil(diffDaysS / 7);
               montoAtraso = prestamo.mTotal - (prestamo.cuota * cuotasRestantes);
-              cuotasAtrasadas = Math.floor(montoAtraso / prestamo.cuota);
+              cuotasAtrasadas = Math.ceil(montoAtraso / prestamo.cuota);
               //creamos el estado de atraso y el color de alerta dependiendo de la cantidad de dias de atraso
               if (cuotasAtrasadas == 1) {
                 colorAlert = "orange";
@@ -466,9 +466,9 @@ const esperadoDiario = async(req, res) =>{
             case "quincenal":
               let diffTimeQ = Math.abs(fechaPago - fechaVencimiento);
               let diffDaysQ = Math.ceil(diffTimeQ / (1000 * 60 * 60 * 24));
-              cuotasRestantes = Math.floor(diffDaysQ / 15);
+              cuotasRestantes = Math.ceil(diffDaysQ / 15);
               montoAtraso = prestamo.mTotal - (prestamo.cuota * cuotasRestantes);
-              cuotasAtrasadas = Math.floor(montoAtraso / prestamo.cuota);
+              cuotasAtrasadas = Math.ceil(montoAtraso / prestamo.cuota);
               //creamos el estado de atraso y el color de alerta dependiendo de la cantidad de dias de atraso
               if (cuotasAtrasadas >= 1) {
                 colorAlert = "red";
@@ -480,9 +480,9 @@ const esperadoDiario = async(req, res) =>{
             case "mensual":
               let diffTimeM = Math.abs(fechaPago - fechaVencimiento);
               let diffDaysM = Math.ceil(diffTimeM / (1000 * 60 * 60 * 24));
-              cuotasRestantes = Math.floor(diffDaysM / 30);
+              cuotasRestantes = Math.ceil(diffDaysM / 30);
               montoAtraso = prestamo.mTotal - (prestamo.cuota * cuotasRestantes);
-              cuotasAtrasadas = Math.floor(montoAtraso / prestamo.cuota);
+              cuotasAtrasadas = Math.ceil(montoAtraso / prestamo.cuota);
               //creamos el estado de atraso y el color de alerta dependiendo de la cantidad de dias de atraso
               if (cuotasAtrasadas >= 1) {
                 colorAlert = "red";
@@ -505,7 +505,7 @@ const esperadoDiario = async(req, res) =>{
           let diffTime = Math.abs(fechaPago - fechaVencimiento);
           let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
           console.log("dias de adelanto " + diffDays);
-          cuotasAtrasadas = Math.floor(diffDays / 1);
+          cuotasAtrasadas = Math.ceil(diffDays / 1);
           statusAtraso = "VENCIDO - " + diffDays + " días de vencimiento";
           colorAlert = "red";
           montoAtraso = prestamo.mTotal;
